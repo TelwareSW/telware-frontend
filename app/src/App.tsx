@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import TestComponent from "./components/testComponent"
 
 function App() {
 
   return (
-    <h1>Hello World</h1>
+    <TestComponent/>
   )
 }
 
