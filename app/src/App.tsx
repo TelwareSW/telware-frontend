@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import TestComponent from "./components/testComponent"
 
 function App() {
 
+  const queryClient = new QueryClient();
+
   return (
-    <h1>Hello World</h1>
+    <QueryClientProvider client={queryClient}>
+      <TestComponent/>
+    </QueryClientProvider>
   )
 }
 
