@@ -1,0 +1,20 @@
+services:
+  frontend:
+    image: telware/frontend
+    build:
+      context: ./app
+      dockerfile: dev.Dockerfile
+
+    ports:
+      - 5173:5173
+
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+
+
+  
+  
