@@ -127,6 +127,10 @@ const GlobalStyles = createGlobalStyle`
   margin: 0;
 
   transition: background-color 0.3s, border 0.3s;
+
+  user-select: none;
+  user-drag: none;
+  app-region: no-drag;
 }
 
 body {
