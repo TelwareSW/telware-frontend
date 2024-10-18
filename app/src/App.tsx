@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import Login from "./pages/Login";
+import ProfileSettings from "./features/profile-settings/ProfileSettings";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<div>Home</div>} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<div>Signup</div>} />
+          <Route path="profile-settings" element={<ProfileSettings />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
