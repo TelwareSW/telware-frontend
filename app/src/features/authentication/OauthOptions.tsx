@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import google from "/google.png";
-import gitHub from "/gitHub.png";
-import facebook from "/facebook.png";
+import google from "/oauth/google.png";
+import gitHub from "/oauth/gitHub.png";
+import facebook from "/oauth/facebook.png";
 
 const Icon = styled.div`
   display: flex;

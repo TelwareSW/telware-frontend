@@ -1,16 +1,70 @@
 import { http, HttpResponse } from 'msw'
  
+type LoginRequestBody = {
+  email: string;
+  password: string;
+};
+
+type LoginResponseBodySuccess = {
+  status: "success";
+  message: String;
+  data: {
+    user: {};
+    accessToken: string;
+  };
+};
+
+type LoginResponseBodyFail = {
+  status: "fail" | "error";
+  message: String;
+  data: {};
+};
+
+type LoginResponseBody = LoginResponseBodySuccess | LoginResponseBodyFail;
+
+const MOCK_USER = {
+  email: "test@example.com",
+  password: "1234",
+};
+
 export const handlers = [
-  //example
-/* 
- http.get('https://example.com/user', () => {
-    // ...and respond to them using this JSON response.
-    return HttpResponse.json({
-      id: 'c7b3d8e0-5e0b-4b0f-8b3a-3b9f4b3d3b3d',
-      firstName: 'John',
-      lastName: 'Maverick',
-    })
+  http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
+    return undefined;
   }),
-*/
-]
+
+  http.post<{}, LoginRequestBody, LoginResponseBody>(
+    "/auth/login",
+    async ({ request }) => {
+      const { email, password } = await request.json();
+
+      const isValidUser =
+        email === MOCK_USER.email && password === MOCK_USER.password;
+
+      if (!isValidUser) {
+        return HttpResponse.json(
+          {
+            message: "Invalid email or password",
+            status: "error",
+            data: {},
+          },
+          { status: 401 }
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          message: "Successful login",
+          status: "success",
+          data: {
+            user: {
+              email: "test@example.com",
+            },
+            accessToken: "accessToken",
+          },
+        },
+        { status: 201 }
+      );
+    }
+  ),
+];
     
