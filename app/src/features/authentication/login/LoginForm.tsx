@@ -1,6 +1,11 @@
+import { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import styled from "styled-components";
+
+import { useLogin } from "./hooks/useLogin";
+import { schema } from "./schema/login";
 
 import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
@@ -28,10 +33,32 @@ const P = styled.p`
   color: var(--color-text-secondary);
 `;
 
+const Error = styled.p`
+  align-self: center;
+  color: var(--color-error);
+`;
+
 export default function LoginForm() {
-  const { register, handleSubmit } = useForm<User>();
+  const { login, isPending } = useLogin();
+  const [error, setError] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<User>({
+    resolver: yupResolver(schema),
+  });
+
   const onSubmit: SubmitHandler<User> = function (data) {
     console.log(data);
+    login(data, {
+      onSettled: (_, error) => {
+        setError(error ? error.message : "");
+        reset();
+      },
+    });
   };
 
   return (
@@ -44,6 +71,7 @@ export default function LoginForm() {
           register={register}
           placeholder="Email"
           autoComplete="email"
+          error={errors.email?.message}
         />
 
         <InputField
@@ -53,12 +81,14 @@ export default function LoginForm() {
           register={register}
           placeholder="Password"
           autoComplete="current-password"
+          error={errors.password?.message}
         />
       </Inputs>
 
       <P>Forgot password?</P>
 
-      <Button type="submit">Login</Button>
+      <Button type="submit">{isPending ? "Loading..." : "Login"}</Button>
+      {error && <Error>{error}</Error>}
     </Form>
   );
 }
