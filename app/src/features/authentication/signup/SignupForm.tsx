@@ -52,6 +52,7 @@ export default function SignupForm() {
           register={register}
           placeholder="User Name"
           autoComplete="username"
+          error=""
         />
 
         <InputField
@@ -61,6 +62,7 @@ export default function SignupForm() {
           register={register}
           placeholder="Email"
           autoComplete="email"
+          error=""
         />
 
         <InputField
@@ -70,6 +72,7 @@ export default function SignupForm() {
           register={register}
           placeholder="Phone Number"
           autoComplete="tel"
+          error=""
         />
 
         <InputField
@@ -79,6 +82,7 @@ export default function SignupForm() {
           register={register}
           placeholder="Password"
           autoComplete="new-password"
+          error=""
         />
 
         <InputField
@@ -88,6 +92,7 @@ export default function SignupForm() {
           register={register}
           placeholder="Confirm Password"
           autoComplete="new-password"
+          error=""
         />
       </Inputs>
 
