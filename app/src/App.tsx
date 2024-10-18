@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import GlobalStyles from "./styles/GlobalStyles";
 
-import Login from "./pages/Login"
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   const queryClient = new QueryClient();
@@ -15,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<div>Home</div>} />
           <Route path="login" element={<Login />} />
-          <Route path="signup" element={<div>Signup</div>} />
+          <Route path="signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
