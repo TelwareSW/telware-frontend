@@ -59,17 +59,23 @@ const StyledLabel = styled.label`
   transition: 0.2s;
 `;
 
+const Error = styled.p`
+  color: var(--color-error);
+`;
+
 type InputType = {
   label: string;
   register: any;
   id: string;
+  error: string | undefined;
 } & ComponentProps<"input">;
 
-function InputField({ label, id, register, ...props }: InputType) {
+function InputField({ label, id, register, error,...props }: InputType) {
   return (
     <InputWrapper>
       <StyledInput {...register(id)} id={id} {...props} />
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
+      <Error>{error}</Error>
     </InputWrapper>
   );
 }
