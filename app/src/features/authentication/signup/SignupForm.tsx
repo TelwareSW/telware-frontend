@@ -1,9 +1,13 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
 import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
+import TelephoneInputField from "../../../components/TelphoneInputField";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./schema/signup";
+import { useSignup } from "./hooks/useSignup";
 
 export type User = {
   username: string;
@@ -27,13 +31,33 @@ const Inputs = styled.div`
   width: 100%;
   gap: 0.5rem;
 `;
-
+const Error = styled.p`
+  align-self: center;
+  color: var(--color-error);
+`;
 export default function SignupForm() {
-  const { register, handleSubmit, setValue } = useForm<User>();
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
+  const { signup, isPending } = useSignup();
+  const [error, setError] = useState("");
 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<User>({
+    resolver: yupResolver(schema),
+  });
   const onSubmit: SubmitHandler<User> = function (data) {
     console.log("Form data:", data);
+    signup(data, {
+      onSettled: (_, error) => {
+        setError(error ? error.message : "");
+        reset();
+      },
+    });
   };
 
   const handleRecaptchaChange = (token: string | null) => {
@@ -52,7 +76,7 @@ export default function SignupForm() {
           register={register}
           placeholder="User Name"
           autoComplete="username"
-          error=""
+          error={errors.username?.message}
         />
 
         <InputField
@@ -62,17 +86,17 @@ export default function SignupForm() {
           register={register}
           placeholder="Email"
           autoComplete="email"
-          error=""
+          error={errors.email?.message}
         />
 
-        <InputField
+        <TelephoneInputField
           label="Phone Number"
           type="tel"
           id="phoneNumber"
-          register={register}
+          control={control}
           placeholder="Phone Number"
           autoComplete="tel"
-          error=""
+          error={errors.phoneNumber?.message}
         />
 
         <InputField
@@ -82,7 +106,7 @@ export default function SignupForm() {
           register={register}
           placeholder="Password"
           autoComplete="new-password"
-          error=""
+          error={errors.password?.message}
         />
 
         <InputField
@@ -92,7 +116,7 @@ export default function SignupForm() {
           register={register}
           placeholder="Confirm Password"
           autoComplete="new-password"
-          error=""
+          error={errors.confirmPassword?.message}
         />
       </Inputs>
 
@@ -101,8 +125,10 @@ export default function SignupForm() {
         sitekey={import.meta.env.VITE_REACT_APP_SITE_KEY}
         onChange={handleRecaptchaChange}
       />
+      {error && <Error>{errors.reCaptchaResponse?.message}</Error>}
 
-      <Button type="submit">Sign up</Button>
+      <Button type="submit">{isPending ? "Loading..." : "Sign up"}</Button>
+      {error && <Error>{error}</Error>}
     </Form>
   );
 }

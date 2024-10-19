@@ -1,5 +1,5 @@
-import { http, HttpResponse } from 'msw'
- 
+import { http, HttpResponse } from "msw";
+
 type LoginRequestBody = {
   email: string;
   password: string;
@@ -27,7 +27,7 @@ const MOCK_USER = {
   password: "1234",
 };
 
-export const handlers = [
+export const loginMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
     return undefined;
   }),
@@ -67,4 +67,3 @@ export const handlers = [
     }
   ),
 ];
-    
