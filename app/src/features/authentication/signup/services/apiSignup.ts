@@ -9,6 +9,7 @@ export async function Signup(user: User) {
     body: JSON.stringify(user),
   });
   const data = await res.json();
-  if (data.status !== "sucess") throw new Error(data.message);
+  if (data.status !== "success") throw new Error(data.message);
+  console.log(data);
   return data.data;
 }

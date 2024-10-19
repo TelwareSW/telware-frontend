@@ -1,6 +1,10 @@
+import { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SignupForm from "./SignupForm";
+import { useSignup } from "./hooks/useSignup";
+import ConfirmationEmailModal from "./ConfirmationEmailModal";
 
 const Container = styled.div`
   max-width: 120rem;
@@ -53,6 +57,7 @@ function SignupSection() {
   return (
     <Container>
       <SignupForm />
+
       <P>
         Already have an account?{" "}
         <span>
