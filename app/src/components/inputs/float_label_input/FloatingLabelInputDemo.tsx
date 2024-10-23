@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styled from "styled-components";
 import FloatingLabelInput from "@inputs/float_label_input/FloatingLabelInput";
+import { DevTool } from "@hookform/devtools";
 
 const DemoContainer = styled.div`
   max-width: 800px;
@@ -63,7 +64,6 @@ interface DemoForm {
   email: string;
   password: string;
   maxLengthInput: string;
-  validatedInput: string;
   disabledInput: string;
   numberInput: number;
   searchInput: string;
@@ -87,10 +87,6 @@ const validationSchema = yup.object({
       "Password must contain at least one uppercase letter, one lowercase letter, and one number",
     ),
   maxLengthInput: yup.string().max(20, "Maximum 20 characters allowed"),
-  validatedInput: yup
-    .string()
-    .required("This field is required")
-    .min(3, "Minimum 3 characters required"),
   numberInput: yup
     .number()
     .typeError("Please enter a valid number")
@@ -106,6 +102,7 @@ export default function FloatingLabelInputDemo() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<DemoForm>({
     resolver: yupResolver(validationSchema),
@@ -113,6 +110,7 @@ export default function FloatingLabelInputDemo() {
   });
 
   const onSubmit = async (data: DemoForm) => {
+    console.log("Submitting form...");
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Form submitted:", data);
@@ -123,8 +121,11 @@ export default function FloatingLabelInputDemo() {
     }
   };
 
+  console.log(errors);
+
   return (
     <DemoContainer>
+      <DevTool control={control} placement="top-right" />
       <Title>Floating Label Input Demo</Title>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -148,6 +149,7 @@ export default function FloatingLabelInputDemo() {
               id="disabledInput"
               label="Disabled Input"
               register={register}
+              value="Disabled Input"
               disabled
             />
           </Grid>

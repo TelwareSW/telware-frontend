@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function UserNameForm() {
-  return <div>Hello World</div>;
+  return <div></div>;
 }
 
 export default UserNameForm;

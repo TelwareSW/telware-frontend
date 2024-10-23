@@ -12,6 +12,7 @@ interface FloatingLabelInputProps<TFormValues extends FieldValues> {
   type?: React.InputHTMLAttributes<HTMLInputElement>["type"];
   placeholder?: string;
   disabled?: boolean;
+  [key: string]: any;
 }
 
 const InputGroup = styled.div`
