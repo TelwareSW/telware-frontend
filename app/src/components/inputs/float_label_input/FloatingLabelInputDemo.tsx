@@ -109,7 +109,7 @@ export default function FloatingLabelInputDemo() {
     formState: { errors, isSubmitting },
   } = useForm<DemoForm>({
     resolver: yupResolver(validationSchema),
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const onSubmit = async (data: DemoForm) => {

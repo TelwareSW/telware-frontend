@@ -7,7 +7,7 @@ const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 20rem;
+  width: 30rem;
   min-height: 100dvh;
   background-color: var(--color-background);
 `;

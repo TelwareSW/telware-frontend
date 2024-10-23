@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import TextBox from "../../components/TextBox";
+import FloatingLabelInputDemo from "@components/inputs/float_label_input/FloatingLabelInputDemo";
 
 const SettingContainer = styled.div`
   padding: 1rem 1.5rem;
@@ -7,11 +7,7 @@ const SettingContainer = styled.div`
 
 function NameAndBioForm() {
   return (
-    <SettingContainer>
-      <TextBox label="Name" id="name" />
-      <TextBox label="email" id="email" />
-      <TextBox label="Test (required)" id="required" />
-    </SettingContainer>
+    <FloatingLabelInputDemo />
   );
 }
 
