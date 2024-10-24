@@ -1,17 +1,15 @@
 import styled from "styled-components";
-import SideBarRow from "./sideBarRow";
+import SideBarRow from "./SideBarRow";
 import Heading from "./Heading";
 import { useAppSelector } from "../hooks";
 
-const StyledOptionsList = styled.div`
+const StyledOptionsList = styled.ul`
   display: flex;
+  padding: 1rem 1rem 0 1rem !important;
+  list-style: none;
   flex-direction: column;
   justify-content: center;
-
   border-bottom: 1rem solid var(--color-item-hover);
-  
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 `;
 
 function OptionsList() {

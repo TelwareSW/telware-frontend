@@ -4,7 +4,7 @@ import Heading from "./Heading";
 import { changeData } from "../state/sideBar/sideBar";
 import { useAppDispatch } from "../hooks";
 
-const StyledSideBarRow = styled.div`
+const StyledSideBarRow = styled.li`
   height: 4rem;
 
   display: flex;
@@ -17,6 +17,7 @@ const StyledSideBarRow = styled.div`
 
   &:hover {
     background: var(--color-background-compact-menu-hover);
+    cursor: pointer;
   }
 
   border-radius: var(--border-radius-modal);

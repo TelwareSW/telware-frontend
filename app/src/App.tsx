@@ -5,6 +5,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import Login from "./pages/Login";
+import AppLayout from "./components/AppLayout";
+import { useEffect } from "react";
+import { useAppSelector } from "./hooks";
+import { Theme } from "./state/theme/theme";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,13 +19,19 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const currentTheme = useAppSelector((state) => state.theme.value);
+
+  useEffect(() => {
+    document.documentElement.className =
+      currentTheme === Theme.DARK ? "dark-mode" : "light-mode";
+  }, [currentTheme]);
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<div>Home</div>} />
+          <Route path="/" element={<AppLayout />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<div>Signup</div>} />
         </Routes>

@@ -1,4 +1,4 @@
-import { SideBarRowProps } from "../components/sideBarRow";
+import { SideBarRowProps } from "../components/SideBarRow";
 import BlockIcon from "@mui/icons-material/Block";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
