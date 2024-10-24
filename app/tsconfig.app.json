@@ -30,6 +30,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
     /* Plugins */
     "plugins": [
       {
