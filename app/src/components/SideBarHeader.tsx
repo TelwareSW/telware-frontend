@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Heading from "./Heading";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { changeData } from "../state/sideBar/sideBar";
+import { updateSideBarView } from "../state/sideBar/sideBar";
 
 const StyledSideBarHeader = styled.div`
   height: 4rem;
@@ -41,7 +41,7 @@ function SideBarHeader({}: SideBarHeaderProps) {
   const { header, backView } = useAppSelector((state) => state.sideBarData);
   return (
     <StyledSideBarHeader>
-      <StyledDiv onClick={() => dispatch(changeData(backView))}>
+      <StyledDiv onClick={() => dispatch(updateSideBarView(backView))}>
         <ArrowBackIcon
           sx={{
             color: `var(--color-icon-secondary)`,

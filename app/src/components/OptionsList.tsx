@@ -9,7 +9,7 @@ const StyledOptionsList = styled.div`
   justify-content: center;
 
   border-bottom: 1rem solid var(--color-item-hover);
-  
+
   padding-top: 2rem;
   padding-bottom: 2rem;
 `;

@@ -10,7 +10,6 @@ interface SideBarState {
 }
 
 function getSideBarPage(type: number): SideBarState {
-
   switch (type) {
     case sideBarPages.SETTINGS:
       return settings;
@@ -28,8 +27,9 @@ const sideBarSlice = createSlice({
   name: "sideBarData",
   initialState,
   reducers: {
-    changeData: (state, action) => {
+    updateSideBarView: (state, action) => {
       const newData = getSideBarPage(action.payload);
+      console.log(newData);
       state.rows = newData.rows;
       state.header = newData.header;
       state.backView = newData.backView;
@@ -37,6 +37,6 @@ const sideBarSlice = createSlice({
   },
 });
 
-export const { changeData } = sideBarSlice.actions;
+export const { updateSideBarView } = sideBarSlice.actions;
 export default sideBarSlice.reducer;
 export type { SideBarState };
