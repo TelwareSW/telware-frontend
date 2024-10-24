@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
 import { AddAPhotoOutlined, Check } from "@mui/icons-material";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FloatingLabelInput from "@components/inputs/float_label_input/FloatingLabelInput";
 import { DevTool } from "@hookform/devtools";
+
+import { BIO_MAX_LENGTH, ValidationSchema } from "./schema/EditProfileSchema";
+import { useProfileSettings } from "./hooks/useProfileSettings";
+import { useUpdateProfileSettings } from "./hooks/useUpdateProfileSettings";
+import { useEffect } from "react";
 
 const SideBarContainer = styled.div`
   & > form {
@@ -105,32 +109,22 @@ interface EditProfileForm {
   bio: string;
   username: string;
 }
-
-const BIO_MAX_LENGTH = 120;
-
-const ValidationSchema = yup.object({
-  profilePicture: yup.string(),
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string(),
-  bio: yup.string().max(BIO_MAX_LENGTH, "Bio must be 160 characters or less"),
-  username: yup
-    .string()
-    .required("Username is required")
-    .min(5, "Username must be at least 5 characters")
-    .matches(/^[a-zA-Z0-9_]*$/, "Username must be alphanumeric"),
-});
-
 function ProfileSettings() {
+  const { data: initialProfileSettings } = useProfileSettings();
+
+  const { updateProfileSettings } = useUpdateProfileSettings();
+
   const {
     register,
     handleSubmit,
     control,
     watch,
+    reset,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<EditProfileForm>({
     resolver: yupResolver(ValidationSchema),
     mode: "onChange",
-    defaultValues: {
+    defaultValues: initialProfileSettings || {
       profilePicture: "",
       firstName: "",
       lastName: "",
@@ -139,11 +133,17 @@ function ProfileSettings() {
     },
   });
 
+  useEffect(() => {
+    if (initialProfileSettings) {
+      reset(initialProfileSettings);
+    }
+  }, [initialProfileSettings, reset]);
+
   const userHandle = `https://telware.online/${watch("username") || "username"}`;
 
   const onSubmit = async (data: EditProfileForm) => {
     try {
-      console.log(data);
+      updateProfileSettings(data);
     } catch (error) {
       console.error(error);
     }
@@ -239,3 +239,4 @@ function ProfileSettings() {
 }
 
 export default ProfileSettings;
+export type { EditProfileForm };
