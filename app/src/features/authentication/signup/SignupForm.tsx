@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema/signup";
 import { useSignup } from "./hooks/useSignup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
+import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
 
 export type User = {
   username: string;
@@ -36,15 +37,15 @@ const Error = styled.p`
   align-self: center;
   color: var(--color-error);
 `;
-const Message = styled.p`
-  align-self: center;
-  color: var(--color-accent);
-`;
+
 export default function SignupForm() {
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const { signup, isPending, isSuccess } = useSignup();
+  const { SendConfirmationCode, isSuccess: isEmailSent } =
+    UseSendConfirmationEmail();
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     setIsOpen(isSuccess);
   }, [isSuccess]);
@@ -53,6 +54,7 @@ export default function SignupForm() {
     handleSubmit,
     setValue,
     reset,
+    watch,
     control,
     formState: { errors },
   } = useForm<User>({
@@ -67,11 +69,17 @@ export default function SignupForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<User> = function (data) {
-    console.log("Form data:", data);
-    signup(data, {
-      onSettled: (_, error) => {
-        setError(error ? error.message : "");
+  const onSubmit: SubmitHandler<User> = function (userData) {
+    console.log("Form data:", userData);
+    signup(userData, {
+      onSuccess: () => {
+        SendConfirmationCode(userData.email);
+        setIsOpen(isEmailSent);
+      },
+      onError: (error) => {
+        setError(error.message);
+      },
+      onSettled: () => {
         reset();
       },
     });
@@ -88,6 +96,7 @@ export default function SignupForm() {
       <ConfirmationEmailModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        email={watch("email")}
       />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Inputs>

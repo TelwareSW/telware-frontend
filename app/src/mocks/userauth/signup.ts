@@ -11,26 +11,26 @@ type SignupRequestBody = {
 
 type SignupResponseBodySuccess = {
   status: "success";
-  message: String;
-  data: {};
+  message: string;
+  data: object;
 };
 
 type SignupResponseBodyFail = {
   status: "fail" | "error";
-  message: String;
-  data: {};
+  message: string;
+  data: object;
 };
 
 type SignupResponseBody = SignupResponseBodySuccess | SignupResponseBodyFail;
 
 const API = import.meta.env.VITE_BACKEND_API;
 export const signupMock = [
-  http.post<{}, SignupRequestBody, SignupResponseBody>(
-    `${API}/signup`,
+  http.post<object, SignupRequestBody, SignupResponseBody>(
+    `${API}/auth/signup`,
     async ({ request }) => {
       await request.json();
-      const isValidUser = true;
-      if (!isValidUser) {
+      const isValid = true;
+      if (!isValid) {
         return HttpResponse.json(
           {
             message: "Invalid data",

@@ -4,14 +4,21 @@ import { Signup } from "../services/apiSignup";
 export function useSignup() {
   const {
     mutate: signup,
-    isPending,
     isSuccess,
+    isPending,
+    isError,
   } = useMutation({
     mutationFn: Signup,
-    onSuccess: (data) => {
-      console.log(data);
+
+    onSuccess: (email) => {
+      console.log(email);
     },
   });
 
-  return { signup, isPending, isSuccess };
+  return {
+    signup,
+    isPending,
+    isSuccess,
+    isError,
+  };
 }

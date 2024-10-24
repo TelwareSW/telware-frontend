@@ -1,7 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import CodeInputField from "../../../components/CodeInputField";
+import { UseVerifyEmail } from "./hooks/useVerifyEmail";
+import { useNavigate } from "react-router-dom";
+import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -54,6 +56,7 @@ const ModalMessage = styled.p`
 type ConfirmationEmailModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  email: string;
 };
 const CloseButton = styled.button`
   position: absolute;
@@ -79,16 +82,59 @@ const ResendText = styled.span`
     color: var(--color-hover);
   }
 `;
+const Error = styled.p`
+  align-self: center;
+  color: var(--color-error);
+`;
+const Success = styled.p`
+  align-self: center;
+  color: var(--color-success);
+`;
 
 function ConfirmationEmailModal({
   isOpen,
   onClose,
+  email,
 }: ConfirmationEmailModalProps) {
-  const [code, setCode] = useState<string[]>(Array(6).fill(""));
+  const [codeDisplay, setCodeDisplay] = useState<string[]>(Array(6).fill(""));
+  const [error, setError] = useState<string>("");
+  const {
+    verifyCode,
+    isPending: isPendingVerification,
+    isError: isErrorVerification,
+    isSuccess: isVerified,
+  } = UseVerifyEmail();
+  const {
+    SendConfirmationCode,
+    isSuccess: isCodeRensent,
+    isError: isErrorResendingCode,
+  } = UseSendConfirmationEmail();
+  const navigate = useNavigate();
   if (!isOpen) return null;
-  console.log(code.join(""));
-  function handleConfirmCode() {}
-  function handleResendEmail() {}
+  console.log(codeDisplay.join(""));
+  function handleConfirmCode() {
+    const code = codeDisplay.join("");
+    verifyCode(
+      { email, code },
+      {
+        onSuccess: () => {
+          setTimeout(() => {
+            navigate("/login", { replace: true });
+          }, 500);
+        },
+        onError: (err) => {
+          setError(err.message);
+        },
+      }
+    );
+  }
+  function handleResendEmail() {
+    SendConfirmationCode(email, {
+      onError: (err) => {
+        setError(err.message);
+      },
+    });
+  }
   return (
     <ModalOverlay>
       <ModalContainer>
@@ -99,13 +145,20 @@ function ConfirmationEmailModal({
           A confirmation email has been sent to your email address. Please check
           your inbox to verify your account.
         </ModalMessage>
-        <CodeInputField code={code} setCode={setCode} />
-        <Button onClick={handleConfirmCode} disabled={code.join("").length < 6}>
-          Verify
+        <CodeInputField code={codeDisplay} setCode={setCodeDisplay} />
+        <Button
+          onClick={handleConfirmCode}
+          disabled={codeDisplay.join("").length < 6}
+        >
+          {isPendingVerification ? "Loading..." : "Verify"}
         </Button>
+        {isErrorVerification && <Error>{error}</Error>}
+        {isVerified && <Success>you are verified,redirecting... </Success>}
         <ModalMessage>
           Didn't get an email?{" "}
           <ResendText onClick={handleResendEmail}>resend email</ResendText>
+          {isErrorResendingCode && <Error>{error}</Error>}
+          {isCodeRensent && <Success>Code is resent! check your email</Success>}
         </ModalMessage>
       </ModalContainer>
     </ModalOverlay>
