@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { UseFormRegister, FieldValues, Path } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldValues,
+  Path,
+  UseFormWatch,
+} from "react-hook-form";
 
 interface FloatingLabelInputProps<TFormValues extends FieldValues> {
   label: string;
   id: Path<TFormValues>;
+  watch?: UseFormWatch<TFormValues>;
   register?: UseFormRegister<TFormValues>;
   error?: string;
   maxLength?: number;
@@ -12,7 +18,6 @@ interface FloatingLabelInputProps<TFormValues extends FieldValues> {
   type?: React.InputHTMLAttributes<HTMLInputElement>["type"];
   placeholder?: string;
   disabled?: boolean;
-  [key: string]: any;
 }
 
 const InputGroup = styled.div`
@@ -129,42 +134,33 @@ const CharCount = styled.span`
   background-color: var(--color-background);
 `;
 
-export default function FloatingLabelInput<TFormValues extends FieldValues>({
+function FloatingLabelInput<TFormValues extends FieldValues>({
   label,
   register,
   id,
+  watch,
   error,
   maxLength,
   validation,
   type = "text",
   ...props
 }: FloatingLabelInputProps<TFormValues>) {
-  const [value, setValue] = useState("");
+  const watchedValue = watch ? watch(id) : "";
   const [isFloating, setIsFloating] = useState(false);
   const [isValid, setIsValid] = useState(false);
 
-  useEffect(() => {
-    setIsFloating(value !== "");
-    if (validation) {
-      setIsValid(validation(value) && value !== "");
-    }
-  }, [value, validation]);
-
   const registeredProps = register ? register(id) : undefined;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    if (registeredProps?.onChange) {
-      registeredProps.onChange(e);
+  useEffect(() => {
+    setIsFloating(watchedValue !== "" && watchedValue !== undefined);
+    if (validation && watchedValue !== undefined) {
+      setIsValid(validation(watchedValue) && watchedValue !== "");
     }
-  };
+  }, [watchedValue, validation]);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.target.value === "") {
       setIsFloating(false);
-    }
-    if (registeredProps?.onBlur) {
-      registeredProps.onBlur(e);
     }
   };
 
@@ -175,8 +171,6 @@ export default function FloatingLabelInput<TFormValues extends FieldValues>({
         type={type}
         {...props}
         {...registeredProps}
-        value={value}
-        onChange={handleChange}
         onFocus={() => setIsFloating(true)}
         onBlur={handleBlur}
         $hasError={!!error}
@@ -188,9 +182,11 @@ export default function FloatingLabelInput<TFormValues extends FieldValues>({
       </Label>
       {maxLength && (
         <CharCount>
-          {value.length}/{maxLength}
+          {watchedValue?.length}/{maxLength}
         </CharCount>
       )}
     </InputGroup>
   );
 }
+
+export default FloatingLabelInput;

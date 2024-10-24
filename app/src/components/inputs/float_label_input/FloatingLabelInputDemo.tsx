@@ -98,15 +98,19 @@ const validationSchema = yup.object({
     .matches(/^\+?[\d\s-]{10,}$/, "Please enter a valid phone number"),
 });
 
-export default function FloatingLabelInputDemo() {
+function FloatingLabelInputDemo() {
   const {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<DemoForm>({
     resolver: yupResolver(validationSchema),
     mode: "onChange",
+    defaultValues: {
+      basicInput: "Amir",
+    },
   });
 
   const onSubmit = async (data: DemoForm) => {
@@ -136,12 +140,14 @@ export default function FloatingLabelInputDemo() {
               id="basicInput"
               label="Basic Input"
               register={register}
+              watch={watch}
             />
 
             <FloatingLabelInput<DemoForm>
               id="requiredInput"
               label="Required Input"
               register={register}
+              watch={watch}
               error={errors.requiredInput?.message}
             />
 
@@ -149,7 +155,7 @@ export default function FloatingLabelInputDemo() {
               id="disabledInput"
               label="Disabled Input"
               register={register}
-              value="Disabled Input"
+              watch={watch}
               disabled
             />
           </Grid>
@@ -164,6 +170,7 @@ export default function FloatingLabelInputDemo() {
               type="email"
               register={register}
               error={errors.email?.message}
+              watch={watch}
               validation={(value) => {
                 try {
                   validationSchema.validateSyncAt("email", {
@@ -182,6 +189,7 @@ export default function FloatingLabelInputDemo() {
               type="password"
               register={register}
               error={errors.password?.message}
+              watch={watch}
               validation={(value) => {
                 try {
                   validationSchema.validateSyncAt("password", {
@@ -198,6 +206,7 @@ export default function FloatingLabelInputDemo() {
               id="maxLengthInput"
               label="Max Length (20 chars)"
               register={register}
+              watch={watch}
               error={errors.maxLengthInput?.message}
               maxLength={20}
             />
@@ -212,6 +221,7 @@ export default function FloatingLabelInputDemo() {
               label="Number Input"
               type="number"
               register={register}
+              watch={watch}
               error={errors.numberInput?.message}
             />
 
@@ -220,6 +230,7 @@ export default function FloatingLabelInputDemo() {
               label="URL Input"
               type="url"
               register={register}
+              watch={watch}
               error={errors.urlInput?.message}
             />
 
@@ -227,6 +238,7 @@ export default function FloatingLabelInputDemo() {
               id="telInput"
               label="Phone Number"
               type="tel"
+              watch={watch}
               register={register}
               error={errors.telInput?.message}
             />
@@ -242,3 +254,5 @@ export default function FloatingLabelInputDemo() {
     </DemoContainer>
   );
 }
+
+export default FloatingLabelInputDemo;
