@@ -12,6 +12,6 @@ export function useSignup() {
       console.log(data);
     },
   });
-  console.log(isSuccess);
+
   return { signup, isPending, isSuccess };
 }

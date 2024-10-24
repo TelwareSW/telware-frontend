@@ -32,6 +32,8 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu: rgb(255, 255, 255, 0.733);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.067);
         
+    --color-border: rgb(244, 244, 245);
+
     --image-grayscale: 0;
     --image-opacity: 100%;
   }
@@ -60,10 +62,13 @@ const GlobalStyles = createGlobalStyle`
     --color-chat-active: #2d637c;
     --color-chat-hover: #25353f;
     
+    --color-icon-secondary:  rgb(170, 170, 170);
     --pattern-color: #2d394ecc
     
     --color-background-compact-menu: rgb(33, 33, 33, 0.867);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.4);
+ 
+    --color-border: #25353f;
     
     --image-grayscale: 10%;
     --image-opacity: 90%;

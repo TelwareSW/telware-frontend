@@ -44,7 +44,7 @@ export default function SignupForm() {
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const { signup, isPending, isSuccess } = useSignup();
   const [error, setError] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     setIsOpen(isSuccess);
   }, [isSuccess]);
