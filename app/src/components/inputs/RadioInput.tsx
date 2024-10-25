@@ -82,6 +82,7 @@ function RadioInput({ data, enable, register, updateFn }: RadioInputProps) {
       <OptionsDiv>
         {options.map((option: RadioOptionInterface) => {
           const { id, label, value } = option;
+          const registeredProps = register ? register(id) : undefined;
 
           return (
             <StyledOption key={id}>
@@ -90,12 +91,10 @@ function RadioInput({ data, enable, register, updateFn }: RadioInputProps) {
                 id={id}
                 name={title}
                 value={value}
-                // {...register(data.id)}
+                {...registeredProps}
                 color="black"
                 disabled={!enable}
-                onClick={() =>
-                  handleSelect({ key: "lastSeenPrivacy", value: value })
-                }
+                onClick={() => handleSelect({ key: data.id, value: value })}
               />
               <Label id={id}>{label}</Label>
             </StyledOption>
@@ -108,4 +107,4 @@ function RadioInput({ data, enable, register, updateFn }: RadioInputProps) {
 
 export default RadioInput;
 
-export type { RadioOptionInterface, RadioInputInterface };
+export type { RadioOptionInterface, RadioInputInterface, RadioInputProps };
