@@ -5,7 +5,6 @@ export function UseVerifyEmail() {
     mutate: verifyCode,
     isPending,
     isSuccess,
-    isError,
   } = useMutation({
     mutationFn: verifyEmail,
     onSuccess: (data) => {
@@ -16,6 +15,5 @@ export function UseVerifyEmail() {
     verifyCode,
     isSuccess,
     isPending,
-    isError,
   };
 }

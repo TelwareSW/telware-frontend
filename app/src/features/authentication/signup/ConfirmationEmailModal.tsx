@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import { useState } from "react";
-import CodeInputField from "../../../components/CodeInputField";
-import { UseVerifyEmail } from "./hooks/useVerifyEmail";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { UseVerifyEmail } from "./hooks/useVerifyEmail";
 import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
+import CodeInputField from "@components/CodeInputField";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -101,17 +101,12 @@ function ConfirmationEmailModal({
   const {
     verifyCode,
     isPending: isPendingVerification,
-    isError: isErrorVerification,
     isSuccess: isVerified,
   } = UseVerifyEmail();
-  const {
-    SendConfirmationCode,
-    isSuccess: isCodeRensent,
-    isError: isErrorResendingCode,
-  } = UseSendConfirmationEmail();
+  const { SendConfirmationCode, isSuccess: isCodeRensent } =
+    UseSendConfirmationEmail();
   const navigate = useNavigate();
   if (!isOpen) return null;
-  console.log(codeDisplay.join(""));
   function handleConfirmCode() {
     const code = codeDisplay.join("");
     verifyCode(
@@ -122,7 +117,7 @@ function ConfirmationEmailModal({
             navigate("/login", { replace: true });
           }, 500);
         },
-        onError: (err) => {
+        onError: (err: Error) => {
           setError(err.message);
         },
       }
@@ -152,12 +147,11 @@ function ConfirmationEmailModal({
         >
           {isPendingVerification ? "Loading..." : "Verify"}
         </Button>
-        {isErrorVerification && <Error>{error}</Error>}
+        <Error>{error}</Error>
         {isVerified && <Success>you are verified,redirecting... </Success>}
         <ModalMessage>
           Didn't get an email?{" "}
           <ResendText onClick={handleResendEmail}>resend email</ResendText>
-          {isErrorResendingCode && <Error>{error}</Error>}
           {isCodeRensent && <Success>Code is resent! check your email</Success>}
         </ModalMessage>
       </ModalContainer>

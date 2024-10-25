@@ -6,7 +6,6 @@ export function UseSendConfirmationEmail() {
     mutate: SendConfirmationCode,
     isPending,
     isSuccess,
-    isError,
   } = useMutation({
     mutationFn: sendEmailVerification,
     onSuccess: (data) => {
@@ -17,6 +16,5 @@ export function UseSendConfirmationEmail() {
     SendConfirmationCode,
     isSuccess,
     isPending,
-    isError,
   };
 }

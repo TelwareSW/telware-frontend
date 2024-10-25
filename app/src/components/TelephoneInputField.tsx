@@ -1,5 +1,5 @@
 import { ComponentProps } from "react";
-import { Controller } from "react-hook-form"; // Import Controller
+import { Controller } from "react-hook-form";
 import { PhoneInput } from "react-international-phone";
 import styled from "styled-components";
 import "react-international-phone/style.css";
@@ -74,12 +74,7 @@ const Error = styled.p`
   color: var(--color-error);
 `;
 
-export default function TelephoneInputField({
-  label,
-  id,
-  control,
-  error,
-}: InputType) {
+function TelephoneInputField({ label, id, control, error }: InputType) {
   return (
     <InputWrapper>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
@@ -94,3 +89,4 @@ export default function TelephoneInputField({
     </InputWrapper>
   );
 }
+export default TelephoneInputField;

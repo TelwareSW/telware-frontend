@@ -56,12 +56,12 @@ export const verifyEmailMock = [
     `${API_ENDPOINT}/auth/verify`,
     async ({ request }) => {
       await request.json();
-      const isValid = true;
+      const isValid = false;
 
       if (!isValid) {
         return HttpResponse.json(
           {
-            message: "Incorrect code , please retry",
+            message: "Incorrect code, please retry",
             status: "error",
           },
           { status: 401 }

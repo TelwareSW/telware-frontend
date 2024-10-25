@@ -1,6 +1,6 @@
 export async function sendEmailVerification(email: string) {
   const API = import.meta.env.VITE_BACKEND_API;
-  console.log(JSON.stringify(email));
+
   const res = await fetch(`${API}/auth/send-confirmation`, {
     method: "POST",
     headers: {

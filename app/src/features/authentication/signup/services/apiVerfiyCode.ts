@@ -6,7 +6,6 @@ export async function verifyEmail({
   code: string;
 }) {
   const API = import.meta.env.VITE_BACKEND_API;
-  console.log(JSON.stringify(email));
   const res = await fetch(`${API}/auth/verify`, {
     method: "POST",
     headers: {
@@ -16,7 +15,5 @@ export async function verifyEmail({
   });
   const data = await res.json();
   if (data.status !== "success") throw new Error(data.message);
-  console.log(data);
-
   return data.data;
 }

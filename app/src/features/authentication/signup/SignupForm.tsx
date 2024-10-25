@@ -1,15 +1,15 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
-import Button from "../../../components/Button";
-import InputField from "../../../components/InputField";
-import TelephoneInputField from "../../../components/TelphoneInputField";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./schema/signup";
+import Button from "@components/Button";
+import InputField from "@components/InputField";
+import TelephoneInputField from "@components/TelephoneInputField";
 import { useSignup } from "./hooks/useSignup";
-import ConfirmationEmailModal from "./ConfirmationEmailModal";
 import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
+import { schema } from "./schema/signup";
+import ConfirmationEmailModal from "./ConfirmationEmailModal";
 
 export type User = {
   username: string;
@@ -70,7 +70,6 @@ export default function SignupForm() {
   });
 
   const onSubmit: SubmitHandler<User> = function (userData) {
-    console.log("Form data:", userData);
     signup(userData, {
       onSuccess: () => {
         SendConfirmationCode(userData.email);
