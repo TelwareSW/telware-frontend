@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CircleIcon from "./CircleIcon";
+import CircleIcon from "../../CircleIcon";
 import ChatsSidebarHeader from "./ChatsSideBarHeader";
 import StartNewChat from "./StartNewChat";
 

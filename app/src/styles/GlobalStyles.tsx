@@ -10,8 +10,25 @@ const GlobalStyles = createGlobalStyle`
     --color-interactive-element-hover: rgba(var(--color-text-secondary-rgb), 0.08);
     
     --accent-color: #4c90b2;
-    
-    --theme-background-color: #E0E0E4;
+    --color-chat-wallpaper-1: linear-gradient(
+        90deg,
+        #c9c866,
+        #9da558,
+        #5a8c4b,
+        #416f3c,
+        #203a18
+      );
+      --color-chat-wallpaper-2:linear-gradient(
+          90deg,
+          #476f5a,
+          #46693d,
+          #406b46,
+          #767b59,
+          #9fa087
+        );
+        --chat-wallpaper-bg: url("/assets/bg-light.png");
+
+            --theme-background-color: #E0E0E4;
     
     --color-background: #ffffff;
     --color-background-secondary: rgb(240, 240, 240, 255);
@@ -54,6 +71,9 @@ const GlobalStyles = createGlobalStyle`
     --theme-background-color-top-right: #141C2B;
     
     --accent-color: #56a2c9;
+    --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64);;
+    --color-chat-wallpaper-2:linear-gradient(90deg, #3e1f3f, #562a48, #947358);
+    --chat-wallpaper-bg: url("/assets/bg-dark.png");
     
     --color-background: #192b35;
     --color-background-secondary: #24343e;

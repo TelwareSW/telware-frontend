@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { getIcon } from "../data/icons";
+import { getIcon } from "../../../data/icons";
 
 interface SideBarMenuItemProps {
   title: string;

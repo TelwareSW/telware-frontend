@@ -34,7 +34,6 @@ function App() {
           <Route path="/" element={<AppLayout />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<div>Signup</div>} />
-          <Route path="profile-settings" element={<ProfileSettings />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

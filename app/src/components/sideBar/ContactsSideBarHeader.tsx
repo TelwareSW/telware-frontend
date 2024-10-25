@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import SearchBar from "./SearchBar";
-import BackArrow from "./BackArrow";
+import SearchBar from "../sideBar/chats/SearchBar";
+import BackArrow from "../BackArrow";
 const StyledHeader = styled.header`
   background: var(--color-background);
   display: flex;

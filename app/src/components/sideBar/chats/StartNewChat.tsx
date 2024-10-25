@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import SideBarMenuItem, { SideBarMenuItemProps } from "./SideBarMenuItem";
-import CircleIcon from "./CircleIcon";
+import CircleIcon from "../../CircleIcon";
 
 interface StyledListProps {
   bottom?: number;

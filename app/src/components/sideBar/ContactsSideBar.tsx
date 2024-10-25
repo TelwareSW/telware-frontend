@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CircleIcon from "./CircleIcon";
+import CircleIcon from "../CircleIcon";
 import ContactsSidebarHeader from "./ContactsSideBarHeader";
 
 interface ContactsSideBarProps {

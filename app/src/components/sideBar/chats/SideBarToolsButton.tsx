@@ -2,11 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MenuOutlined } from "@mui/icons-material";
 import ThemeToggle from "./ThemeToggle";
-import { useAppDispatch } from "../hooks";
-import { toggleTheme } from "../state/theme/theme";
+import { useAppDispatch } from "../../../hooks";
+import { toggleTheme } from "../../../state/theme/theme";
 import SideBarMenuItem from "./SideBarMenuItem";
-import { updateSideBarView } from "../state/sideBar/sideBar";
-import { sideBarPages } from "../data/sideBar";
+import { updateSideBarView } from "../../../state/sideBar/sideBar";
+import { sideBarPages } from "../../../data/sideBar";
 
 const StyledToolsIcon = styled(MenuOutlined)`
   color: var(--color-icon-secondary);

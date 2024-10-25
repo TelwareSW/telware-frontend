@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useAppSelector } from "../hooks";
-import Heading from "./Heading";
-import BackArrow from "./BackArrow";
-import CircleIcon from "./CircleIcon";
+import { useAppSelector } from "../../../hooks";
+import Heading from "../../Heading";
+import BackArrow from "../../BackArrow";
+import CircleIcon from "../../CircleIcon";
 const StyledSideBarHeader = styled.div`
   height: 4rem;
   position: relative;
