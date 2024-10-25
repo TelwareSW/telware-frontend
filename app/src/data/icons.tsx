@@ -4,7 +4,17 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import HttpsOutlinedIcon from "@mui/icons-material/HttpsOutlined";
 import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
 
-const iconMap: { [key: string]: React.ReactNode } = {
+enum icons {
+  BlockIcon,
+  SettingsOutlinedIcon,
+  NotificationsOutlinedIcon,
+  HttpsOutlinedIcon,
+  DevicesOutlinedIcon,
+}
+
+type iconStrings = keyof typeof icons;
+
+const iconMap: { [K in iconStrings]: React.ReactNode } = {
   BlockIcon: <BlockIcon sx={{ color: `var(--color-icon-secondary)` }} />,
   SettingsOutlinedIcon: (
     <SettingsOutlinedIcon sx={{ color: `var(--color-icon-secondary)` }} />
@@ -20,8 +30,9 @@ const iconMap: { [key: string]: React.ReactNode } = {
   ),
 };
 
-function getIcon(iconName?: string) {
-  return iconName ? iconMap[iconName] : null;
+function getIcon(iconName?: iconStrings) {
+  return iconName ? iconMap[iconName] : undefined;
 }
 
 export { getIcon };
+export type { iconStrings };

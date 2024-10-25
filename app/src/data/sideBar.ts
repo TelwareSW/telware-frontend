@@ -1,39 +1,36 @@
 import { SideBarRowProps } from "../components/sideBarRow";
 import { SideBarState } from "../state/sideBar/sideBar";
-import { userState } from "../state/user/user";
+import {
+  privacySettingsID,
+  activitySettingsID,
+  sideBarPages,
+} from "../types/sideBar";
+import {
+  activitySettingsInterface,
+  privacySettingsInterface,
+} from "../types/user";
 
-enum sideBarPages {
-  SETTINGS,
-  PRIVACY_SETTINGS,
-}
-
-enum privacySettingsID {
-  STORIES_SEEN_PRIVACY,
-  LAST_SEEN_PRIVACY,
-  PROFILE_PHOTO_PRIVACY,
-  ADD_TO_GROUP_PRIVACY,
-  ADD_TO_CHANNEL_PRIVACY,
-  READ_RECEIPTS_PRIVACY,
-}
-
-enum privacyStates {
-  EVERYONE = "everyone",
-  CONTACTS = "contacts",
-  NOBODY = "nobody",
-}
-
-enum activeStates {
-  ENABLED = "enabled",
-  DISABLED = "disabled",
-}
-
-const privacySettingsMap: Record<privacySettingsID, keyof userState> = {
+const privacySettingsMap: Record<
+  privacySettingsID,
+  keyof privacySettingsInterface
+> = {
   [privacySettingsID.STORIES_SEEN_PRIVACY]: "storiesSeenPrivacy",
   [privacySettingsID.LAST_SEEN_PRIVACY]: "lastSeenPrivacy",
   [privacySettingsID.PROFILE_PHOTO_PRIVACY]: "profilePhotoPrivacy",
   [privacySettingsID.ADD_TO_GROUP_PRIVACY]: "addToGroupPrivacy",
   [privacySettingsID.ADD_TO_CHANNEL_PRIVACY]: "addToChannelPrivacy",
-  [privacySettingsID.READ_RECEIPTS_PRIVACY]: "readReceiptsPrivacy",
+};
+
+const activitySettingsMap: Record<
+  activitySettingsID,
+  keyof activitySettingsInterface
+> = {
+  [activitySettingsID.READ_RECEIPTS_PRIVACY]: "readReceiptsPrivacy",
+};
+
+const statusMap = {
+  privacy: privacySettingsMap,
+  activity: activitySettingsMap,
 };
 
 const privacySettings: SideBarState = {
@@ -47,27 +44,27 @@ const privacySettings: SideBarState = {
     },
     {
       title: "Who can see my stories?",
-      status: privacySettingsID.STORIES_SEEN_PRIVACY,
+      privacyStatus: privacySettingsID.STORIES_SEEN_PRIVACY,
     },
     {
       title: "Who can see my last seen?",
-      status: privacySettingsID.LAST_SEEN_PRIVACY,
+      privacyStatus: privacySettingsID.LAST_SEEN_PRIVACY,
     },
     {
       title: "Who can see my profile photo?",
-      status: privacySettingsID.PROFILE_PHOTO_PRIVACY,
+      privacyStatus: privacySettingsID.PROFILE_PHOTO_PRIVACY,
     },
     {
       title: "Who can add me to group chats?",
-      status: privacySettingsID.ADD_TO_GROUP_PRIVACY,
+      privacyStatus: privacySettingsID.ADD_TO_GROUP_PRIVACY,
     },
     {
       title: "Who can add me to channels?",
-      status: privacySettingsID.ADD_TO_CHANNEL_PRIVACY,
+      privacyStatus: privacySettingsID.ADD_TO_CHANNEL_PRIVACY,
     },
     {
       title: "Read receipts",
-      status: privacySettingsID.READ_RECEIPTS_PRIVACY,
+      activityStatus: activitySettingsID.READ_RECEIPTS_PRIVACY,
     },
   ] as SideBarRowProps[],
 };
@@ -95,12 +92,4 @@ const settings: SideBarState = {
   ] as SideBarRowProps[],
 };
 
-export {
-  settings,
-  privacySettings,
-  sideBarPages,
-  privacySettingsID,
-  activeStates,
-  privacyStates,
-  privacySettingsMap,
-};
+export { settings, privacySettings, statusMap, activitySettingsID, sideBarPages };

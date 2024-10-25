@@ -29,7 +29,6 @@ const sideBarSlice = createSlice({
   reducers: {
     updateSideBarView: (state, action) => {
       const newData = getSideBarPage(action.payload);
-      console.log(newData);
       state.rows = newData.rows;
       state.header = newData.header;
       state.backView = newData.backView;
