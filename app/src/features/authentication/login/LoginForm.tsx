@@ -6,9 +6,9 @@ import styled from "styled-components";
 
 import { useLogin } from "./hooks/useLogin";
 import { schema } from "./schema/login";
-
-import Button from "../../../components/Button";
-import InputField from "../../../components/InputField";
+import Button from "@components/Button";
+import InputField from "@components/InputField";
+import ResetPasswordModal from "./ResetPasswordModal";
 
 export type User = {
   email: string;
@@ -29,23 +29,39 @@ const Inputs = styled.div`
   gap: 0.5rem;
 `;
 
-const P = styled.p`
-  color: var(--color-text-secondary);
-`;
-
 const Error = styled.p`
   align-self: center;
+  color: var(--accent-color);
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--color-hover);
+  }
   color: var(--color-error);
+`;
+const StyledSpan = styled.span`
+  color: var(--accent-color);
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--color-hover);
+  }
 `;
 
 export default function LoginForm() {
   const { login, isPending } = useLogin();
   const [error, setError] = useState("");
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const handleOpenModal = () => setIsOpenModal(true);
 
   const {
     register,
     handleSubmit,
     reset,
+
     formState: { errors },
   } = useForm<User>({
     resolver: yupResolver(schema),
@@ -62,33 +78,39 @@ export default function LoginForm() {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Inputs>
-        <InputField
-          label="Email"
-          type="email"
-          id="email"
-          register={register}
-          placeholder="Email"
-          autoComplete="email"
-          error={errors.email?.message}
-        />
+    <>
+      <ResetPasswordModal
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+      />
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Inputs>
+          <InputField
+            label="Email"
+            type="email"
+            id="email"
+            register={register}
+            placeholder="Email"
+            autoComplete="email"
+            error={errors.email?.message}
+          />
 
-        <InputField
-          label="Password"
-          type="password"
-          id="password"
-          register={register}
-          placeholder="Password"
-          autoComplete="current-password"
-          error={errors.password?.message}
-        />
-      </Inputs>
+          <InputField
+            label="Password"
+            type="password"
+            id="password"
+            register={register}
+            placeholder="Password"
+            autoComplete="current-password"
+            error={errors.password?.message}
+          />
+        </Inputs>
 
-      <P>Forgot password?</P>
+        <StyledSpan onClick={handleOpenModal}>Forgot password?</StyledSpan>
 
-      <Button type="submit">{isPending ? "Loading..." : "Login"}</Button>
-      {error && <Error>{error}</Error>}
-    </Form>
+        <Button type="submit">{isPending ? "Loading..." : "Login"}</Button>
+        {error && <Error>{error}</Error>}
+      </Form>
+    </>
   );
 }
