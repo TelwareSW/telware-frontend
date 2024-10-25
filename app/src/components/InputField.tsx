@@ -48,14 +48,14 @@ const StyledInput = styled.input`
 
 const StyledLabel = styled.label`
   display: block;
-  
+
   position: absolute;
   top: 0;
-  
+
   font-size: 1rem;
-  
+
   color: var(--color-text-secondary);
-  
+
   transition: 0.2s;
 `;
 
@@ -70,7 +70,7 @@ type InputType = {
   error: string | undefined;
 } & ComponentProps<"input">;
 
-function InputField({ label, id, register, error,...props }: InputType) {
+function InputField({ label, id, register, error, ...props }: InputType) {
   return (
     <InputWrapper>
       <StyledInput {...register(id)} id={id} {...props} />
