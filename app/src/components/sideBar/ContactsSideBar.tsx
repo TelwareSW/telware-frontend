@@ -13,9 +13,6 @@ const StyledContactsSideBar = styled.div`
   position: relative;
 `;
 function ContactsSideBar({ children }: ContactsSideBarProps) {
-  const toggleModalDisplay = () => {
-    console.log("Toggle Modal Display");
-  };
   return (
     <StyledContactsSideBar>
       <ContactsSidebarHeader />
@@ -27,7 +24,6 @@ function ContactsSideBar({ children }: ContactsSideBarProps) {
         size={3.3}
         color="white"
         bgColor="var(--color-search-border)"
-        onClick={toggleModalDisplay}
       />
     </StyledContactsSideBar>
   );
