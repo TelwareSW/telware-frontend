@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./theme/theme";
-import SideBarReducer from "./sideBar/sideBar";
+import sideBarReducer from "./sideBar/sideBar";
+import userReducer from "./user/user";
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
-    sideBarData: SideBarReducer,
+    sideBarData: sideBarReducer,
+    user: userReducer,
   },
 });
 

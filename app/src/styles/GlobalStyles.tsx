@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 :root {
-  &, &.light-mode{
+  &.light-mode{
     --color-text: #000000fd;
     --color-text-secondary: rgb(112, 117, 121);
     --color-text-secondary-rgb: 112, 117, 121;
@@ -10,8 +10,25 @@ const GlobalStyles = createGlobalStyle`
     --color-interactive-element-hover: rgba(var(--color-text-secondary-rgb), 0.08);
     
     --accent-color: #4c90b2;
-    
-    --theme-background-color: #E0E0E4;
+    --color-chat-wallpaper-1: linear-gradient(
+        90deg,
+        #c9c866,
+        #9da558,
+        #5a8c4b,
+        #416f3c,
+        #203a18
+      );
+      --color-chat-wallpaper-2:linear-gradient(
+          90deg,
+          #476f5a,
+          #46693d,
+          #406b46,
+          #767b59,
+          #9fa087
+        );
+        --chat-wallpaper-bg: url("/assets/bg-light.png");
+
+            --theme-background-color: #E0E0E4;
     
     --color-background: #ffffff;
     --color-background-secondary: rgb(240, 240, 240, 255);
@@ -21,6 +38,9 @@ const GlobalStyles = createGlobalStyle`
     
     --color-chat-active: #56a2c9;
     --color-chat-hover: rgb(244, 244, 245);
+
+    --color-default-shadow: rgb(114, 114, 114, 0.251);
+
     
     --color-item-hover: rgb(244, 244, 245);
     --color-item-active: rgb(237, 237, 237);
@@ -31,31 +51,34 @@ const GlobalStyles = createGlobalStyle`
   
     --color-background-compact-menu: rgb(255, 255, 255, 0.733);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.067);
-        
+    
     --color-border: rgb(244, 244, 245);
+    --color-search-border: #3390ec;
 
     --image-grayscale: 0;
     --image-opacity: 100%;
   }
-
   &.dark-mode {
     --color-text: #f5f5f5;
     --color-text-secondary: rgb(170, 170, 170);
     --color-text-secondary-rgb: 170, 170, 170;
     --color-text-button: var(--color-text);
-    
+    --color-background: #050709;
     --color-interactive-element-hover: rgba(var(--color-text-secondary-rgb), 0.08);
-
     --theme-background-color-down-right: #172431;
     --theme-background-color-down-left: #0E141A;
     --theme-background-color-top-left: #0F171E;
     --theme-background-color-top-right: #141C2B;
     
     --accent-color: #56a2c9;
+    --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64);;
+    --color-chat-wallpaper-2:linear-gradient(90deg, #3e1f3f, #562a48, #947358);
+    --chat-wallpaper-bg: url("/assets/bg-dark.png");
     
     --color-background: #192b35;
     --color-background-secondary: #24343e;
     --color-background-secondary-accent: #22313a;
+    --color-chat-hover: #2c2c2c;
 
     --color-default-shadow: rgb(16, 16, 16, 0.612);
     
@@ -69,6 +92,7 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.4);
  
     --color-border: #25353f;
+    --color-search-border: #7644CB;
     
     --image-grayscale: 10%;
     --image-opacity: 90%;
@@ -109,9 +133,11 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-default: 0.75rem;
   --border-radius-default-small: 0.625rem;
   --border-radius-default-tiny: 0.375rem;
+  --border-radius-searchbar: 1.4rem;
   --border-radius-messages: 0.9375rem;
   --border-radius-messages-small: 0.375rem;
   --border-radius-forum-avatar: 25%;
+  --border-radius-circle: 50%;
   
   --color-borders-input: rgb(218, 220, 224);
 

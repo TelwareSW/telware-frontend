@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import Heading from "../components/Heading";
 import LoginSection from "../features/authentication/login/LoginSection";
-import SettingsSideBar from "../components/SettingsSideBar";
 
 const LoginLayout = styled.div`
   display: grid;
@@ -20,7 +19,6 @@ const Main = styled.main`
 function Login() {
   return (
     <LoginLayout>
-      <SettingsSideBar header="Privacy and Security" />
       <Main>
         <Heading>Welcome back!</Heading>
         <LoginSection />

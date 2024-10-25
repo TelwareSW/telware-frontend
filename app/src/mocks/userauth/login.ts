@@ -7,7 +7,7 @@ type LoginRequestBody = {
 
 type LoginResponseBodySuccess = {
   status: "success";
-  message: String;
+  message: string;
   data: {
     user: {};
     accessToken: string;
@@ -16,7 +16,7 @@ type LoginResponseBodySuccess = {
 
 type LoginResponseBodyFail = {
   status: "fail" | "error";
-  message: String;
+  message: string;
   data: {};
 };
 
