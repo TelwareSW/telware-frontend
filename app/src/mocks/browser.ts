@@ -1,4 +1,11 @@
 import { setupWorker } from "msw/browser";
-import { handlers } from "./handlers";
-
-export const worker = setupWorker(...handlers);
+import { loginMock } from "./userauth/login";
+import { signupMock } from "./userauth/signup";
+import { sendEmailConfirmationMock } from "./userauth/verfiyEmail";
+import { verifyEmailMock } from "./userauth/verfiyEmail";
+export const worker = setupWorker(
+  ...loginMock,
+  ...signupMock,
+  ...sendEmailConfirmationMock,
+  ...verifyEmailMock
+);

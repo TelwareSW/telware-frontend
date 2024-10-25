@@ -33,7 +33,7 @@ export const MOCK_USER = {
   username: "johndoe",
 };
 
-export const handlers = [
+export const loginMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
     return undefined;
   }),
@@ -93,11 +93,5 @@ export const handlers = [
       },
       { status: 200 }
     );
-  }),
-
-  http.patch("/users/privacy/last-seen", async ({ request }) => {
-    return HttpResponse.json({
-      status: "success",
-    });
   }),
 ];
