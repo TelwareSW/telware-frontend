@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { privacySettings, settings } from "../../data/sideBar";
-import { SideBarRowProps } from "../../components/sideBarRow";
+import { SideBarRowProps } from "../../components/privacySettings/sideBarRow";
 import { sideBarPages } from "../../data/sideBar";
 
 interface SideBarState {
@@ -21,7 +21,7 @@ function getSideBarPage(type: number): SideBarState {
   }
 }
 
-const initialState: SideBarState = settings;
+const initialState: SideBarState = { rows: [] };
 
 const sideBarSlice = createSlice({
   name: "sideBarData",

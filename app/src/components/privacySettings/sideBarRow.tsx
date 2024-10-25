@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import Heading from "./Heading";
-import { updateSideBarView } from "../state/sideBar/sideBar";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { activitySettingsID, privacySettingsID } from "../types/sideBar";
-import { getIcon, iconStrings } from "../data/icons";
+import Heading from "../Heading";
+import { updateSideBarView } from "../../state/sideBar/sideBar";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { activitySettingsID, privacySettingsID } from "../../types/sideBar";
+import { getIcon, iconStrings } from "../../data/icons";
 import { useEffect, useState } from "react";
-import { statusMap } from "../data/sideBar";
+import { statusMap } from "../../data/sideBar";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;

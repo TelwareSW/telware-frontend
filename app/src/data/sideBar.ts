@@ -1,4 +1,4 @@
-import { SideBarRowProps } from "../components/sideBarRow";
+import { SideBarRowProps } from "../components/privacySettings/sideBarRow";
 import { SideBarState } from "../state/sideBar/sideBar";
 import {
   privacySettingsID,
@@ -92,4 +92,10 @@ const settings: SideBarState = {
   ] as SideBarRowProps[],
 };
 
-export { settings, privacySettings, statusMap, activitySettingsID, sideBarPages };
+export {
+  settings,
+  privacySettings,
+  statusMap,
+  activitySettingsID,
+  sideBarPages,
+};

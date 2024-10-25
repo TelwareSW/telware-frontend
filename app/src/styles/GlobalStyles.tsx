@@ -74,7 +74,6 @@ const GlobalStyles = createGlobalStyle`
     --image-opacity: 90%;
   }
 
-
   
   --color-background-own-1: #6573F8;
   --color-background-own-2: #7644CB;

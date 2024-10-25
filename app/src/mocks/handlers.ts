@@ -53,7 +53,7 @@ export const handlers = [
             status: "error",
             data: {},
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
 
@@ -68,9 +68,9 @@ export const handlers = [
             accessToken: "accessToken",
           },
         },
-        { status: 201 },
+        { status: 201 }
       );
-    },
+    }
   ),
 
   http.get("/users/me", async ({ request }) => {
@@ -79,7 +79,7 @@ export const handlers = [
         status: "success",
         data: MOCK_USER,
       },
-      { status: 200 },
+      { status: 200 }
     );
   }),
 
@@ -91,8 +91,13 @@ export const handlers = [
         status: "success",
         data: newProfileSettings,
       },
-      { status: 200 },
+      { status: 200 }
     );
   }),
-];
 
+  http.patch("/users/privacy/last-seen", async ({ request }) => {
+    return HttpResponse.json({
+      status: "success",
+    });
+  }),
+];
