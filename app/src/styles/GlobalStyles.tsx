@@ -12,19 +12,19 @@ const GlobalStyles = createGlobalStyle`
     --accent-color: #4c90b2;
     --color-chat-wallpaper-1: linear-gradient(
         90deg,
-        #c9c866,
-        #9da558,
-        #5a8c4b,
-        #416f3c,
-        #203a18
+        #858442,
+        #636837,
+        #38562f,
+        #1f341d,
+        #13220e
       );
       --color-chat-wallpaper-2:linear-gradient(
           90deg,
-          #476f5a,
-          #46693d,
-          #406b46,
-          #767b59,
-          #9fa087
+          #304a3c,
+          #2b4025,
+          #1d3020,
+          #393c2a,
+          #5e5f4f
         );
         --chat-wallpaper-bg: url("/assets/bg-light.png");
 
