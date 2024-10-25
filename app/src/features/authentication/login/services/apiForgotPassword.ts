@@ -1,4 +1,4 @@
-export async function resetPassword(email: string) {
+export async function forgotPassword(email: string) {
   const API = import.meta.env.VITE_BACKEND_API;
   const emailObj = { email: email };
   const result = await fetch(`${API}/auth/password/forget`, {

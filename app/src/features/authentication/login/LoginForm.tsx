@@ -8,7 +8,8 @@ import { useLogin } from "./hooks/useLogin";
 import { schema } from "./schema/login";
 import Button from "@components/Button";
 import InputField from "@components/InputField";
-import ResetPasswordModal from "./ResetPasswordModal";
+import ForgotPasswordModal from "./ForgotPasswordModal";
+import PasswordInputField from "@components/inputs/PasswordInputField/PasswordInputField";
 
 export type User = {
   email: string;
@@ -79,7 +80,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <ResetPasswordModal
+      <ForgotPasswordModal
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
       />
@@ -95,9 +96,8 @@ export default function LoginForm() {
             error={errors.email?.message}
           />
 
-          <InputField
+          <PasswordInputField
             label="Password"
-            type="password"
             id="password"
             register={register}
             placeholder="Password"

@@ -23,12 +23,12 @@ type PasswordResponseBody = PasswordResponseSuccess | PasswordResponseError;
 
 const API_ENDPOINT = import.meta.env.VITE_BACKEND_API;
 
-export const sendResetPassword = [
+export const forgetPassword = [
   http.post<object, PasswordRequestBodySend, PasswordResponseBody>(
     `${API_ENDPOINT}/auth/password/forget`,
     async ({ request }) => {
       await request.json();
-      const isValid = true;
+      const isValid = false;
 
       if (!isValid) {
         return HttpResponse.json(
@@ -51,12 +51,12 @@ export const sendResetPassword = [
   ),
 ];
 
-export const verifyPasswordMock = [
+export const resetPassword = [
   http.post<object, PasswordRequestBodyVerify, PasswordResponseBody>(
-    `${API_ENDPOINT}/auth/verify`,
+    `${API_ENDPOINT}/auth/password/reset/1`,
     async ({ request }) => {
       await request.json();
-      const isValid = true;
+      const isValid = false;
 
       if (!isValid) {
         return HttpResponse.json(
