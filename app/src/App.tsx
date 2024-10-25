@@ -9,6 +9,8 @@ import AppLayout from "./components/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import Login from "./pages/Login";
+import ProfileSettings from "./features/profile-settings/ProfileSettings";
+import Signup from "./pages/Signup";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,12 +30,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />} />
           <Route path="login" element={<Login />} />
-          <Route path="signup" element={<div>Signup</div>} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="profile-settings" element={<ProfileSettings />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

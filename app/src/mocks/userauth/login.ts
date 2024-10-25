@@ -33,7 +33,7 @@ export const MOCK_USER = {
   username: "johndoe",
 };
 
-export const handlers = [
+export const loginMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
     return undefined;
   }),
