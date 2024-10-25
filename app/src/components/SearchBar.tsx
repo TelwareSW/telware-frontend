@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { SearchOutlined } from "@mui/icons-material";
 
-const StyledSearchbar = styled.div`
+const StyledSearchBar = styled.div`
   margin-left: 1rem;
+  position: relative;
   &:focus-within > svg {
     color: var(--color-search-border);
   }
+  max-width: 16rem;
 `;
 
-const StyledIcon = styled(SearchOutlined)`
+const StyledSearchIcon = styled(SearchOutlined)`
   position: absolute;
-  left: 5.25rem;
+  left: 0.5rem;
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-text-secondary);
@@ -37,13 +39,13 @@ const StyledInput = styled.input`
   }
 `;
 
-function ChatsSearchbar() {
+function SearchBar() {
   return (
-    <StyledSearchbar>
+    <StyledSearchBar>
       <StyledInput type="text" placeholder="Search" />
-      <StyledIcon />
-    </StyledSearchbar>
+      <StyledSearchIcon />
+    </StyledSearchBar>
   );
 }
 
-export default ChatsSearchbar;
+export default SearchBar;

@@ -117,6 +117,7 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-messages: 0.9375rem;
   --border-radius-messages-small: 0.375rem;
   --border-radius-forum-avatar: 25%;
+  --border-radius-circle: 50%;
   
   --color-borders-input: rgb(218, 220, 224);
 

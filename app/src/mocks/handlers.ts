@@ -1,5 +1,5 @@
-import { http, HttpResponse } from 'msw'
- 
+import { http, HttpResponse } from "msw";
+
 type LoginRequestBody = {
   email: string;
   password: string;
@@ -7,7 +7,7 @@ type LoginRequestBody = {
 
 type LoginResponseBodySuccess = {
   status: "success";
-  message: String;
+  message: string;
   data: {
     user: {};
     accessToken: string;
@@ -16,7 +16,7 @@ type LoginResponseBodySuccess = {
 
 type LoginResponseBodyFail = {
   status: "fail" | "error";
-  message: String;
+  message: string;
   data: {};
 };
 
@@ -67,4 +67,3 @@ export const handlers = [
     }
   ),
 ];
-    

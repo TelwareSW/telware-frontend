@@ -1,41 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { privacySettings, settings } from "../../data/sideBar";
-import { SideBarRowProps } from "../../components/SideBarRow";
+import {
+  chats,
+  contacts,
+  editProfile,
+  privacySettings,
+  settings,
+} from "../../data/sideBar";
 import { sideBarPages } from "../../data/sideBar";
 
-interface SideBarState {
-  header?: string;
-  rows: SideBarRowProps[];
+interface SideBarView {
+  title: string;
+  content: React.ReactNode;
   backView?: number;
 }
+const initialState: SideBarView = chats;
 
-function getSideBarPage(type: number): SideBarState {
+function getSideBarPage(type: number): SideBarView {
   switch (type) {
+    case sideBarPages.CHATS:
+      return chats;
+    case sideBarPages.CONTACTS:
+      return contacts;
     case sideBarPages.SETTINGS:
       return settings;
     case sideBarPages.PRIVACY_SETTINGS:
       return privacySettings;
+    case sideBarPages.EDIT_PROFILE:
+      return editProfile;
 
     default:
       throw new Error("Unknown Type");
   }
 }
 
-const initialState: SideBarState = settings;
-
 const sideBarSlice = createSlice({
   name: "sideBarData",
   initialState,
   reducers: {
-    changeData: (state, action) => {
+    updateSideBarView: (state, action) => {
       const newData = getSideBarPage(action.payload);
-      state.rows = newData.rows;
-      state.header = newData.header;
+      state.title = newData.title;
+      state.content = newData.content;
       state.backView = newData.backView;
     },
   },
 });
 
-export const { changeData } = sideBarSlice.actions;
+export const { updateSideBarView } = sideBarSlice.actions;
 export default sideBarSlice.reducer;
-export type { SideBarState };
+export type { SideBarView };

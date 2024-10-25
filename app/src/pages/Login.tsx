@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Heading from "../components/Heading";
 import LoginSection from "../features/authentication/login/LoginSection";
-import SettingsSideBar from "../components/SettingsSideBar";
+import SettingsSideBar from "../components/SettingsSideBarBody";
 
 const LoginLayout = styled.div`
   display: grid;
