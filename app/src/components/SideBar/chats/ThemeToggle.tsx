@@ -7,7 +7,7 @@ const Switch = styled.label`
   display: inline-block;
   width: 35px;
   height: 16px;
-  margin-left: 4rem;
+  margin-left: 1rem;
 `;
 const Input = styled.input`
   opacity: 0;
@@ -35,10 +35,10 @@ const Slider = styled.span<{ $theme?: Theme }>`
   &:before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
-    left: 0px;
-    bottom: -1.5px;
+    height: 22px;
+    width: 22px;
+    left: -7px;
+    bottom: -3px;
     transition: 0.4s;
     border-radius: 50%;
     background-color: var(--color-background);
@@ -51,7 +51,7 @@ const Slider = styled.span<{ $theme?: Theme }>`
   }
 
   ${Input}:checked + &:before {
-    transform: translateX(18px);
+    transform: translateX(25px);
   }
 `;
 function ThemeToggle() {

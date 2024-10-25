@@ -6,12 +6,15 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import NightlightOutlinedIcon from "@mui/icons-material/NightlightOutlined";
-import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddIcon from "@mui/icons-material/Add";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 const iconMap: { [key: string]: React.ReactNode } = {
   BlockIcon: <BlockIcon sx={{ color: `var(--color-icon-secondary)` }} />,
   SettingsOutlinedIcon: (
@@ -76,6 +79,33 @@ const iconMap: { [key: string]: React.ReactNode } = {
     <PersonIcon
       fontSize="large"
       sx={{ color: `var(--color-icon-secondary)` }}
+    />
+  ),
+  NewGroup: (
+    <GroupOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+      }}
+    />
+  ),
+  NewChannel: (
+    <CampaignOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+      }}
+    />
+  ),
+  NewChat: (
+    <PersonAddAltOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+      }}
+    />
+  ),
+  Close: (
+    <CloseOutlinedIcon
+      fontSize="large"
+      sx={{ color: `var(--color-search-border)` }}
     />
   ),
 };

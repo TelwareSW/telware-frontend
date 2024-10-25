@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import SearchBar from "./SearchBar";
 import SideBarToolsButton from "./SideBarToolsButton";
-import BackArrow from "./BackArrow";
+import SearchBar from "./SearchBar";
 const StyledHeader = styled.header`
   background: var(--color-background);
   display: flex;
@@ -10,15 +9,16 @@ const StyledHeader = styled.header`
   justify-content: space-around;
   padding: 0.375rem 0.8125rem 0.5rem 1.3rem;
   position: relative;
+  height: 4rem;
 `;
 
-function ContactsSidebarHeader() {
+function ChatsSidebarHeader() {
   return (
     <StyledHeader>
-      <BackArrow />
+      <SideBarToolsButton />
       <SearchBar />
     </StyledHeader>
   );
 }
 
-export default ContactsSidebarHeader;
+export default ChatsSidebarHeader;

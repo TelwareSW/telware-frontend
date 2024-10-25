@@ -7,7 +7,7 @@ const StyledSearchBar = styled.div`
   &:focus-within > svg {
     color: var(--color-search-border);
   }
-  max-width: 16rem;
+  max-width: 20rem;
 `;
 
 const StyledSearchIcon = styled(SearchOutlined)`

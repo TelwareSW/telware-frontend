@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Theme } from "../state/theme/theme";
 import { useAppSelector } from "../hooks";
+import { Theme } from "../state/theme/theme";
 
 const StyledMain = styled.main<{ $theme: Theme }>`
   position: relative;

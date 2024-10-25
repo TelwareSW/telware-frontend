@@ -20,12 +20,12 @@ const StyledToolsIcon = styled(MenuOutlined)`
 
 const StyledList = styled.ul<{ $isOpened?: boolean }>`
   position: absolute;
-  width: 16.5rem;
+  width: 13rem;
   top: 3.325rem;
   left: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   justify-content: space-between;
   list-style: none;
   padding: 0.5rem 0.2rem;
@@ -48,14 +48,17 @@ function SettingsToolbar() {
         <StyledList $isOpened={isOpened}>
           <SideBarMenuItem
             title="Contacts"
+            iconMapValue="Contacts"
             onClick={() => dispatch(updateSideBarView(sideBarPages.CONTACTS))}
           />
           <SideBarMenuItem
             title="Settings"
+            iconMapValue="Settings"
             onClick={() => dispatch(updateSideBarView(sideBarPages.SETTINGS))}
           />
           <SideBarMenuItem
-            title="NightMode"
+            title="Dark Mode"
+            iconMapValue="NightMode"
             onClick={() => dispatch(toggleTheme())}
           >
             <ThemeToggle />

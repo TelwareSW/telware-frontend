@@ -1,17 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  chats,
-  contacts,
-  editProfile,
-  privacySettings,
-  settings,
-} from "../../data/sideBar";
+import { chats, settings, contacts, privacySettings } from "../../data/sideBar";
 import { sideBarPages } from "../../data/sideBar";
 
 interface SideBarView {
   title: string;
-  content: React.ReactNode;
   backView?: number;
+  props?: object;
 }
 const initialState: SideBarView = chats;
 
@@ -25,8 +19,6 @@ function getSideBarPage(type: number): SideBarView {
       return settings;
     case sideBarPages.PRIVACY_SETTINGS:
       return privacySettings;
-    case sideBarPages.EDIT_PROFILE:
-      return editProfile;
 
     default:
       throw new Error("Unknown Type");
@@ -40,8 +32,8 @@ const sideBarSlice = createSlice({
     updateSideBarView: (state, action) => {
       const newData = getSideBarPage(action.payload);
       state.title = newData.title;
-      state.content = newData.content;
       state.backView = newData.backView;
+      state.props = newData.props;
     },
   },
 });

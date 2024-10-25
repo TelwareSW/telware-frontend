@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { useAppSelector } from "../hooks";
 import SideBarRow, { SideBarRowProps } from "./SideBarRow";
 import Heading from "./Heading";
-import { useAppSelector } from "../hooks";
 
 const StyledOptionsList = styled.ul`
   display: flex;

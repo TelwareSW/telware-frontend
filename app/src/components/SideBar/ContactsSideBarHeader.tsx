@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
-import SideBarToolsButton from "./SideBarToolsButton";
+import BackArrow from "./BackArrow";
 const StyledHeader = styled.header`
   background: var(--color-background);
   display: flex;
@@ -11,13 +11,13 @@ const StyledHeader = styled.header`
   position: relative;
 `;
 
-function ChatsSidebarHeader() {
+function ContactsSidebarHeader() {
   return (
     <StyledHeader>
-      <SideBarToolsButton />
+      <BackArrow />
       <SearchBar />
     </StyledHeader>
   );
 }
 
-export default ChatsSidebarHeader;
+export default ContactsSidebarHeader;

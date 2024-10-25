@@ -22,12 +22,12 @@ function ContactsSideBar({ children }: ContactsSideBarProps) {
       {children}
       <CircleIcon
         icon="AddContacts"
-        onClick={toggleModalDisplay}
-        right="1rem"
-        bottom="1rem"
+        right={1}
+        bottom={1}
         size={3.3}
         color="white"
         bgColor="var(--color-search-border)"
+        onClick={toggleModalDisplay}
       />
     </StyledContactsSideBar>
   );

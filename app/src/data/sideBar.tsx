@@ -1,17 +1,12 @@
 import { SideBarRowProps } from "../components/SideBarRow";
 import { SideBarView } from "../state/sideBar/sideBar";
-import ChatsSideBar from "../components/ChatsSideBar";
-import SettingsSideBar from "../components/SettingsSideBarBody";
-import ContactsSideBar from "../components/ContactsSideBar";
 import { userState } from "../state/user/user";
-import ProfilePicture from "../components/ProfilePicture";
 
 enum sideBarPages {
   CHATS,
   SETTINGS,
   CONTACTS,
   PRIVACY_SETTINGS,
-  EDIT_PROFILE,
 }
 
 enum privacySettingsID {
@@ -97,41 +92,32 @@ const privacySettingsRows: SideBarRowProps[] = [
 
 const chats: SideBarView = {
   title: "Chats",
-  content: <ChatsSideBar />,
 };
 const contacts: SideBarView = {
   title: "Contacts",
   backView: sideBarPages.CHATS,
-  content: <ContactsSideBar />,
 };
 const privacySettings: SideBarView = {
   title: "Privacy",
   backView: sideBarPages.SETTINGS,
-  content: <SettingsSideBar rows={privacySettingsRows} />,
+  props: { rows: privacySettingsRows },
 };
 const settings: SideBarView = {
   title: "Settings",
   backView: sideBarPages.CHATS,
-  content: (
-    <SettingsSideBar rows={settingsRows}>
-      <ProfilePicture />
-    </SettingsSideBar>
-  ),
+  props: { rows: settingsRows },
 };
-const editProfile: SideBarView = {
-  title: "Edit Profile",
-  backView: sideBarPages.SETTINGS,
-  content: <div> edit profile</div>,
-};
+
 export {
   chats,
   contacts,
   settings,
-  editProfile,
   sideBarPages,
   activeStates,
+  settingsRows,
   privacyStates,
   privacySettings,
   privacySettingsID,
   privacySettingsMap,
+  privacySettingsRows,
 };

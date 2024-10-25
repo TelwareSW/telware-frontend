@@ -4,7 +4,8 @@ import { getIcon } from "../data/icons";
 interface SideBarMenuItemProps {
   title: string;
   children?: React.ReactNode;
-  onClick: () => void;
+  iconMapValue?: string;
+  onClick?: () => void;
 }
 
 const StyledLi = styled.li`
@@ -23,14 +24,19 @@ const StyledLi = styled.li`
   }
 `;
 
-function SideBarMenuItem({ title, onClick, children }: SideBarMenuItemProps) {
+function SideBarMenuItem({
+  title,
+  onClick,
+  children,
+  iconMapValue,
+}: SideBarMenuItemProps) {
   return (
     <StyledLi onClick={onClick}>
-      {getIcon(title)}
+      {getIcon(iconMapValue)}
       {title}
       {children}
     </StyledLi>
   );
 }
-
+export type { SideBarMenuItemProps };
 export default SideBarMenuItem;
