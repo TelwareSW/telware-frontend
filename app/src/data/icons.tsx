@@ -15,7 +15,31 @@ import EditIcon from "@mui/icons-material/Edit";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddIcon from "@mui/icons-material/Add";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-const iconMap: { [key: string]: React.ReactNode } = {
+
+enum icons {
+  BlockIcon,
+  SettingsOutlinedIcon,
+  NotificationsOutlinedIcon,
+  HttpsOutlinedIcon,
+  DevicesOutlinedIcon,
+  BackArrow,
+  Contacts,
+  Settings,
+  NightMode,
+  AddContacts,
+  Edit,
+  AddStory,
+  Logout,
+  ProflePicture,
+  NewGroup,
+  NewChannel,
+  NewChat,
+  Close,
+}
+
+type iconStrings = keyof typeof icons;
+
+const iconMap: { [K in iconStrings]: React.ReactNode } = {
   BlockIcon: <BlockIcon sx={{ color: `var(--color-icon-secondary)` }} />,
   SettingsOutlinedIcon: (
     <SettingsOutlinedIcon sx={{ color: `var(--color-icon-secondary)` }} />
@@ -110,8 +134,9 @@ const iconMap: { [key: string]: React.ReactNode } = {
   ),
 };
 
-function getIcon(iconName?: string) {
-  return iconName ? iconMap[iconName] : null;
+function getIcon(iconName?: iconStrings) {
+  return iconName ? iconMap[iconName] : undefined;
 }
 
 export { getIcon };
+export type { iconStrings };

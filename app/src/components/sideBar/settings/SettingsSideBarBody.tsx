@@ -1,6 +1,6 @@
 import OptionsList from "./OptionsList";
-import { SideBarRowProps } from "./SideBarRow";
 import SettingsSideBarHeader from "./SettingsSideBarHeader";
+import { SideBarRowProps } from "./SideBarRow";
 
 interface SettingsSideBarProps {
   children?: React.ReactNode;

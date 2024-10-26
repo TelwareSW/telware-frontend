@@ -8,5 +8,6 @@
       "path": "./tsconfig.node.json"
     }
   ],
-  // "esModuleInterop": true
+
+  "compilerOptions": { "esModuleInterop": true }
 }

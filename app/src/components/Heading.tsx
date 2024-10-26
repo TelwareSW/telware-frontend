@@ -42,9 +42,6 @@ const Heading = styled.h1`
       font-size: 1rem;
       font-weight: 400;
       color: var(--color-text-secondary) !important;
-      padding-left: 5%;
-      padding-right: 5%;
-      padding-bottom: 0.5rem;
     `}
 
   color: var(--color-text);

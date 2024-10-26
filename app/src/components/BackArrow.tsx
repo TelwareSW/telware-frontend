@@ -23,7 +23,11 @@ function BackArrow() {
   const { backView } = useAppSelector((state) => state.sideBarData);
 
   return (
-    <StyledArrow onClick={() => dispatch(updateSideBarView(backView))}>
+    <StyledArrow
+      onClick={() =>
+        backView && dispatch(updateSideBarView({ redirect: backView }))
+      }
+    >
       {getIcon("BackArrow")}
     </StyledArrow>
   );
