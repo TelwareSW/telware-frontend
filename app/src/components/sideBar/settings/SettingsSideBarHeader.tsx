@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../hooks";
 import Heading from "../../Heading";
 import BackArrow from "../../BackArrow";
 import CircleIcon from "../../CircleIcon";
+import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 const StyledSideBarHeader = styled.div`
   height: 4rem;
   position: relative;
@@ -29,6 +30,7 @@ const StyledIconsContainer = styled.div`
 
 function SettingsSideBarHeader() {
   const { title } = useAppSelector((state) => state.sideBarData);
+  const { logout } = useLogout();
 
   return (
     <StyledSideBarHeader>
@@ -44,6 +46,7 @@ function SettingsSideBarHeader() {
             bgColor="var(--color-pattern)"
           />
           <CircleIcon
+            onClick={logout}
             icon="Logout"
             padding={0.2}
             size={1.8}
