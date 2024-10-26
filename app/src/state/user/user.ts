@@ -1,62 +1,72 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-enum privacyStates {
-  EVERYONE = "everyone",
-  CONTACTS = "contacts",
-  NOBODY = "nobody",
-}
-
-enum activeStates {
-  ENABLED = "enabled",
-  DISABLED = "disabled",
-}
+import { privacyStates, activeStates } from "../../types/sideBar";
+import {
+  userInfoInterface,
+  privacySettingsInterface,
+  activitySettingsInterface,
+  updatePrivacyInterface,
+  updateInfoInterface,
+  updateActivityInterface,
+} from "../../types/user";
 
 interface userState {
-  username: string;
-  screenName: string;
-  email: string;
-  photo?: string;
-  status: string;
-  bio: string;
-
-  storiesSeenPrivacy: privacyStates;
-  lastSeenPrivacy: privacyStates;
-  profilePhotoPrivacy: privacyStates;
-  addToGroupPrivacy: privacyStates;
-  addToChannelPrivacy: privacyStates;
-  readReceiptsPrivacy: activeStates;
+  userInfo: userInfoInterface;
+  privacySettings: privacySettingsInterface;
+  activitySettings: activitySettingsInterface;
 }
 
 const initialState: userState = {
   // TODO: set at login
-  username: "",
-  screenName: "",
-  email: "",
-  photo: "",
-  status: "",
-  bio: "",
-
-  storiesSeenPrivacy: privacyStates.EVERYONE,
-  lastSeenPrivacy: privacyStates.EVERYONE,
-  profilePhotoPrivacy: privacyStates.EVERYONE,
-  addToGroupPrivacy: privacyStates.EVERYONE,
-  addToChannelPrivacy: privacyStates.EVERYONE,
-  readReceiptsPrivacy: activeStates.ENABLED,
+  userInfo: {
+    username: "",
+    screenName: "",
+    email: "",
+    photo: "",
+    status: "",
+    bio: "",
+  },
+  privacySettings: {
+    storiesSeenPrivacy: privacyStates.EVERYONE,
+    lastSeenPrivacy: privacyStates.EVERYONE,
+    profilePhotoPrivacy: privacyStates.EVERYONE,
+    addToGroupPrivacy: privacyStates.EVERYONE,
+    addToChannelPrivacy: privacyStates.EVERYONE,
+  },
+  activitySettings: {
+    readReceiptsPrivacy: activeStates.ENABLED,
+  },
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateUserInfo: (state, action) => {
+    updateUserPrivacy: (
+      state: userState,
+      action: PayloadAction<updatePrivacyInterface>
+    ) => {
       const { key, value } = action.payload;
-      console.log(typeof value);
-      state[key] = value as typeof value;
+      state.privacySettings[key] = privacyStates[value];
+    },
+    updateUserInfo: (
+      state: userState,
+      action: PayloadAction<updateInfoInterface>
+    ) => {
+      const { key, value } = action.payload;
+      state.userInfo[key] = value;
+    },
+    updateUserActivity: (
+      state: userState,
+      action: PayloadAction<updateActivityInterface>
+    ) => {
+      const { key, value } = action.payload;
+      state.activitySettings[key] = activeStates[value];
     },
   },
 });
 
-export const { updateUserInfo } = userSlice.actions;
+export const { updateUserPrivacy, updateUserInfo, updateUserActivity } =
+  userSlice.actions;
 
 export default userSlice.reducer;
 export type { activeStates, privacyStates, userState };
