@@ -10,6 +10,8 @@ const GlobalStyles = createGlobalStyle`
     --color-interactive-element-hover: rgba(var(--color-text-secondary-rgb), 0.08);
     
     --accent-color: #4c90b2;
+    --accent-color-shade: #447f9c;
+
     --color-chat-wallpaper-1: linear-gradient(
         90deg,
         #c9c866,
@@ -26,9 +28,10 @@ const GlobalStyles = createGlobalStyle`
           #767b59,
           #9fa087
         );
-        --chat-wallpaper-bg: url("/assets/bg-light.png");
 
-            --theme-background-color: #E0E0E4;
+    --chat-wallpaper-bg: url("/assets/bg-light.png");
+
+    --theme-background-color: #E0E0E4;
     
     --color-background: #ffffff;
     --color-background-secondary: rgb(240, 240, 240, 255);
@@ -53,6 +56,8 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.067);
     
     --color-border: rgb(244, 244, 245);
+    --color-borders-input: rgb(218, 220, 224);
+
     --color-search-border: #3390ec;
 
     --image-grayscale: 0;
@@ -71,6 +76,8 @@ const GlobalStyles = createGlobalStyle`
     --theme-background-color-top-right: #141C2B;
     
     --accent-color: #56a2c9;
+    --accent-color-shade: #447f9c;
+
     --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64);;
     --color-chat-wallpaper-2:linear-gradient(90deg, #3e1f3f, #562a48, #947358);
     --chat-wallpaper-bg: url("/assets/bg-dark.png");
@@ -92,6 +99,8 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.4);
  
     --color-border: #25353f;
+    --color-borders-input: var(--color-text-secondary);
+
     --color-search-border: #7644CB;
     
     --image-grayscale: 10%;
@@ -147,6 +156,21 @@ const GlobalStyles = createGlobalStyle`
   font-size: 16px;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-text);
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-background) inset;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: var(--color-text)
+}
+
 *,
 *::before,
 *::after {
@@ -184,6 +208,10 @@ select {
 
 button {  
   cursor: pointer;
+}
+
+*:disabled {
+  cursor: not-allowed;
 }
 `;
 

@@ -3,6 +3,7 @@ import { ComponentProps } from "react";
 import styled from "styled-components";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const InputWrapper = styled.div`
   position: relative;
   padding: 0.9rem 0 0;
@@ -25,6 +26,10 @@ const StyledInput = styled.input`
   &:placeholder-shown ~ label {
     cursor: text;
     top: 1rem;
+  }
+
+  &:placeholder-shown ~ span {
+    top: 1.1rem;
   }
 
   &:focus ~ label {
@@ -60,7 +65,7 @@ const Error = styled.p`
 const EyeIcon = styled.span`
   position: absolute;
   right: 0.5rem;
-  top: 50%;
+
   cursor: pointer;
   font-size: 1.25rem;
   color: var(--color-icon-secondary);
