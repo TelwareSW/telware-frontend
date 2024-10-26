@@ -1,4 +1,4 @@
-import { SideBarRowProps } from "../components/privacySettings/sideBarRow";
+import { SideBarRowProps } from "../components/sideBar/settings/sideBarRow";
 import { SideBarState } from "../state/sideBar/sideBar";
 import {
   privacySettingsID,

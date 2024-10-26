@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { privacySettings, settings } from "../../data/sideBar";
-import { SideBarRowProps } from "../../components/privacySettings/sideBarRow";
+import { SideBarRowProps } from "../../components/sideBar/settings/sideBarRow";
 import { sideBarPages } from "../../data/sideBar";
 
 interface SideBarState {

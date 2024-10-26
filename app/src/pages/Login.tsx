@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Heading from "../components/Heading";
 import LoginSection from "../features/authentication/login/LoginSection";
-import SettingsSideBar from "../components/privacySettings/SettingsSideBar";
+import SettingsSideBar from "../components/sideBar/settings/SettingsSideBar";
 import ChangeSettings from "@components/privacySettings/changeSettings";
 import RadioInput from "@components/inputs/RadioInput";
 
