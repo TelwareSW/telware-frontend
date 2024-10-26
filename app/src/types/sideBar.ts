@@ -3,7 +3,10 @@ enum sideBarPages {
   PRIVACY_SETTINGS,
   CHATS,
   CONTACTS,
+  SETTINGS_UPDATE,
 }
+
+type pagesStrings = keyof typeof sideBarPages;
 
 enum privacySettingsID {
   STORIES_SEEN_PRIVACY,
@@ -41,3 +44,5 @@ export {
   activitySettingsID,
   StatusType,
 };
+
+export type { pagesStrings };

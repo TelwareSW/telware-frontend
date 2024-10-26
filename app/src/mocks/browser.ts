@@ -3,9 +3,11 @@ import { loginMock } from "./userauth/login";
 import { signupMock } from "./userauth/signup";
 import { sendEmailConfirmationMock } from "./userauth/verfiyEmail";
 import { verifyEmailMock } from "./userauth/verfiyEmail";
+import { privacySettingsMock } from "./privacySettings";
 export const worker = setupWorker(
   ...loginMock,
   ...signupMock,
   ...sendEmailConfirmationMock,
-  ...verifyEmailMock
+  ...verifyEmailMock,
+  ...privacySettingsMock
 );

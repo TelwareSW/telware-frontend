@@ -26,13 +26,10 @@ async function changeSettings(data: {
     body: JSON.stringify(reqBody),
   });
 
-  const response = await res.json();
-
-  if (response.status !== "success") {
-    throw new Error(response.message);
+  if (res.status !== 200) {
+    throw new Error(res.statusText);
   }
-
-  return response.data;
 }
 
 export default changeSettings;
+export { endPts };

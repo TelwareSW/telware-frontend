@@ -1,14 +1,19 @@
+import { useEffect } from "react";
 import Heading from "@components/Heading";
-import changeSettings from "features/privacy-settings/service/changeSettings";
 import { useAppDispatch } from "hooks";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import {
   activeStatesStrings,
+  privacySettingsInterface,
   privacyStatesStrings,
   updateActivityInterface,
   updateInfoInterface,
   updatePrivacyInterface,
+  userInfoInterface,
 } from "types/user";
+import changeSettings from "features/privacy-settings/service/changeSettings";
+import { updateUserActivity, updateUserPrivacy } from "state/user/user";
 
 interface RadioOptionInterface {
   id: string;
@@ -17,7 +22,10 @@ interface RadioOptionInterface {
 }
 
 interface RadioInputInterface {
-  id: string;
+  id:
+    | keyof userInfoInterface
+    | keyof privacySettingsInterface
+    | "readReceiptsPrivacy";
   title: string;
   options: RadioOptionInterface[];
 }
@@ -28,15 +36,15 @@ type paramType =
   | updateActivityInterface;
 
 interface RadioInputProps {
+  header?: string;
+  state?: string;
   data: RadioInputInterface;
-  updateFn: (param: paramType) => { type: string; payload?: any };
-  register?: any;
-  errors?: any;
-  enable: boolean;
+  enable?: boolean;
+  updateFnType: boolean; // 0-> activity , 1-> privacy
 }
 
-const StyledDiv = styled.div`
-  width: full;
+const StyledForm = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -53,58 +61,73 @@ const OptionsDiv = styled.div`
 const StyledOption = styled.div`
   display: flex;
   gap: 1rem;
+  align-items: center;
 `;
 
 const StyledInput = styled.input`
   border: var(--border-width) solid var(--color-text-secondary);
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
   cursor: pointer;
 `;
 
 const Label = styled.label`
   font-size: var(font-size);
+  color: var(--color-text);
 `;
 
-function RadioInput({ data, enable, register, updateFn }: RadioInputProps) {
+function RadioInput({ state, data, enable, updateFnType }: RadioInputProps) {
   const { title, options } = data;
+  console.log(state);
+  const { register, watch } = useForm({
+    defaultValues: {
+      [data.id]: options.find((item) => item.label === state)?.value,
+    },
+  });
+
+  const updateFn = updateFnType ? updateUserPrivacy : updateUserActivity;
   const dispatch = useAppDispatch();
 
-  const handleSelect = (payload: any) => {
-    if (updateFn) dispatch(updateFn(payload));
-    changeSettings(payload);
-  };
+  let selectedValue = watch(data.id);
+
+  useEffect(() => {
+    async function submit() {
+      if (selectedValue) {
+        const payload = { key: data.id, value: selectedValue };
+        console.log("payload: ", payload);
+        dispatch(updateFn(payload));
+        await changeSettings(payload);
+      }
+    }
+    submit();
+  }, [selectedValue, data.id, dispatch, updateFn]);
 
   return (
-    <StyledDiv>
+    <StyledForm>
       <Heading as="h6">{title}</Heading>
-
       <OptionsDiv>
         {options.map((option: RadioOptionInterface) => {
           const { id, label, value } = option;
-          const registeredProps = register ? register(id) : undefined;
-
           return (
             <StyledOption key={id}>
               <StyledInput
                 type="radio"
                 id={id}
-                name={title}
                 value={value}
-                {...registeredProps}
-                color="black"
-                disabled={!enable}
-                onClick={() => handleSelect({ key: data.id, value: value })}
+                {...register(data.id)}
+                disabled={enable ? !enable : false}
+                checked={selectedValue === value}
               />
-              <Label id={id}>{label}</Label>
+              <Label htmlFor={id} id={id}>
+                {label}
+              </Label>
             </StyledOption>
           );
         })}
       </OptionsDiv>
-    </StyledDiv>
+    </StyledForm>
   );
 }
 
 export default RadioInput;
-
 export type { RadioOptionInterface, RadioInputInterface, RadioInputProps };

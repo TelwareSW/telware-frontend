@@ -49,12 +49,26 @@ function SettingsToolbar() {
           <SideBarMenuItem
             title="Contacts"
             iconMapValue="Contacts"
-            onClick={() => dispatch(updateSideBarView(sideBarPages.CONTACTS))}
+            onClick={() =>
+              dispatch(
+                updateSideBarView({
+                  redirect: sideBarPages.CONTACTS,
+                  data: undefined,
+                })
+              )
+            }
           />
           <SideBarMenuItem
             title="Settings"
             iconMapValue="Settings"
-            onClick={() => dispatch(updateSideBarView(sideBarPages.SETTINGS))}
+            onClick={() =>
+              dispatch(
+                updateSideBarView({
+                  redirect: sideBarPages.SETTINGS,
+                  data: undefined,
+                })
+              )
+            }
           />
           <SideBarMenuItem
             title="Dark Mode"
