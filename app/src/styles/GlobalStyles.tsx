@@ -105,6 +105,9 @@ const GlobalStyles = createGlobalStyle`
     
     --image-grayscale: 10%;
     --image-opacity: 90%;
+
+     --color-item-hover: rgb(244, 244, 245);
+    --color-item-active: rgb(237, 237, 237);
   }
 
   

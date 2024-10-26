@@ -20,7 +20,7 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   position: relative;
-  background: white;
+  background: var(--color-background);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -46,11 +46,12 @@ const Button = styled.button<{ disabled?: boolean }>`
 `;
 const ModalTitle = styled.h2`
   margin-bottom: 1rem;
-  font-color: (--accent-color: #56a2c9);
+  color: var(--accent-color);
 `;
 
 const ModalMessage = styled.p`
   margin-bottom: 2rem;
+  color: var(--color-text);
 `;
 
 type ConfirmationEmailModalProps = {
