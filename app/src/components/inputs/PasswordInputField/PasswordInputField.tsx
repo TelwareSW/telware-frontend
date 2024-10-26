@@ -1,8 +1,8 @@
+import { getIcon } from "data/icons";
 import { useState } from "react";
 import { ComponentProps } from "react";
 import styled from "styled-components";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const InputWrapper = styled.div`
   position: relative;
   padding: 0.9rem 0 0;
@@ -60,7 +60,7 @@ const Error = styled.p`
 const EyeIcon = styled.span`
   position: absolute;
   right: 0.5rem;
-  top: 50%;
+  top: 20%;
   cursor: pointer;
   font-size: 1.25rem;
   color: var(--color-icon-secondary);
@@ -96,7 +96,7 @@ function PasswordInputField({
       />
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
       <EyeIcon onClick={togglePasswordVisibility}>
-        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+        {showPassword ? getIcon("Hide") : getIcon("Show")}
       </EyeIcon>
       <Error>{error}</Error>
     </InputWrapper>

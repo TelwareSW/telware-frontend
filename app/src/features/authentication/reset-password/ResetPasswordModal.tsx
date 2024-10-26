@@ -17,8 +17,8 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  backdrop-filter: blur(5px); /* Adjust the blur intensity */
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   position: relative;
-  background: white;
+  background: var(--color-background);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -54,7 +54,7 @@ const Button = styled.button<{ disabled?: boolean }>`
 
 const ModalTitle = styled.h2`
   margin-bottom: 1rem;
-  color: var(--accent-color);
+  color: var(--color-text);
 `;
 
 const Error = styled.p`
@@ -74,6 +74,7 @@ const Form = styled.form`
 `;
 const ModalMessage = styled.p`
   margin-bottom: 2rem;
+  color: var(--color-text-secondary);
 `;
 const Inputs = styled.div`
   display: flex;

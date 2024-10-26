@@ -15,7 +15,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddIcon from "@mui/icons-material/Add";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 enum icons {
   BlockIcon,
   SettingsOutlinedIcon,
@@ -35,6 +36,8 @@ enum icons {
   NewChannel,
   NewChat,
   Close,
+  Show,
+  Hide,
 }
 
 type iconStrings = keyof typeof icons;
@@ -126,8 +129,14 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-  Close: (
-    <CloseOutlinedIcon
+  Show: (
+    <VisibilityIcon
+      fontSize="large"
+      sx={{ color: `var(--color-search-border)` }}
+    />
+  ),
+  Hide: (
+    <VisibilityOffIcon
       fontSize="large"
       sx={{ color: `var(--color-search-border)` }}
     />
