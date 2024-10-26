@@ -10,6 +10,7 @@ import { useSignup } from "./hooks/useSignup";
 import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
 import { schema } from "./schema/signup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
+import PasswordInputField from "@components/inputs/PasswordInputField/PasswordInputField";
 
 export type User = {
   username: string;
@@ -129,9 +130,8 @@ export default function SignupForm() {
             error={errors.phoneNumber?.message}
           />
 
-          <InputField
+          <PasswordInputField
             label="Password"
-            type="password"
             id="password"
             register={register}
             placeholder="Password"
@@ -139,7 +139,7 @@ export default function SignupForm() {
             error={errors.password?.message}
           />
 
-          <InputField
+          <PasswordInputField
             label="Confirm Password"
             type="password"
             id="confirmPassword"
