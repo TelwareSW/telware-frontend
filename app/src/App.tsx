@@ -9,8 +9,9 @@ import AppLayout from "./components/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import Login from "./pages/Login";
-import ProfileSettings from "./features/profile-settings/ProfileSettings";
+import ProfileSettings from "@features/profile-settings/ProfileSettings";
 import Signup from "./pages/Signup";
+import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +37,10 @@ function App() {
         <Routes>
           <Route path="/" element={<AppLayout />} />
           <Route path="login" element={<Login />} />
+          <Route
+            path="password-reset/:token"
+            element={<ResetPasswordModal />}
+          />
           <Route path="signup" element={<Signup />} />
           <Route path="profile-settings" element={<ProfileSettings />} />
         </Routes>
