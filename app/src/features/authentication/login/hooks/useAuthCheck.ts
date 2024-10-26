@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type Path = "/login" | "/signup" | "/password-reset";
+type Path = "/login" | "/signup" | `/password-reset/${string}`;
 
 const useAuthCheck = (path: Path) => {
   const navigate = useNavigate();

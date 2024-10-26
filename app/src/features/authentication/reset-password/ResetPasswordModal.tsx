@@ -68,8 +68,6 @@ const Inputs = styled.div`
 `;
 
 function ResetPasswordModal() {
-  useAuthCheck("/password-reset");
-
   const { resetPassword, isPending, isSuccess, isError } = useResetPassword();
   const navigate = useNavigate();
   const {
@@ -87,6 +85,8 @@ function ResetPasswordModal() {
     console.error("Token is missing in the URL.");
     return null;
   }
+
+  useAuthCheck(`/password-reset/${token}`);
 
   const handleResetPassword = () => {
     resetPassword({
