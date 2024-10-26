@@ -10,7 +10,7 @@ import { useSignup } from "./hooks/useSignup";
 import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
 import { schema } from "./schema/signup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
-import PasswordInputField from "@components/inputs/PasswordInputField/PasswordInputField";
+import PasswordInputField from "@components/inputs/PasswordInputField";
 
 export type User = {
   username: string;

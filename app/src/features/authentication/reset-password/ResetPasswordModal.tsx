@@ -4,7 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useResetPassword } from "./hooks/useResetPassword";
 import { schema } from "./schema/schema";
 import styled from "styled-components";
-import PasswordInputField from "@components/inputs/PasswordInputField/PasswordInputField";
+import PasswordInputField from "@components/inputs/PasswordInputField";
+import Button from "@components/Button";
+import useAuthCheck from "../login/hooks/useAuthCheck";
 
 type ResetPassword = {
   newPassword: string;
@@ -33,23 +35,6 @@ const ModalContainer = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 400px;
-`;
-
-const Button = styled.button<{ disabled?: boolean }>`
-  border: none;
-  border-radius: var(--border-radius-default-tiny);
-  padding: 0.6rem 1rem;
-  margin: 1rem;
-  background-color: ${({ disabled }) =>
-    disabled ? "transparent" : "var(--accent-color)"};
-  color: ${({ disabled }) =>
-    disabled ? "var( --color-text-secondary)" : "var(--color-text-button)"};
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
-
-  &:hover {
-    background-color: var(--color-item-hover);
-  }
 `;
 
 const ModalTitle = styled.h2`
@@ -102,6 +87,8 @@ function ResetPasswordModal() {
     return null;
   }
 
+  useAuthCheck(`/password-reset/${token}`);
+
   const handleResetPassword = () => {
     resetPassword({
       token: token!,
@@ -149,7 +136,7 @@ function ResetPasswordModal() {
           {isSuccess ? (
             <Button onClick={handleLogin}>Login</Button>
           ) : (
-            <Button type="submit" disabled={isPending}>
+            <Button $type="modal" type="submit" disabled={isPending}>
               Reset Password
             </Button>
           )}

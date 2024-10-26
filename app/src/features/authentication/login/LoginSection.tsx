@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import LoginForm from "./LoginForm";
 import OauthOptions from "../OauthOptions";
+
+import StyledLink from "@components/StyledLink";
 
 const Container = styled.div`
   max-width: 120rem;
@@ -26,31 +27,6 @@ const P = styled.p`
   transform: translateX(-50%);
 `;
 
-const StyledLink = styled(Link)`
-  color: var(--accent-color);
-  position: relative;
-  text-decoration: none;
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    border-radius: 4px;
-    background-color: var(--accent-color);
-    bottom: 0;
-    left: 0;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  &:hover::before {
-    transform-origin: left;
-    transform: scaleX(1);
-  }
-`;
-
 function LoginSection() {
   return (
     <Container>
@@ -59,7 +35,7 @@ function LoginSection() {
       <P>
         Don't have an account?{" "}
         <span>
-          <StyledLink to="/">Sign up</StyledLink>
+          <StyledLink to="/signup">Sign up</StyledLink>
         </span>
       </P>
     </Container>

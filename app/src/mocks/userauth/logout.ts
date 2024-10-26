@@ -1,5 +1,4 @@
 import { http, HttpResponse } from "msw";
-import { TOKEN } from "@mocks/mockData";
 
 type LoginRequestBody = {
   email: string;
@@ -66,18 +65,23 @@ export const loginMock = [
             user: {
               email: "test@example.com",
             },
-            accessToken: TOKEN,
+            accessToken: "accessToken",
           },
         },
-        {
-          status: 201,
-          headers: {
-            "Set-Cookie": `accessToken=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
-          },
-        }
+        { status: 201 }
       );
     }
   ),
+
+  http.get("/users/me", async ({ request }) => {
+    return HttpResponse.json(
+      {
+        status: "success",
+        data: MOCK_USER,
+      },
+      { status: 200 }
+    );
+  }),
 
   http.patch("/users/me", async ({ request }) => {
     const newProfileSettings = await request.json();
@@ -89,22 +93,5 @@ export const loginMock = [
       },
       { status: 200 }
     );
-  }),
-
-  http.get("/auth/me", ({ cookies }) => {
-    if (!cookies.accessToken || cookies.accessToken !== TOKEN) {
-      return new HttpResponse(null, { status: 403 });
-    }
-
-    return new HttpResponse(null, { status: 201 });
-  }),
-
-  http.post("/auth/logout", async () => {
-    return new HttpResponse(null, {
-      status: 200,
-      headers: {
-        "Set-Cookie": "accessToken=; HttpOnly; Path=/; Max-Age=0",
-      },
-    });
   }),
 ];

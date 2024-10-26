@@ -5,23 +5,7 @@ import styled from "styled-components";
 import { useForgotPassword } from "./hooks/useForgotPassword";
 import Modal from "@components/Modal";
 import InputField from "@components/InputField";
-
-const Button = styled.button<{ disabled?: boolean }>`
-  border: none;
-  border-radius: var(--border-radius-default-tiny);
-  padding: 0.6rem 1rem;
-  margin: auto 1rem;
-  background-color: ${({ disabled }) =>
-    disabled ? "transparent" : "var(--accent-color)"};
-  color: ${({ disabled }) =>
-    disabled ? "var(--color-text-secondary)" : "var(--color-text-button)"};
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
-
-  &:hover {
-    background-color: var(--color-item-hover);
-  }
-`;
+import Button from "@components/Button";
 
 const Error = styled.p`
   align-self: center;
@@ -109,7 +93,7 @@ function ForgotPasswordModal({ isOpen, onClose }: ForgetPasswordModalProps) {
           />
         </Inputs>
 
-        <Button type="submit" disabled={isSubmitting} aria-live="polite">
+        <Button $type='modal' type="submit" disabled={isSubmitting} aria-live="polite">
           {isSubmitting ? "Loading..." : "Reset Password"}
         </Button>
 

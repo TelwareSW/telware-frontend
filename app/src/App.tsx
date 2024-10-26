@@ -1,17 +1,18 @@
 import { useEffect } from "react";
-import { useAppSelector } from "./hooks";
-import { Theme } from "./state/theme/theme";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import AppLayout from "./components/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
 
+import { Theme } from "./state/theme/theme";
+import { useAppSelector } from "./hooks";
+
 import Login from "./pages/Login";
-import ProfileSettings from "@features/profile-settings/ProfileSettings";
 import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
+import ProtectedRoute from "@components/ProtectedRoute";
+import AppLayout from "@components/AppLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,18 +32,24 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AppLayout />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="login" element={<Login />} />
           <Route
             path="password-reset/:token"
             element={<ResetPasswordModal />}
           />
           <Route path="signup" element={<Signup />} />
-          <Route path="profile-settings" element={<ProfileSettings />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

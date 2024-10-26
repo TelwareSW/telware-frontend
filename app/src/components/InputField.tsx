@@ -73,6 +73,7 @@ type InputType = {
 function InputField({ label, id, register, error, ...props }: InputType) {
   return (
     <InputWrapper>
+      
       <StyledInput {...register(id)} id={id} {...props} />
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
       <Error>{error}</Error>

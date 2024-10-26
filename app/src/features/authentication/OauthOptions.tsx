@@ -17,6 +17,10 @@ const Icon = styled.div`
   justify-content: center;
 
   cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-interactive-element-hover);
+  }
 `;
 
 const Img = styled.img`

@@ -27,6 +27,10 @@ const StyledInput = styled.input`
     top: 1rem;
   }
 
+  &:placeholder-shown ~ span {
+    top: 1.1rem;
+  }
+
   &:focus ~ label {
     position: absolute;
     top: 0;
@@ -60,7 +64,7 @@ const Error = styled.p`
 const EyeIcon = styled.span`
   position: absolute;
   right: 0.5rem;
-  top: 20%;
+
   cursor: pointer;
   font-size: 1.25rem;
   color: var(--color-icon-secondary);
