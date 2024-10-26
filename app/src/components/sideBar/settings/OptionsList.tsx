@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import SideBarRow from "./sideBarRow";
+import SideBarRow from "./SideBarRow";
 import Heading from "../../Heading";
 import { useAppSelector } from "../../../hooks";
 

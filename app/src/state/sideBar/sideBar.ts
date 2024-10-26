@@ -1,16 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { privacySettings, settings } from "../../data/sideBar";
+import { chats, settings, contacts, privacySettings } from "../../data/sideBar";
 import { SideBarRowProps } from "../../components/sideBar/settings/sideBarRow";
 import { sideBarPages } from "../../data/sideBar";
 
-interface SideBarState {
-  header?: string;
-  rows: SideBarRowProps[];
+interface SideBarView {
+  title: string;
   backView?: number;
+  props?: object;
 }
+const initialState: SideBarView = chats;
 
-function getSideBarPage(type: number): SideBarState {
+function getSideBarPage(type: number): SideBarView {
   switch (type) {
+    case sideBarPages.CHATS:
+      return chats;
+    case sideBarPages.CONTACTS:
+      return contacts;
     case sideBarPages.SETTINGS:
       return settings;
     case sideBarPages.PRIVACY_SETTINGS:
@@ -21,7 +26,6 @@ function getSideBarPage(type: number): SideBarState {
   }
 }
 
-const initialState: SideBarState = { rows: [] };
 
 const sideBarSlice = createSlice({
   name: "sideBarData",
@@ -29,13 +33,13 @@ const sideBarSlice = createSlice({
   reducers: {
     updateSideBarView: (state, action) => {
       const newData = getSideBarPage(action.payload);
-      state.rows = newData.rows;
-      state.header = newData.header;
+      state.title = newData.title;
       state.backView = newData.backView;
+      state.props = newData.props;
     },
   },
 });
 
 export const { updateSideBarView } = sideBarSlice.actions;
 export default sideBarSlice.reducer;
-export type { SideBarState };
+export type { SideBarView };
