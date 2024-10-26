@@ -135,7 +135,7 @@ const contacts: SideBarView = {
   page: "CONTACTS",
 };
 const privacySettings: SideBarView = {
-  title: "Privacy",
+  title: "Privacy Settings",
   backView: sideBarPages.SETTINGS,
   props: { rows: privacySettingsRows },
   page: "PRIVACY_SETTINGS",
