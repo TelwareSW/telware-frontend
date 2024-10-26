@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chats, settings, contacts, privacySettings } from "../../data/sideBar";
-import { SideBarRowProps } from "../../components/sideBar/settings/sideBarRow";
 import { sideBarPages } from "../../data/sideBar";
 
 interface SideBarView {
@@ -25,7 +24,6 @@ function getSideBarPage(type: number): SideBarView {
       throw new Error("Unknown Type");
   }
 }
-
 
 const sideBarSlice = createSlice({
   name: "sideBarData",

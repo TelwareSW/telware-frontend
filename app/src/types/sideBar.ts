@@ -1,6 +1,8 @@
 enum sideBarPages {
   SETTINGS,
   PRIVACY_SETTINGS,
+  CHATS,
+  CONTACTS,
 }
 
 enum privacySettingsID {

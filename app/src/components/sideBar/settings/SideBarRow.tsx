@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { updateSideBarView } from "../../../state/sideBar/sideBar";
-import { updateUserInfo, userState } from "../../../state/user/user";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { privacySettingsID, privacyStates } from "../../../data/sideBar";
-import { privacySettingsMap } from "../../../data/sideBar";
-import { getIcon } from "../../../data/icons";
 import Heading from "../../Heading";
+import { updateSideBarView } from "../../../state/sideBar/sideBar";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { activitySettingsID, privacySettingsID } from "../../../types/sideBar";
+import { getIcon, iconStrings } from "../../../data/icons";
+import { useEffect, useState } from "react";
+import { statusMap } from "../../../data/sideBar";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;
@@ -48,56 +48,53 @@ const StyledP = styled.p`
 `;
 
 interface SideBarRowProps {
-  icon?: string;
+  icon?: iconStrings;
   title: string;
-  status?: privacySettingsID;
+  activityStatus?: activitySettingsID;
+  privacyStatus?: privacySettingsID;
   count?: number;
   redirect?: number;
 }
 
-function SideBarRow({ redirect, icon, title, status, count }: SideBarRowProps) {
-  const dispatch = useAppDispatch();
+function SideBarRow({
+  redirect,
+  icon,
+  title,
+  activityStatus,
+  privacyStatus,
+  count,
+}: SideBarRowProps) {
   const userData = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const renderedIcon = getIcon(icon);
 
-  let currStatus = null;
-  let key: keyof userState;
-  if (status) {
-    key = privacySettingsMap[status];
-    currStatus = userData[key];
-  }
+  const [currStatus, setCurrStatus] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    let key;
+    if (privacyStatus !== undefined) {
+      key = statusMap.privacy[privacyStatus];
+      setCurrStatus(userData.privacySettings[key]);
+    } else if (activityStatus !== undefined) {
+      key = statusMap.activity[activityStatus];
+      setCurrStatus(userData.activitySettings[key]);
+    }
+  }, [userData, privacyStatus, activityStatus]);
 
-  const renderedIcon = icon ? getIcon(icon) : null;
   return (
-    <>
-      <StyledSideBarRow onClick={() => dispatch(updateSideBarView(redirect))}>
-        <RowInfo>
-          {renderedIcon}
-          {currStatus ? (
-            <InnerDiv>
-              <Heading as="h5">{title}</Heading>
-              <StyledP>{currStatus}</StyledP>
-            </InnerDiv>
-          ) : (
+    <StyledSideBarRow onClick={() => dispatch(updateSideBarView(redirect))}>
+      <RowInfo>
+        {renderedIcon}
+        {currStatus ? (
+          <InnerDiv>
             <Heading as="h5">{title}</Heading>
-          )}
-        </RowInfo>
-        {count && <StyledP>{count}</StyledP>}
-      </StyledSideBarRow>
-      {currStatus && (
-        <button
-          onClick={() =>
-            dispatch(
-              updateUserInfo({
-                key: key,
-                value: privacyStates.CONTACTS,
-              })
-            )
-          }
-        >
-          Update
-        </button>
-      )}
-    </>
+            <StyledP>{currStatus}</StyledP>
+          </InnerDiv>
+        ) : (
+          <Heading as="h5">{title}</Heading>
+        )}
+      </RowInfo>
+      {count && <StyledP>{count}</StyledP>}
+    </StyledSideBarRow>
   );
 }
 

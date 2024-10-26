@@ -34,11 +34,10 @@ enum icons {
   NewGroup,
   NewChannel,
   NewChat,
-  Close
+  Close,
 }
 
 type iconStrings = keyof typeof icons;
-
 
 const iconMap: { [K in iconStrings]: React.ReactNode } = {
   BlockIcon: <BlockIcon sx={{ color: `var(--color-icon-secondary)` }} />,
@@ -140,3 +139,4 @@ function getIcon(iconName?: iconStrings) {
 }
 
 export { getIcon };
+export type { iconStrings };

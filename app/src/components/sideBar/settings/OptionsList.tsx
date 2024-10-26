@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import SideBarRow from "./SideBarRow";
+import SideBarRow, { SideBarRowProps } from "./SideBarRow";
 import Heading from "../../Heading";
 import { useAppSelector } from "../../../hooks";
 
@@ -20,15 +20,15 @@ const PlaceHeader  = styled.div`
   padding-bottom: 0.5rem;
 `;
 
-function OptionsList() {
-  const { rows, header } = useAppSelector((state) => state.sideBarData);
+function OptionsList({ rows }: { rows: SideBarRowProps[] }) {
+  const { title } = useAppSelector((state) => state.sideBarData);
 
   return (
     <>
       {rows.length > 0 && (
         <StyledOptionsList>
           <PlaceHeader>
-            <Heading as="h6">{header}</Heading>
+            <Heading as="h6">{title}</Heading>
           </PlaceHeader>
           {rows.map((item, index) => (
             <SideBarRow {...item} key={index} />
