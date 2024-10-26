@@ -13,7 +13,7 @@ const CodeInput = styled.input`
   text-align: center;
   border: 2px solid var(--accent-color);
   border-radius: 4px;
-
+  color: var(--color-text);
   &:focus {
     outline: none;
     border-color: var(--color-hover);

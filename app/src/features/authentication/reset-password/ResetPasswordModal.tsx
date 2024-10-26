@@ -54,7 +54,7 @@ const Button = styled.button<{ disabled?: boolean }>`
 
 const ModalTitle = styled.h2`
   margin-bottom: 1rem;
-  color: var(--accent-color);
+  color: var(--color-text);
 `;
 
 const Error = styled.p`
