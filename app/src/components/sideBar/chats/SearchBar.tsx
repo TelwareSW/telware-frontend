@@ -42,7 +42,7 @@ const StyledInput = styled.input`
 function SearchBar() {
   return (
     <StyledSearchBar>
-      <StyledInput type="text" placeholder="Search" />
+      <StyledInput type="text" placeholder="Search" data-set="general-search" />
       <StyledSearchIcon />
     </StyledSearchBar>
   );

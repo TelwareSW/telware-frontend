@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import SideBarMenuItem, { SideBarMenuItemProps } from "./SideBarMenuItem";
 import CircleIcon from "../../CircleIcon";
+import { useMouseLeave } from "hooks/useMouseLeave";
 
 interface StyledListProps {
   bottom?: number;
@@ -33,29 +34,33 @@ const StyledList = styled.ul<StyledListProps>`
   list-style: none;
   padding: 0.5rem 0.2rem;
   background-color: var(--color-background);
-  box-shadow: 0 0.25rem 0.5rem 0.125rem var(--color-default-shadow);
+  box-shadow: var(--box-shadow);
   border-radius: var(--border-radius-default);
 `;
 
 function StartNewChat() {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
+  const ref = useMouseLeave(() => setIsMenuOpened(false), false);
   const handleOpenMenu = () => {
     setIsMenuOpened((prevState) => !prevState);
   };
   return (
     <>
       <CircleIcon
-        icon={isMenuOpened ? "Close" : "Edit"}
-        right={1.25}
-        bottom={5}
-        size={2.8}
-        padding={0.5}
-        color="var(--color-icon-secondary)"
-        bgColor="var(--color-pattern)"
+        $icon={isMenuOpened ? "Close" : "Edit"}
+        $right={1.25}
+        $bottom={5}
+        $size={2.8}
+        $padding={0.5}
+        $color="var(--color-icon-secondary)"
+        $bgColor="var(--color-pattern)"
         onClick={handleOpenMenu}
       />
       {isMenuOpened && (
-        <StyledList {...menuStyles}>
+        <StyledList
+          {...menuStyles}
+          ref={ref as React.RefObject<HTMLUListElement>}
+        >
           {items.map((item: SideBarMenuItemProps, id: number) => (
             <SideBarMenuItem {...item} key={id} />
           ))}
