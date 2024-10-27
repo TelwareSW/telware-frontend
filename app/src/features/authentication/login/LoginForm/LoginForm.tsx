@@ -10,7 +10,8 @@ import { schema } from "../schema/login";
 import ForgotPasswordModal from "../ForgotPasswordModal";
 
 import Button from "@components/Button";
-import InputField from "@components/InputField/InputField";
+import InputField from "@components/inputs/InputField";
+import PasswordInputField from "@components/inputs/PasswordInputField";
 import SpinnerMini from "@components/SpinnerMini";
 import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
 

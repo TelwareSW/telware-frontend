@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Heading from "../../Heading";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux";
 import { updateSideBarView } from "../../../state/sideBar/sideBar";
 
 const StyledSideBarHeader = styled.div`

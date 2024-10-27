@@ -18,12 +18,12 @@ function ContactsSideBar({ children }: ContactsSideBarProps) {
       <ContactsSidebarHeader />
       {children}
       <CircleIcon
-        icon="AddContacts"
-        right={1}
-        bottom={1}
-        size={3.3}
-        color="white"
-        bgColor="var(--color-search-border)"
+        $icon="AddContacts"
+        $right={1}
+        $bottom={1}
+        $size={3.3}
+        $color="white"
+        $bgColor="var(--accent-color)"
       />
     </StyledContactsSideBar>
   );

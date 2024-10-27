@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import SideBarRow, { SideBarRowProps } from "./sideBarRow/SideBarRow";
 import Heading from "../../Heading";
-import { useAppSelector } from "../../../hooks";
+import { useAppSelector } from "../../../hooks/useRedux";
 
 const StyledOptionsList = styled.div`
   display: flex;
