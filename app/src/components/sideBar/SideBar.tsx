@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../hooks/useRedux";
 import ChatsSideBar from "../sideBar/chats/ChatsSideBar";
 import SettingsSideBar from "../sideBar/settings/SettingsSideBarBody";
 import ContactsSideBar from "../sideBar/ContactsSideBar";
@@ -25,13 +25,13 @@ const fadeOut = keyframes`
   100% { opacity: 0; transform: translateX(100px); }
 `;
 
-const StyledSidebar = styled.aside<{ isExiting: boolean }>`
+const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   height: 100vh;
   background-color: var(--color-background);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  animation: ${({ isExiting }) => (isExiting ? fadeOut : fadeIn)} 0.1s
+  animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s
     ease-in-out;
 `;
 
@@ -74,7 +74,7 @@ function Sidebar() {
   const pageString = pagesMap[currentPage];
 
   return (
-    <StyledSidebar isExiting={isExiting}>
+    <StyledSidebar $isExiting={isExiting}>
       {sideBarMap[pageString](props || {})}
     </StyledSidebar>
   );

@@ -14,22 +14,23 @@ const GlobalStyles = createGlobalStyle`
 
     --color-chat-wallpaper-1: linear-gradient(
         90deg,
-        #c9c866,
-        #9da558,
-        #5a8c4b,
-        #416f3c,
-        #203a18
+        #d6d46c,
+        #5e924e,
+        #509751,
+        #4c8446,
+        #335c26
       );
       --color-chat-wallpaper-2:linear-gradient(
           90deg,
-          #476f5a,
-          #46693d,
-          #406b46,
-          #767b59,
-          #9fa087
+          #53826a,
+          #59854e,
+          #406a50,
+          #4a7a51,
+          #b7b89c
         );
 
     --chat-wallpaper-bg: url("/assets/bg-light.png");
+    --bg-image-opacity: 30%;
 
     --theme-background-color: #E0E0E4;
     
@@ -61,7 +62,7 @@ const GlobalStyles = createGlobalStyle`
     --color-search-border: #3390ec;
 
     --image-grayscale: 0;
-    --image-opacity: 100%;
+    --image-opacity: 30%;
   }
   &.dark-mode {
     --color-text: #f5f5f5;
@@ -79,7 +80,9 @@ const GlobalStyles = createGlobalStyle`
     --accent-color-shade: #447f9c;
 
     --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64);;
-    --color-chat-wallpaper-2:linear-gradient(90deg, #3e1f3f, #562a48, #947358);
+    --color-chat-wallpaper-2: linear-gradient(90deg, #3e1f3f, #562a48, #7a5b42);
+    --bg-image-opacity: 100%;
+
     --chat-wallpaper-bg: url("/assets/bg-dark.png");
     
     --color-background: #192b35;
@@ -139,6 +142,7 @@ const GlobalStyles = createGlobalStyle`
   --color-peer-bg-active-6: #ee7aae2b;
   
   --backdrop-filter: 10px;
+  --box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.215);
   
   --border-radius-modal: 1rem;
   --border-radius-default: 0.75rem;

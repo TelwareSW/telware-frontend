@@ -22,13 +22,13 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
       <ChatsSidebarHeader />
       {children}
       <CircleIcon
-        icon="AddStory"
-        right={1}
-        bottom={1}
-        size={3.3}
-        padding={0.5}
-        color="white"
-        bgColor="var(--color-search-border)"
+        $icon="AddStory"
+        $right={1}
+        $bottom={1}
+        $size={3.3}
+        $padding={0.5}
+        $color="white"
+        $bgColor="var(--accent-color)"
       />
       <StartNewChat />
     </StyledChatsSideBar>

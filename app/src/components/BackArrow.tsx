@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { getIcon } from "../data/icons";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
 import { updateSideBarView } from "../state/sideBar/sideBar";
 
 const StyledArrow = styled.div`

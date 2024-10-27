@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useAppSelector } from "../../../hooks";
+import { useAppSelector } from "../../../hooks/useRedux";
 import Heading from "../../Heading";
 import BackArrow from "../../BackArrow";
 import CircleIcon from "../../CircleIcon";

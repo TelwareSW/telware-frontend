@@ -2,11 +2,12 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MenuOutlined } from "@mui/icons-material";
 import ThemeToggle from "./ThemeToggle";
-import { useAppDispatch } from "../../../hooks";
+import { useAppDispatch } from "../../../hooks/useRedux";
 import { toggleTheme } from "../../../state/theme/theme";
 import SideBarMenuItem from "./SideBarMenuItem";
 import { updateSideBarView } from "../../../state/sideBar/sideBar";
 import { sideBarPages } from "../../../data/sideBar";
+import { useMouseLeave } from "hooks/useMouseLeave";
 
 const StyledToolsIcon = styled(MenuOutlined)`
   color: var(--color-icon-secondary);
@@ -38,6 +39,7 @@ const StyledList = styled.ul<{ $isOpened?: boolean }>`
 function SettingsToolbar() {
   const [isOpened, setIsOpened] = useState(false);
   const dispatch = useAppDispatch();
+  const ref = useMouseLeave(() => setIsOpened(false), false);
   const handleOpenSettings = () => {
     setIsOpened((prevState) => !prevState);
   };
@@ -45,7 +47,10 @@ function SettingsToolbar() {
     <>
       <StyledToolsIcon onClick={handleOpenSettings} fontSize="large" />
       {isOpened && (
-        <StyledList $isOpened={isOpened}>
+        <StyledList
+          $isOpened={isOpened}
+          ref={ref as React.RefObject<HTMLUListElement>}
+        >
           <SideBarMenuItem
             title="Contacts"
             iconMapValue="Contacts"

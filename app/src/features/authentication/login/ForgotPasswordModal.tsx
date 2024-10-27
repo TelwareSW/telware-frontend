@@ -4,7 +4,7 @@ import * as yup from "yup";
 import styled from "styled-components";
 import { useForgotPassword } from "./hooks/useForgotPassword";
 import Modal from "@components/Modal";
-import InputField from "@components/InputField";
+import InputField from "@components/inputs/InputField";
 import Button from "@components/Button";
 
 const Error = styled.p`
@@ -93,7 +93,12 @@ function ForgotPasswordModal({ isOpen, onClose }: ForgetPasswordModalProps) {
           />
         </Inputs>
 
-        <Button $type='modal' type="submit" disabled={isSubmitting} aria-live="polite">
+        <Button
+          $type="modal"
+          type="submit"
+          disabled={isSubmitting}
+          aria-live="polite"
+        >
           {isSubmitting ? "Loading..." : "Reset Password"}
         </Button>
 
