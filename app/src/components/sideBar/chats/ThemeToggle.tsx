@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Theme, toggleTheme } from "../../../state/theme/theme";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux";
 
 const Switch = styled.label`
   position: relative;
@@ -25,7 +25,7 @@ const Slider = styled.span<{ $theme?: Theme }>`
   transition: 0.4s;
   border-radius: 10px;
   padding: 4px;
-  background-color: var(--color-background-own-2);
+  background-color: var(--accent-color);
 
   ${({ $theme }) =>
     $theme === Theme.LIGHT &&
@@ -39,14 +39,16 @@ const Slider = styled.span<{ $theme?: Theme }>`
     width: 22px;
     left: -7px;
     bottom: -3px;
-    transition: 0.4s;
+    transition: 0.2s;
     border-radius: 50%;
     background-color: var(--color-background);
-    border: 2px solid var(--pattern-color);
+    border: 2px solid;
+    border-color: var(--accent-color);
+
     ${({ $theme }) =>
-      $theme !== Theme.LIGHT &&
+      $theme === Theme.LIGHT &&
       css`
-        border: 2px solid var(--color-background-own-2);
+        border-color: var(--pattern-color);
       `};
   }
 

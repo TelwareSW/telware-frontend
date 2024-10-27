@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Heading from "../../../Heading";
 import { updateSideBarView } from "../../../../state/sideBar/sideBar";
-import { useAppDispatch, useAppSelector } from "../../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/useRedux";
 import {
   activitySettingsID,
   privacySettingsID,

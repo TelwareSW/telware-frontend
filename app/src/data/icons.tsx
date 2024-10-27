@@ -141,6 +141,12 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       sx={{ color: `var(--color-icon-secondary)` }}
     />
   ),
+  Close: (
+    <CloseOutlinedIcon
+      fontSize="large"
+      sx={{ color: `var(--color-icon-secondary)` }}
+    />
+  ),
 };
 
 function getIcon(iconName?: iconStrings) {

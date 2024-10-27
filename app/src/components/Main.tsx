@@ -15,7 +15,7 @@ const StyledMain = styled.main`
 
     -webkit-mask-image: linear-gradient(to bottom, transparent, white);
     mask-image: linear-gradient(to bottom, transparent, white);
-    background: var(--color-chat-wallpap7er-2);
+    background: var(--color-chat-wallpaper-2);
   }
 
   &::after {
@@ -25,11 +25,11 @@ const StyledMain = styled.main`
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: var(--chat-wallpaper-bg);
+    z-index: 9;
     background-position: center;
     background-size: cover;
-    opacity: 0.6;
-    z-index: 9;
+    opacity: var(--bg-image-opacity);
+    background-image: var(--chat-wallpaper-bg);
   }
 `;
 

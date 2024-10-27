@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { getIcon } from "../../../data/icons";
+import { getIcon, iconStrings } from "../../../data/icons";
 
 interface SideBarMenuItemProps {
   title: string;
   children?: React.ReactNode;
-  iconMapValue?: string;
+  iconMapValue?: iconStrings;
   onClick?: () => void;
 }
 
