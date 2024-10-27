@@ -6,10 +6,12 @@ import { verifyEmailMock } from "./userauth/verfiyEmail";
 import { forgetPassword, resetPassword } from "./userauth/resetpassword";
 import { privacySettingsMock } from "./privacySettings";
 import { gitHubOauthMock } from "./oauth/gitHub";
+import { googleOauthMock } from "./oauth/google";
 
 export const worker = setupWorker(
   ...loginMock,
   ...gitHubOauthMock,
+  ...googleOauthMock,
   ...signupMock,
   ...sendEmailConfirmationMock,
   ...verifyEmailMock,

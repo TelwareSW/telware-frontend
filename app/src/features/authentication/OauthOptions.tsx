@@ -9,6 +9,7 @@ import { useAppSelector } from "../../hooks";
 import { Theme } from "../../state/theme/theme";
 import { useEffect } from "react";
 import { useOauthGitHub } from "./oauth/hooks/useOauthGitHub";
+import { useOauthGoogle } from "./oauth/hooks/useOauthGoogle";
 
 const Icon = styled.div`
   display: flex;
@@ -54,15 +55,20 @@ const OtherMethods = styled.div`
 function OauthOptions() {
   const theme = useAppSelector((state) => state.theme.value);
   const gitHub = theme === Theme.DARK ? gitHubDark : gitHubLight;
-  const { mutate } = useOauthGitHub();
+  const { mutateGitHub } = useOauthGitHub();
+  const { mutateGoogle } = useOauthGoogle();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
 
     if (code) {
-      console.log(code);
-      mutate(code);
+      console.log("OAuth Code:", code);
+      if (window.location.href.includes("google")) {
+        mutateGoogle(code);
+      } else {
+        mutateGitHub(code);
+      }
     }
   }, []);
 
@@ -72,16 +78,36 @@ function OauthOptions() {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}`;
   }
 
+  function loginWithGoogle() {
+    const clientID =
+      "975054339874-g0ott1ue6qllst7dd0f00h0k2gbonen7.apps.googleusercontent.com";
+    const redirectURI = "http://localhost:5174/login";
+    const scope = "profile email";
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code&scope=${scope}`;
+  }
+
+  function loginWithFacbook() {
+    const clientID = "1059738629134040";
+    const redirectURI = "http://localhost:5174/login";
+    const scope = "profile email";
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code&scope=${scope}`;
+  }
+
   return (
     <OtherMethods>
       <p>Or</p>
 
       <Icons data-test="oauth-options">
-        <Icon>
+        <Icon onClick={loginWithGoogle}>
           <Img data-test="google-img" src={google} alt="google" />
         </Icon>
         <Icon>
-          <Img data-test="facebook-img" src={facebook} alt="facebook" />
+          <Img
+            onClick={loginWithFacbook}
+            data-test="facebook-img"
+            src={facebook}
+            alt="facebook"
+          />
         </Icon>
         <Icon onClick={loginWithGitHub}>
           <Img data-test="github-img" src={gitHub} alt="github" />
