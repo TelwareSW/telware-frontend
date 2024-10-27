@@ -5,7 +5,7 @@ import SettingsSideBar from "../sideBar/settings/SettingsSideBarBody";
 import ContactsSideBar from "../sideBar/ContactsSideBar";
 import ProfilePicture from "../sideBar/settings/ProfilePicture";
 import SettingsUpdate from "./settings/SettingsUpdate";
-import { RadioInputProps } from "@components/inputs/RadioInput";
+import { RadioInputProps } from "@components/inputs/radioInput/RadioInput";
 import { SideBarRowProps } from "./settings/SideBarRow";
 import { pagesMap } from "data/sideBar";
 import { useEffect, useState } from "react";
