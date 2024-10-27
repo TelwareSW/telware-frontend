@@ -35,7 +35,7 @@ function LoginSection() {
       <P>
         Don't have an account?{" "}
         <span>
-          <StyledLink to="/signup">Sign up</StyledLink>
+          <StyledLink data-test='signup-link' to="/signup">Sign up</StyledLink>
         </span>
       </P>
     </Container>

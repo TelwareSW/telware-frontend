@@ -1,8 +1,14 @@
 import styled from "styled-components";
 
 import google from "/oauth/google.png";
-import gitHub from "/oauth/gitHub.png";
+import gitHubLight from "/oauth/gitHubLight.png";
+import gitHubDark from "/oauth/gitHubDark.png";
 import facebook from "/oauth/facebook.png";
+
+import { useAppSelector } from "../../hooks";
+import { Theme } from "../../state/theme/theme";
+import { useEffect } from "react";
+import { useOauthGitHub } from "./oauth/hooks/useOauthGitHub";
 
 const Icon = styled.div`
   display: flex;
@@ -46,19 +52,39 @@ const OtherMethods = styled.div`
 `;
 
 function OauthOptions() {
+  const theme = useAppSelector((state) => state.theme.value);
+  const gitHub = theme === Theme.DARK ? gitHubDark : gitHubLight;
+  const { mutate } = useOauthGitHub();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+
+    if (code) {
+      console.log(code);
+      mutate(code);
+    }
+  }, []);
+
+  function loginWithGitHub() {
+    const clientID = "Ov23lizLh4CkrbN0D190";
+    const redirectURI = "http://localhost:5174/login";
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}`;
+  }
+
   return (
     <OtherMethods>
       <p>Or</p>
-      
-      <Icons>
+
+      <Icons data-test="oauth-options">
         <Icon>
-          <Img src={google} alt="google" />
+          <Img data-test="google-img" src={google} alt="google" />
         </Icon>
         <Icon>
-          <Img src={facebook} alt="facebook" />
+          <Img data-test="facebook-img" src={facebook} alt="facebook" />
         </Icon>
-        <Icon>
-          <Img src={gitHub} alt="github" />
+        <Icon onClick={loginWithGitHub}>
+          <Img data-test="github-img" src={gitHub} alt="github" />
         </Icon>
       </Icons>
     </OtherMethods>

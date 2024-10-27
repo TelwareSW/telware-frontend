@@ -29,6 +29,7 @@ function App() {
     document.documentElement.className =
       currentTheme === Theme.DARK ? "dark-mode" : "light-mode";
   }, [currentTheme]);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
