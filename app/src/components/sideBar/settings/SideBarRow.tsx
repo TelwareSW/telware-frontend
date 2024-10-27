@@ -11,7 +11,7 @@ import { getIcon, iconStrings } from "../../../data/icons";
 import { useEffect, useState } from "react";
 import { statusMap } from "../../../data/sideBar";
 import { activeStates } from "types/user";
-import { RadioOptionInterface } from "@components/inputs/RadioInput";
+import { RadioOptionInterface } from "@components/inputs/radioInput/RadioInput";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;
