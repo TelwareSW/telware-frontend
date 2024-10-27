@@ -11,7 +11,11 @@
       "@inputs/*": ["./components/inputs/*"],
       "@mocks/*": ["./mocks/*"],
       "@features/*": ["./features/*"],
-      "@pages/*": ["./pages/*"]
+      "@pages/*": ["./pages/*"],
+      "hooks": ["./hooks.ts"],
+      "state": ["./state"],
+      "types": ["./types"],
+      "data": ["./data"]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
