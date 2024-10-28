@@ -49,6 +49,7 @@ function CodeInputField({ code, setCode }: CodeInputFieldProps) {
         <CodeInput
           key={index}
           id={`code-input-${index}`}
+          data-testid={`code-input-${index}`}
           type="text"
           maxLength={1}
           value={digit}

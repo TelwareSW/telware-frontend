@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import * as update from "@features/privacy-settings/service/changeSettings";
-import renderWithStore from "@components/side-bar/test-utils";
+import renderWithStore from "../../tests/test-utils";
+
 import SideBar from "./SideBar";
 import {
   privacySettings,
@@ -12,7 +13,7 @@ jest.mock("@features/privacy-settings/service/changeSettings", () => ({
   changeSettings: jest.fn(),
 }));
 
-jest.mock("hooks/useAppState", () => ({
+jest.mock("hooks/useGlobalState", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
@@ -23,8 +24,8 @@ jest.mock("@features/authentication/logout/hooks/useLogout", () => ({
   logout: jest.fn(),
 }));
 
-const mockedUseAppSelector = require("../../hooks/useAppState").useAppSelector;
-const mockedUseAppDispatch = require("../../hooks/useAppState").useAppDispatch;
+const mockedUseAppSelector = require("hooks/useGlobalState").useAppSelector;
+const mockedUseAppDispatch = require("hooks/useGlobalState").useAppDispatch;
 const mockedUseLogout =
   require("@features/authentication/logout/hooks/useLogout").useLogout;
 

@@ -4,14 +4,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import styled from "styled-components";
 
-import { useLogin } from "./hooks/useLogin";
-import { schema } from "./schema/login";
+import { useLogin } from "../hooks/useLogin";
+import { schema } from "../schema/login";
 
-import ForgotPasswordModal from "./ForgotPasswordModal";
+import ForgotPasswordModal from "../ForgotPasswordModal";
 
 import Button from "@components/Button";
-import InputField from "@components/inputs/InputField";
-import PasswordInputField from "@components/inputs/PasswordInputField";
+import InputField from "@components/inputs/input-field/InputField";
+import PasswordInputField from "@components/inputs/input-field/PasswordInputField";
 import SpinnerMini from "@components/SpinnerMini";
 
 export type User = {
@@ -103,9 +103,10 @@ export default function LoginForm() {
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
       />
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form data-test="login-form" onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <InputField
+            data-testid="login-email-input"
             label="Email"
             type="email"
             id="email"
@@ -116,6 +117,7 @@ export default function LoginForm() {
           />
 
           <PasswordInputField
+            data-testid="login-password-input"
             label="Password"
             id="password"
             register={register}
@@ -125,12 +127,22 @@ export default function LoginForm() {
           />
         </Inputs>
 
-        <StyledSpan onClick={handleOpenModal}>Forgot password?</StyledSpan>
+        <StyledSpan data-test="forgot-password-span" onClick={handleOpenModal}>
+          Forgot password?
+        </StyledSpan>
 
-        <Button disabled={isPending} type="submit">
-          {isPending ? <SpinnerMini data-testid="spinner" /> : "Login"}
+        <Button
+          data-testid="login-form-submit-button"
+          disabled={isPending}
+          type="submit"
+        >
+          {isPending ? (
+            <SpinnerMini data-test="spinner" data-testid="spinner" />
+          ) : (
+            "Login"
+          )}
         </Button>
-        {error && <Error>{error}</Error>}
+        {error && <Error data-testid="login-error-message">{error}</Error>}
       </Form>
     </>
   );

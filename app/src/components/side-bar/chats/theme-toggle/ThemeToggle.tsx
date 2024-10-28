@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Theme, toggleTheme } from "../../../state/theme/theme";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useAppState";
+import { Theme, toggleTheme } from "state/theme/theme";
+import { useAppDispatch, useAppSelector } from "hooks/useGlobalState";
 
 const Switch = styled.label`
   position: relative;

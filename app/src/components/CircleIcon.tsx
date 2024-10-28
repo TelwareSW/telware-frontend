@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
-import { getIcon } from "data/icons";
-
-import { iconStrings } from "data/icons";
+import { getIcon, iconStrings } from "data/icons";
 
 interface CircleIconProps {
   $icon: iconStrings;

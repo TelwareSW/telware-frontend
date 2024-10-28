@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "hooks/useAppState";
+import { useAppDispatch, useAppSelector } from "hooks/useGlobalState";
 import Heading from "@components/Heading";
 import BackArrow from "@components/BackArrow";
 import CircleIcon from "@components/CircleIcon";
@@ -7,7 +7,7 @@ import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 import { updateSideBarView } from "state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
 const StyledSideBarHeader = styled.div`
-  height: 4rem;
+  height: 4rem !important;
   position: relative;
   display: flex;
   flex-direction: row;

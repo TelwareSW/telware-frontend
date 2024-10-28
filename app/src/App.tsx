@@ -6,12 +6,12 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import { Theme } from "./state/theme/theme";
-import { useAppSelector } from "./hooks/useAppState";
+import { useAppSelector } from "./hooks/useGlobalState";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
-import ProtectedRoute from "@components/ProtectedRoute";
+import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
 
 const queryClient = new QueryClient({
@@ -29,9 +29,10 @@ function App() {
     document.documentElement.className =
       currentTheme === Theme.DARK ? "dark-mode" : "light-mode";
   }, [currentTheme]);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <GlobalStyles />
       <BrowserRouter>
         <Routes>

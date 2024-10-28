@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import SideBarRow, { SideBarRowProps } from "./side-bar-row/SideBarRow";
 import Heading from "@components/Heading";
-import { useAppSelector } from "hooks/useAppState";
+import { useAppSelector } from "hooks/useGlobalState";
 
 const StyledOptionsList = styled.div`
   display: flex;
@@ -9,9 +9,7 @@ const StyledOptionsList = styled.div`
   justify-content: center;
 
   border-bottom: 1px solid var(--color-item-hover);
-
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 1rem 0;
 `;
 
 const PlaceHeader = styled.div`

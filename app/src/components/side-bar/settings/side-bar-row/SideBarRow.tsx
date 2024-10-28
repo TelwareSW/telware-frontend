@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Heading from "@components/Heading";
 import { updateSideBarView } from "state/side-bar/sideBar";
-import { useAppDispatch, useAppSelector } from "hooks/useAppState";
+import { useAppDispatch, useAppSelector } from "hooks/useGlobalState";
 import {
   activitySettingsID,
   privacySettingsID,

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Heading from "@components/Heading";
-import { useAppDispatch } from "hooks/useAppState";
+import { useAppDispatch } from "hooks/useGlobalState";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import {
@@ -93,7 +93,9 @@ function RadioInput({ state, data, updateFnType }: RadioInputProps) {
 
   return (
     <StyledForm>
-      <Heading as="h6">{title}</Heading>
+      <Heading as="h6" data-testid={`radio-input-${title}`}>
+        {title}
+      </Heading>
       <OptionsDiv>
         {options.map((option: RadioOptionInterface) => {
           const { id, label, value } = option;
@@ -105,6 +107,7 @@ function RadioInput({ state, data, updateFnType }: RadioInputProps) {
                 value={value}
                 {...register(data.id)}
                 checked={selectedValue === value}
+                data-testid={id}
               />
               <Label htmlFor={id} id={id}>
                 {label}

@@ -24,6 +24,7 @@ function ContactsSideBar({ children }: ContactsSideBarProps) {
         $size={3.3}
         $color="white"
         $bgColor="var(--accent-color)"
+        data-testid="add-contacts-icon"
       />
     </StyledContactsSideBar>
   );

@@ -24,13 +24,13 @@ const SideBar = styled.div`
 `;
 
 function Login() {
-  useAuthCheck('/login');
+  useAuthCheck("/login");
 
   return (
     <LoginLayout>
       <SideBar />
       <Main>
-        <Heading>Welcome back!</Heading>
+        <Heading data-test="login-header">Welcome back!</Heading>
         <LoginSection />
       </Main>
     </LoginLayout>

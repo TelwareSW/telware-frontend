@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UseVerifyEmail } from "./hooks/useVerifyEmail";
 import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
-import CodeInputField from "@components/inputs/CodeInputField";
+import CodeInputField from "@components/inputs/input-field/CodeInputField";
 
 const ModalOverlay = styled.div`
   position: fixed;
