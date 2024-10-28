@@ -86,6 +86,7 @@ function ForgotPasswordModal({ isOpen, onClose }: ForgetPasswordModalProps) {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <InputField
+            data-testid="email-input"
             label="Email"
             id="email"
             register={register}
@@ -93,17 +94,28 @@ function ForgotPasswordModal({ isOpen, onClose }: ForgetPasswordModalProps) {
           />
         </Inputs>
 
-        <Button $type='modal' type="submit" disabled={isSubmitting} aria-live="polite">
+        <Button
+          $type="modal"
+          type="submit"
+          disabled={isSubmitting}
+          aria-live="polite"
+          data-testid="submit-button"
+        >
           {isSubmitting ? "Loading..." : "Reset Password"}
         </Button>
 
         <div>
           {isSuccess && !isValid && (
-            <Success>Instructions were sent over email</Success>
+            <Success data-testid="success-msg">
+              Instructions were sent over email
+            </Success>
           )}
           {isError && !isValid && <Error>There was an error, try again</Error>}
           {(isSuccess || isError) && (
-            <ResendText onClick={handleSubmit(onSubmit)}>
+            <ResendText
+              data-testid="resend-link"
+              onClick={handleSubmit(onSubmit)}
+            >
               resend email
             </ResendText>
           )}

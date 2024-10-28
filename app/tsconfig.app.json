@@ -11,7 +11,8 @@
       "@inputs/*": ["./components/inputs/*"],
       "@mocks/*": ["./mocks/*"],
       "@features/*": ["./features/*"],
-      "@pages/*": ["./pages/*"]
+      "@pages/*": ["./pages/*"],
+      "@constants":["./constants"]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

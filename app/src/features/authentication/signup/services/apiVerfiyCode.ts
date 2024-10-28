@@ -1,3 +1,5 @@
+import { API_URL } from "@constants";
+
 export async function verifyEmail({
   email,
   code,
@@ -5,7 +7,7 @@ export async function verifyEmail({
   email: string;
   code: string;
 }) {
-  const API = import.meta.env.VITE_BACKEND_API;
+  const API = API_URL;
   const res = await fetch(`${API}/auth/verify`, {
     method: "POST",
     headers: {

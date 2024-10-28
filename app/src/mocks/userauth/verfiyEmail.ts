@@ -1,3 +1,4 @@
+import { API_URL } from "@constants";
 import { http, HttpResponse } from "msw";
 
 type EmailRequestBodySend = {
@@ -21,7 +22,7 @@ type EmailResponseError = {
 
 type EmailResponseBody = EmailResponseSuccess | EmailResponseError;
 
-const API_ENDPOINT = import.meta.env.VITE_BACKEND_API;
+const API_ENDPOINT = API_URL;
 
 export const sendEmailConfirmationMock = [
   http.post<object, EmailRequestBodySend, EmailResponseBody>(

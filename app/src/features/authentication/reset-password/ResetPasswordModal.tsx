@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useResetPassword } from "./hooks/useResetPassword";
 import { schema } from "./schema/schema";
 import styled from "styled-components";
-import PasswordInputField from "@components/inputs/PasswordInputField";
+import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
 import Button from "@components/Button";
 import useAuthCheck from "../login/hooks/useAuthCheck";
 

@@ -1,3 +1,4 @@
+import { API_URL } from "@constants";
 import { http, HttpResponse } from "msw";
 
 type SignupRequestBody = {
@@ -23,7 +24,7 @@ type SignupResponseBodyFail = {
 
 type SignupResponseBody = SignupResponseBodySuccess | SignupResponseBodyFail;
 
-const API = import.meta.env.VITE_BACKEND_API;
+const API = API_URL;
 export const signupMock = [
   http.post<object, SignupRequestBody, SignupResponseBody>(
     `${API}/auth/signup`,

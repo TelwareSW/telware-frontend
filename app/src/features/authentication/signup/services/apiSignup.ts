@@ -1,7 +1,7 @@
+import { API_URL } from "@constants";
 import { User } from "../SignupForm";
 export async function Signup(user: User) {
-  const API = import.meta.env.VITE_BACKEND_API;
-  const res = await fetch(`${API}/auth/signup`, {
+  const res = await fetch(`${API_URL}/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
