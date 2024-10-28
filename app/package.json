@@ -28,6 +28,7 @@
     "react-hook-form": "^7.53.0",
     "react-international-phone": "^4.3.0",
     "react-router-dom": "^6.27.0",
+    "redux-mock-store": "^1.5.5",
     "styled-components": "^6.1.13",
     "yup": "^1.4.0"
   },
