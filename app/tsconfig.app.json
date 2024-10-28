@@ -12,6 +12,7 @@
       "@mocks/*": ["./mocks/*"],
       "@features/*": ["./features/*"],
       "@pages/*": ["./pages/*"],
+      "@constants": ["./constants"],
       "hooks": ["./hooks.ts"],
       "state": ["./state"],
       "types": ["./types"],

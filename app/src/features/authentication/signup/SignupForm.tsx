@@ -5,12 +5,13 @@ import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
 import Button from "@components/Button";
 import InputField from "@components/InputField/InputField";
-import TelephoneInputField from "@components/TelephoneInputField";
+import TelephoneInputField from "@components/inputs/TelephoneInputField";
 import { useSignup } from "./hooks/useSignup";
 import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
 import { schema } from "./schema/signup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
-import PasswordInputField from "@components/inputs/PasswordInputField";
+import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
+import { RECAPTCHA_SITE_KEY } from "@constants";
 
 export type User = {
   username: string;
@@ -26,6 +27,7 @@ const Form = styled.form`
   flex-direction: column;
   width: 100%;
   gap: 2rem;
+  margin-bottom: 5rem;
 `;
 
 const Inputs = styled.div`
@@ -66,7 +68,7 @@ export default function SignupForm() {
       phoneNumber: "+1234567890",
       password: "password123",
       confirmPassword: "password123",
-      reCaptchaResponse: `${import.meta.env.VITE_REACT_APP_SITE_KEY}`,
+      reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
     },
   });
 
@@ -101,6 +103,7 @@ export default function SignupForm() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <InputField
+            data-testid="username-input"
             label="User Name"
             type="text"
             id="username"
@@ -111,6 +114,7 @@ export default function SignupForm() {
           />
 
           <InputField
+            data-testid="email-input"
             label="Email"
             type="email"
             id="email"
@@ -124,6 +128,7 @@ export default function SignupForm() {
             label="Phone Number"
             type="tel"
             id="phoneNumber"
+            data-testid="phone-number-input"
             control={control}
             placeholder="Phone Number"
             autoComplete="tel"
@@ -131,6 +136,7 @@ export default function SignupForm() {
           />
 
           <PasswordInputField
+            data-testid="password-input"
             label="Password"
             id="password"
             register={register}
@@ -140,6 +146,7 @@ export default function SignupForm() {
           />
 
           <PasswordInputField
+            data-testid="confirm-password-input"
             label="Confirm Password"
             type="password"
             id="confirmPassword"
@@ -151,14 +158,17 @@ export default function SignupForm() {
         </Inputs>
 
         <ReCAPTCHA
+          data-testid="recaptcha"
           ref={recaptchaRef}
-          sitekey={import.meta.env.VITE_REACT_APP_SITE_KEY}
+          sitekey={RECAPTCHA_SITE_KEY}
           onChange={handleRecaptchaChange}
         />
         {error && <Error>{errors.reCaptchaResponse?.message}</Error>}
 
-        <Button type="submit">{isPending ? "Loading..." : "Sign up"}</Button>
-        {error && <Error>{error}</Error>}
+        <Button type="submit" data-testid="submit-button">
+          {isPending ? "Loading..." : "Sign up"}
+        </Button>
+        {error && <Error data-testid="error-signup">{error}</Error>}
       </Form>
     </>
   );

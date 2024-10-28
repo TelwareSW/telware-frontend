@@ -11,8 +11,8 @@ import ForgotPasswordModal from "../ForgotPasswordModal";
 
 import Button from "@components/Button";
 import InputField from "@components/InputField/InputField";
-import PasswordInputField from "@components/inputs/PasswordInputField";
 import SpinnerMini from "@components/SpinnerMini";
+import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
 
 export type User = {
   email: string;
