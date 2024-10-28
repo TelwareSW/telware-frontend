@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import SideBarRow, { SideBarRowProps } from "./SideBarRow";
-import { updateSideBarView } from "state/side-bar/sideBar";
-import renderWithStore from "../../../../tests/test-utils";
-import { getIcon } from "data/icons";
+import { updateSideBarView } from "@state/side-bar/sideBar";
+import renderWithStore from "@tests/test-utils";
+import { getIcon } from "@data/icons";
 import { privacyStates, activeStates } from "types/sideBar";
 
 jest.mock("@hooks/useGlobalState", () => ({
@@ -10,7 +10,7 @@ jest.mock("@hooks/useGlobalState", () => ({
   useAppDispatch: jest.fn(),
 }));
 
-jest.mock("data/icons", () => ({
+jest.mock("@data/icons", () => ({
   getIcon: jest.fn(),
 }));
 

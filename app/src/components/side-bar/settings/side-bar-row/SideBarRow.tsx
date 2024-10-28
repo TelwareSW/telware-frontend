@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import Heading from "@components/Heading";
-import { updateSideBarView } from "state/side-bar/sideBar";
+import { updateSideBarView } from "@state/side-bar/sideBar";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import {
   activitySettingsID,
   privacySettingsID,
   privacyStates,
 } from "types/sideBar";
-import { getIcon, iconStrings } from "data/icons";
+import { getIcon, iconStrings } from "@data/icons";
 import { useEffect, useState } from "react";
-import { statusMap } from "data/sideBar";
-import { activeStates } from "types/user";
+import { statusMap } from "@data/sideBar";
 import { RadioOptionInterface } from "@components/inputs/radio-input/RadioInput";
+import { activeStates } from "types/user";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;

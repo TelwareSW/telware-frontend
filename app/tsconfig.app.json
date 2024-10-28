@@ -14,9 +14,10 @@
       "@pages/*": ["./pages/*"],
       "@hooks/*": ["./hooks/*"],
       "@constants": ["./constants"],
-      "@state": ["./state/*"],
-      "@types": ["./types/*"],
-      "@data": ["./data/*"]
+      "@state/*": ["./state/*"],
+      "types/*": ["./types/*"],
+      "@data/*": ["./data/*"],
+      "@tests/*": ["./tests/*"]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

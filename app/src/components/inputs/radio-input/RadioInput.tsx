@@ -9,7 +9,7 @@ import {
   privacyStatesStrings,
   userInfoInterface,
 } from "types/user";
-import { updateUserActivity, updateUserPrivacy } from "state/user/user";
+import { updateUserActivity, updateUserPrivacy } from "@state/user/user";
 import { useUpdatePrivacy } from "@features/privacy-settings/hooks/useUpdatePrivacy";
 
 interface RadioOptionInterface {

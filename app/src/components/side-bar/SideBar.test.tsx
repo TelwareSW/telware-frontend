@@ -1,13 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import * as update from "@features/privacy-settings/service/changeSettings";
-import renderWithStore from "../../tests/test-utils";
+import renderWithStore from "@tests/test-utils";
 
 import SideBar from "./SideBar";
-import {
-  privacySettings,
-  privacySettingsRows,
-  settingsRows,
-} from "data/sideBar";
+import { privacySettingsRows, settingsRows } from "@data/sideBar";
 
 jest.mock("@features/privacy-settings/service/changeSettings", () => ({
   changeSettings: jest.fn(),
