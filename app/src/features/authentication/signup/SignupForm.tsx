@@ -26,6 +26,7 @@ const Form = styled.form`
   flex-direction: column;
   width: 100%;
   gap: 2rem;
+  margin-bottom: 5rem;
 `;
 
 const Inputs = styled.div`
@@ -66,7 +67,7 @@ export default function SignupForm() {
       phoneNumber: "+1234567890",
       password: "password123",
       confirmPassword: "password123",
-      reCaptchaResponse: `${import.meta.env.VITE_REACT_APP_SITE_KEY}`,
+      reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
     },
   });
 
@@ -101,6 +102,7 @@ export default function SignupForm() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <InputField
+            data-testid="username-input"
             label="User Name"
             type="text"
             id="username"
@@ -111,6 +113,7 @@ export default function SignupForm() {
           />
 
           <InputField
+            data-testid="email-input"
             label="Email"
             type="email"
             id="email"
@@ -124,6 +127,7 @@ export default function SignupForm() {
             label="Phone Number"
             type="tel"
             id="phoneNumber"
+            data-testid="phone-number-input"
             control={control}
             placeholder="Phone Number"
             autoComplete="tel"
@@ -131,6 +135,7 @@ export default function SignupForm() {
           />
 
           <PasswordInputField
+            data-testid="password-input"
             label="Password"
             id="password"
             register={register}
@@ -140,6 +145,7 @@ export default function SignupForm() {
           />
 
           <PasswordInputField
+            data-testid="confirm-password-input"
             label="Confirm Password"
             type="password"
             id="confirmPassword"
@@ -151,14 +157,17 @@ export default function SignupForm() {
         </Inputs>
 
         <ReCAPTCHA
+          data-testid="recaptcha"
           ref={recaptchaRef}
-          sitekey={import.meta.env.VITE_REACT_APP_SITE_KEY}
+          sitekey={RECAPTCHA_SITE_KEY}
           onChange={handleRecaptchaChange}
         />
         {error && <Error>{errors.reCaptchaResponse?.message}</Error>}
 
-        <Button type="submit">{isPending ? "Loading..." : "Sign up"}</Button>
-        {error && <Error>{error}</Error>}
+        <Button type="submit" data-testid="submit-button">
+          {isPending ? "Loading..." : "Sign up"}
+        </Button>
+        {error && <Error data-testid="error-signup">{error}</Error>}
       </Form>
     </>
   );

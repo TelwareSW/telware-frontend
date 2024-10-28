@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Theme, toggleTheme } from "state/theme/theme";
-import { useAppDispatch, useAppSelector } from "hooks/useGlobalState";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 
 const Switch = styled.label`
   position: relative;
@@ -26,6 +26,7 @@ const Slider = styled.span<{ $theme?: Theme }>`
   border-radius: 10px;
   padding: 4px;
   background-color: var(--accent-color);
+  background-color: var(--accent-color);
 
   ${({ $theme }) =>
     $theme === Theme.LIGHT &&
@@ -40,14 +41,20 @@ const Slider = styled.span<{ $theme?: Theme }>`
     left: -7px;
     bottom: -3px;
     transition: 0.2s;
+    transition: 0.2s;
     border-radius: 50%;
     background-color: var(--color-background);
     border: 2px solid;
     border-color: var(--accent-color);
 
+    border: 2px solid;
+    border-color: var(--accent-color);
+
     ${({ $theme }) =>
       $theme === Theme.LIGHT &&
+      $theme === Theme.LIGHT &&
       css`
+        border-color: var(--pattern-color);
         border-color: var(--pattern-color);
       `};
   }

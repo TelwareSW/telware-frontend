@@ -13,7 +13,7 @@ jest.mock("@features/privacy-settings/service/changeSettings", () => ({
   changeSettings: jest.fn(),
 }));
 
-jest.mock("hooks/useGlobalState", () => ({
+jest.mock("@hooks/useGlobalState", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
@@ -24,8 +24,8 @@ jest.mock("@features/authentication/logout/hooks/useLogout", () => ({
   logout: jest.fn(),
 }));
 
-const mockedUseAppSelector = require("hooks/useGlobalState").useAppSelector;
-const mockedUseAppDispatch = require("hooks/useGlobalState").useAppDispatch;
+const mockedUseAppSelector = require("@hooks/useGlobalState").useAppSelector;
+const mockedUseAppDispatch = require("@hooks/useGlobalState").useAppDispatch;
 const mockedUseLogout =
   require("@features/authentication/logout/hooks/useLogout").useLogout;
 

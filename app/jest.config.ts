@@ -14,6 +14,12 @@ module.exports = {
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/src/mocks/fileMock.ts",
+    "^@components/(.*)$": "<rootDir>/src/components/$1",
+    "^@inputs/(.*)$": "<rootDir>/src/components/inputs/$1",
+    "^@mocks/(.*)$": "<rootDir>/src/mocks/$1",
+    "^@features/(.*)$": "<rootDir>/src/features/$1",
+    "^@pages/(.*)$": "<rootDir>/src/pages/$1",
+    "^@constants$": "<rootDir>/src/constants",
   },
   coveragePathIgnorePatterns: [
     "/node_modules/",

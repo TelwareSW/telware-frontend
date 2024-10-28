@@ -49,7 +49,7 @@ const ModalTitle = styled.h2`
   color: var(--accent-color);
 `;
 
-const ModalMessage = styled.p`
+const ModalMessage = styled.span`
   margin-bottom: 2rem;
   color: var(--color-text);
 `;
@@ -141,19 +141,32 @@ function ConfirmationEmailModal({
           A confirmation email has been sent to your email address. Please check
           your inbox to verify your account.
         </ModalMessage>
-        <CodeInputField code={codeDisplay} setCode={setCodeDisplay} />
+        <CodeInputField
+          data-testid="code-input"
+          code={codeDisplay}
+          setCode={setCodeDisplay}
+        />
         <Button
           onClick={handleConfirmCode}
           disabled={codeDisplay.join("").length < 6}
+          data-testid="verify-code-button"
         >
           {isPendingVerification ? "Loading..." : "Verify"}
         </Button>
-        <Error>{error}</Error>
-        {isVerified && <Success>you are verified,redirecting... </Success>}
+        <Error data-testid="error-msg">{error}</Error>
+        {isVerified && (
+          <Success data-testid="verified-msg">
+            you are verified,redirecting...{" "}
+          </Success>
+        )}
         <ModalMessage>
           Didn't get an email?{" "}
           <ResendText onClick={handleResendEmail}>resend email</ResendText>
-          {isCodeRensent && <Success>Code is resent! check your email</Success>}
+          {isCodeRensent && (
+            <Success data-testid="email-resent-msg">
+              Code is resent! check your email
+            </Success>
+          )}
         </ModalMessage>
       </ModalContainer>
     </ModalOverlay>

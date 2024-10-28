@@ -1,3 +1,5 @@
+import { API_URL } from "@constants";
+
 export async function resetPassword({
   token,
   newPassword,
@@ -7,12 +9,11 @@ export async function resetPassword({
   newPassword: string;
   confirmPassword: string;
 }) {
-  const API = import.meta.env.VITE_BACKEND_API;
   const requestObj = {
     newPassword: newPassword,
     confirmNewPassword: confirmPassword,
   };
-  const result = await fetch(`${API}/auth/password/reset/${token}`, {
+  const result = await fetch(`${API_URL}/auth/password/reset/${token}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

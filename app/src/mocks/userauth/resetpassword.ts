@@ -1,3 +1,4 @@
+import { API_URL } from "@constants";
 import { http, HttpResponse } from "msw";
 
 type PasswordRequestBodySend = {
@@ -21,7 +22,7 @@ type PasswordResponseError = {
 
 type PasswordResponseBody = PasswordResponseSuccess | PasswordResponseError;
 
-const API_ENDPOINT = import.meta.env.VITE_BACKEND_API;
+const API_ENDPOINT = API_URL;
 
 export const forgetPassword = [
   http.post<object, PasswordRequestBodySend, PasswordResponseBody>(

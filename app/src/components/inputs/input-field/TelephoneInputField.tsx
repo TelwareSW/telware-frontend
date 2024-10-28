@@ -8,6 +8,7 @@ type InputType = {
   label: string;
   control: any;
   id: string;
+
   error: string | undefined;
 } & ComponentProps<"input">;
 
@@ -74,7 +75,13 @@ const Error = styled.p`
   color: var(--color-error);
 `;
 
-function TelephoneInputField({ label, id, control, error }: InputType) {
+function TelephoneInputField({
+  label,
+  id,
+  control,
+  error,
+  ...rest
+}: InputType) {
   return (
     <InputWrapper>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
@@ -82,7 +89,7 @@ function TelephoneInputField({ label, id, control, error }: InputType) {
         name={id}
         control={control}
         render={({ field }) => (
-          <StyledPhoneInput defaultCountry="eg" {...field} />
+          <StyledPhoneInput defaultCountry="eg" {...rest} {...field} />
         )}
       />
       <Error>{error}</Error>

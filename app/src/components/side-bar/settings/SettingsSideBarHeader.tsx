@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "hooks/useGlobalState";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import Heading from "@components/Heading";
 import BackArrow from "@components/BackArrow";
 import CircleIcon from "@components/CircleIcon";

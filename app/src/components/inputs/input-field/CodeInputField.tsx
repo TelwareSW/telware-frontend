@@ -29,7 +29,7 @@ interface CodeInputFieldProps {
   setCode: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function CodeInputField({ code, setCode }: CodeInputFieldProps) {
+function CodeInputField({ code, setCode, ...rest }: CodeInputFieldProps) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
@@ -47,6 +47,7 @@ function CodeInputField({ code, setCode }: CodeInputFieldProps) {
     <CodeContainer>
       {code.map((digit, index) => (
         <CodeInput
+          {...rest}
           key={index}
           id={`code-input-${index}`}
           data-testid={`code-input-${index}`}

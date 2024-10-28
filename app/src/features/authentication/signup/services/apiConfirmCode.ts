@@ -1,7 +1,7 @@
-export async function sendEmailVerification(email: string) {
-  const API = import.meta.env.VITE_BACKEND_API;
+import { API_URL } from "@constants";
 
-  const res = await fetch(`${API}/auth/send-confirmation`, {
+export async function sendEmailVerification(email: string) {
+  const res = await fetch(`${API_URL}/auth/send-confirmation`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

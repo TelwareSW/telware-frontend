@@ -12,7 +12,8 @@
       "@mocks/*": ["./mocks/*"],
       "@features/*": ["./features/*"],
       "@pages/*": ["./pages/*"],
-      "hooks": ["./hooks/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@constants": ["./constants"],
       "state": ["./state"],
       "types": ["./types"],
       "data": ["./data"]

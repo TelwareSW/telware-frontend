@@ -4,22 +4,22 @@ import SignupForm from "./SignupForm";
 
 const Container = styled.div`
   max-width: 120rem;
-  margin: 0 auto;
-
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-
   position: relative;
+  flex: 1;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
 const P = styled.p`
   position: absolute;
-  bottom: -4rem;
-
+  bottom: 2rem;
   margin: 0 auto;
   color: var(--color-text-secondary);
-
   left: 50%;
   transform: translateX(-50%);
 `;
@@ -53,12 +53,8 @@ function SignupSection() {
   return (
     <Container>
       <SignupForm />
-
       <P>
-        Already have an account?{" "}
-        <span>
-          <StyledLink to="/login">Login</StyledLink>
-        </span>
+        Already have an account? <StyledLink to="/login">Login</StyledLink>
       </P>
     </Container>
   );

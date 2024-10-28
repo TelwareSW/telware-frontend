@@ -17,6 +17,7 @@ const StyledIcon = styled.div<CircleIconProps>`
   bottom: ${(props) => props.$bottom}rem;
   ${(props) =>
     (props.$right !== undefined || props.$bottom !== undefined) &&
+    (props.$right !== undefined || props.$bottom !== undefined) &&
     css`
       position: absolute;
     `};
@@ -24,7 +25,13 @@ const StyledIcon = styled.div<CircleIconProps>`
   height: ${(props) => props.$size}rem;
   padding: ${(props) => props.$padding}rem;
   background-color: ${(props) => props.$bgColor};
+  width: ${(props) => props.$size}rem;
+  height: ${(props) => props.$size}rem;
+  padding: ${(props) => props.$padding}rem;
+  background-color: ${(props) => props.$bgColor};
   border-radius: var(--border-radius-circle);
+  opacity: 0.9;
+  box-shadow: var(--box-shadow);
   opacity: 0.9;
   box-shadow: var(--box-shadow);
 
@@ -33,6 +40,9 @@ const StyledIcon = styled.div<CircleIconProps>`
     cursor: pointer;
   }
   & > svg {
+    width: 100%;
+    height: 100%;
+    color: ${(props) => props.$color};
     width: 100%;
     height: 100%;
     color: ${(props) => props.$color};
@@ -53,7 +63,9 @@ function CircleIcon({
     <StyledIcon
       onClick={onClick}
       {...{ $icon, $bottom, $right, $size, $padding, $color, $bgColor }}
+      {...{ $icon, $bottom, $right, $size, $padding, $color, $bgColor }}
     >
+      {getIcon($icon)}
       {getIcon($icon)}
     </StyledIcon>
   );

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import SideBarMenuItem, { SideBarMenuItemProps } from "./SideBarMenuItem";
-import CircleIcon from "../../CircleIcon";
-import { useMouseLeave } from "hooks/useMouseLeave";
+import CircleIcon from "@components/CircleIcon";
+import { useMouseLeave } from "@hooks/useMouseLeave";
 
 interface StyledListProps {
   $bottom?: number;
@@ -34,6 +34,7 @@ const StyledList = styled.ul<StyledListProps>`
   list-style: none;
   padding: 0.5rem 0.2rem;
   background-color: var(--color-background);
+  box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius-default);
 `;

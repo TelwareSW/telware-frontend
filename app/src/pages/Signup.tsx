@@ -32,6 +32,7 @@ const fadeIn = keyframes`
 
 const AnimatedTitle = styled(Heading).attrs({ as: "h1" })`
   animation: ${fadeIn} 2s ease-in-out forwards;
+  width: 100vh;
 `;
 
 function Signup() {
@@ -42,7 +43,7 @@ function Signup() {
       <SideBar />
       <Main>
         <AnimatedTitle>Welcome to Telware!</AnimatedTitle>
-        {/* <Heading as="h3">Create your account</Heading> */}
+
         <SignupSection />
       </Main>
     </SignupLayout>
