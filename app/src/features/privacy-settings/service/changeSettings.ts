@@ -31,5 +31,5 @@ async function changeSettings(data: {
   }
 }
 
-export default changeSettings;
+export { changeSettings };
 export { endPts };

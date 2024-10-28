@@ -25,7 +25,8 @@ function BackArrow() {
   return (
     <StyledArrow
       onClick={() =>
-        backView && dispatch(updateSideBarView({ redirect: backView }))
+        backView !== undefined &&
+        dispatch(updateSideBarView({ redirect: backView }))
       }
     >
       {getIcon("BackArrow")}
