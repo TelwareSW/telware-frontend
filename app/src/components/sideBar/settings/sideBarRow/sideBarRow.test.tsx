@@ -1,22 +1,22 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import SideBarRow, { SideBarRowProps } from "./SideBarRow";
-import { updateSideBarView } from "../../../../state/sideBar/sideBar";
+import { updateSideBarView } from "state/sideBar/sideBar";
 import renderWithStore from "../../test-utils";
-import { getIcon } from "../../../../data/icons";
+import { getIcon } from "data/icons";
 import { privacyStates, activeStates } from "types/sideBar";
 
-jest.mock("../../../hooks", () => ({
+jest.mock("hooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
 
-jest.mock("../../../data/icons", () => ({
+jest.mock("data/icons", () => ({
   getIcon: jest.fn(),
 }));
 
 const mockDispatch = jest.fn();
-const mockedUseAppSelector = require("../../../hooks").useAppSelector;
-const mockedUseAppDispatch = require("../../../hooks").useAppDispatch;
+const mockedUseAppSelector = require("hooks").useAppSelector;
+const mockedUseAppDispatch = require("hooks").useAppDispatch;
 describe("SideBarRow", () => {
   beforeEach(() => {
     mockedUseAppDispatch.mockReturnValue(mockDispatch);

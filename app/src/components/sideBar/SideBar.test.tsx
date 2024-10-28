@@ -8,7 +8,7 @@ jest.mock("@features/privacy-settings/service/changeSettings", () => ({
   changeSettings: jest.fn(),
 }));
 
-jest.mock("../../hooks", () => ({
+jest.mock("hooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
