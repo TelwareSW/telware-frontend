@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Heading from "@components/Heading";
-import { useAppDispatch } from "hooks/useRedux";
+import { useAppDispatch } from "hooks/useAppState";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import {

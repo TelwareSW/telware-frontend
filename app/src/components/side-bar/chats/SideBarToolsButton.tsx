@@ -2,10 +2,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MenuOutlined } from "@mui/icons-material";
 import ThemeToggle from "./ThemeToggle";
-import { useAppDispatch } from "../../../hooks/useRedux";
+import { useAppDispatch } from "../../../hooks/useAppState";
 import { toggleTheme } from "../../../state/theme/theme";
 import SideBarMenuItem from "./SideBarMenuItem";
-import { updateSideBarView } from "../../../state/sideBar/sideBar";
+import { updateSideBarView } from "../../../state/side-bar/sideBar";
 import { sideBarPages } from "../../../data/sideBar";
 import { useMouseLeave } from "hooks/useMouseLeave";
 
@@ -45,13 +45,18 @@ function SettingsToolbar() {
   };
   return (
     <>
-      <StyledToolsIcon onClick={handleOpenSettings} fontSize="large" />
+      <StyledToolsIcon
+        onClick={handleOpenSettings}
+        fontSize="large"
+        data-testid="menu-items-icon"
+      />
       {isOpened && (
         <StyledList
           $isOpened={isOpened}
           ref={ref as React.RefObject<HTMLUListElement>}
         >
           <SideBarMenuItem
+            data-testid="menu-item-contacts"
             title="Contacts"
             iconMapValue="Contacts"
             onClick={() =>
@@ -64,6 +69,7 @@ function SettingsToolbar() {
             }
           />
           <SideBarMenuItem
+            data-testid="menu-item-settings"
             title="Settings"
             iconMapValue="Settings"
             onClick={() =>
@@ -76,6 +82,7 @@ function SettingsToolbar() {
             }
           />
           <SideBarMenuItem
+            data-testid="menu-item-dark-mode"
             title="Dark Mode"
             iconMapValue="NightMode"
             onClick={() => dispatch(toggleTheme())}

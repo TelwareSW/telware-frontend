@@ -22,6 +22,7 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
       <ChatsSidebarHeader />
       {children}
       <CircleIcon
+        data-testid="add-story-icon"
         $icon="AddStory"
         $right={1}
         $bottom={1}

@@ -47,6 +47,7 @@ function StartNewChat() {
   return (
     <>
       <CircleIcon
+        data-testid="start-new-chat-icon"
         $icon={isMenuOpened ? "Close" : "Edit"}
         $right={1.25}
         $bottom={5}
@@ -59,10 +60,15 @@ function StartNewChat() {
       {isMenuOpened && (
         <StyledList
           {...menuStyles}
+          data-testid="start-new-chat-menu"
           ref={ref as React.RefObject<HTMLUListElement>}
         >
           {items.map((item: SideBarMenuItemProps, id: number) => (
-            <SideBarMenuItem {...item} key={id} />
+            <SideBarMenuItem
+              data-testid={`new-chat-menu-item-${id}`}
+              {...item}
+              key={id}
+            />
           ))}
         </StyledList>
       )}

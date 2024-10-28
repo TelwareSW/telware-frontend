@@ -1,5 +1,5 @@
-import { SideBarRowProps } from "../components/sideBar/settings/SideBarRow";
-import { SideBarView } from "../state/sideBar/sideBar";
+import { SideBarRowProps } from "../components/side-bar/settings/SideBarRow";
+import { SideBarView } from "../state/side-bar/sideBar";
 import {
   privacySettingsID,
   activitySettingsID,
@@ -64,6 +64,7 @@ const pagesMap: { [K in pagesStrings]: string } = {
   SETTINGS: "Settings",
   PRIVACY_SETTINGS: "Privacy",
   SETTINGS_UPDATE: "SettingsUpdate",
+  PROFILE_UPDATE: "ProfileUpdate",
 };
 
 const settingsRows = [
@@ -140,20 +141,22 @@ const privacySettings: SideBarView = {
   props: { rows: privacySettingsRows },
   page: "PRIVACY_SETTINGS",
 };
-
 const settings: SideBarView = {
   title: "Settings",
   backView: sideBarPages.CHATS,
   props: { rows: settingsRows },
   page: "SETTINGS",
 };
-
 const settingsUpdate: SideBarView = {
   title: "SettingsUpdate",
   backView: sideBarPages.PRIVACY_SETTINGS,
   page: "SETTINGS_UPDATE",
 };
-
+const profileUpdate: SideBarView = {
+  title: "ProfileUpdate",
+  backView: sideBarPages.SETTINGS,
+  page: "PROFILE_UPDATE",
+};
 export {
   chats,
   contacts,
@@ -167,5 +170,6 @@ export {
   statusMap,
   sideBarPages,
   settingsUpdate,
+  profileUpdate,
   pagesMap,
 };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { getIcon } from "../data/icons";
-import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
-import { updateSideBarView } from "../state/sideBar/sideBar";
+import { useAppDispatch, useAppSelector } from "../hooks/useAppState";
+import { updateSideBarView } from "../state/side-bar/sideBar";
 
 const StyledArrow = styled.div`
   width: 30px;
@@ -24,8 +24,10 @@ function BackArrow() {
 
   return (
     <StyledArrow
+      data-testid="back-arrow-icon"
       onClick={() =>
-        backView && dispatch(updateSideBarView({ redirect: backView }))
+        backView !== undefined &&
+        dispatch(updateSideBarView({ redirect: backView }))
       }
     >
       {getIcon("BackArrow")}

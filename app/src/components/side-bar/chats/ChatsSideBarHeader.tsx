@@ -14,7 +14,7 @@ const StyledHeader = styled.header`
 
 function ChatsSidebarHeader() {
   return (
-    <StyledHeader>
+    <StyledHeader data-testid="chatlist-header">
       <SideBarToolsButton />
       <SearchBar />
     </StyledHeader>

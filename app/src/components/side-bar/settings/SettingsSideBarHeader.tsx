@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import { useAppSelector } from "../../../hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useAppState";
 import Heading from "../../Heading";
 import BackArrow from "../../BackArrow";
 import CircleIcon from "../../CircleIcon";
 import { useLogout } from "@features/authentication/logout/hooks/useLogout";
+import { updateSideBarView } from "state/side-bar/sideBar";
+import { sideBarPages } from "types/sideBar";
 const StyledSideBarHeader = styled.div`
   height: 4rem;
   position: relative;
@@ -31,27 +33,37 @@ const StyledIconsContainer = styled.div`
 function SettingsSideBarHeader() {
   const { title } = useAppSelector((state) => state.sideBarData);
   const { logout } = useLogout();
+  const dispatch = useAppDispatch();
 
   return (
-    <StyledSideBarHeader>
+    <StyledSideBarHeader data-testid="settings-side-bar-header">
       <BackArrow />
-      <Heading as={"h4"}>{title}</Heading>
+      <Heading data-testid="settings-title" as={"h4"}>
+        {title}
+      </Heading>
       {title === "Settings" && (
         <StyledIconsContainer>
           <CircleIcon
-            icon="Edit"
-            padding={0.2}
-            size={1.8}
-            color="var(--color-text)"
-            bgColor="var(--color-pattern)"
+            data-testid="profile-update-icon"
+            $icon="Edit"
+            $padding={0.2}
+            $size={1.8}
+            $color="var(--color-text)"
+            $bgColor="var(--color-pattern)"
+            onClick={() =>
+              dispatch(
+                updateSideBarView({ redirect: sideBarPages.PROFILE_UPDATE })
+              )
+            }
           />
           <CircleIcon
+            data-testid="logout-icon"
             onClick={logout}
-            icon="Logout"
-            padding={0.2}
-            size={1.8}
-            color="var(--color-text)"
-            bgColor="var(--color-pattern)"
+            $icon="Logout"
+            $padding={0.2}
+            $size={1.8}
+            $color="var(--color-text)"
+            $bgColor="var(--color-pattern)"
           />
         </StyledIconsContainer>
       )}

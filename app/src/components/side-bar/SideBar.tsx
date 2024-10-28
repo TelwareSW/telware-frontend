@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { useAppSelector } from "../../hooks/useRedux";
-import ChatsSideBar from "../sideBar/chats/ChatsSideBar";
-import SettingsSideBar from "../sideBar/settings/SettingsSideBarBody";
-import ContactsSideBar from "../sideBar/ContactsSideBar";
-import ProfilePicture from "../sideBar/settings/ProfilePicture";
+import { useAppSelector } from "../../hooks/useAppState";
+import { pagesMap } from "data/sideBar";
+import ChatsSideBar from "./chats/ChatsSideBar";
+import SettingsSideBar from "./settings/SettingsSideBarBody";
+import ContactsSideBar from "./ContactsSideBar";
+import ProfilePicture from "./settings/ProfilePicture";
 import SettingsUpdate from "./settings/SettingsUpdate";
 import { RadioInputProps } from "@components/inputs/RadioInput";
 import { SideBarRowProps } from "./settings/SideBarRow";
-import { pagesMap } from "data/sideBar";
-import { useEffect, useState } from "react";
+import ProfileSettings from "@features/profile-settings/ProfileSettings";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -50,6 +51,7 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
         {props.data && <SettingsUpdate {...props.data} />}
       </SettingsSideBar>
     ),
+    ProfileUpdate: () => <ProfileSettings />,
   };
 
 function Sidebar() {
@@ -74,7 +76,7 @@ function Sidebar() {
   const pageString = pagesMap[currentPage];
 
   return (
-    <StyledSidebar $isExiting={isExiting}>
+    <StyledSidebar $isExiting={isExiting} data-testid="side-bar">
       {sideBarMap[pageString](props || {})}
     </StyledSidebar>
   );

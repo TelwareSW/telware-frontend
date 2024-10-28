@@ -13,8 +13,8 @@ const StyledMain = styled.main`
     width: 100%;
     height: 100%;
 
-    -webkit-mask-image: linear-gradient(to bottom, transparent, white);
-    mask-image: linear-gradient(to bottom, transparent, white);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black);
+    mask-image: linear-gradient(to bottom, transparent, black);
     background: var(--color-chat-wallpaper-2);
   }
 
@@ -34,7 +34,7 @@ const StyledMain = styled.main`
 `;
 
 function Main({ children }: { children?: React.ReactNode }) {
-  return <StyledMain>{children}</StyledMain>;
+  return <StyledMain data-testid="main">{children}</StyledMain>;
 }
 
 export default Main;

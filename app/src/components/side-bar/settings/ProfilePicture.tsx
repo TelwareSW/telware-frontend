@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
 `;
 
 function ProfilePicture() {
-  return <StyledDiv />;
+  return <StyledDiv data-testid="profile-picture" />;
 }
 
 export default ProfilePicture;

@@ -5,6 +5,7 @@ import {
   contacts,
   privacySettings,
   settingsUpdate,
+  profileUpdate,
   sideBarPages,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
@@ -29,6 +30,8 @@ function getSideBarPage(type: number): SideBarView {
       return privacySettings;
     case sideBarPages.SETTINGS_UPDATE:
       return settingsUpdate;
+    case sideBarPages.PROFILE_UPDATE:
+      return profileUpdate;
     default:
       throw new Error("Unknown Type");
   }
@@ -45,7 +48,7 @@ const sideBarSlice = createSlice({
   reducers: {
     updateSideBarView: (state, action: PayloadAction<actionType>) => {
       const { redirect, data } = action.payload;
-      
+
       // redirect can take value 0, so don't try "if(redirect)"
       if (redirect === undefined) return;
 

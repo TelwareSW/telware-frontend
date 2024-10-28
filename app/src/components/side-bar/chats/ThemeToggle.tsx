@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Theme, toggleTheme } from "../../../state/theme/theme";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useAppState";
 
 const Switch = styled.label`
   position: relative;
@@ -63,13 +63,14 @@ function ThemeToggle() {
     dispatch(toggleTheme());
   };
   return (
-    <Switch>
+    <Switch data-testid="toggle-mode-label">
       <Input
+        data-testid="toggle-mode-checkbox"
         type="checkbox"
         checked={currentTheme === Theme.DARK}
         onChange={handleChange}
       />
-      <Slider $theme={currentTheme} />
+      <Slider $theme={currentTheme} data-testid="toggle-mode-slider" />
     </Switch>
   );
 }

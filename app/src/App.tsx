@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import { Theme } from "./state/theme/theme";
-import { useAppSelector } from "./hooks/useRedux";
+import { useAppSelector } from "./hooks/useAppState";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
