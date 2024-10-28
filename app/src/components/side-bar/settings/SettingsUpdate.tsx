@@ -5,8 +5,7 @@ import styled from "styled-components";
 
 const StyledDiv = styled.div`
   padding: 2rem 2rem;
-  border-bottom: 1rem solid var(--color-item-hover);
-  border-radius: var(--border-radius-modal);
+  border-bottom: 1px solid var(--color-item-hover);
 `;
 
 function SettingsUpdate(radioData: RadioInputProps) {
