@@ -11,7 +11,7 @@ import { useAppSelector } from "./hooks";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
-import ProtectedRoute from "@components/ProtectedRoute";
+import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
 
 const queryClient = new QueryClient({
@@ -29,6 +29,7 @@ function App() {
     document.documentElement.className =
       currentTheme === Theme.DARK ? "dark-mode" : "light-mode";
   }, [currentTheme]);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
