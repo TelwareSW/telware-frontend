@@ -10,9 +10,9 @@ import { schema } from "../schema/login";
 import ForgotPasswordModal from "../ForgotPasswordModal";
 
 import Button from "@components/Button";
-import InputField from "@components/InputField/InputField";
-import SpinnerMini from "@components/SpinnerMini";
+import InputField from "@components/inputs/input-field/InputField";
 import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
+import SpinnerMini from "@components/SpinnerMini";
 
 export type User = {
   email: string;
@@ -106,7 +106,7 @@ export default function LoginForm() {
       <Form data-test="login-form" onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <InputField
-            data-test="login-email-input"
+            data-testid="login-email-input"
             label="Email"
             type="email"
             id="email"
@@ -117,7 +117,7 @@ export default function LoginForm() {
           />
 
           <PasswordInputField
-            data-test="login-password-input"
+            data-testid="login-password-input"
             label="Password"
             id="password"
             register={register}
@@ -132,7 +132,7 @@ export default function LoginForm() {
         </StyledSpan>
 
         <Button
-          data-test="login-form-submit-button"
+          data-testid="login-form-submit-button"
           disabled={isPending}
           type="submit"
         >
@@ -142,7 +142,7 @@ export default function LoginForm() {
             "Login"
           )}
         </Button>
-        {error && <Error data-test="login-error-message">{error}</Error>}
+        {error && <Error data-testid="login-error-message">{error}</Error>}
       </Form>
     </>
   );

@@ -103,10 +103,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     />
   ),
   ProflePicture: (
-    <PersonIcon
-      fontSize="large"
-      sx={{ color: `var(--color-icon-secondary)` }}
-    />
+    <PersonIcon fontSize="large" sx={{ color: `var(--color-background)` }} />
   ),
   NewGroup: (
     <GroupOutlinedIcon
@@ -137,6 +134,12 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
   Hide: (
     <VisibilityOffIcon
+      fontSize="large"
+      sx={{ color: `var(--color-icon-secondary)` }}
+    />
+  ),
+  Close: (
+    <CloseOutlinedIcon
       fontSize="large"
       sx={{ color: `var(--color-icon-secondary)` }}
     />

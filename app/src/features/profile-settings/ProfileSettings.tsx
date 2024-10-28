@@ -3,20 +3,21 @@ import styled from "styled-components";
 import { AddAPhotoOutlined, Check } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FloatingLabelInput from "@components/inputs/float_label_input/FloatingLabelInput";
+import FloatingLabelInput from "@components/inputs/float-label-input/FloatingLabelInput";
 import { DevTool } from "@hookform/devtools";
 
 import { BIO_MAX_LENGTH, ValidationSchema } from "./schema/EditProfileSchema";
 import { useProfileSettings } from "./hooks/useProfileSettings";
 import { useUpdateProfileSettings } from "./hooks/useUpdateProfileSettings";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import SettingsSideBarHeader from "@components/side-bar/settings/SettingsSideBarHeader";
 
 const SideBarContainer = styled.div`
   & > form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 30rem;
+    width: 100%;
     min-height: 100dvh;
     background-color: var(--color-background-secondary);
   }
@@ -59,7 +60,8 @@ const UploadProfilePictureIcon = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--color-text);
+  color: white;
+  cursor: pointer;
 
   svg {
     transition: all 0.2s ease-out;
@@ -68,6 +70,29 @@ const UploadProfilePictureIcon = styled.div`
   }
 `;
 
+const StyledImageInput = styled.input`
+  position: absolute;
+  top: 1rem;
+  left: 5rem;
+  width: 9rem;
+  height: 8rem;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+`;
+const DefaultProfilePicture = styled.div`
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  opacity: 0.8;
+`;
 const SubmitButton = styled.button<{ $revealed?: boolean }>`
   --button-width: 3.5rem;
 
@@ -109,10 +134,11 @@ interface EditProfileForm {
   bio: string;
   username: string;
 }
+
 function ProfileSettings() {
   const { data: initialProfileSettings } = useProfileSettings();
-
   const { updateProfileSettings } = useUpdateProfileSettings();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const {
     register,
@@ -141,41 +167,67 @@ function ProfileSettings() {
 
   const userHandle = `https://telware.online/${watch("username") || "username"}`;
 
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setSelectedImage(imageURL);
+    }
+  };
+
   const onSubmit = async (data: EditProfileForm) => {
     try {
+      if (selectedImage) {
+        data.profilePicture = selectedImage;
+      }
       updateProfileSettings(data);
     } catch (error) {
       console.error(error);
     }
   };
+  const firstName = watch("firstName") || "";
+  const lastName = watch("lastName") || "";
+  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 
   return (
     <SideBarContainer>
+      <SettingsSideBarHeader />
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{ position: "relative", overflow: "hidden" }}
       >
         <DevTool control={control} placement="top-right" />
+
         <SettingSection>
           <UploadProfilePicture>
-            {/* NOTE: this is a placeholder for upload image */}
-            {/* TODO: implement image upload */}
-            <img
-              src={
-                watch("profilePicture") ||
-                "https://media-hbe1-1.cdn.whatsapp.net/v/t61.24694-24/462460819_518473281043631_6485009024565374350_n.jpg?ccb=11-4&oh=01_Q5AaINdhN3wt4c6ZnmGni8RNhM8fIvquSRicC2QT82X6ddeB&oe=6727186F&_nc_sid=5e03e0&_nc_cat=100"
-              }
-              alt="Profile Picture"
-              style={{
-                width: "8rem",
-                height: "8rem",
-                borderRadius: "50%",
-                objectFit: "cover",
-              }}
+            {/* Image Upload */}
+            <StyledImageInput
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              data-testid="image-upload"
             />
-            <UploadProfilePictureIcon>
-              <AddAPhotoOutlined />
-            </UploadProfilePictureIcon>
+            {selectedImage ? (
+              <>
+                <img
+                  src={selectedImage}
+                  alt="Profile Picture"
+                  style={{
+                    width: "8rem",
+                    height: "8rem",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
+              </>
+            ) : (
+              <DefaultProfilePicture>{initials}</DefaultProfilePicture>
+            )}
+            {initials?.length == 0 && (
+              <UploadProfilePictureIcon>
+                <AddAPhotoOutlined />
+              </UploadProfilePictureIcon>
+            )}
           </UploadProfilePicture>
 
           <FloatingLabelInput<EditProfileForm>
@@ -184,6 +236,7 @@ function ProfileSettings() {
             register={register}
             watch={watch}
             error={errors.firstName?.message}
+            data-testid="first-name"
           />
           <FloatingLabelInput<EditProfileForm>
             id="lastName"
@@ -191,6 +244,7 @@ function ProfileSettings() {
             register={register}
             watch={watch}
             error={errors.lastName?.message}
+            data-testid="last-name"
           />
           <FloatingLabelInput<EditProfileForm>
             id="bio"
@@ -199,6 +253,7 @@ function ProfileSettings() {
             watch={watch}
             error={errors.bio?.message}
             maxLength={BIO_MAX_LENGTH}
+            data-testid="bio"
           />
           <Hint>
             Any details such as age, occupation or city.
@@ -214,6 +269,7 @@ function ProfileSettings() {
             register={register}
             watch={watch}
             error={errors.username?.message}
+            data-testid="username"
           />
           <Hint>
             You can choose a username on <b>Telware</b>. If you do, people will
@@ -230,7 +286,12 @@ function ProfileSettings() {
             {userHandle}
           </Hint>
         </SettingSection>
-        <SubmitButton type="submit" disabled={isSubmitting} $revealed={isDirty}>
+        <SubmitButton
+          type="submit"
+          disabled={isSubmitting}
+          $revealed={isDirty}
+          data-testid="submit-button"
+        >
           <Check />
         </SubmitButton>
       </form>

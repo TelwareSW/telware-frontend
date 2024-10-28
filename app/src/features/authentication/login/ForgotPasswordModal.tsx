@@ -4,7 +4,7 @@ import * as yup from "yup";
 import styled from "styled-components";
 import { useForgotPassword } from "./hooks/useForgotPassword";
 import Modal from "@components/Modal";
-import InputField from "@components/InputField/InputField";
+import InputField from "@components/inputs/input-field/InputField";
 import Button from "@components/Button";
 
 const Error = styled.p`

@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import { Theme } from "./state/theme/theme";
-import { useAppSelector } from "./hooks";
+import { useAppSelector } from "./hooks/useGlobalState";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -29,10 +29,9 @@ function App() {
     document.documentElement.className =
       currentTheme === Theme.DARK ? "dark-mode" : "light-mode";
   }, [currentTheme]);
-  
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
       <BrowserRouter>
         <Routes>

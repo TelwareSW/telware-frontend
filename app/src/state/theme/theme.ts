@@ -8,16 +8,11 @@ export enum Theme {
 interface themeState {
   value: Theme;
 }
-const getSystemTheme = (): Theme => {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? Theme.DARK
-    : Theme.LIGHT;
-};
 
 const initialState: themeState = {
-  value: (localStorage.getItem("theme")
+  value: localStorage.getItem("theme")
     ? Number(localStorage.getItem("theme"))
-    : getSystemTheme()) as Theme,
+    : Theme.DARK,
 };
 
 const themeSlice = createSlice({
