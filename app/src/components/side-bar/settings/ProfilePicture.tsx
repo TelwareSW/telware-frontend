@@ -4,8 +4,8 @@ const StyledDiv = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30rem;
-  background-image: url("");
+  min-height: 20rem;
+  width: 100%;
   object-fit: fill;
 `;
 
