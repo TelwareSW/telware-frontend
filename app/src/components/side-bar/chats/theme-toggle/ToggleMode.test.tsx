@@ -1,6 +1,6 @@
 import { screen, fireEvent, render } from "@testing-library/react";
 import ThemeToggle from "./ThemeToggle";
-import renderWithStore from "../../../../tests/test-utils";
+import renderWithStore from "@tests/test-utils";
 
 describe("ThemeToggle Component", () => {
   test("should render toggle switch with DARK theme initially", () => {

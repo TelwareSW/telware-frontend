@@ -2,7 +2,7 @@ import { RadioInputProps } from "@components/inputs/radio-input/RadioInput";
 import { fireEvent, render, screen } from "@testing-library/react";
 import * as update from "@features/privacy-settings/service/changeSettings";
 import SettingsUpdate from "@components/side-bar/settings/SettingsUpdate";
-import renderWithStore from "../../../tests/test-utils";
+import renderWithStore from "@tests/test-utils";
 
 jest.mock("@features/privacy-settings/service/changeSettings", () => ({
   changeSettings: jest.fn(),

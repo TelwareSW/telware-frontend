@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { MenuOutlined } from "@mui/icons-material";
 import ThemeToggle from "./theme-toggle/ThemeToggle";
 import { useAppDispatch } from "@hooks/useGlobalState";
-import { toggleTheme } from "state/theme/theme";
+import { toggleTheme } from "@state/theme/theme";
 import SideBarMenuItem from "./SideBarMenuItem";
-import { updateSideBarView } from "state/side-bar/sideBar";
-import { sideBarPages } from "data/sideBar";
+import { updateSideBarView } from "@state/side-bar/sideBar";
+import { sideBarPages } from "@data/sideBar";
 import { useMouseLeave } from "@hooks/useMouseLeave";
 
 const StyledToolsIcon = styled(MenuOutlined)`

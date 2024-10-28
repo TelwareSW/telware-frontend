@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { getIcon } from "data/icons";
+import { getIcon } from "@data/icons";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
-import { updateSideBarView } from "state/side-bar/sideBar";
+import { updateSideBarView } from "@state/side-bar/sideBar";
 
 const StyledArrow = styled.div`
   width: 30px;

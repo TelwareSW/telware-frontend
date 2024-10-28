@@ -9,7 +9,7 @@ import {
   privacyStatesStrings,
   userInfoInterface,
 } from "types/user";
-import { updateUserActivity, updateUserPrivacy } from "state/user/user";
+import { updateUserActivity, updateUserPrivacy } from "@state/user/user";
 import { useUpdatePrivacy } from "@features/privacy-settings/hooks/useUpdatePrivacy";
 
 interface RadioOptionInterface {
@@ -107,7 +107,7 @@ function RadioInput({ state, data, updateFnType }: RadioInputProps) {
                 value={value}
                 {...register(data.id)}
                 checked={selectedValue === value}
-                data-testid={id}
+                data-testid={`radio-input-${id}`}
               />
               <Label htmlFor={id} id={id}>
                 {label}

@@ -1,4 +1,4 @@
-import { getIcon } from "data/icons";
+import { getIcon } from "@data/icons";
 import { useState } from "react";
 import { ComponentProps } from "react";
 import styled from "styled-components";

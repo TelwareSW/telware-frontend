@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { pagesMap } from "data/sideBar";
+import { pagesMap } from "@data/sideBar";
 import ChatsSideBar from "./chats/ChatsSideBar";
 import SettingsSideBar from "./settings/SettingsSideBarBody";
 import ContactsSideBar from "./ContactsSideBar";
