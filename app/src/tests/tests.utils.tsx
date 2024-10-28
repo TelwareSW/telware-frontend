@@ -1,6 +1,6 @@
 import { render as rtlRender } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "../../../state/store";
+import { store } from "../state/store";
 
 function renderWithRedux(ui: any, renderOptions = {}) {
   function Wrapper({ children }: any) {

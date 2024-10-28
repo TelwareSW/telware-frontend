@@ -7,13 +7,10 @@ import {
   activeStatesStrings,
   privacySettingsInterface,
   privacyStatesStrings,
-  updateActivityInterface,
-  updateInfoInterface,
-  updatePrivacyInterface,
   userInfoInterface,
 } from "types/user";
-import changeSettings from "features/privacy-settings/service/changeSettings";
 import { updateUserActivity, updateUserPrivacy } from "state/user/user";
+import { useUpdatePrivacy } from "@features/privacy-settings/hooks/useUpdatePrivacy";
 
 interface RadioOptionInterface {
   id: string;
@@ -30,16 +27,10 @@ interface RadioInputInterface {
   options: RadioOptionInterface[];
 }
 
-type paramType =
-  | updatePrivacyInterface
-  | updateInfoInterface
-  | updateActivityInterface;
-
 interface RadioInputProps {
   header?: string;
   state?: string;
   data: RadioInputInterface;
-  enable?: boolean;
   updateFnType: boolean; // 0-> activity , 1-> privacy
 }
 
@@ -76,31 +67,29 @@ const Label = styled.label`
   color: var(--color-text);
 `;
 
-function RadioInput({ state, data, enable, updateFnType }: RadioInputProps) {
+function RadioInput({ state, data, updateFnType }: RadioInputProps) {
   const { title, options } = data;
-  console.log(state);
+  const updateFn = updateFnType ? updateUserPrivacy : updateUserActivity;
+  const dispatch = useAppDispatch();
+  const updatePrivacy = useUpdatePrivacy();
+
   const { register, watch } = useForm({
     defaultValues: {
       [data.id]: options.find((item) => item.label === state)?.value,
     },
   });
 
-  const updateFn = updateFnType ? updateUserPrivacy : updateUserActivity;
-  const dispatch = useAppDispatch();
+  async function handleSumbit(payload: any) {
+    await updatePrivacy(payload);
+    dispatch(updateFn(payload));
+  }
 
   let selectedValue = watch(data.id);
 
   useEffect(() => {
-    async function submit() {
-      if (selectedValue) {
-        const payload = { key: data.id, value: selectedValue };
-        console.log("payload: ", payload);
-        dispatch(updateFn(payload));
-        await changeSettings(payload);
-      }
-    }
-    submit();
-  }, [selectedValue, data.id, dispatch, updateFn]);
+    const payload = { key: data.id, value: selectedValue };
+    handleSumbit(payload);
+  }, [selectedValue]);
 
   return (
     <StyledForm>
@@ -115,7 +104,6 @@ function RadioInput({ state, data, enable, updateFnType }: RadioInputProps) {
                 id={id}
                 value={value}
                 {...register(data.id)}
-                disabled={enable ? !enable : false}
                 checked={selectedValue === value}
               />
               <Label htmlFor={id} id={id}>

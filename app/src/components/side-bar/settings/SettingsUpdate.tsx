@@ -1,4 +1,6 @@
-import RadioInput, { RadioInputProps } from "@components/inputs/RadioInput";
+import RadioInput, {
+  RadioInputProps,
+} from "@components/inputs/radio-input/RadioInput";
 import styled from "styled-components";
 
 const StyledDiv = styled.div`

@@ -1,22 +1,23 @@
 import styled from "styled-components";
 
-import { AddAPhotoOutlined, Check } from "@mui/icons-material";
+import { AddAPhotoOutlined, Check, Settings } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FloatingLabelInput from "@components/inputs/float_label_input/FloatingLabelInput";
+import FloatingLabelInput from "@components/inputs/float-label-input/FloatingLabelInput";
 import { DevTool } from "@hookform/devtools";
 
 import { BIO_MAX_LENGTH, ValidationSchema } from "./schema/EditProfileSchema";
 import { useProfileSettings } from "./hooks/useProfileSettings";
 import { useUpdateProfileSettings } from "./hooks/useUpdateProfileSettings";
 import { useEffect } from "react";
+import SettingsSideBarHeader from "@components/side-bar/settings/SettingsSideBarHeader";
 
 const SideBarContainer = styled.div`
   & > form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 30rem;
+    width: 100%;
     min-height: 100dvh;
     background-color: var(--color-background-secondary);
   }
@@ -151,6 +152,7 @@ function ProfileSettings() {
 
   return (
     <SideBarContainer>
+      <SettingsSideBarHeader />
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{ position: "relative", overflow: "hidden" }}

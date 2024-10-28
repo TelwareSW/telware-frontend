@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import SideBarRow, { SideBarRowProps } from "./SideBarRow";
-import Heading from "../../Heading";
-import { useAppSelector } from "../../../hooks/useAppState";
+import SideBarRow, { SideBarRowProps } from "./side-bar-row/SideBarRow";
+import Heading from "@components/Heading";
+import { useAppSelector } from "hooks/useAppState";
 
 const StyledOptionsList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  border-bottom: 1rem solid var(--color-item-hover);
+  border-bottom: 1px solid var(--color-item-hover);
 
   padding-top: 2rem;
   padding-bottom: 2rem;

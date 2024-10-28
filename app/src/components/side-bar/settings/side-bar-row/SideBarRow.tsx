@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import Heading from "../../Heading";
-import { updateSideBarView } from "../../../state/side-bar/sideBar";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useAppState";
+import Heading from "@components/Heading";
+import { updateSideBarView } from "state/side-bar/sideBar";
+import { useAppDispatch, useAppSelector } from "hooks/useAppState";
 import {
   activitySettingsID,
   privacySettingsID,
   privacyStates,
-} from "../../../types/sideBar";
-import { getIcon, iconStrings } from "../../../data/icons";
+} from "types/sideBar";
+import { getIcon, iconStrings } from "data/icons";
 import { useEffect, useState } from "react";
-import { statusMap } from "../../../data/sideBar";
+import { statusMap } from "data/sideBar";
 import { activeStates } from "types/user";
-import { RadioOptionInterface } from "@components/inputs/RadioInput";
+import { RadioOptionInterface } from "@components/inputs/radio-input/RadioInput";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;
@@ -72,7 +72,7 @@ function ExtractData(
   let data: any;
 
   if (activityStatus !== undefined || privacyStatus !== undefined) {
-    let rowInfo =
+    const rowInfo =
       privacyStatus !== undefined
         ? statusMap.privacy[privacyStatus]
         : activityStatus !== undefined
@@ -89,7 +89,7 @@ function ExtractData(
         ? Object.keys(privacyStates)
         : Object.keys(activeStates);
 
-    let radioOptions: RadioOptionInterface[] = [];
+    const radioOptions: RadioOptionInterface[] = [];
 
     keyOptions.map((item, index) => {
       radioOptions.push({
@@ -131,10 +131,10 @@ function SideBarRow({
     let key;
     if (privacyStatus !== undefined) {
       key = statusMap.privacy[privacyStatus];
-      setCurrStatus(userData.privacySettings[key.id]);
+      setCurrStatus(userData?.privacySettings?.[key.id] || "everyone");
     } else if (activityStatus !== undefined) {
       key = statusMap.activity[activityStatus];
-      setCurrStatus(userData.activitySettings[key.id]);
+      setCurrStatus(userData?.activitySettings?.[key.id] || "enabled");
     } else {
       setCurrStatus(undefined);
     }

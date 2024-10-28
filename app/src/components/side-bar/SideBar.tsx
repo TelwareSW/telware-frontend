@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { useAppSelector } from "../../hooks/useAppState";
+import { useAppSelector } from "hooks/useAppState";
 import { pagesMap } from "data/sideBar";
 import ChatsSideBar from "./chats/ChatsSideBar";
 import SettingsSideBar from "./settings/SettingsSideBarBody";
 import ContactsSideBar from "./ContactsSideBar";
 import ProfilePicture from "./settings/ProfilePicture";
 import SettingsUpdate from "./settings/SettingsUpdate";
-import { RadioInputProps } from "@components/inputs/RadioInput";
-import { SideBarRowProps } from "./settings/SideBarRow";
+import { RadioInputProps } from "@components/inputs/radio-input/RadioInput";
+import { SideBarRowProps } from "./settings/side-bar-row/SideBarRow";
 import ProfileSettings from "@features/profile-settings/ProfileSettings";
 
 interface SideBarProps {
@@ -73,7 +73,7 @@ function Sidebar() {
     }
   }, [page, currentPage]);
 
-  const pageString = pagesMap[currentPage];
+  const pageString = pagesMap[currentPage] || "Settings";
 
   return (
     <StyledSidebar $isExiting={isExiting} data-testid="side-bar">

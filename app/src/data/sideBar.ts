@@ -1,5 +1,5 @@
-import { SideBarRowProps } from "../components/side-bar/settings/SideBarRow";
-import { SideBarView } from "../state/side-bar/sideBar";
+import { SideBarRowProps } from "components/side-bar/settings/side-bar-row/SideBarRow";
+import { SideBarView } from "state/side-bar/sideBar";
 import {
   privacySettingsID,
   activitySettingsID,
@@ -136,7 +136,7 @@ const contacts: SideBarView = {
   page: "CONTACTS",
 };
 const privacySettings: SideBarView = {
-  title: "Privacy",
+  title: "Privacy Settings",
   backView: sideBarPages.SETTINGS,
   props: { rows: privacySettingsRows },
   page: "PRIVACY_SETTINGS",

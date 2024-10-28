@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useAppState";
-import Heading from "../../Heading";
-import BackArrow from "../../BackArrow";
-import CircleIcon from "../../CircleIcon";
+import { useAppDispatch, useAppSelector } from "hooks/useAppState";
+import Heading from "@components/Heading";
+import BackArrow from "@components/BackArrow";
+import CircleIcon from "@components/CircleIcon";
 import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 import { updateSideBarView } from "state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";

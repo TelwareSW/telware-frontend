@@ -5,9 +5,9 @@ import CircleIcon from "../../CircleIcon";
 import { useMouseLeave } from "hooks/useMouseLeave";
 
 interface StyledListProps {
-  bottom?: number;
-  right?: number;
-  size?: number;
+  $bottom?: number;
+  $right?: number;
+  $size?: number;
 }
 const items: SideBarMenuItemProps[] = [
   { title: "New Channel", iconMapValue: "NewChannel" },
@@ -15,18 +15,18 @@ const items: SideBarMenuItemProps[] = [
   { title: "New Chat", iconMapValue: "NewChat" },
 ];
 const menuStyles: StyledListProps = {
-  bottom: 5,
-  right: 1.25,
-  size: 10,
+  $bottom: 5,
+  $right: 1.25,
+  $size: 10,
 };
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
-  width: ${(props) => props.size}rem;
+  width: ${(props) => props.$size}rem;
 
-  right: ${(props) => (props.right ?? 3) + 2}rem;
+  right: ${(props) => (props.$right ?? 3) + 2}rem;
 
-  bottom: ${(props) => (props.bottom ?? 3) + 3}rem;
+  bottom: ${(props) => (props.$bottom ?? 3) + 3}rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;

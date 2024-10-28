@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { getIcon } from "../data/icons";
+import { getIcon } from "data/icons";
 
-import { iconStrings } from "../data/icons";
+import { iconStrings } from "data/icons";
 
 interface CircleIconProps {
   $icon: iconStrings;
@@ -15,12 +15,12 @@ interface CircleIconProps {
 }
 
 const StyledIcon = styled.div<CircleIconProps>`
+  right: ${(props) => props.$right}rem;
+  bottom: ${(props) => props.$bottom}rem;
   ${(props) =>
     (props.$right !== undefined || props.$bottom !== undefined) &&
     css`
       position: absolute;
-      right: ${(props) => props.$right ?? 0}rem;
-      bottom: ${(props) => props.$bottom ?? 0}rem;
     `};
   width: ${(props) => props.$size}rem;
   height: ${(props) => props.$size}rem;

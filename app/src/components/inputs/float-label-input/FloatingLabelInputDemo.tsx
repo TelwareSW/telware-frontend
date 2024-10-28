@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styled from "styled-components";
-import FloatingLabelInput from "@inputs/float_label_input/FloatingLabelInput";
+import FloatingLabelInput from "@components/inputs/float-label-input/FloatingLabelInput";
 import { DevTool } from "@hookform/devtools";
 
 const DemoContainer = styled.div`
@@ -84,7 +84,7 @@ const validationSchema = yup.object({
     .min(8, "Password must be at least 8 characters")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     ),
   maxLengthInput: yup.string().max(20, "Maximum 20 characters allowed"),
   numberInput: yup
