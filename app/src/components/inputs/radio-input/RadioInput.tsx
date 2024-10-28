@@ -107,7 +107,7 @@ function RadioInput({ state, data, updateFnType }: RadioInputProps) {
                 value={value}
                 {...register(data.id)}
                 checked={selectedValue === value}
-                data-testid={id}
+                data-testid={`radio-input-${id}`}
               />
               <Label htmlFor={id} id={id}>
                 {label}
