@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import SideBarRow, { SideBarRowProps } from "./SideBarRow";
+import SideBarRow, { SideBarRowProps } from "./sideBarRow/SideBarRow";
 import Heading from "../../Heading";
 import { useAppSelector } from "../../../hooks";
 
@@ -14,7 +14,7 @@ const StyledOptionsList = styled.div`
   padding-bottom: 2rem;
 `;
 
-const PlaceHeader  = styled.div`
+const PlaceHeader = styled.div`
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 0.5rem;

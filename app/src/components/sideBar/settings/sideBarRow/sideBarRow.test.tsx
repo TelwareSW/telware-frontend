@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import SideBarRow, { SideBarRowProps } from "./SideBarRow";
-import { updateSideBarView } from "../../../state/sideBar/sideBar";
-import renderWithStore from "../../../components/sideBar/test-utils";
-import { getIcon } from "../../../data/icons";
+import { updateSideBarView } from "../../../../state/sideBar/sideBar";
+import renderWithStore from "../../test-utils";
+import { getIcon } from "../../../../data/icons";
 import { privacyStates, activeStates } from "types/sideBar";
 
 jest.mock("../../../hooks", () => ({
