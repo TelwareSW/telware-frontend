@@ -1,97 +1,23 @@
 import { http, HttpResponse } from "msw";
+import { TOKEN } from "@mocks/mockData";
 
-type LoginRequestBody = {
-  email: string;
-  password: string;
-};
+export const logoutMock = [
+  http.get("/auth/me", ({ cookies }) => {
+    console.log(cookies.sessionID);
 
-type LoginResponseBodySuccess = {
-  status: "success";
-  message: string;
-  data: {
-    user: {};
-    accessToken: string;
-  };
-};
-
-type LoginResponseBodyFail = {
-  status: "fail" | "error";
-  message: string;
-  data: {};
-};
-
-type LoginResponseBody = LoginResponseBodySuccess | LoginResponseBodyFail;
-
-export const MOCK_USER = {
-  email: "test@example.com",
-  password: "1234",
-  firstName: "John",
-  lastName: "Doe",
-  bio: "Hello, I'm John Doe",
-  photo:
-    "https://media-hbe1-1.cdn.whatsapp.net/v/t61.24694-24/462460819_518473281043631_6485009024565374350_n.jpg?ccb=11-4&oh=01_Q5AaINdhN3wt4c6ZnmGni8RNhM8fIvquSRicC2QT82X6ddeB&oe=6727186F&_nc_sid=5e03e0&_nc_cat=100",
-  username: "johndoe",
-};
-
-export const loginMock = [
-  http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
-    return undefined;
-  }),
-
-  http.post<{}, LoginRequestBody, LoginResponseBody>(
-    "/auth/login",
-    async ({ request }) => {
-      const { email, password } = await request.json();
-
-      const isValidUser =
-        email === MOCK_USER.email && password === MOCK_USER.password;
-
-      if (!isValidUser) {
-        return HttpResponse.json(
-          {
-            message: "Invalid email or password",
-            status: "error",
-            data: {},
-          },
-          { status: 401 }
-        );
-      }
-
-      return HttpResponse.json(
-        {
-          message: "Successful login",
-          status: "success",
-          data: {
-            user: {
-              email: "test@example.com",
-            },
-            accessToken: "accessToken",
-          },
-        },
-        { status: 201 }
-      );
+    if (!cookies.sessionID || cookies.sessionID !== TOKEN) {
+      return new HttpResponse(null, { status: 403 });
     }
-  ),
 
-  http.get("/users/me", async ({ request }) => {
-    return HttpResponse.json(
-      {
-        status: "success",
-        data: MOCK_USER,
-      },
-      { status: 200 }
-    );
+    return new HttpResponse(null, { status: 201 });
   }),
 
-  http.patch("/users/me", async ({ request }) => {
-    const newProfileSettings = await request.json();
-
-    return HttpResponse.json(
-      {
-        status: "success",
-        data: newProfileSettings,
+  http.post("/auth/logout", async () => {
+    return new HttpResponse(null, {
+      status: 200,
+      headers: {
+        "Set-Cookie": "sessionID=; HttpOnly; Path=/; Max-Age=0",
       },
-      { status: 200 }
-    );
+    });
   }),
 ];

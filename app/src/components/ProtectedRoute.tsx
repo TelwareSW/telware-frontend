@@ -6,6 +6,8 @@ type prortectedRouteType = {
 };
 
 function ProtectedRoute({ children }: prortectedRouteType) {
+  console.log('reached here');
+  
   const isAuthenticated = useAuthCheck("/login");
   if (isAuthenticated) return children;
 }

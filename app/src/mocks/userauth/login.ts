@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { TOKEN } from "@mocks/mockData";
+import { MOCK_USER, TOKEN } from "@mocks/mockData";
 
 type LoginRequestBody = {
   email: string;
@@ -11,7 +11,7 @@ type LoginResponseBodySuccess = {
   message: string;
   data: {
     user: {};
-    accessToken: string;
+    sessionID: string;
   };
 };
 
@@ -22,17 +22,6 @@ type LoginResponseBodyFail = {
 };
 
 type LoginResponseBody = LoginResponseBodySuccess | LoginResponseBodyFail;
-
-export const MOCK_USER = {
-  email: "test@example.com",
-  password: "1234",
-  firstName: "John",
-  lastName: "Doe",
-  bio: "Hello, I'm John Doe",
-  photo:
-    "https://media-hbe1-1.cdn.whatsapp.net/v/t61.24694-24/462460819_518473281043631_6485009024565374350_n.jpg?ccb=11-4&oh=01_Q5AaINdhN3wt4c6ZnmGni8RNhM8fIvquSRicC2QT82X6ddeB&oe=6727186F&_nc_sid=5e03e0&_nc_cat=100",
-  username: "johndoe",
-};
 
 export const loginMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
@@ -66,13 +55,13 @@ export const loginMock = [
             user: {
               email: "test@example.com",
             },
-            accessToken: TOKEN,
+            sessionID: TOKEN,
           },
         },
         {
           status: 201,
           headers: {
-            "Set-Cookie": `accessToken=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
+            "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
           },
         }
       );
@@ -89,22 +78,5 @@ export const loginMock = [
       },
       { status: 200 }
     );
-  }),
-
-  http.get("/auth/me", ({ cookies }) => {
-    if (!cookies.accessToken || cookies.accessToken !== TOKEN) {
-      return new HttpResponse(null, { status: 403 });
-    }
-
-    return new HttpResponse(null, { status: 201 });
-  }),
-
-  http.post("/auth/logout", async () => {
-    return new HttpResponse(null, {
-      status: 200,
-      headers: {
-        "Set-Cookie": "accessToken=; HttpOnly; Path=/; Max-Age=0",
-      },
-    });
   }),
 ];

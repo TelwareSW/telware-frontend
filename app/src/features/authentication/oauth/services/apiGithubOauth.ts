@@ -1,4 +1,4 @@
-export async function apiGitHubOauth(code: string) {
+export async function apiGithubOauth(code: string) {
   const res = await fetch("/auth/oauth/github", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

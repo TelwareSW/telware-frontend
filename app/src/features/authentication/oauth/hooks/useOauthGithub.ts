@@ -1,19 +1,19 @@
-import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
-import { apiGoogleOauth } from "../services/apiGoogleOauth";
+import { apiGithubOauth } from "../services/apiGithubOauth";
 
-export function useOauthGoogle() {
+export function useOauthGithub() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { mutate: loginWithGoogle, isPending } = useMutation({
-    mutationFn: apiGoogleOauth,
+  const { mutate: loginWithGithub, isPending } = useMutation({
+    mutationFn: apiGithubOauth,
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], { user: data.user });
       navigate("/", { replace: true });
     },
   });
 
-  return { loginWithGoogle, isPending };
+  return { loginWithGithub, isPending };
 }
