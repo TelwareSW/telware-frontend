@@ -12,7 +12,11 @@
       "@mocks/*": ["./mocks/*"],
       "@features/*": ["./features/*"],
       "@pages/*": ["./pages/*"],
-      "@constants":["./constants"]
+      "@constants": ["./constants"],
+      "hooks": ["./hooks.ts"],
+      "state": ["./state"],
+      "types": ["./types"],
+      "data": ["./data"]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
