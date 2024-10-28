@@ -4,13 +4,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import styled from "styled-components";
 
-import { useLogin } from "./hooks/useLogin";
-import { schema } from "./schema/login";
+import { useLogin } from "../hooks/useLogin";
+import { schema } from "../schema/login";
 
-import ForgotPasswordModal from "./ForgotPasswordModal";
+import ForgotPasswordModal from "../ForgotPasswordModal";
 
 import Button from "@components/Button";
-import InputField from "@components/InputField";
+import InputField from "@components/InputField/InputField";
 import PasswordInputField from "@components/inputs/PasswordInputField";
 import SpinnerMini from "@components/SpinnerMini";
 

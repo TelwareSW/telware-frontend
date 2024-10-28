@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { useLogin } from "./hooks/useLogin";
+import { useLogin } from "../hooks/useLogin";
 import LoginForm from "./LoginForm";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-jest.mock("./hooks/useLogin");
-jest.mock("./services/apiForgotPassword", () => ({
+jest.mock("../hooks/useLogin");
+jest.mock("../services/apiForgotPassword", () => ({
   forgotPassword: jest.fn(() => Promise.resolve()),
 }));
 

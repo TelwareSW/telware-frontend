@@ -3,8 +3,6 @@ import { TOKEN } from "@mocks/mockData";
 
 export const logoutMock = [
   http.get("/auth/me", ({ cookies }) => {
-    console.log(cookies.sessionID);
-
     if (!cookies.sessionID || cookies.sessionID !== TOKEN) {
       return new HttpResponse(null, { status: 403 });
     }

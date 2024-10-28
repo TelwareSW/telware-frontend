@@ -1,4 +1,4 @@
-import { User } from "../LoginForm";
+import { User } from "../LoginForm/LoginForm";
 
 export async function login(user: User) {
   const res = await fetch("auth/login", {

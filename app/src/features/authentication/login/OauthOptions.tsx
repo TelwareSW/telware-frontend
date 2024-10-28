@@ -8,12 +8,12 @@ import facebook from "/oauth/facebook.png";
 
 import LoginWith from "./LoginWith";
 
-import { useAppSelector } from "../../hooks";
-import { Theme } from "../../state/theme/theme";
+import { useAppSelector } from "../../../hooks";
+import { Theme } from "../../../state/theme/theme";
 
-import { useOauthGoogle } from "./oauth/hooks/useOauthGoogle";
-import { useOauthFacebook } from "./oauth/hooks/useOauthFacebook";
-import { useOauthGithub } from "./oauth/hooks/useOauthGithub";
+import { useOauthGoogle } from "../oauth/hooks/useOauthGoogle";
+import { useOauthFacebook } from "../oauth/hooks/useOauthFacebook";
+import { useOauthGithub } from "../oauth/hooks/useOauthGithub";
 
 const Icons = styled.div`
   display: flex;

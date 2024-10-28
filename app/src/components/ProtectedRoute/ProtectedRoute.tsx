@@ -5,9 +5,7 @@ type prortectedRouteType = {
   children: ReactNode;
 };
 
-function ProtectedRoute({ children }: prortectedRouteType) {
-  console.log('reached here');
-  
+function ProtectedRoute({ children }: prortectedRouteType) {  
   const isAuthenticated = useAuthCheck("/login");
   if (isAuthenticated) return children;
 }
