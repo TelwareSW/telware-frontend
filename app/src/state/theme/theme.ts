@@ -15,8 +15,9 @@ const getSystemTheme = (): Theme => {
 };
 
 const initialState: themeState = {
-  value:
-    Number(localStorage.getItem("theme") as unknown as Theme) || Theme.LIGHT,
+  value: (localStorage.getItem("theme")
+    ? Number(localStorage.getItem("theme"))
+    : getSystemTheme()) as Theme,
 };
 
 const themeSlice = createSlice({
