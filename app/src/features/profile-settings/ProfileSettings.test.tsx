@@ -239,4 +239,58 @@ describe("ProfileSettings", () => {
       expect(bioInput).toHaveValue(longBio.slice(0, 120));
     });
   });
+
+  it("loads and displays email and phone data correctly", async () => {
+    const initialState = createInitialState();
+    render(<ProfileSettings />, { wrapper: createWrapper(initialState) });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("email")).toHaveValue("johndoe@example.com");
+      expect(screen.getByTestId("phone")).toHaveValue("0123456789");
+    });
+  });
+
+  it("shows validation errors for empty required fields in Contact Information", async () => {
+    const initialState = createInitialState();
+    render(<ProfileSettings />, { wrapper: createWrapper(initialState) });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("email")).not.toHaveValue("");
+    });
+
+    const emailInput = screen.getByTestId("email");
+    const phoneInput = screen.getByTestId("phone");
+    const submitButton = screen.getByTestId("submit-button");
+
+    await userEvent.clear(emailInput);
+    await userEvent.clear(phoneInput);
+    await userEvent.click(submitButton);
+
+    await waitFor(
+      () => {
+        expect(screen.getByText("Email is required")).toBeInTheDocument();
+      },
+      { timeout: 3000 },
+    );
+  });
+
+  it("shows validation error for invalid email format", async () => {
+    const initialState = createInitialState();
+    render(<ProfileSettings />, { wrapper: createWrapper(initialState) });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("email")).not.toHaveValue("");
+    });
+
+    const emailInput = screen.getByTestId("email");
+    const submitButton = screen.getByTestId("submit-button");
+
+    await userEvent.clear(emailInput);
+    await userEvent.type(emailInput, "invalid-email-format");
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Invalid email address")).toBeInTheDocument();
+    });
+  });
 });

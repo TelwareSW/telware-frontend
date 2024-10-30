@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import SettingsSideBarHeader from "@components/side-bar/settings/SettingsSideBarHeader";
 
 const SideBarContainer = styled.div`
+  overflow-y: auto;
+
   & > form {
     display: flex;
     flex-direction: column;
@@ -133,6 +135,8 @@ interface EditProfileForm {
   lastName: string;
   bio: string;
   username: string;
+  email: string;
+  phone: string;
 }
 
 function ProfileSettings() {
@@ -192,10 +196,7 @@ function ProfileSettings() {
   return (
     <SideBarContainer>
       <SettingsSideBarHeader />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ position: "relative", overflow: "hidden" }}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} placement="top-right" />
 
         <SettingSection>
@@ -285,6 +286,26 @@ function ProfileSettings() {
             <br />
             {userHandle}
           </Hint>
+        </SettingSection>
+        <SettingSection>
+          <SectionTitle>Contact Information</SectionTitle>
+          <FloatingLabelInput<EditProfileForm>
+            id="email"
+            label="Email"
+            register={register}
+            watch={watch}
+            error={errors.email?.message}
+            data-testid="email"
+          />
+          <FloatingLabelInput<EditProfileForm>
+            id="phone"
+            label="Phone number"
+            type="tel"
+            register={register}
+            watch={watch}
+            error={errors.phone?.message}
+            data-testid="phone"
+          />
         </SettingSection>
         <SubmitButton
           type="submit"
