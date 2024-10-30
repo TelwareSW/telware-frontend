@@ -12,6 +12,11 @@ const ValidationSchema = yup.object({
     .required("Username is required")
     .min(5, "Username must be at least 5 characters")
     .matches(/^[a-zA-Z0-9_]*$/, "Username must be alphanumeric"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email address"),
+  phone: yup.string().matches(/^[0-9]*$/, "Phone number must be numeric"),
 });
 
 export { ValidationSchema, BIO_MAX_LENGTH };

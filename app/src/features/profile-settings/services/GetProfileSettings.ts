@@ -18,6 +18,8 @@ async function GetProfileSettings() {
     lastName: data.data.lastName,
     bio: data.data.bio,
     username: data.data.username,
+    email: data.data.email,
+    phone: data.data.phoneNumber,
   };
 
   return profileSettings;

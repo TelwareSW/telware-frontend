@@ -29,7 +29,8 @@ const fadeOut = keyframes`
 const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   height: 100vh;
   background-color: var(--color-background);
-  overflow-y: auto;
+  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
   animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s;
