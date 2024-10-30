@@ -7,7 +7,7 @@ module.exports = {
     "!src/**/*Demo.tsx",
   ],
   coverageDirectory: "coverage",
-  testEnvironment: "jsdom",
+  testEnvironment: "jest-fixed-jsdom",
   transform: {
     ".(ts|tsx)": "babel-jest",
   },
@@ -25,10 +25,16 @@ module.exports = {
     "/node_modules/",
     "/coverage",
     "package.json",
-    "package-lock.json",
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/mocks/",
     "reportWebVitals.ts",
     "jest.setup.ts",
     "index.tsx",
   ],
+  setupFiles: ["./jest.polyfills.ts"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testEnvironmentOptions: {
+    customExportConditions: [""],
+  },
 };
