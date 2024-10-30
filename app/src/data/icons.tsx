@@ -128,13 +128,13 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
   Show: (
     <VisibilityIcon
-      fontSize="large"
+      fontSize="medium"
       sx={{ color: `var(--color-icon-secondary)` }}
     />
   ),
   Hide: (
     <VisibilityOffIcon
-      fontSize="large"
+      fontSize="medium"
       sx={{ color: `var(--color-icon-secondary)` }}
     />
   ),

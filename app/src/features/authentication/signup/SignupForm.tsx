@@ -1,17 +1,18 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSignup } from "./hooks/useSignup";
+import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
+import { schema } from "./schema/signup";
+
 import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
 import Button from "@components/Button";
 import InputField from "@components/inputs/input-field/InputField";
 import TelephoneInputField from "@components/inputs/input-field/TelephoneInputField";
-import { useSignup } from "./hooks/useSignup";
-import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
-import { schema } from "./schema/signup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
 import PasswordInputField from "@components/inputs/input-field/PasswordInputField";
-
+import { RECAPTCHA_SITE_KEY } from "@constants";
 export type User = {
   username: string;
   phoneNumber: string;
@@ -147,7 +148,6 @@ export default function SignupForm() {
           <PasswordInputField
             data-testid="confirm-password-input"
             label="Confirm Password"
-            type="password"
             id="confirmPassword"
             register={register}
             placeholder="Confirm Password"
