@@ -6,15 +6,16 @@ services:
       dockerfile: dev.Dockerfile
 
     ports:
-      - 5173:5173
+      - "5174:5174"
 
     volumes:
       - ./app:/app
       - /app/node_modules
 
+    env_file:
+      - ./app/.env
+
     environment:
       - NODE_ENV=${NODE_ENV:-development}
+      - VITE_PORT=5174
 
-
-  
-  
