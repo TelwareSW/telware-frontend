@@ -1,4 +1,3 @@
-import { API_URL } from "@constants";
 import { http, HttpResponse } from "msw";
 
 type SignupRequestBody = {
@@ -24,10 +23,9 @@ type SignupResponseBodyFail = {
 
 type SignupResponseBody = SignupResponseBodySuccess | SignupResponseBodyFail;
 
-const API = API_URL;
 export const signupMock = [
   http.post<object, SignupRequestBody, SignupResponseBody>(
-    `${API}/auth/signup`,
+    `/auth/signup`,
     async ({ request }) => {
       await request.json();
       const isValid = true;
@@ -38,7 +36,7 @@ export const signupMock = [
             status: "error",
             data: {},
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -48,8 +46,8 @@ export const signupMock = [
           status: "success",
           data: {},
         },
-        { status: 201 }
+        { status: 201 },
       );
-    }
+    },
   ),
 ];
