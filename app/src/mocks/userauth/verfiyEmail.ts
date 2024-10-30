@@ -1,4 +1,3 @@
-import { API_URL } from "@constants";
 import { http, HttpResponse } from "msw";
 
 type EmailRequestBodySend = {
@@ -22,7 +21,7 @@ type EmailResponseError = {
 
 type EmailResponseBody = EmailResponseSuccess | EmailResponseError;
 
-const API_ENDPOINT = API_URL;
+const API_ENDPOINT = "";
 
 export const sendEmailConfirmationMock = [
   http.post<object, EmailRequestBodySend, EmailResponseBody>(
@@ -37,7 +36,7 @@ export const sendEmailConfirmationMock = [
             message: "Cannot send the confirmation, please retry",
             status: "error",
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -46,9 +45,9 @@ export const sendEmailConfirmationMock = [
           message: "Confirmation code sent. Check your email.",
           status: "success",
         },
-        { status: 201 }
+        { status: 201 },
       );
-    }
+    },
   ),
 ];
 
@@ -65,7 +64,7 @@ export const verifyEmailMock = [
             message: "Incorrect code, please retry",
             status: "error",
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -74,8 +73,8 @@ export const verifyEmailMock = [
           message: "Successful! Redirecting...",
           status: "success",
         },
-        { status: 201 }
+        { status: 201 },
       );
-    }
+    },
   ),
 ];
