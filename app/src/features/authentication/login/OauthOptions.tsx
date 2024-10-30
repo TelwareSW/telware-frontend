@@ -14,6 +14,7 @@ import { Theme } from "state/theme/theme";
 import { useOauthGoogle } from "../oauth/hooks/useOauthGoogle";
 import { useOauthFacebook } from "../oauth/hooks/useOauthFacebook";
 import { useOauthGithub } from "../oauth/hooks/useOauthGithub";
+import { PORT } from "@constants";
 
 const Icons = styled.div`
   display: flex;
@@ -57,13 +58,13 @@ function OauthOptions() {
 
   function handleGithubLogin() {
     const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
-    const redirectURI = "http://localhost:5174/login";
+    const redirectURI = `http://localhost:${PORT}/login`;
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}`;
   }
 
   function handleGoogleLogin() {
     const clientID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const redirectURI = "http://localhost:5174/login";
+    const redirectURI = `http://localhost:${PORT}/login`;
     const scope = "profile email";
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code&scope=${scope}`;
   }
