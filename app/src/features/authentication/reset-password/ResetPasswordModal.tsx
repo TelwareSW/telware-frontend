@@ -110,12 +110,13 @@ function ResetPasswordModal() {
 
   return (
     <ModalOverlay>
-      <ModalContainer>
+      <ModalContainer data-testid="forgot-password-modal">
         <ModalTitle>Change your password</ModalTitle>
         <ModalMessage>Enter your new password!</ModalMessage>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Inputs>
             <PasswordInputField
+              data-testid="password-input"
               label="Password"
               id="newPassword"
               register={register}
@@ -124,6 +125,7 @@ function ResetPasswordModal() {
               error={errors.newPassword?.message}
             />
             <PasswordInputField
+              data-testid="confirm-password-input"
               label="Confirm Password"
               id="confirmPassword"
               register={register}
@@ -134,18 +136,29 @@ function ResetPasswordModal() {
           </Inputs>
 
           {isSuccess ? (
-            <Button onClick={handleLogin}>Login</Button>
+            <Button onClick={handleLogin} data-testid="button-redirect">
+              Login
+            </Button>
           ) : (
-            <Button $type="modal" type="submit" disabled={isPending}>
+            <Button
+              $type="modal"
+              type="submit"
+              disabled={isPending}
+              data-testid="button-submit"
+            >
               Reset Password
             </Button>
           )}
           <div>
             {isSuccess && !isValid && (
-              <Success>Your Password is reset!</Success>
+              <Success data-testid="success-message">
+                Your Password is reset!
+              </Success>
             )}
             {isError && !isValid && (
-              <Error>There was an error, try again</Error>
+              <Error data-testid="failure-message">
+                There was an error, try again
+              </Error>
             )}
           </div>
         </Form>
