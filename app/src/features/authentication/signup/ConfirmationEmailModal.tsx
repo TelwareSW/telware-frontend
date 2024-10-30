@@ -27,6 +27,11 @@ const ModalContainer = styled.div`
   text-align: center;
   width: 400px;
 `;
+const CodeWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+`;
 
 const Button = styled.button<{ disabled?: boolean }>`
   border: none;
@@ -50,7 +55,7 @@ const ModalTitle = styled.h2`
 `;
 
 const ModalMessage = styled.span`
-  margin-bottom: 2rem;
+  margin-bottom: 3em;
   color: var(--color-text);
 `;
 
@@ -141,11 +146,13 @@ function ConfirmationEmailModal({
           A confirmation email has been sent to your email address. Please check
           your inbox to verify your account.
         </ModalMessage>
-        <CodeInputField
-          data-testid="code-input"
-          code={codeDisplay}
-          setCode={setCodeDisplay}
-        />
+        <CodeWrapper>
+          <CodeInputField
+            data-testid="code-input"
+            code={codeDisplay}
+            setCode={setCodeDisplay}
+          />
+        </CodeWrapper>
         <Button
           onClick={handleConfirmCode}
           disabled={codeDisplay.join("").length < 6}

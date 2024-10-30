@@ -68,7 +68,7 @@ export default function SignupForm() {
       phoneNumber: "+1234567890",
       password: "password123",
       confirmPassword: "password123",
-      reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
+      //reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
     },
   });
 
@@ -162,7 +162,10 @@ export default function SignupForm() {
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={handleRecaptchaChange}
         />
-        {error && <Error>{errors.reCaptchaResponse?.message}</Error>}
+
+        {errors.reCaptchaResponse?.message && (
+          <Error>{errors.reCaptchaResponse?.message}</Error>
+        )}
 
         <Button type="submit" data-testid="submit-button">
           {isPending ? "Loading..." : "Sign up"}
