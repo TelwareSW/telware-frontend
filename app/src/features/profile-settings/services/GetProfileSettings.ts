@@ -20,6 +20,7 @@ async function GetProfileSettings() {
     username: data.data.username,
     email: data.data.email,
     phone: data.data.phoneNumber,
+    lastSeen: data.data.status,
   };
 
   return profileSettings;

@@ -65,7 +65,7 @@ interface SideBarRowProps {
 function ExtractData(
   privacyStatus: privacySettingsID | undefined,
   activityStatus: activitySettingsID | undefined,
-  currStatus: string | undefined
+  currStatus: string | undefined,
 ) {
   let keyOptions;
   let valueOptions: string[];
