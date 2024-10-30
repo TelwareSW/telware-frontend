@@ -53,7 +53,9 @@ function Modal({ onClose, isOpen, title, message, children }: ModalProps) {
   return (
     <ModalOverlay>
       <ModalContainer>
-        <CloseButton onClick={onClose}>&times;</CloseButton>
+        <CloseButton onClick={onClose} data-testid="close-button">
+          &times;
+        </CloseButton>
         <ModalTitle>{title}</ModalTitle>
         <ModalMessage>{message}</ModalMessage>
         {children}
