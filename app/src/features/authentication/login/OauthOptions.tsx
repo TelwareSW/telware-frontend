@@ -4,7 +4,6 @@ import styled from "styled-components";
 import google from "/oauth/google.png";
 import githubLight from "/oauth/githubLight.png";
 import githubDark from "/oauth/githubDark.png";
-import facebook from "/oauth/facebook.png";
 
 import LoginWith from "./LoginWith";
 
@@ -12,7 +11,6 @@ import { useAppSelector } from "hooks/useGlobalState";
 import { Theme } from "state/theme/theme";
 
 import { useOauthGoogle } from "../oauth/hooks/useOauthGoogle";
-import { useOauthFacebook } from "../oauth/hooks/useOauthFacebook";
 import { useOauthGithub } from "../oauth/hooks/useOauthGithub";
 import { PORT } from "@constants";
 
@@ -39,7 +37,6 @@ function OauthOptions() {
 
   const { loginWithGithub } = useOauthGithub();
   const { loginWithGoogle } = useOauthGoogle();
-  const { loginWithFacebook } = useOauthFacebook();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -48,8 +45,6 @@ function OauthOptions() {
     if (code) {
       if (window.location.href.includes("google")) {
         loginWithGoogle(code);
-      } else if (window.location.href.includes("facebook")) {
-        loginWithFacebook(code);
       } else {
         loginWithGithub(code);
       }
@@ -75,7 +70,6 @@ function OauthOptions() {
 
       <Icons data-test="oauth-options">
         <LoginWith onClick={handleGoogleLogin} src={google} alt="google" />
-        <LoginWith src={facebook} alt="facebook" />
         <LoginWith onClick={handleGithubLogin} src={gitHub} alt="github" />
       </Icons>
     </OtherMethods>

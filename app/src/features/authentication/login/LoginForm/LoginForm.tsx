@@ -14,6 +14,9 @@ import InputField from "@components/inputs/input-field/InputField";
 import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
 import SpinnerMini from "@components/SpinnerMini";
 
+const MAX_PASSWORD_LENGTH = 128;
+const MAX_EMAIL_LENGTH = 254;
+
 export type User = {
   email: string;
   password: string;
@@ -81,15 +84,28 @@ export default function LoginForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<User>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<User> = function (data) {
+    if (
+      data.email.length > MAX_EMAIL_LENGTH ||
+      data.password.length > MAX_PASSWORD_LENGTH
+    ) {
+      setError("Invalid email or password");
+      return;
+    }
+
     login(data, {
       onSettled: (_, error) => {
         setError(error ? error.message : "");
+      },
+
+      onSuccess: () => {
+        reset();
       },
     });
   };
