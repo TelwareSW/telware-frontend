@@ -105,7 +105,6 @@ export default function LoginForm() {
           <InputField
             data-testid="login-email-input"
             label="Email"
-            type="email"
             id="email"
             register={register}
             placeholder="Email"
