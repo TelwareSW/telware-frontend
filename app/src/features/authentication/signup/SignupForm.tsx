@@ -11,6 +11,7 @@ import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
 import { schema } from "./schema/signup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
 import PasswordInputField from "@components/inputs/input-field/PasswordInputField";
+import { RECAPTCHA_SITE_KEY } from "@constants";
 
 export type User = {
   username: string;
@@ -61,15 +62,17 @@ export default function SignupForm() {
     formState: { errors },
   } = useForm<User>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      username: "TestUser",
-      email: "test@example.com",
-      phoneNumber: "+1234567890",
-      password: "password123",
-      confirmPassword: "password123",
-      reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
-    },
+   
   });
+
+  //  defaultValues: {
+  //     username: "TestUser",
+  //     email: "test@example.com",
+  //     phoneNumber: "+1234567890",
+  //     password: "password123",
+  //     confirmPassword: "password123",
+  //     reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
+  //   },
 
   const onSubmit: SubmitHandler<User> = function (userData) {
     signup(userData, {

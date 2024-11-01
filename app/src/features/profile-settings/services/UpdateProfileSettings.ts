@@ -1,7 +1,8 @@
+import { API_URL } from "@constants";
 import { EditProfileForm } from "../ProfileSettings";
 
 async function UpdateProfileSettings(newProfileSettings: EditProfileForm) {
-  const res = await fetch("users/me", {
+  const res = await fetch(`${API_URL}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

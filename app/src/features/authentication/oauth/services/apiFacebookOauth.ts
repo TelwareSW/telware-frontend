@@ -1,5 +1,7 @@
+import { API_URL } from "@constants";
+
 export async function apiFacebookOauth(code: string) {
-  const res = await fetch("/auth/oauth/facebook", {
+  const res = await fetch(`${API_URL}/auth/oauth/facebook`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code }),

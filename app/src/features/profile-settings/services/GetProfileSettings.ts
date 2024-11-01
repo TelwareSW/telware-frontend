@@ -1,5 +1,7 @@
+import { API_URL } from "@constants";
+
 async function GetProfileSettings() {
-  const res = await fetch("users/me", {
+  const res = await fetch(`${API_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
