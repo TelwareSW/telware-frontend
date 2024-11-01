@@ -11,6 +11,7 @@ import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
 import { schema } from "./schema/signup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
 import PasswordInputField from "@components/inputs/input-field/PasswordInputField";
+import { RECAPTCHA_SITE_KEY } from "@constants";
 
 export type User = {
   username: string;
