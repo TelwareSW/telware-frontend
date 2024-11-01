@@ -81,8 +81,6 @@ export default function LoginForm() {
   const {
     register,
     handleSubmit,
-    reset,
-
     formState: { errors },
   } = useForm<User>({
     resolver: yupResolver(schema),
@@ -92,7 +90,6 @@ export default function LoginForm() {
     login(data, {
       onSettled: (_, error) => {
         setError(error ? error.message : "");
-        reset();
       },
     });
   };
