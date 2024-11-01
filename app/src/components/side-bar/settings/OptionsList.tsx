@@ -29,7 +29,7 @@ function OptionsList({ rows }: { rows: SideBarRowProps[] }) {
             <Heading as="h6">{title}</Heading>
           </PlaceHeader>
           {rows.map((item, index) => (
-            <SideBarRow {...item} key={index} />
+            <SideBarRow {...item} key={index} id={index} />
           ))}
         </StyledOptionsList>
       )}

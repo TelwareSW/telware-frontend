@@ -60,6 +60,7 @@ interface SideBarRowProps {
   privacyStatus?: privacySettingsID;
   count?: number;
   redirect?: number;
+  id: number;
 }
 
 function ExtractData(
@@ -120,6 +121,7 @@ function SideBarRow({
   activityStatus,
   privacyStatus,
   count,
+  id,
 }: SideBarRowProps) {
   const userData = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
@@ -147,6 +149,7 @@ function SideBarRow({
       onClick={() =>
         redirect && dispatch(updateSideBarView({ redirect, data }))
       }
+      data-testid={`menu-item-${id}`}
     >
       <RowInfo>
         {renderedIcon}
