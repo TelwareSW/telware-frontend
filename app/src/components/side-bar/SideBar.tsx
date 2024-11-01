@@ -10,6 +10,7 @@ import { RadioInputProps } from "@components/inputs/radio-input/RadioInput";
 import { SideBarRowProps } from "./settings/side-bar-row/SideBarRow";
 import ProfileSettings from "@features/profile-settings/ProfileSettings";
 import { useAppSelector } from "@hooks/useGlobalState";
+import ProfileInfo from "@features/profile-info/ProfileInfo";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -45,6 +46,7 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
     Settings: (props) => (
       <SettingsSideBar rows={props.rows || []}>
         <ProfilePicture />
+        <ProfileInfo />
       </SettingsSideBar>
     ),
     Privacy: (props) => <SettingsSideBar rows={props.rows || []} />,
