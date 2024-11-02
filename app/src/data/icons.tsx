@@ -17,6 +17,8 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 enum icons {
   BlockIcon,
   SettingsOutlinedIcon,
@@ -38,6 +40,8 @@ enum icons {
   Close,
   Show,
   Hide,
+  Delete,
+  AddPhoto,
 }
 
 type iconStrings = keyof typeof icons;
@@ -142,6 +146,14 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     <CloseOutlinedIcon
       fontSize="large"
       sx={{ color: `var(--color-icon-secondary)` }}
+    />
+  ),
+  AddPhoto: <AddAPhotoOutlined fontSize="large" />,
+  Delete: (
+    <DeleteOutlineOutlinedIcon
+      sx={{
+        color: "white",
+      }}
     />
   ),
 };

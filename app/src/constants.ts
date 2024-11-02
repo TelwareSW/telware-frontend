@@ -6,4 +6,6 @@ const {
   VITE_ENV: ENV,
 } = import.meta.env;
 
-export { ENVIRONMENT, RECAPTCHA_SITE_KEY, API_URL, PORT, ENV };
+const MOBILE_VIEW = "(max-width: 768px)";
+
+export { ENVIRONMENT, RECAPTCHA_SITE_KEY, API_URL, PORT, ENV, MOBILE_VIEW };

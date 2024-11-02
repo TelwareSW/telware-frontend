@@ -5,7 +5,7 @@ export const MOCK_USER = {
   lastName: "Doe",
   bio: "Hello, I'm John Doe",
   photo:
-    "https://media-hbe1-1.cdn.whatsapp.net/v/t61.24694-24/462460819_518473281043631_6485009024565374350_n.jpg?ccb=11-4&oh=01_Q5AaINdhN3wt4c6ZnmGni8RNhM8fIvquSRicC2QT82X6ddeB&oe=6727186F&_nc_sid=5e03e0&_nc_cat=100",
+    "https://i.pinimg.com/564x/26/76/a1/2676a1898da6edae9fc648c94332903f.jpg",
   username: "johndoe",
   phoneNumber: "0123456789",
   status: "Online",

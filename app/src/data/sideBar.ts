@@ -153,7 +153,7 @@ const settingsUpdate: SideBarView = {
   page: "SETTINGS_UPDATE",
 };
 const profileUpdate: SideBarView = {
-  title: "ProfileUpdate",
+  title: "Edit Profile",
   backView: sideBarPages.SETTINGS,
   page: "PROFILE_UPDATE",
 };
