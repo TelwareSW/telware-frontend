@@ -8,6 +8,7 @@ async function UpdateProfileSettings(newProfileSettings: EditProfileForm) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newProfileSettings),
+    credentials: "include",
   });
 
   const data = await res.json();
