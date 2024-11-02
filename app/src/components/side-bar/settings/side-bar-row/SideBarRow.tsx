@@ -11,7 +11,11 @@ import { getIcon, iconStrings } from "@data/icons";
 import { useEffect, useState } from "react";
 import { statusMap } from "@data/sideBar";
 import { RadioOptionInterface } from "@components/inputs/radio-input/RadioInput";
-import { activeStates } from "types/user";
+import {
+  activeStates,
+  activitySettingsInterface,
+  privacySettingsInterface,
+} from "types/user";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;
@@ -66,7 +70,7 @@ interface SideBarRowProps {
 function ExtractData(
   privacyStatus: privacySettingsID | undefined,
   activityStatus: activitySettingsID | undefined,
-  currStatus: string | undefined,
+  currStatus: string | undefined
 ) {
   let keyOptions;
   let valueOptions: string[];
@@ -121,7 +125,6 @@ function SideBarRow({
   activityStatus,
   privacyStatus,
   count,
-  id,
 }: SideBarRowProps) {
   const userData = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
@@ -129,8 +132,20 @@ function SideBarRow({
 
   const [currStatus, setCurrStatus] = useState<string | undefined>(undefined);
 
+  let key:
+    | {
+        id: keyof privacySettingsInterface;
+        name: string;
+        subtitle: string;
+      }
+    | {
+        id: keyof activitySettingsInterface;
+        name: string;
+        subtitle: string;
+      }
+    | undefined;
+
   useEffect(() => {
-    let key;
     if (privacyStatus !== undefined) {
       key = statusMap.privacy[privacyStatus];
       setCurrStatus(userData?.privacySettings?.[key.id] || "everyone");
@@ -149,7 +164,7 @@ function SideBarRow({
       onClick={() =>
         redirect && dispatch(updateSideBarView({ redirect, data }))
       }
-      data-testid={`menu-item-${id}`}
+      data-testid={key && `menu-item-${key.id}`}
     >
       <RowInfo>
         {renderedIcon}

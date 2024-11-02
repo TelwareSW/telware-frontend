@@ -2,6 +2,7 @@ import styled from "styled-components";
 import SideBarRow, { SideBarRowProps } from "./side-bar-row/SideBarRow";
 import Heading from "@components/Heading";
 import { useAppSelector } from "@hooks/useGlobalState";
+import { statusMap } from "@data/sideBar";
 
 const StyledOptionsList = styled.div`
   display: flex;
@@ -29,7 +30,16 @@ function OptionsList({ rows }: { rows: SideBarRowProps[] }) {
             <Heading as="h6">{title}</Heading>
           </PlaceHeader>
           {rows.map((item, index) => (
-            <SideBarRow {...item} key={index} id={index} />
+            <SideBarRow
+              {...item}
+              key={
+                item.privacyStatus !== undefined
+                  ? statusMap.privacy[item.privacyStatus].id
+                  : item.activityStatus !== undefined
+                    ? statusMap.activity[item.activityStatus].id
+                    : index
+              }
+            />
           ))}
         </StyledOptionsList>
       )}
