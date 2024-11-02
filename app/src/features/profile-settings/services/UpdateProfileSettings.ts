@@ -2,12 +2,21 @@ import { API_URL } from "@constants";
 import { EditProfileForm } from "../ProfileSettings";
 
 async function UpdateProfileSettings(newProfileSettings: EditProfileForm) {
+  const formattedNewProfileSettings = {
+    screenFirstName: newProfileSettings.firstName,
+    screenLastName: newProfileSettings.lastName,
+    username: newProfileSettings.username,
+    bio: newProfileSettings.bio,
+    phoneNumber: newProfileSettings.phone,
+    email: newProfileSettings.email,
+  };
+
   const res = await fetch(`${API_URL}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(newProfileSettings),
+    body: JSON.stringify(formattedNewProfileSettings),
     credentials: "include",
   });
 
