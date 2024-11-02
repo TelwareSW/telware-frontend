@@ -14,12 +14,11 @@ const useAuthCheck = (path: Path) => {
         const res = await fetch(`${API_URL}/auth/me`, {
           method: "GET",
           credentials: "include",
-        });
-
+        });        
         if (res.ok) {
           setIsAuthenticated(true);
           navigate("/", { replace: true });
-        } else {
+        } else {          
           setIsAuthenticated(false);
           navigate(path);
         }

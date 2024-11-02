@@ -60,23 +60,4 @@ export const OauthMock = [
       }
     );
   }),
-
-  http.post<{}, RequestBody, ResponseBody>("/auth/oauth/facebook", async () => {
-    return HttpResponse.json(
-      {
-        message: "Successful login",
-        status: "success",
-        data: {
-          user: MOCK_USER,
-          sessionID: TOKEN,
-        },
-      },
-      {
-        status: 201,
-        headers: {
-          "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
-        },
-      }
-    );
-  }),
 ];
