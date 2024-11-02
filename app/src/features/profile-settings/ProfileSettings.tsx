@@ -11,6 +11,7 @@ import { useProfileSettings } from "./hooks/useProfileSettings";
 import { useUpdateProfileSettings } from "./hooks/useUpdateProfileSettings";
 import { useEffect, useState } from "react";
 import SettingsSideBarHeader from "@components/side-bar/settings/SettingsSideBarHeader";
+import toast from "react-hot-toast";
 
 const SideBarContainer = styled.div`
   overflow-y: auto;
@@ -152,6 +153,7 @@ function ProfileSettings() {
     reset,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<EditProfileForm>({
+    // @ts-expect-error - yupResolver type mismatch
     resolver: yupResolver(ValidationSchema),
     mode: "onChange",
     defaultValues: initialProfileSettings || {
@@ -169,7 +171,7 @@ function ProfileSettings() {
     }
   }, [initialProfileSettings, reset]);
 
-  const userHandle = `https://telware.online/${watch("username") || "username"}`;
+  const userHandle = `https://telware.tech/${watch("username") || "username"}`;
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -185,8 +187,11 @@ function ProfileSettings() {
         data.profilePicture = selectedImage;
       }
       updateProfileSettings(data);
+      toast.success("updated profile settings successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        (error as Error).message || "Failed to update profile settings",
+      );
     }
   };
   const firstName = watch("firstName") || "";

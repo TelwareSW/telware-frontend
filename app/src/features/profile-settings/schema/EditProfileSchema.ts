@@ -16,7 +16,7 @@ const ValidationSchema = yup.object({
     .string()
     .required("Email is required")
     .email("Invalid email address"),
-  phone: yup.string().matches(/^[0-9]*$/, "Phone number must be numeric"),
+  phone: yup.string(),
 });
 
 export { ValidationSchema, BIO_MAX_LENGTH };

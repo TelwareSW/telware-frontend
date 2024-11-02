@@ -15,15 +15,17 @@ async function GetProfileSettings() {
     throw new Error(data.message);
   }
 
+  const user = data.data?.user;
+
   const profileSettings = {
-    profilePicture: data.data.photo,
-    firstName: data.data.firstName,
-    lastName: data.data.lastName,
-    bio: data.data.bio,
-    username: data.data.username,
-    email: data.data.email,
-    phone: data.data.phoneNumber,
-    lastSeen: data.data.status,
+    profilePicture: user?.photo,
+    firstName: user?.screenFirstName,
+    lastName: user?.screenLastName,
+    bio: user?.bio,
+    username: user?.username,
+    email: user?.email,
+    phone: user?.phoneNumber,
+    lastSeen: user?.status,
   };
 
   return profileSettings;

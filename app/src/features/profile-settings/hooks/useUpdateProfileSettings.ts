@@ -12,8 +12,8 @@ function useUpdateProfileSettings() {
     isPending,
   } = useMutation({
     mutationFn: UpdateProfileSettingsAPI,
-    onSuccess: (data) => {
-      queryClient.setQueryData(["profileSettings"], data);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profileSettings"] });
     },
   });
 
