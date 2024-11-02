@@ -6,8 +6,10 @@ export async function login(user: User) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-credentials": "true",
     },
     body: JSON.stringify(user),
+    credentials: "include",
   });
 
   const data = await res.json();

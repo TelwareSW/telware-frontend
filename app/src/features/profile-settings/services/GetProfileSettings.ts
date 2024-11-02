@@ -1,9 +1,12 @@
+import { API_URL } from "@constants";
+
 async function GetProfileSettings() {
-  const res = await fetch("users/me", {
+  const res = await fetch(`${API_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   const data = await res.json();
@@ -20,6 +23,7 @@ async function GetProfileSettings() {
     username: data.data.username,
     email: data.data.email,
     phone: data.data.phoneNumber,
+    lastSeen: data.data.status,
   };
 
   return profileSettings;

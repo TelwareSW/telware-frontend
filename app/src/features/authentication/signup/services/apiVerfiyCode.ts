@@ -7,8 +7,7 @@ export async function verifyEmail({
   email: string;
   code: string;
 }) {
-  const API = API_URL;
-  const res = await fetch(`${API}/auth/verify`, {
+  const res = await fetch(`${API_URL}/auth/verify`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -62,15 +62,17 @@ export default function SignupForm() {
     formState: { errors },
   } = useForm<User>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      username: "TestUser",
-      email: "test@example.com",
-      phoneNumber: "+1234567890",
-      password: "password123",
-      confirmPassword: "password123",
-      reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
-    },
+   
   });
+
+  //  defaultValues: {
+  //     username: "TestUser",
+  //     email: "test@example.com",
+  //     phoneNumber: "+1234567890",
+  //     password: "password123",
+  //     confirmPassword: "password123",
+  //     reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
+  //   },
 
   const onSubmit: SubmitHandler<User> = function (userData) {
     signup(userData, {
