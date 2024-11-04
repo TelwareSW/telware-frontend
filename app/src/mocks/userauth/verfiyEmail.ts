@@ -21,11 +21,9 @@ type EmailResponseError = {
 
 type EmailResponseBody = EmailResponseSuccess | EmailResponseError;
 
-const API_ENDPOINT = "";
-
 export const sendEmailConfirmationMock = [
   http.post<object, EmailRequestBodySend, EmailResponseBody>(
-    `${API_ENDPOINT}/auth/send-confirmation`,
+    `mock/auth/send-confirmation`,
     async ({ request }) => {
       await request.json();
       const isValid = true;
@@ -36,7 +34,7 @@ export const sendEmailConfirmationMock = [
             message: "Cannot send the confirmation, please retry",
             status: "error",
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
 
@@ -45,18 +43,18 @@ export const sendEmailConfirmationMock = [
           message: "Confirmation code sent. Check your email.",
           status: "success",
         },
-        { status: 201 },
+        { status: 201 }
       );
-    },
+    }
   ),
 ];
 
 export const verifyEmailMock = [
   http.post<object, EmailRequestBodyVerify, EmailResponseBody>(
-    `${API_ENDPOINT}/auth/verify`,
+    `mock/auth/verify`,
     async ({ request }) => {
       await request.json();
-      const isValid = false;
+      const isValid = true;
 
       if (!isValid) {
         return HttpResponse.json(
@@ -64,7 +62,7 @@ export const verifyEmailMock = [
             message: "Incorrect code, please retry",
             status: "error",
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
 
@@ -73,8 +71,8 @@ export const verifyEmailMock = [
           message: "Successful! Redirecting...",
           status: "success",
         },
-        { status: 201 },
+        { status: 201 }
       );
-    },
+    }
   ),
 ];

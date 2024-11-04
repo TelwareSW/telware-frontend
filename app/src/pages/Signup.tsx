@@ -1,6 +1,6 @@
-import Heading from "../components/Heading";
+import Heading from "@components/Heading";
 import { styled, keyframes } from "styled-components";
-import SignupSection from "../features/authentication/signup/SignupSection";
+import SignupSection from "@features/authentication/signup/SignupSection";
 import useAuthCheck from "@features/authentication/login/hooks/useAuthCheck";
 
 const SignupLayout = styled.div`

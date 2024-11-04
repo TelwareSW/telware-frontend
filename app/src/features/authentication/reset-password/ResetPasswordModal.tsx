@@ -70,6 +70,8 @@ const Inputs = styled.div`
 
 function ResetPasswordModal() {
   const { resetPassword, isPending, isSuccess, isError } = useResetPassword();
+  const { token } = useParams();
+  useAuthCheck(`/password-reset/${token}`);
   const navigate = useNavigate();
   const {
     register,
@@ -81,13 +83,10 @@ function ResetPasswordModal() {
     resolver: yupResolver(schema),
   });
 
-  const { token } = useParams();
   if (!token) {
     console.error("Token is missing in the URL.");
     return null;
   }
-
-  useAuthCheck(`/password-reset/${token}`);
 
   const handleResetPassword = () => {
     resetPassword({
