@@ -10,11 +10,11 @@ export async function resetPassword({
   confirmPassword: string;
 }) {
   const requestObj = {
-    newPassword: newPassword,
-    confirmNewPassword: confirmPassword,
+    password: newPassword,
+    passwordConfirm: confirmPassword,
   };
   const result = await fetch(`${API_URL}/auth/password/reset/${token}`, {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
