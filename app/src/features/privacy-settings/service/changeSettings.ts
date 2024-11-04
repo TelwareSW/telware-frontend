@@ -1,3 +1,4 @@
+import { API_URL } from "@constants";
 import { activeStatesStrings, privacyStatesStrings } from "types/user";
 
 enum endPts {
@@ -18,7 +19,7 @@ async function changeSettings(data: {
   const endpt = endPts[key];
   const reqBody = { privacy: value };
 
-  const res = await fetch(`/users/privacy/${endpt}`, {
+  const res = await fetch(`${API_URL}/users/privacy/${endpt}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

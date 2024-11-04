@@ -1,5 +1,7 @@
+import { API_URL } from "@constants";
+
 export async function apiGithubOauth(code: string) {
-  const res = await fetch("/auth/oauth/github", {
+  const res = await fetch(`${API_URL}/auth/oauth/github`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code }),

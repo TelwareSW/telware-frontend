@@ -1,3 +1,4 @@
+import { API_URL } from "@constants";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,15 +11,14 @@ const useAuthCheck = (path: Path) => {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch("/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           method: "GET",
           credentials: "include",
-        });
-
+        });        
         if (res.ok) {
           setIsAuthenticated(true);
           navigate("/", { replace: true });
-        } else {
+        } else {          
           setIsAuthenticated(false);
           navigate(path);
         }
