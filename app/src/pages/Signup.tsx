@@ -36,8 +36,6 @@ const AnimatedTitle = styled(Heading).attrs({ as: "h1" })`
 `;
 
 function Signup() {
-  useAuthCheck("/signup");
-
   return (
     <SignupLayout>
       <SideBar />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UseVerifyEmail } from "./hooks/useVerifyEmail";
@@ -111,14 +111,20 @@ function ConfirmationEmailModal({
   } = UseVerifyEmail();
   const { SendConfirmationCode, isSuccess: isCodeRensent } =
     UseSendConfirmationEmail();
+
   const navigate = useNavigate();
+  useEffect(() => {
+    SendConfirmationCode(email);
+  }, [email, SendConfirmationCode]);
   if (!isOpen) return null;
   function handleConfirmCode() {
+    setError("");
     const code = codeDisplay.join("");
     verifyCode(
-      { email, code },
+      { email, verificationCode: code },
       {
         onSuccess: () => {
+          onClose();
           setTimeout(() => {
             navigate("/login", { replace: true });
           }, 500);
@@ -162,16 +168,14 @@ function ConfirmationEmailModal({
         </Button>
         <Error data-testid="error-msg">{error}</Error>
         {isVerified && (
-          <Success data-testid="verified-msg">
-            you are verified,redirecting...{" "}
-          </Success>
+          <Success data-testid="verified-msg">Email verified!</Success>
         )}
         <ModalMessage>
           Didn't get an email?{" "}
           <ResendText onClick={handleResendEmail}>resend email</ResendText>
           {isCodeRensent && (
             <Success data-testid="email-resent-msg">
-              Code is resent! check your email
+              Code is sent! check your email
             </Success>
           )}
         </ModalMessage>

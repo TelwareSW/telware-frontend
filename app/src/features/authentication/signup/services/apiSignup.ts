@@ -1,5 +1,5 @@
-import { API_URL } from "@constants";
 import { User } from "../SignupForm";
+import { API_URL } from "@constants";
 export async function Signup(user: User) {
   const res = await fetch(`${API_URL}/auth/signup`, {
     method: "POST",
