@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { privacyStates, activeStates } from "../../types/sideBar";
+import {
+  privacyStates,
+  activeStates,
+  permissionStates,
+} from "../../types/sideBar";
 import {
   userInfoInterface,
   privacySettingsInterface,
@@ -7,12 +11,15 @@ import {
   updatePrivacyInterface,
   updateInfoInterface,
   updateActivityInterface,
+  permissionsSettingsInterface,
+  updatePermissionInterface,
 } from "../../types/user";
 
 interface userState {
   userInfo: userInfoInterface;
   privacySettings: privacySettingsInterface;
   activitySettings: activitySettingsInterface;
+  permissionSettings: permissionsSettingsInterface;
 }
 
 const initialState: userState = {
@@ -29,11 +36,13 @@ const initialState: userState = {
     storiesSeenPrivacy: privacyStates.EVERYONE,
     lastSeenPrivacy: privacyStates.EVERYONE,
     profilePhotoPrivacy: privacyStates.EVERYONE,
-    addToGroupPrivacy: privacyStates.EVERYONE,
-    addToChannelPrivacy: privacyStates.EVERYONE,
   },
   activitySettings: {
     readReceiptsPrivacy: activeStates.ENABLED,
+  },
+  permissionSettings: {
+    addToGroupPrivacy: permissionStates.EVERYONE,
+    addToChannelPrivacy: permissionStates.EVERYONE,
   },
 };
 
@@ -62,11 +71,22 @@ const userSlice = createSlice({
       const { key, value } = action.payload;
       state.activitySettings[key] = activeStates[value];
     },
+    updateUserPermission: (
+      state: userState,
+      action: PayloadAction<updatePermissionInterface>
+    ) => {
+      const { key, value } = action.payload;
+      state.permissionSettings[key] = permissionStates[value];
+    },
   },
 });
 
-export const { updateUserPrivacy, updateUserInfo, updateUserActivity } =
-  userSlice.actions;
+export const {
+  updateUserPrivacy,
+  updateUserInfo,
+  updateUserActivity,
+  updateUserPermission,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 export type { activeStates, privacyStates, userState };

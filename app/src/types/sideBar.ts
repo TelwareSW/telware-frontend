@@ -13,12 +13,15 @@ enum privacySettingsID {
   STORIES_SEEN_PRIVACY,
   LAST_SEEN_PRIVACY,
   PROFILE_PHOTO_PRIVACY,
-  ADD_TO_GROUP_PRIVACY,
-  ADD_TO_CHANNEL_PRIVACY,
 }
 
 enum activitySettingsID {
   READ_RECEIPTS_PRIVACY,
+}
+
+enum permissionSettingsID {
+  ADD_TO_GROUP_PRIVACY,
+  ADD_TO_CHANNEL_PRIVACY,
 }
 
 enum privacyStates {
@@ -32,10 +35,20 @@ enum activeStates {
   DISABLED = "disabled",
 }
 
+enum permissionStates {
+  EVERYONE = "everyone",
+  ADMINS = "admins",
+}
+
 enum StatusType {
   PRIVACY = "privacy",
   ACTIVITY = "activity",
+  PERMISSION = "permission",
 }
+
+type privacyStatesStrings = keyof typeof privacyStates;
+type activeStatesStrings = keyof typeof activeStates;
+type permissionStatesStrings = keyof typeof permissionStates;
 
 export {
   sideBarPages,
@@ -44,6 +57,13 @@ export {
   privacyStates,
   activitySettingsID,
   StatusType,
+  permissionSettingsID,
+  permissionStates,
 };
 
-export type { pagesStrings };
+export type {
+  pagesStrings,
+  activeStatesStrings,
+  privacyStatesStrings,
+  permissionStatesStrings,
+};

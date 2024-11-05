@@ -1,5 +1,5 @@
 import { API_URL } from "@constants";
-import { activeStatesStrings, privacyStatesStrings } from "types/user";
+import { activeStatesStrings, privacyStatesStrings } from "types/sideBar";
 
 enum endPts {
   lastSeenPrivacy = "last-seen",
@@ -17,10 +17,12 @@ async function changeSettings(data: {
   const { key, value } = data;
 
   const endpt = endPts[key];
-  const reqBody = { privacy: value };
+  const reqBody = { privacy: value.toLowerCase() };
+
 
   const res = await fetch(`${API_URL}/users/privacy/${endpt}`, {
     method: "PATCH",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
