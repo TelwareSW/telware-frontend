@@ -13,6 +13,10 @@ import Button from "@components/Button";
 import InputField from "@components/inputs/input-field/InputField";
 import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
 import SpinnerMini from "@components/SpinnerMini";
+import ConfirmationEmailModal from "@features/authentication/signup/ConfirmationEmailModal";
+
+const MAX_PASSWORD_LENGTH = 128;
+const MAX_EMAIL_LENGTH = 254;
 
 export type User = {
   email: string;
@@ -72,26 +76,47 @@ export default function LoginForm() {
   const { login, isPending } = useLogin();
 
   const [error, setError] = useState("");
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  function handleOpenModal() {
-    setIsOpenModal(true);
-  }
+  const [isOpenForgetPasswordModal, setIsOpenForgetPasswordModal] =
+    useState(false);
+  const [isOpenConfirmEmailModal, setIsOpenConfirmEmailModal] = useState(false);
+  const [email, setEmail] = useState("");
 
   const {
     register,
     handleSubmit,
     reset,
-
     formState: { errors },
   } = useForm<User>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<User> = function (data) {
+    if (
+      data.email.length > MAX_EMAIL_LENGTH ||
+      data.password.length > MAX_PASSWORD_LENGTH
+    ) {
+      setError("Invalid email or password");
+      return;
+    }
+
     login(data, {
       onSettled: (_, error) => {
         setError(error ? error.message : "");
+      },
+      onError: (error) => {
+        setError(error ? error.message : "");
+        const errorMessage = error.message.toLowerCase();
+        if (
+          errorMessage.includes("email") &&
+          errorMessage.includes("verify") &&
+          !errorMessage.includes("register")
+        ) {
+          setIsOpenConfirmEmailModal(true);
+          setEmail(data.email);
+        }
+      },
+
+      onSuccess: () => {
         reset();
       },
     });
@@ -100,15 +125,19 @@ export default function LoginForm() {
   return (
     <>
       <ForgotPasswordModal
-        isOpen={isOpenModal}
-        onClose={() => setIsOpenModal(false)}
+        isOpen={isOpenForgetPasswordModal}
+        onClose={() => setIsOpenForgetPasswordModal(false)}
+      />
+      <ConfirmationEmailModal
+        isOpen={isOpenConfirmEmailModal}
+        onClose={() => setIsOpenConfirmEmailModal(false)}
+        email={email}
       />
       <Form data-test="login-form" onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <InputField
             data-testid="login-email-input"
             label="Email"
-            type="email"
             id="email"
             register={register}
             placeholder="Email"
@@ -127,7 +156,10 @@ export default function LoginForm() {
           />
         </Inputs>
 
-        <StyledSpan data-test="forgot-password-span" onClick={handleOpenModal}>
+        <StyledSpan
+          data-test="forgot-password-span"
+          onClick={() => setIsOpenForgetPasswordModal(true)}
+        >
           Forgot password?
         </StyledSpan>
 

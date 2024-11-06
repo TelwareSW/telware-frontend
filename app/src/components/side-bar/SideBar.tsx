@@ -29,6 +29,7 @@ const fadeOut = keyframes`
 
 const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   height: 100vh;
+  min-width: 300px;
   background-color: var(--color-background);
   overflow: hidden;
   position: relative;

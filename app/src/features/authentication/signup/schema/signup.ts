@@ -11,7 +11,7 @@ export const schema = yup.object({
     .string()
     .min(8, "Password has to be more than eight characters")
     .required("Password is required"),
-  confirmPassword: yup
+  passwordConfirm: yup
     .string()
     .oneOf([yup.ref("password")], "Passwords must match")
     .required("Please confirm your password"),

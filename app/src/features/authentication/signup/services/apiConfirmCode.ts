@@ -6,7 +6,7 @@ export async function sendEmailVerification(email: string) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(email),
+    body: JSON.stringify({ email: email }),
   });
   const data = await res.json();
   if (data.status !== "success") throw new Error(data.message);

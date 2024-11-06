@@ -15,7 +15,6 @@ const useAuthCheck = (path: Path) => {
           method: "GET",
           credentials: "include",
         });
-
         if (res.ok) {
           setIsAuthenticated(true);
           navigate("/", { replace: true });
@@ -30,7 +29,7 @@ const useAuthCheck = (path: Path) => {
     }
 
     checkAuth();
-  }, [navigate]);
+  }, [navigate, path]);
 
   return isAuthenticated;
 };
