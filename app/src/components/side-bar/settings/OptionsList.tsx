@@ -2,6 +2,12 @@ import styled from "styled-components";
 import SideBarRow, { SideBarRowProps } from "./side-bar-row/SideBarRow";
 import Heading from "@components/Heading";
 import { useAppSelector } from "@hooks/useGlobalState";
+import {
+  activitySettingsID,
+  permissionSettingsID,
+  privacySettingsID,
+  StatusType,
+} from "types/sideBar";
 import { statusMap } from "@data/sideBar";
 
 const StyledOptionsList = styled.div`
@@ -33,11 +39,15 @@ function OptionsList({ rows }: { rows: SideBarRowProps[] }) {
             <SideBarRow
               {...item}
               key={
-                item.privacyStatus !== undefined
-                  ? statusMap.privacy[item.privacyStatus].id
-                  : item.activityStatus !== undefined
-                    ? statusMap.activity[item.activityStatus].id
-                    : index
+                item.status !== undefined && item.type !== undefined
+                  ? item.type === StatusType.PRIVACY
+                    ? statusMap.privacy[item.status as privacySettingsID].id
+                    : item.type === StatusType.ACTIVITY
+                      ? statusMap.activity[item.status as activitySettingsID].id
+                      : statusMap.permission[
+                          item.status as permissionSettingsID
+                        ].id
+                  : index
               }
             />
           ))}

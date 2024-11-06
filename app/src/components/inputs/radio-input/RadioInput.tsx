@@ -3,14 +3,19 @@ import Heading from "@components/Heading";
 import { useAppDispatch } from "@hooks/useGlobalState";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { privacySettingsInterface, userInfoInterface } from "types/user";
+
+import {
+  updateUserActivity,
+  updateUserPermission,
+  updateUserPrivacy,
+} from "@state/user/user";
+import { useUpdatePrivacy } from "@features/privacy-settings/hooks/useUpdatePrivacy";
 import {
   activeStatesStrings,
-  privacySettingsInterface,
   privacyStatesStrings,
-  userInfoInterface,
-} from "types/user";
-import { updateUserActivity, updateUserPrivacy } from "@state/user/user";
-import { useUpdatePrivacy } from "@features/privacy-settings/hooks/useUpdatePrivacy";
+  StatusType,
+} from "types/sideBar";
 
 interface RadioOptionInterface {
   id: string;
@@ -31,7 +36,7 @@ interface RadioInputProps {
   header?: string;
   state?: string;
   data: RadioInputInterface;
-  updateFnType: boolean; // 0-> activity , 1-> privacy
+  updateFnType: StatusType;
 }
 
 const StyledForm = styled.div`
@@ -67,9 +72,23 @@ const Label = styled.label`
   color: var(--color-text);
 `;
 
+function getUpdateFn(updateFnType: StatusType) {
+  switch (updateFnType) {
+    case StatusType.PRIVACY:
+      return updateUserPrivacy;
+    case StatusType.ACTIVITY:
+      return updateUserActivity;
+    case StatusType.PERMISSION:
+      return updateUserPermission;
+    default:
+      throw new Error("No matching function");
+  }
+}
+
 function RadioInput({ state, data, updateFnType }: RadioInputProps) {
   const { title, options } = data;
-  const updateFn = updateFnType ? updateUserPrivacy : updateUserActivity;
+  const updateFn = getUpdateFn(updateFnType);
+
   const dispatch = useAppDispatch();
   const updatePrivacy = useUpdatePrivacy();
 
