@@ -7,7 +7,7 @@ const {
   VITE_BACKEND_STORGAE: STATIC_MEDIA_URL,
 } = import.meta.env;
 
-const MOBILE_VIEW = "(max-width: 768px)";
+const MOBILE_VIEW = "(max-width: 600px)";
 
 export {
   ENVIRONMENT,

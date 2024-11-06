@@ -103,6 +103,18 @@ export default function LoginForm() {
       onSettled: (_, error) => {
         setError(error ? error.message : "");
       },
+      onError: (error) => {
+        setError(error ? error.message : "");
+        const errorMessage = error.message.toLowerCase();
+        if (
+          errorMessage.includes("email") &&
+          errorMessage.includes("verify") &&
+          !errorMessage.includes("register")
+        ) {
+          setIsOpenConfirmEmailModal(true);
+          setEmail(data.email);
+        }
+      },
 
       onSuccess: () => {
         reset();

@@ -5,7 +5,7 @@ import { MOBILE_VIEW } from "@constants";
 
 const StyledApp = styled.div`
   display: grid;
-  grid-template-columns: 33% auto;
+  grid-template-columns: 24rem auto;
   height: 100dvh;
 
   & > main {

@@ -7,7 +7,7 @@ import {
   UseFormWatch,
 } from "react-hook-form";
 
-export interface FloatingLabelInputProps<TFormValues extends FieldValues> {
+interface FloatingLabelInputProps<TFormValues extends FieldValues> {
   label: string;
   id: Path<TFormValues>;
   watch?: UseFormWatch<TFormValues>;
@@ -188,5 +188,5 @@ function FloatingLabelInput<TFormValues extends FieldValues>({
     </InputGroup>
   );
 }
-
+export type { FloatingLabelInputProps };
 export default FloatingLabelInput;
