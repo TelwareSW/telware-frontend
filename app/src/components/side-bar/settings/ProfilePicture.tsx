@@ -48,13 +48,9 @@ const LastSeenP = styled.p`
 
 function ProfilePicture() {
   const { data: profileSettings } = useProfileSettings();
-
   return (
     <ProfilePictureContainer>
-      <StyledImg
-        data-testid="profile-picture"
-        src="https://i.pinimg.com/564x/26/76/a1/2676a1898da6edae9fc648c94332903f.jpg"
-      />
+      <StyledImg data-testid="profile-picture" src={profileSettings?.photo} />
       <ProfileInfo>
         <ProfileNameH2>
           {profileSettings?.firstName} {profileSettings?.lastName}

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { AddAPhotoOutlined, Check } from "@mui/icons-material";
+import { Check } from "@mui/icons-material";
 import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FloatingLabelInput from "@components/inputs/float-label-input/FloatingLabelInput";
@@ -12,13 +12,15 @@ import { useUpdateProfileSettings } from "./hooks/useUpdateProfileSettings";
 import { useEffect, useState } from "react";
 import SettingsSideBarHeader from "@components/side-bar/settings/SettingsSideBarHeader";
 import toast from "react-hot-toast";
-import ImageEditor from "@components/ImageEditor";
 import { useAppDispatch } from "@hooks/useGlobalState";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
 import { getIcon } from "@data/icons";
 import Modal from "@components/Modal";
 import Button from "@components/Button";
+import { useDeleteProfileSettings } from "./hooks/useDeleteProfilePicture";
+import { useUpdateProfilePicture } from "./hooks/useUpdateProfilePicture";
+import { STATIC_MEDIA_URL } from "@constants";
 
 const SideBarContainer = styled.div`
   overflow-y: auto;
@@ -50,7 +52,7 @@ const SectionTitle = styled.h3`
   color: var(--color-text-secondary);
 `;
 
-const UploadProfilePicture = styled.div`
+const ProfilePictureSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -58,10 +60,9 @@ const UploadProfilePicture = styled.div`
   padding: 1rem 1.5rem;
   background-color: var(--color-background);
   position: relative;
-  cursor: pointer;
 `;
 
-const UploadProfilePictureIcon = styled.div`
+const UploadProfilePictureContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -70,7 +71,7 @@ const UploadProfilePictureIcon = styled.div`
   cursor: pointer;
   z-index: 5;
   &:hover svg {
-    scale: 1.2;
+    transform: scale(1.2);
   }
   svg {
     transition: all 0.2s ease-out;
@@ -78,8 +79,7 @@ const UploadProfilePictureIcon = styled.div`
     font-size: 3rem;
   }
 `;
-const DeleteProfilePicture = styled.div``;
-const DeleteProfilePictureIcon = styled.div`
+const DeleteProfilePictureContainer = styled.div`
   position: absolute;
   bottom: 1rem;
   right: calc(50% - 4rem);
@@ -95,7 +95,7 @@ const DeleteProfilePictureIcon = styled.div`
   justify-content: center;
   align-items: center;
   &:hover svg {
-    scale: 1.2;
+    transform: scale(1.2);
   }
   svg {
     transition: all 0.2s ease-out;
@@ -105,7 +105,7 @@ const DeleteProfilePictureIcon = styled.div`
 
 const StyledImageInput = styled.input`
   position: absolute;
-  top: 1rem;
+  top: calc(50% - 4rem);
   left: calc(50% - 4rem);
   width: 8rem;
   height: 8rem;
@@ -179,11 +179,12 @@ export interface EditProfileForm {
 function ProfileSettings() {
   const { data: initialProfileSettings } = useProfileSettings();
   const { updateProfileSettings, isPending } = useUpdateProfileSettings();
-  const [selectedImage, setSelectedImage] = useState<string | null>(
-    initialProfileSettings?.photo || null
-  );
+  const { deleteProfilePicture } = useDeleteProfileSettings();
+  const { updateProfilePicture } = useUpdateProfilePicture();
+
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [photoChanged, setPhotoChanged] = useState(false);
-  const [isImgEditorOpen, setIsImgEditorOpen] = useState(false);
+
   const [isDeleting, setIsDeleting] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -215,28 +216,32 @@ function ProfileSettings() {
 
   const userHandle = `https://telware.tech/${watch("username") || "username"}`;
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setIsImgEditorOpen(true);
-    if (file) {
-      const imgStr = URL.createObjectURL(file);
-      setSelectedImage(imgStr);
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files) {
+      setPhotoChanged(true);
+      const file = event.target.files[0];
+      setSelectedImageFile(file);
     }
   };
-  const handleImageSave = (file: File) => {
-    setPhotoChanged(true);
-    setSelectedImage(URL.createObjectURL(file));
-  };
+
   const handleDeleteImage = () => {
-    setSelectedImage(null);
+    setSelectedImageFile(null);
     setIsDeleting(false);
+    setPhotoChanged(true);
   };
 
   const onSubmit = async (data: EditProfileForm) => {
     try {
-      if (selectedImage) {
-        data.photo = selectedImage;
+      if (photoChanged) {
+        if (selectedImageFile) {
+          updateProfilePicture(selectedImageFile);
+        } else {
+          deleteProfilePicture();
+        }
       }
+
       updateProfileSettings(data);
       toast.success("updated profile settings successfully");
       if (!isPending) {
@@ -259,12 +264,14 @@ function ProfileSettings() {
         <DevTool control={control} placement="top-right" />
 
         <SettingSection>
-          <UploadProfilePicture>
-            <DeleteProfilePicture>
-              <DeleteProfilePictureIcon onClick={() => setIsDeleting(true)}>
-                {getIcon("Delete")}
-              </DeleteProfilePictureIcon>
-              {isDeleting && (
+          <ProfilePictureSection>
+            {selectedImageFile && (
+              <>
+                <DeleteProfilePictureContainer
+                  onClick={() => setIsDeleting(true)}
+                >
+                  {getIcon("Delete")}
+                </DeleteProfilePictureContainer>
                 <Modal
                   isOpen={isDeleting}
                   title="Delete photo"
@@ -279,33 +286,34 @@ function ProfileSettings() {
                     Delete
                   </Button>
                 </Modal>
-              )}
-            </DeleteProfilePicture>
-            <StyledImageInput
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              data-testid="image-upload"
-              id="photo"
-            />
-            {selectedImage ? (
-              <>
-                <UploadProfilePictureIcon>
-                  {getIcon("AddPhoto")}
-                </UploadProfilePictureIcon>
-                <StyledProfileImage src={selectedImage} alt="Profile Picture" />
               </>
-            ) : (
-              <DefaultProfilePicture>{initials}</DefaultProfilePicture>
             )}
-          </UploadProfilePicture>
-          <ImageEditor
-            isOpen={isImgEditorOpen}
-            closeImgEditor={() => setIsImgEditorOpen(false)}
-            src={selectedImage ? selectedImage : ""}
-            onImageSave={handleImageSave}
-            isProfileImage={true}
-          />
+            <>
+              <UploadProfilePictureContainer>
+                <StyledImageInput
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  data-testid="image-upload"
+                  id="photo"
+                />
+                {getIcon("AddPhoto")}
+              </UploadProfilePictureContainer>
+              {selectedImageFile ? (
+                <StyledProfileImage
+                  src={selectedImageFile?.name}
+                  alt="Profile Picture"
+                />
+              ) : !photoChanged && initialProfileSettings?.photo ? (
+                <StyledProfileImage
+                  src={STATIC_MEDIA_URL + initialProfileSettings?.photo}
+                  alt="Profile Picture"
+                />
+              ) : (
+                <DefaultProfilePicture>{initials}</DefaultProfilePicture>
+              )}
+            </>
+          </ProfilePictureSection>
           <FloatingLabelInput<EditProfileForm>
             id="firstName"
             label="First Name (required)"

@@ -47,7 +47,16 @@ interface updateActivityInterface {
   key: keyof activitySettingsInterface;
   value: activeStatesStrings;
 }
-
+interface otherUserInfoInterface {
+  username: string;
+  phoneNumber: string;
+  screenFirstName: string;
+  screenLastName: string;
+  email: string;
+  photo: string | undefined;
+  status: string;
+  bio: string;
+}
 export { activeStates, privacyStates };
 export type {
   activeStatesStrings,
@@ -58,4 +67,5 @@ export type {
   updateInfoInterface,
   updatePrivacyInterface,
   userInfoInterface,
+  otherUserInfoInterface,
 };

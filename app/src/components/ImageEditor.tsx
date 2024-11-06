@@ -51,6 +51,7 @@ function ImageEditor({
         <div>
           <FilerobotImageEditor
             source={src}
+            forceToPngInEllipticalCrop={true}
             onSave={(editedImageObject) => handleSave(editedImageObject)}
             onClose={closeImgEditor}
             annotationsCommon={{
@@ -61,8 +62,7 @@ function ImageEditor({
             Crop={
               isProfileImage
                 ? {
-                    minWidth: 180,
-                    minHeight: 180,
+                    ratio: 1,
                   }
                 : {
                     presetsItems: [
@@ -113,11 +113,15 @@ function ImageEditor({
                 "warning-hover": "#ff0000",
               },
             }}
-            tabsIds={[TABS.ADJUST, TABS.ANNOTATE]} // or {['Adjust', 'Annotate', 'Watermark']}
+            tabsIds={
+              isProfileImage
+                ? [TABS.ADJUST]
+                : [TABS.ADJUST, TABS.ANNOTATE, TABS.FINETUNE, TABS.RESIZE]
+            } // or {['Adjust', 'Annotate', 'Watermark']}
             defaultTabId={isProfileImage ? TABS.ADJUST : TABS.ANNOTATE} // or 'Annotate'
-            defaultToolId={TOOLS.TEXT} // or 'Text'
+            defaultToolId={TOOLS.ADJUST} // or 'Text'
             savingPixelRatio={4}
-            previewPixelRatio={window.devicePixelRatio}
+            previewPixelRatio={4}
           />
         </div>
       )}
