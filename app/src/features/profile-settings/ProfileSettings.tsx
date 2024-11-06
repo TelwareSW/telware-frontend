@@ -307,7 +307,7 @@ function ProfileSettings() {
               </UploadProfilePictureContainer>
               {selectedImageFile ? (
                 <StyledProfileImage
-                  src={selectedImageFile?.name}
+                  src={URL.createObjectURL(selectedImageFile)}
                   alt="Profile Picture"
                 />
               ) : !photoChanged && initialProfileSettings?.photo ? (
