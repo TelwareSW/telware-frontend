@@ -29,7 +29,7 @@ type AddStoryResponseBody =
   | AddStoryResponseBodySuccess
   | AddStoryResponseBodyFail;
 
-export const profileSettingsMock = [
+export const storiesMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
     return undefined;
   }),

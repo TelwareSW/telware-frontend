@@ -8,6 +8,7 @@ import { privacySettingsMock } from "./privacySettings";
 import { OauthMock } from "./oauth/oauth";
 import { profileSettingsMock } from "./profile-settings/profile-settings";
 import { profilePictureMock } from "./profile-settings/profile-picture";
+import { storiesMock } from "./stories/stories";
 
 export default [
   ...loginMock,
@@ -21,4 +22,5 @@ export default [
   ...logoutMock,
   ...profileSettingsMock,
   ...profilePictureMock,
+  ...storiesMock,
 ];
