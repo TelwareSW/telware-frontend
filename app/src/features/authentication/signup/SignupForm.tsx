@@ -1,24 +1,24 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSignup } from "./hooks/useSignup";
+
+import { schema } from "./schema/signup";
+
 import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
 import Button from "@components/Button";
 import InputField from "@components/inputs/input-field/InputField";
 import TelephoneInputField from "@components/inputs/input-field/TelephoneInputField";
-import { useSignup } from "./hooks/useSignup";
-import { UseSendConfirmationEmail } from "./hooks/useSendConfirmationEmail";
-import { schema } from "./schema/signup";
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
 import PasswordInputField from "@components/inputs/input-field/PasswordInputField";
 import { RECAPTCHA_SITE_KEY } from "@constants";
-
 export type User = {
   username: string;
   phoneNumber: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirm: string;
   reCaptchaResponse: string;
 };
 
@@ -44,8 +44,7 @@ const Error = styled.p`
 export default function SignupForm() {
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const { signup, isPending, isSuccess } = useSignup();
-  const { SendConfirmationCode, isSuccess: isEmailSent } =
-    UseSendConfirmationEmail();
+
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,36 +55,24 @@ export default function SignupForm() {
     register,
     handleSubmit,
     setValue,
-    reset,
     watch,
     control,
     formState: { errors },
   } = useForm<User>({
     resolver: yupResolver(schema),
-   
   });
 
-  //  defaultValues: {
-  //     username: "TestUser",
-  //     email: "test@example.com",
-  //     phoneNumber: "+1234567890",
-  //     password: "password123",
-  //     confirmPassword: "password123",
-  //     reCaptchaResponse: `${RECAPTCHA_SITE_KEY}`,
-  //   },
-
   const onSubmit: SubmitHandler<User> = function (userData) {
+    setError("");
     signup(userData, {
       onSuccess: () => {
-        SendConfirmationCode(userData.email);
-        setIsOpen(isEmailSent);
+        setIsOpen(true);
       },
       onError: (error) => {
+        recaptchaRef.current?.reset();
         setError(error.message);
       },
-      onSettled: () => {
-        reset();
-      },
+      onSettled: () => {},
     });
   };
 
@@ -150,12 +137,11 @@ export default function SignupForm() {
           <PasswordInputField
             data-testid="confirm-password-input"
             label="Confirm Password"
-            type="password"
-            id="confirmPassword"
+            id="passwordConfirm"
             register={register}
             placeholder="Confirm Password"
             autoComplete="new-password"
-            error={errors.confirmPassword?.message}
+            error={errors.passwordConfirm?.message}
           />
         </Inputs>
 
@@ -165,7 +151,10 @@ export default function SignupForm() {
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={handleRecaptchaChange}
         />
-        {error && <Error>{errors.reCaptchaResponse?.message}</Error>}
+
+        {errors.reCaptchaResponse?.message && (
+          <Error>{errors.reCaptchaResponse?.message}</Error>
+        )}
 
         <Button type="submit" data-testid="submit-button">
           {isPending ? "Loading..." : "Sign up"}

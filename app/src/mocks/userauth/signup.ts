@@ -25,7 +25,7 @@ type SignupResponseBody = SignupResponseBodySuccess | SignupResponseBodyFail;
 
 export const signupMock = [
   http.post<object, SignupRequestBody, SignupResponseBody>(
-    `/auth/signup`,
+    `mock/auth/signup`,
     async ({ request }) => {
       await request.json();
       const isValid = true;
@@ -36,7 +36,7 @@ export const signupMock = [
             status: "error",
             data: {},
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
 
@@ -46,8 +46,8 @@ export const signupMock = [
           status: "success",
           data: {},
         },
-        { status: 201 },
+        { status: 201 }
       );
-    },
+    }
   ),
 ];

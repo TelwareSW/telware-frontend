@@ -1,3 +1,4 @@
+import { STATIC_MEDIA_URL } from "@constants";
 import { useProfileSettings } from "@features/profile-settings/hooks/useProfileSettings";
 import styled from "styled-components";
 
@@ -50,7 +51,10 @@ function ProfilePicture() {
   const { data: profileSettings } = useProfileSettings();
   return (
     <ProfilePictureContainer>
-      <StyledImg data-testid="profile-picture" src={profileSettings?.photo} />
+      <StyledImg
+        data-testid="profile-picture"
+        src={`${STATIC_MEDIA_URL}/${profileSettings?.photo}`}
+      />
       <ProfileInfo>
         <ProfileNameH2>
           {profileSettings?.firstName} {profileSettings?.lastName}

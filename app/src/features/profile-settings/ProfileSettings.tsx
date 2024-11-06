@@ -12,15 +12,15 @@ import { useUpdateProfileSettings } from "./hooks/useUpdateProfileSettings";
 import { useEffect, useState } from "react";
 import SettingsSideBarHeader from "@components/side-bar/settings/SettingsSideBarHeader";
 import toast from "react-hot-toast";
-import { useAppDispatch } from "@hooks/useGlobalState";
-import { updateSideBarView } from "@state/side-bar/sideBar";
-import { sideBarPages } from "types/sideBar";
+import { STATIC_MEDIA_URL } from "@constants";
 import { getIcon } from "@data/icons";
 import Modal from "@components/Modal";
 import Button from "@components/Button";
-import { useDeleteProfileSettings } from "./hooks/useDeleteProfilePicture";
+import { updateSideBarView } from "@state/side-bar/sideBar";
+import { sideBarPages } from "types/sideBar";
+import { useAppDispatch } from "@hooks/useGlobalState";
 import { useUpdateProfilePicture } from "./hooks/useUpdateProfilePicture";
-import { STATIC_MEDIA_URL } from "@constants";
+import { useDeleteProfilePicture } from "./hooks/useDeleteProfilePicture";
 
 const SideBarContainer = styled.div`
   overflow-y: auto;
@@ -179,7 +179,7 @@ export interface EditProfileForm {
 function ProfileSettings() {
   const { data: initialProfileSettings } = useProfileSettings();
   const { updateProfileSettings, isPending } = useUpdateProfileSettings();
-  const { deleteProfilePicture } = useDeleteProfileSettings();
+  const { deleteProfilePicture } = useDeleteProfilePicture();
   const { updateProfilePicture } = useUpdateProfilePicture();
 
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
@@ -245,7 +245,12 @@ function ProfileSettings() {
       updateProfileSettings(data);
       toast.success("updated profile settings successfully");
       if (!isPending) {
-        dispatch(updateSideBarView({ redirect: sideBarPages.SETTINGS }));
+        dispatch(
+          updateSideBarView({
+            redirect: sideBarPages.SETTINGS,
+            data: undefined,
+          })
+        );
       }
     } catch (error) {
       toast.error(
@@ -282,6 +287,7 @@ function ProfileSettings() {
                     type="button"
                     onClick={handleDeleteImage}
                     $type="danger"
+                    style={{ margin: "0 auto" }}
                   >
                     Delete
                   </Button>

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { DeleteProfilePicture as DeleteProfilePictureAPI } from "../services/DeleteProfilePicture";
 
-function useDeleteProfileSettings() {
+function useDeleteProfilePicture() {
   const queryClient = useQueryClient();
 
   const {
@@ -20,4 +20,4 @@ function useDeleteProfileSettings() {
   return { deleteProfilePicture, data, error, isPending };
 }
 
-export { useDeleteProfileSettings };
+export { useDeleteProfilePicture };

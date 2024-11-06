@@ -1,7 +1,7 @@
 import { STATIC_MEDIA_URL } from "@constants";
 import { http, HttpResponse } from "msw";
 
-export const profileSettingsMock = [
+export const profilePictureMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
     return undefined;
   }),
