@@ -72,4 +72,6 @@ export type {
   otherUserInfoInterface,
   permissionsSettingsInterface,
   updatePermissionInterface,
+  privacyStatesStrings,
+  activeStatesStrings,
 };
