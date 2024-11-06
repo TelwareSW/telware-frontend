@@ -17,6 +17,13 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import SearchIcon from "@mui/icons-material/Search";
+
 enum icons {
   BlockIcon,
   SettingsOutlinedIcon,
@@ -38,6 +45,12 @@ enum icons {
   Close,
   Show,
   Hide,
+  Record,
+  Attatch,
+  Emojie,
+  More,
+  Call,
+  Search,
 }
 
 type iconStrings = keyof typeof icons;
@@ -142,6 +155,58 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     <CloseOutlinedIcon
       fontSize="large"
       sx={{ color: `var(--color-icon-secondary)` }}
+    />
+  ),
+
+  Record: <KeyboardVoiceIcon sx={{ fontSize: "1rem" }} />,
+
+  Attatch: (
+    <AttachFileIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  Emojie: (
+    <SentimentSatisfiedAltIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  More: (
+    <MoreVertIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  Search: (
+    <SearchIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  Call: (
+    <LocalPhoneIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
     />
   ),
 };

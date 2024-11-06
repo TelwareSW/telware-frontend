@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
+
 import { pagesMap } from "@data/sideBar";
+
 import ChatsSideBar from "./chats/ChatsSideBar";
 import SettingsSideBar from "./settings/SettingsSideBarBody";
 import ContactsSideBar from "./ContactsSideBar";
@@ -9,8 +11,10 @@ import SettingsUpdate from "./settings/SettingsUpdate";
 import { RadioInputProps } from "@components/inputs/radio-input/RadioInput";
 import { SideBarRowProps } from "./settings/side-bar-row/SideBarRow";
 import ProfileSettings from "@features/profile-settings/ProfileSettings";
-import { useAppSelector } from "@hooks/useGlobalState";
 import ProfileInfo from "@features/profile-info/ProfileInfo";
+import ChatList from "@features/Chats/ChatsList";
+
+import { useAppSelector } from "@hooks/useGlobalState";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -38,11 +42,28 @@ const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s;
   animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s
     ease-in-out;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: inherit;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color);
+    border-radius: 5px;
+  }
 `;
 
 const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
   {
-    Chats: () => <ChatsSideBar />,
+    Chats: () => (
+      <ChatsSideBar>
+        <ChatList />
+      </ChatsSideBar>
+    ),
     Contacts: () => <ContactsSideBar />,
     Settings: (props) => (
       <SettingsSideBar rows={props.rows || []}>

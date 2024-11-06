@@ -40,8 +40,8 @@ const GlobalStyles = createGlobalStyle`
     
     --color-text-button: var(--color-background);
     
-    --color-chat-active: #56a2c9;
-    --color-chat-hover: rgb(244, 244, 245);
+    --color-chat-active: #c6deeb;
+    --color-chat-hover: #f5f5f5;
 
     --color-default-shadow: rgb(114, 114, 114, 0.251);
 
@@ -63,7 +63,10 @@ const GlobalStyles = createGlobalStyle`
 
     --image-grayscale: 0;
     --image-opacity: 30%;
+
+    --scrollbar-color: rgba(0, 0, 0, .2);
   }
+  
   &.dark-mode {
     --color-text: #f5f5f5;
     --color-text-secondary: rgb(170, 170, 170);
@@ -79,8 +82,24 @@ const GlobalStyles = createGlobalStyle`
     --accent-color: #56a2c9;
     --accent-color-shade: #447f9c;
 
-    --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64);;
-    --color-chat-wallpaper-2: linear-gradient(90deg, #3e1f3f, #562a48, #7a5b42);
+    /* --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64); */
+    --color-chat-wallpaper-1:conic-gradient(
+    from 45deg,
+    var(--theme-background-color-top-left),
+    var(--theme-background-color-top-right),
+    var(--theme-background-color-down-right),
+    var(--theme-background-color-down-left),
+    var(--theme-background-color-top-left)
+    );
+    /* --color-chat-wallpaper-2: linear-gradient(90deg, #3e1f3f, #562a48, #7a5b42); */
+    --color-chat-wallpaper-2: conic-gradient(
+    from 45deg,
+    var(--theme-background-color-top-left),
+    var(--theme-background-color-top-right),
+    var(--theme-background-color-down-right),
+    var(--theme-background-color-down-left),
+    var(--theme-background-color-top-left)
+    );;
     --bg-image-opacity: 100%;
 
     --chat-wallpaper-bg: url("/assets/bg-dark.png");
@@ -92,7 +111,7 @@ const GlobalStyles = createGlobalStyle`
 
     --color-default-shadow: rgb(16, 16, 16, 0.612);
     
-    --color-chat-active: #2d637c;
+    --color-chat-active: #1e4454;
     --color-chat-hover: #25353f;
     
     --color-icon-secondary:  rgb(170, 170, 170);
@@ -109,8 +128,10 @@ const GlobalStyles = createGlobalStyle`
     --image-grayscale: 10%;
     --image-opacity: 90%;
 
-     --color-item-hover: rgb(244, 244, 245);
+    --color-item-hover: rgb(244, 244, 245);
     --color-item-active: rgb(237, 237, 237);
+
+    --scrollbar-color: rgba(255, 255, 255, .2);
   }
 
   

@@ -1,29 +1,48 @@
+import { Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
-import Main from "./Main";
-import SideBar from "./side-bar/SideBar";
+
 import { media } from "data/deviceSize";
 
-const StyledApp = styled.div`
+import Main from "./Main";
+import SideBar from "./side-bar/SideBar";
+
+const StyledApp = styled.div<{ $isChatOpen: boolean }>`
   @media ${media.mobile} {
     & > main {
-      display: none;
+      display: ${({ $isChatOpen }) => ($isChatOpen ? "contents" : "none")};
+    }
+
+    & > aside {
+      display: ${({ $isChatOpen }) => ($isChatOpen ? "none" : "contents")};
     }
   }
 
   @media ${media.desktop} {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 2fr 5fr;
 
     & > main {
       display: block;
     }
+
+    & > aside {
+      display: block;
+    }
   }
 `;
+
 function AppLayout() {
+  const { chatId } = useParams();
+
+  // Determine if the chatId exists and set the state for mobile layout
+  const isChatOpen = !!chatId; // true if chatId exists, false if not
+
   return (
-    <StyledApp data-testid="app-layout">
+    <StyledApp $isChatOpen={isChatOpen} data-testid="app-layout">
       <SideBar />
-      <Main />
+      <Main>
+        <Outlet />
+      </Main>
     </StyledApp>
   );
 }

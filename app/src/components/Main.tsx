@@ -25,7 +25,7 @@ const StyledMain = styled.main`
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 9;
+
     background-position: center;
     background-size: cover;
     opacity: var(--bg-image-opacity);
