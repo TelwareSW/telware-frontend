@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { Check } from "@mui/icons-material";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FloatingLabelInput from "@components/inputs/float-label-input/FloatingLabelInput";
 import { DevTool } from "@hookform/devtools";
