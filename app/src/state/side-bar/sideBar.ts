@@ -7,6 +7,7 @@ import {
   settingsUpdate,
   profileUpdate,
   sideBarPages,
+  blockList,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -32,6 +33,8 @@ function getSideBarPage(type: number): SideBarView {
       return settingsUpdate;
     case sideBarPages.PROFILE_UPDATE:
       return profileUpdate;
+    case sideBarPages.BLOCKED_USERS:
+      return blockList;
     default:
       throw new Error("Unknown Type");
   }

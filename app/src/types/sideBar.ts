@@ -5,6 +5,7 @@ enum sideBarPages {
   CONTACTS,
   SETTINGS_UPDATE,
   PROFILE_UPDATE,
+  BLOCKED_USERS,
 }
 
 type pagesStrings = keyof typeof sideBarPages;

@@ -4,7 +4,7 @@ import { forgetPassword, resetPassword } from "./userauth/resetpassword";
 import { verifyEmailMock } from "./userauth/verfiyEmail";
 import { loginMock } from "./userauth/login";
 import { logoutMock } from "./userauth/logout";
-import { privacySettingsMock } from "./privacySettings";
+import { privacySettingsMock } from "./privacy-settings/privacySettings";
 import { OauthMock } from "./oauth/oauth";
 import { profileSettingsMock } from "./profile-settings/profile-settings";
 
