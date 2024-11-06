@@ -25,6 +25,28 @@ const PlaceHeader = styled.div`
   padding-bottom: 0.5rem;
 `;
 
+function getKey(
+  status:
+    | activitySettingsID
+    | privacySettingsID
+    | permissionSettingsID
+    | undefined,
+  type: StatusType | undefined,
+  index: number
+) {
+  let key;
+  if (status !== undefined && type !== undefined) {
+    if (type === StatusType.PRIVACY)
+      key = statusMap.privacy[status as privacySettingsID].id;
+    else if (type === StatusType.ACTIVITY)
+      key = statusMap.activity[status as activitySettingsID].id;
+    else key = statusMap.permission[status as permissionSettingsID].id;
+  } else {
+    key = index;
+  }
+  return key;
+}
+
 function OptionsList({ rows }: { rows: SideBarRowProps[] }) {
   const { title } = useAppSelector((state) => state.sideBarData);
 
@@ -36,20 +58,7 @@ function OptionsList({ rows }: { rows: SideBarRowProps[] }) {
             <Heading as="h6">{title}</Heading>
           </PlaceHeader>
           {rows.map((item, index) => (
-            <SideBarRow
-              {...item}
-              key={
-                item.status !== undefined && item.type !== undefined
-                  ? item.type === StatusType.PRIVACY
-                    ? statusMap.privacy[item.status as privacySettingsID].id
-                    : item.type === StatusType.ACTIVITY
-                      ? statusMap.activity[item.status as activitySettingsID].id
-                      : statusMap.permission[
-                          item.status as permissionSettingsID
-                        ].id
-                  : index
-              }
-            />
+            <SideBarRow {...item} key={getKey(item.status, item.type, index)} />
           ))}
         </StyledOptionsList>
       )}
