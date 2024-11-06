@@ -5,9 +5,12 @@ import {
   activitySettingsID,
   sideBarPages,
   pagesStrings,
+  permissionSettingsID,
+  StatusType,
 } from "../types/sideBar";
 import {
   activitySettingsInterface,
+  permissionsSettingsInterface,
   privacySettingsInterface,
 } from "../types/user";
 
@@ -30,16 +33,6 @@ const privacySettingsMap: Record<
     subtitle: "Who can see my profile photo?",
     name: "Profile Photo",
   },
-  [privacySettingsID.ADD_TO_GROUP_PRIVACY]: {
-    id: "addToGroupPrivacy",
-    subtitle: "Who can add me to group chats?",
-    name: "Group Chats",
-  },
-  [privacySettingsID.ADD_TO_CHANNEL_PRIVACY]: {
-    id: "addToChannelPrivacy",
-    subtitle: "Who can add me to channels?",
-    name: "Channels",
-  },
 };
 
 const activitySettingsMap: Record<
@@ -53,9 +46,26 @@ const activitySettingsMap: Record<
   },
 };
 
+const permissionSettingsMap: Record<
+  permissionSettingsID,
+  { id: keyof permissionsSettingsInterface; name: string; subtitle: string }
+> = {
+  [permissionSettingsID.ADD_TO_GROUP_PRIVACY]: {
+    id: "addToGroupPrivacy",
+    subtitle: "Who can add me to group chats?",
+    name: "Group Chats",
+  },
+  [permissionSettingsID.ADD_TO_CHANNEL_PRIVACY]: {
+    id: "addToChannelPrivacy",
+    subtitle: "Who can add me to channels?",
+    name: "Channels",
+  },
+};
+
 const statusMap = {
   privacy: privacySettingsMap,
   activity: activitySettingsMap,
+  permission: permissionSettingsMap,
 };
 
 const pagesMap: { [K in pagesStrings]: string } = {
@@ -95,34 +105,40 @@ const privacySettingsRows = [
   },
   {
     title: "Who can see my stories?",
-    privacyStatus: privacySettingsID.STORIES_SEEN_PRIVACY,
+    status: privacySettingsID.STORIES_SEEN_PRIVACY,
     redirect: sideBarPages.SETTINGS_UPDATE,
+    type: StatusType.PRIVACY,
   },
   {
     title: "Who can see my last seen?",
-    privacyStatus: privacySettingsID.LAST_SEEN_PRIVACY,
+    status: privacySettingsID.LAST_SEEN_PRIVACY,
     redirect: sideBarPages.SETTINGS_UPDATE,
+    type: StatusType.PRIVACY,
   },
 
   {
     title: "Who can see my profile photo?",
-    privacyStatus: privacySettingsID.PROFILE_PHOTO_PRIVACY,
+    status: privacySettingsID.PROFILE_PHOTO_PRIVACY,
     redirect: sideBarPages.SETTINGS_UPDATE,
+    type: StatusType.PRIVACY,
   },
   {
     title: "Who can add me to group chats?",
-    privacyStatus: privacySettingsID.ADD_TO_GROUP_PRIVACY,
+    status: permissionSettingsID.ADD_TO_GROUP_PRIVACY,
     redirect: sideBarPages.SETTINGS_UPDATE,
+    type: StatusType.PERMISSION,
   },
   {
     title: "Who can add me to channels?",
-    privacyStatus: privacySettingsID.ADD_TO_CHANNEL_PRIVACY,
+    status: permissionSettingsID.ADD_TO_CHANNEL_PRIVACY,
     redirect: sideBarPages.SETTINGS_UPDATE,
+    type: StatusType.PERMISSION,
   },
   {
     title: "Read receipts",
-    activityStatus: activitySettingsID.READ_RECEIPTS_PRIVACY,
+    status: activitySettingsID.READ_RECEIPTS_PRIVACY,
     redirect: sideBarPages.SETTINGS_UPDATE,
+    type: StatusType.ACTIVITY,
   },
 ] as SideBarRowProps[];
 

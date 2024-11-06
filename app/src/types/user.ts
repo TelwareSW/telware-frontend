@@ -16,12 +16,15 @@ interface privacySettingsInterface {
   storiesSeenPrivacy: privacyStates;
   lastSeenPrivacy: privacyStates;
   profilePhotoPrivacy: privacyStates;
-  addToGroupPrivacy: privacyStates;
-  addToChannelPrivacy: privacyStates;
 }
 
 interface activitySettingsInterface {
   readReceiptsPrivacy: activeStates;
+}
+
+interface permissionsSettingsInterface {
+  addToGroupPrivacy: permissionStates;
+  addToChannelPrivacy: permissionStates;
 }
 
 interface userInfoInterface {
@@ -58,14 +61,21 @@ interface otherUserInfoInterface {
   bio: string;
 }
 export { activeStates, privacyStates };
+
+interface updatePermissionInterface {
+  key: keyof permissionsSettingsInterface;
+  value: permissionStatesStrings;
+}
+
+export { activeStates, privacyStates, permissionStates };
 export type {
-  activeStatesStrings,
   activitySettingsInterface,
   privacySettingsInterface,
-  privacyStatesStrings,
   updateActivityInterface,
   updateInfoInterface,
   updatePrivacyInterface,
   userInfoInterface,
   otherUserInfoInterface,
+  permissionsSettingsInterface,
+  updatePermissionInterface,
 };
