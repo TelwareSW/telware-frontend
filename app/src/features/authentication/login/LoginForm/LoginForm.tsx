@@ -15,6 +15,8 @@ import PasswordInputField from "@components/inputs/password-input-field/Password
 import SpinnerMini from "@components/SpinnerMini";
 import ConfirmationEmailModal from "@features/authentication/signup/ConfirmationEmailModal";
 
+import useAuthCheck from "../hooks/useAuthCheck";
+
 const MAX_PASSWORD_LENGTH = 128;
 const MAX_EMAIL_LENGTH = 254;
 
@@ -73,6 +75,7 @@ const StyledSpan = styled.span`
 `;
 
 export default function LoginForm() {
+  useAuthCheck();
   const { login, isPending } = useLogin();
 
   const [error, setError] = useState("");

@@ -23,7 +23,7 @@ type PasswordResponseBody = PasswordResponseSuccess | PasswordResponseError;
 
 export const forgetPassword = [
   http.post<object, PasswordRequestBodySend, PasswordResponseBody>(
-    `mock/auth/password/forget`,
+    `/auth/password/forget`,
     async ({ request }) => {
       await request.json();
       const isValid = false;
@@ -51,7 +51,7 @@ export const forgetPassword = [
 
 export const resetPassword = [
   http.post<object, PasswordRequestBodyVerify, PasswordResponseBody>(
-    `mock/auth/password/reset/1`,
+    `/auth/password/reset/1`,
     async ({ request }) => {
       await request.json();
       const isValid = false;

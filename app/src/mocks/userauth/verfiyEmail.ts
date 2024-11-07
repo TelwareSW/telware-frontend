@@ -23,7 +23,7 @@ type EmailResponseBody = EmailResponseSuccess | EmailResponseError;
 
 export const sendEmailConfirmationMock = [
   http.post<object, EmailRequestBodySend, EmailResponseBody>(
-    `mock/auth/send-confirmation`,
+    `/auth/send-confirmation`,
     async ({ request }) => {
       await request.json();
       const isValid = true;
@@ -51,7 +51,7 @@ export const sendEmailConfirmationMock = [
 
 export const verifyEmailMock = [
   http.post<object, EmailRequestBodyVerify, EmailResponseBody>(
-    `mock/auth/verify`,
+    `/auth/verify`,
     async ({ request }) => {
       await request.json();
       const isValid = true;

@@ -1,37 +1,14 @@
-import { API_URL } from "@constants";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./useAuth";
+import { useEffect } from "react";
 
-type Path = "/login" | "/signup" | `/password-reset/${string}`;
-
-const useAuthCheck = (path: Path) => {
+const useAuthCheck = () => {
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    async function checkAuth() {
-      try {
-        const res = await fetch(`${API_URL}/auth/me`, {
-          method: "GET",
-          credentials: "include",
-        });
-        if (res.ok) {
-          setIsAuthenticated(true);
-          navigate("/", { replace: true });
-        } else {
-          setIsAuthenticated(false);
-          navigate(path);
-        }
-      } catch (error) {
-        setIsAuthenticated(false);
-        navigate("/login");
-      }
-    }
-
-    checkAuth();
-  }, [navigate, path]);
-
-  return isAuthenticated;
+    if (isAuth) navigate("/", { replace: true });
+  }, [isAuth, navigate]);
 };
 
 export default useAuthCheck;
