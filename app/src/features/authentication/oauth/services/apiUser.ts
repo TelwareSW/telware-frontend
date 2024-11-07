@@ -1,11 +1,11 @@
 import { API_URL } from "@constants";
 
-export async function apiGoogleOauth() {
-  const res = await fetch(`${API_URL}/auth/oauth/google`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+export async function apiUser() {
+  const res = await fetch(`${API_URL}/auth/me`, {
+    method: "GET",
+    credentials: "include",
   });
-
+    
   const data = await res.json();
 
   if (data.status !== "success") {
