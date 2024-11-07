@@ -1,27 +1,18 @@
-enum privacyStates {
-  EVERYONE = "everyone",
-  CONTACTS = "contacts",
-  NOBODY = "nobody",
-}
-
-enum activeStates {
-  ENABLED = "enabled",
-  DISABLED = "disabled",
-}
-
-type privacyStatesStrings = keyof typeof privacyStates;
-type activeStatesStrings = keyof typeof activeStates;
+import { privacyStates, activeStates, permissionStates, permissionStatesStrings, activeStatesStrings, privacyStatesStrings } from "./sideBar";
 
 interface privacySettingsInterface {
   storiesSeenPrivacy: privacyStates;
   lastSeenPrivacy: privacyStates;
   profilePhotoPrivacy: privacyStates;
-  addToGroupPrivacy: privacyStates;
-  addToChannelPrivacy: privacyStates;
 }
 
 interface activitySettingsInterface {
   readReceiptsPrivacy: activeStates;
+}
+
+interface permissionsSettingsInterface {
+  addToGroupPrivacy: permissionStates;
+  addToChannelPrivacy: permissionStates;
 }
 
 interface userInfoInterface {
@@ -48,14 +39,19 @@ interface updateActivityInterface {
   value: activeStatesStrings;
 }
 
-export { activeStates, privacyStates };
+interface updatePermissionInterface {
+  key: keyof permissionsSettingsInterface;
+  value: permissionStatesStrings;
+}
+
+export { activeStates, privacyStates, permissionStates };
 export type {
-  activeStatesStrings,
   activitySettingsInterface,
   privacySettingsInterface,
-  privacyStatesStrings,
   updateActivityInterface,
   updateInfoInterface,
   updatePrivacyInterface,
   userInfoInterface,
+  permissionsSettingsInterface,
+  updatePermissionInterface,
 };
