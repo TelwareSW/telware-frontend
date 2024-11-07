@@ -13,7 +13,9 @@ import TelephoneInputField from "@components/inputs/input-field/TelephoneInputFi
 import ConfirmationEmailModal from "./ConfirmationEmailModal";
 import PasswordInputField from "@components/inputs/input-field/PasswordInputField";
 import { RECAPTCHA_SITE_KEY } from "@constants";
+
 import useAuthCheck from "../login/hooks/useAuthCheck";
+
 export type User = {
   username: string;
   phoneNumber: string;

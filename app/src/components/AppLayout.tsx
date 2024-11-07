@@ -34,8 +34,7 @@ const StyledApp = styled.div<{ $isChatOpen: boolean }>`
 function AppLayout() {
   const { chatId } = useParams();
 
-  // Determine if the chatId exists and set the state for mobile layout
-  const isChatOpen = !!chatId; // true if chatId exists, false if not
+  const isChatOpen = !!chatId;
 
   return (
     <StyledApp $isChatOpen={isChatOpen} data-testid="app-layout">

@@ -1,6 +1,7 @@
-import { useAuth } from "@features/authentication/login/hooks/useAuth";
 import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "@features/authentication/login/hooks/useAuth";
 
 type prortectedRouteType = {
   children: ReactNode;

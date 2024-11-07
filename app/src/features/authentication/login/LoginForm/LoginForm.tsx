@@ -4,7 +4,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import styled from "styled-components";
 
-import { useLogin } from "../hooks/useLogin";
 import { schema } from "../schema/login";
 
 import ForgotPasswordModal from "../ForgotPasswordModal";
@@ -15,6 +14,7 @@ import PasswordInputField from "@components/inputs/password-input-field/Password
 import SpinnerMini from "@components/SpinnerMini";
 import ConfirmationEmailModal from "@features/authentication/signup/ConfirmationEmailModal";
 
+import { useLogin } from "../hooks/useLogin";
 import useAuthCheck from "../hooks/useAuthCheck";
 
 const MAX_PASSWORD_LENGTH = 128;

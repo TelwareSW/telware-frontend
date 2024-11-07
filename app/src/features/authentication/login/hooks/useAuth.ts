@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { checkAuth } from "../services/checkAuth";
 
 export function useAuth() {
