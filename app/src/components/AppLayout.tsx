@@ -1,21 +1,20 @@
 import styled from "styled-components";
 import Main from "./Main";
 import SideBar from "./side-bar/SideBar";
-import { media } from "data/deviceSize";
+import { MOBILE_VIEW } from "@constants";
 
 const StyledApp = styled.div`
-  @media ${media.mobile} {
+  display: grid;
+  grid-template-columns: 24rem auto;
+  height: 100dvh;
+
+  & > main {
+    display: block;
+  }
+  @media ${MOBILE_VIEW} {
+    display: block;
     & > main {
       display: none;
-    }
-  }
-
-  @media ${media.desktop} {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-
-    & > main {
-      display: block;
     }
   }
 `;

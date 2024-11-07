@@ -156,7 +156,9 @@ const GlobalStyles = createGlobalStyle`
   
   --color-borders-input: rgb(218, 220, 224);
 
+  
   --color-error: #e53935;
+  --color-error-shade: #c62828;
   --color-success: rgb(0, 199, 62);
 
   font-size: 16px;

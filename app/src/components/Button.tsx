@@ -30,6 +30,16 @@ const Button = styled.button<{ $type?: string }>`
       font-weight: normal;
       letter-spacing: normal;
     `}
+  ${(props) =>
+    props.$type === "danger" &&
+    css`
+      background-color: var(--color-error);
+      color: var(--color-text-button);
+      font-weight: normal;
+      &:hover {
+        background-color: var(--color-error-shade);
+      }
+    `}
 `;
 
 export default Button;
