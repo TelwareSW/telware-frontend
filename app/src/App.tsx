@@ -14,7 +14,7 @@ import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
 import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
-import ChatBox from "@components/ChatBox";
+import ChatBox from "@features/Chats/ChatBox";
 
 const queryClient = new QueryClient({
   defaultOptions: {

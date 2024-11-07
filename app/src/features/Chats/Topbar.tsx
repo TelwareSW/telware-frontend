@@ -1,6 +1,10 @@
 import styled from "styled-components";
+
 import { getIcon } from "@data/icons";
+
 import Avatar from "@features/Chats/Avatar";
+import Icon from "@components/Icon";
+
 import { useChat } from "@features/Chats/hooks/useChat";
 
 const Container = styled.div`
@@ -48,26 +52,30 @@ const Name = styled.span`
 
 const Icons = styled.div`
   display: flex;
+  align-items: center;
+
   gap: 1.5rem;
 `;
 
 function Topbar() {
-
   const { chat } = useChat();
+  const { name, lastSeen, image } = chat || {};
+
+  if (!chat) return;
 
   return (
     <Container>
       <Info>
-        <Avatar name="Alice" />
+        <Avatar image={image} name={name?.charAt(0)} />
         <Content>
-          <Name>{chat?.name}</Name>
-          <LastSeen>last seen {chat?.lastSeen}</LastSeen>
+          <Name>{name}</Name>
+          <LastSeen>last seen {lastSeen}</LastSeen>
         </Content>
       </Info>
       <Icons>
-        {getIcon("Call")}
-        {getIcon("Search")}
-        {getIcon("More")}
+        <Icon>{getIcon("Call")}</Icon>
+        <Icon>{getIcon("Search")}</Icon>
+        <Icon>{getIcon("More")}</Icon>
       </Icons>
     </Container>
   );

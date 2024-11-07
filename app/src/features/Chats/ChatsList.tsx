@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ChatItem from "./ChatItem";
 import { useChats } from "./hooks/useChats";
 
-const ChatListContainer = styled.div`
+const ChatListContainer = styled.ul`
   display: flex;
   flex-direction: column;
   width: 100%;

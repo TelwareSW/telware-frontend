@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-import CircleIcon from "./CircleIcon";
 import { getIcon } from "@data/icons";
-import ExpandingTextArea from "./ExpandingTextArea";
+
+import CircleIcon from "@components/CircleIcon";
+import ExpandingTextArea from "@components/ExpandingTextArea";
+import Icon from "@components/Icon";
 
 const Container = styled.div`
   position: absolute;
@@ -60,9 +62,9 @@ function ChatInput() {
       <AnotherContainer>
         <InputContainer>
           <InputWrapper>
-            {getIcon("Emojie")}
+            <Icon>{getIcon("Emojie")}</Icon>
             <ExpandingTextArea />
-            {getIcon("Attatch")}
+            <Icon>{getIcon("Attatch")}</Icon>
           </InputWrapper>
         </InputContainer>
 

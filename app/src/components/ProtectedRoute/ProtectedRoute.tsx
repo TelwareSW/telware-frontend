@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useAuth } from "@features/authentication/login/hooks/useAuth";
+import { useAuthStatus } from "@features/authentication/login/hooks/useAuthStatus";
 
 type prortectedRouteType = {
   children: ReactNode;
@@ -9,13 +9,13 @@ type prortectedRouteType = {
 
 function ProtectedRoute({ children }: prortectedRouteType) {
   const navigate = useNavigate();
-  const { isAuth } = useAuth();
+  const { isAuth, isPending } = useAuthStatus();
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth && !isPending) {
       navigate("/login");
     }
-  }, [navigate, isAuth]);
+  }, [navigate, isAuth, isPending]);
 
   if (isAuth) return children;
   else return null;

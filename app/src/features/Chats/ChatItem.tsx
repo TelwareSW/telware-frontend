@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Avatar from "./Avatar";
 import { Chat } from "@mocks/data/Chats";
 
-const Container = styled.div<{ $active?: boolean }>`
+const Container = styled.li<{ $active?: boolean }>`
   display: flex;
   align-items: center;
   padding: 0.75rem;
@@ -56,27 +56,29 @@ type ChatItemProps = {
   chat: Chat;
 };
 
-function ChatItem({ chat }: ChatItemProps) {
+function ChatItem({
+  chat: { id, image, name, timestamp, lastMessage },
+}: ChatItemProps) {
   const navigate = useNavigate();
   const { chatId } = useParams<{ chatId: string }>();
 
   const handleOpenChat = () => {
-    navigate(`/${chat.id}`);
+    navigate(`/${id}`);
   };
 
   return (
     <Container
-      $active={Number(chatId) === chat.id}
+      $active={Number(chatId) === id}
       onClick={handleOpenChat}
-      key={chat.id}
+      key={id}
     >
-      <Avatar image={chat.image} name={chat.name} />
+      <Avatar image={image} name={name?.charAt(0)} />
       <ChatContent>
         <ChatHeader>
-          <Name>{chat.name}</Name>
-          <Timestamp>{chat.timestamp}</Timestamp>
+          <Name>{name}</Name>
+          <Timestamp>{timestamp}</Timestamp>
         </ChatHeader>
-        <LastMessage>{chat.lastMessage}</LastMessage>
+        <LastMessage>{lastMessage}</LastMessage>
       </ChatContent>
     </Container>
   );

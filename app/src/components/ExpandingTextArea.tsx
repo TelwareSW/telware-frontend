@@ -6,6 +6,8 @@ const Textarea = styled.textarea`
   border: none;
 
   flex: 1;
+  align-self: center;
+  
   caret-color: var(--accent-color);
   color: var(--color-text);
 
@@ -14,6 +16,8 @@ const Textarea = styled.textarea`
 
   font-size: 1rem;
   line-height: 1.5;
+
+  max-height: 300px;
 `;
 
 function ExpandingTextArea() {

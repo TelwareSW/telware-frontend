@@ -1,6 +1,7 @@
+import ChatInput from "@features/Chats/ChatInput";
+import Topbar from "@features/Chats/Topbar";
+
 import { useCloseChat } from "@hooks/useCloseChat";
-import ChatInput from "./ChatInput";
-import Topbar from "./Topbar";
 
 function ChatBox() {
   useCloseChat();

@@ -37,8 +37,12 @@ const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   background-color: var(--color-background);
   overflow: hidden;
   position: relative;
+
   display: flex;
   flex-direction: column;
+
+  border-right: 1px solid var(--color-border);
+
   animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s;
   animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s
     ease-in-out;
