@@ -103,7 +103,6 @@ const privacySettingsRows = [
     icon: "BlockIcon",
     title: "Blocked Users",
     redirect: sideBarPages.BLOCKED_USERS,
-    count: 2,
   },
   {
     title: "Who can see my stories?",

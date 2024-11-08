@@ -63,6 +63,9 @@ const sideBarSlice = createSlice({
       if (redirect === sideBarPages.SETTINGS_UPDATE) {
         state.props = { data: data };
         state.title = data.header;
+      } else if (redirect === sideBarPages.BLOCKED_USERS) {
+        state.props = { ...newData.props, data: data };
+        state.title = newData.title;
       } else {
         state.title = newData.title;
         state.props = { ...newData.props };

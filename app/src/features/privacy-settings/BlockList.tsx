@@ -1,8 +1,11 @@
 import Heading from "@components/Heading";
 import styled from "styled-components";
-import BlockItem, { BlockedUserProps } from "./BlockItem";
+import BlockItem from "./BlockItem";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useBlock } from "./hooks/useBlock";
+import CircleIcon from "@components/CircleIcon";
+import { useState } from "react";
+import AddToBlockMenuList from "./AddToBlockMenuList";
 
 const StyledOptionsList = styled.div`
   display: flex;
@@ -22,16 +25,34 @@ const PlaceHeader = styled.div`
 function BlockList() {
   const { props } = useAppSelector((state) => state.sideBarData);
 
-  const blockList: BlockedUserProps[] = useBlock();
+  const { blockList } = useBlock();
+
+  const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   return (
     <StyledOptionsList>
+      <CircleIcon
+        $icon="Add"
+        $right={1}
+        $bottom={1}
+        $size={3.3}
+        $color="white"
+        $bgColor="var(--accent-color)"
+        data-testid="add-contacts-icon"
+        onClick={() => setIsMenuOpened(!isMenuOpened)}
+      />
+
+      {isMenuOpened && <AddToBlockMenuList setIsMenuOpened={setIsMenuOpened} />}
+
       <PlaceHeader>
         {props && "subtitle" in props && typeof props.subtitle === "string" && (
           <Heading as="h6">{props?.subtitle}</Heading>
         )}
       </PlaceHeader>
-      {blockList?.map((item) => <BlockItem {...item} key={item.id} />)}
+
+      {blockList?.map((item) => {
+        return <BlockItem {...item} key={item.id} />;
+      })}
     </StyledOptionsList>
   );
 }

@@ -1,4 +1,3 @@
-import { BlockedUserProps } from "@features/privacy-settings/BlockItem";
 import blockList from "@mocks/data/blocklist";
 import { allChats } from "@mocks/data/chats";
 import { endPts } from "features/privacy-settings/service/changeSettings";
@@ -9,9 +8,6 @@ type requestType = {
   privacy: activeStatesStrings | privacyStatesStrings;
 };
 
-type blockUserRequestType = {
-  userId: number;
-};
 
 export const privacySettingsMock = [
   http.patch<{ path: endPts }, requestType>(
@@ -24,47 +20,37 @@ export const privacySettingsMock = [
   ),
 
   http.get("/users/block", async () => {
-    return HttpResponse.json(
-      {
-        users: blockList,
-      },
-      { status: 200 }
-    );
+    return HttpResponse.json({
+      users: blockList,
+    });
   }),
 
-  http.patch<{ id: string }, blockUserRequestType>(
-    "/users/block/:id",
-    async ({ request }) => {
-      const body = await request.json();
-      let user = allChats.find((item) => item.id === body.userId);
-      if (user) {
-        blockList.push({
-          id: user.id,
-          name: user.name,
-          username: user.name.toLowerCase() + "123",
-        });
+  http.patch("/users/block/:id", async (req) => {
+    const id = req.params.id;
+    let user = allChats.find((item) => item.id.toString() === id);
+    if (user) {
+      blockList.push({
+        id: user.id,
+        name: user.name,
+        username: user.name.toLowerCase() + "123",
+      });
 
-        return HttpResponse.json({}, { status: 200 });
-      }
-      return HttpResponse.json({ message: "user not found" }, { status: 404 });
+      return HttpResponse.json({}, { status: 200 });
     }
-  ),
+    return HttpResponse.json({ message: "user not found" }, { status: 404 });
+  }),
 
-  http.delete<{ id: string }, blockUserRequestType>(
-    "/users/block/:id",
-    async ({ request }) => {
-      const body = await request.json();
+  http.delete("/users/block/:id", async (req) => {
+    const id = req.params.id;
 
-      if (allChats.find((item) => item.id === body.userId)) {
-        blockList.filter((item) => {
-          item.id !== body.userId;
-        });
-        return HttpResponse.json({}, { status: 200 });
-      }
+    const index = blockList.findIndex((item) => item.id.toString() === id);
+    if (index === -1)
       return HttpResponse.json(
-        { message: "user is not blocked" },
+        { status: "user not in block list" },
         { status: 404 }
       );
-    }
-  ),
+
+    blockList.splice(index, 1);
+    return HttpResponse.json({}, { status: 200 });
+  }),
 ];

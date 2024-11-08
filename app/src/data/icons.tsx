@@ -17,6 +17,8 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import NoEncryptionOutlinedIcon from "@mui/icons-material/NoEncryptionOutlined";
+
 enum icons {
   BlockIcon,
   SettingsOutlinedIcon,
@@ -27,7 +29,7 @@ enum icons {
   Contacts,
   Settings,
   NightMode,
-  AddContacts,
+  Add,
   Edit,
   AddStory,
   Logout,
@@ -38,6 +40,7 @@ enum icons {
   Close,
   Show,
   Hide,
+  Unlock,
 }
 
 type iconStrings = keyof typeof icons;
@@ -84,7 +87,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-  AddContacts: (
+  Add: (
     <AddIcon fontSize="large" sx={{ color: `var(--color-search-border)` }} />
   ),
   Edit: (
@@ -142,6 +145,13 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     <CloseOutlinedIcon
       fontSize="large"
       sx={{ color: `var(--color-icon-secondary)` }}
+    />
+  ),
+  Unlock: (
+    <NoEncryptionOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+      }}
     />
   ),
 };

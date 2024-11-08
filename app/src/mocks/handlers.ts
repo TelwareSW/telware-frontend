@@ -7,6 +7,7 @@ import { logoutMock } from "./userauth/logout";
 import { privacySettingsMock } from "./privacy-settings/privacySettings";
 import { OauthMock } from "./oauth/oauth";
 import { profileSettingsMock } from "./profile-settings/profile-settings";
+import { chats } from "./chats/chats";
 
 export default [
   ...loginMock,
@@ -19,4 +20,5 @@ export default [
   ...privacySettingsMock,
   ...logoutMock,
   ...profileSettingsMock,
+  ...chats,
 ];
