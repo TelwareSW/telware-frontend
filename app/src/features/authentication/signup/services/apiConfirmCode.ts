@@ -10,7 +10,6 @@ export async function sendEmailVerification(email: string) {
   });
   const data = await res.json();
   if (data.status !== "success") throw new Error(data.message);
-  console.log(data);
 
   return data.data;
 }

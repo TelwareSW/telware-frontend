@@ -14,7 +14,9 @@ import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
 import ProtectedRoute from "@components/protected-route/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
-import ChatBox from "@features/chats/ChatBox";
+
+import ChatBox from "@features/Chats/ChatBox";
+import SocketProvider from "sockets/SocketProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,13 +46,14 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <AppLayout />
+                <SocketProvider>
+                  <AppLayout />
+                </SocketProvider>
               </ProtectedRoute>
             }
           >
             <Route path=":chatId" element={<ChatBox />} />
           </Route>
-
           <Route path="login" element={<Login />} />
           <Route
             path="password-reset/:token"
