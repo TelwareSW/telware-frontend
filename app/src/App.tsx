@@ -15,7 +15,7 @@ import ResetPasswordModal from "@features/authentication/reset-password/ResetPas
 import ProtectedRoute from "@components/protected-route/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
 
-import ChatBox from "@features/Chats/ChatBox";
+import ChatBox from "@features/chats/ChatBox";
 import SocketProvider from "sockets/SocketProvider";
 
 const queryClient = new QueryClient({

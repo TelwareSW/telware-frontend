@@ -85,6 +85,7 @@ function BlockItem({ id, name, username }: BlockedUserInterface) {
   return (
     <StyledSideBarRow
       onClick={() => setIsBlockButtonEnabled(!isBlockButtonEnabled)}
+      data-testid={`open-block-option-${id}`}
     >
       <RowInfo>
         <Avatar name={name[0]} />
@@ -95,7 +96,11 @@ function BlockItem({ id, name, username }: BlockedUserInterface) {
       </RowInfo>
 
       {isBlockButtonEnabled && (
-        <StyledList {...menuStyles} onClick={() => handleRemove(id)}>
+        <StyledList
+          {...menuStyles}
+          onClick={() => handleRemove(id)}
+          data-testid={`remove-from-blocklist-${id}`}
+        >
           <HoverMask>
             <RowInfo>
               {getIcon("Unlock")}

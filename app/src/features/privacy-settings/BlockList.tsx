@@ -38,8 +38,8 @@ function BlockList() {
         $size={3.3}
         $color="white"
         $bgColor="var(--accent-color)"
-        data-testid="add-contacts-icon"
         onClick={() => setIsMenuOpened(!isMenuOpened)}
+        data-testid="block-user-menu-icon"
       />
 
       {isMenuOpened && <AddToBlockMenuList setIsMenuOpened={setIsMenuOpened} />}
