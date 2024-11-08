@@ -87,7 +87,7 @@ function BlockItem({ id, name, username }: BlockedUserInterface) {
       onClick={() => setIsBlockButtonEnabled(!isBlockButtonEnabled)}
     >
       <RowInfo>
-        <Avatar name={name} />
+        <Avatar name={name[0]} />
         <InnerDiv>
           <Heading as="h5">{name}</Heading>
           <StyledP>{`@${username}`}</StyledP>

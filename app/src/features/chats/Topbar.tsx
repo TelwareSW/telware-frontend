@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 import { getIcon } from "@data/icons";
 
-import Avatar from "@features/Chats/Avatar";
+import Avatar from "@features/chats/Avatar";
 import Icon from "@components/Icon";
 
-import { useChat } from "@features/Chats/hooks/useChat";
+import { useChat } from "@features/chats/hooks/useChat";
 
 const Container = styled.div`
   position: absolute;
