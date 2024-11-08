@@ -1,0 +1,40 @@
+name: Trigger Jenkins Job
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - dev
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Jenkins job name based on branch
+        id: jenkins_job_name
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "job_name=frontend" >> $GITHUB_ENV
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "job_name=frontend_dev" >> $GITHUB_ENV
+          else
+            echo "No Jenkins job to trigger for this branch."
+            exit 0
+          fi
+
+      - name: Trigger Jenkins job
+        if: env.job_name != ''
+        env:
+          JENKINS_URL: ${{vars.JENKINS_URL}}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+          JOB_NAME: ${{ env.job_name }}
+        run: |
+          echo "Triggering Jenkins job $JOB_NAME"
+          curl -X POST "$JENKINS_URL/buildByToken/build?job=$JOB_NAME&token=$JENKINS_TOKEN"
+          
