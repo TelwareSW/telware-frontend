@@ -27,7 +27,6 @@ const StyledList = styled.ul<StyledListProps>`
   border-radius: var(--border-radius-default);
 `;
 
-
 interface StyledListProps {
   $bottom?: number;
   $right?: number;
@@ -81,7 +80,11 @@ function AddToBlockMenuList({ setIsMenuOpened }: any) {
             username: item.name.toLowerCase() + 123,
           };
           return (
-            <StylingWrapper onClick={() => handleClick(item)} key={data.id}>
+            <StylingWrapper
+              onClick={() => handleClick(item)}
+              key={data.id}
+              data-testid={`block-user-${data.id}`}
+            >
               <BlockItem {...data} />
             </StylingWrapper>
           );
