@@ -114,8 +114,8 @@ describe("LoginForm", () => {
   });
 
   it("resets the form after a successful login", async () => {
-    const loginSuccess = jest.fn((_, { onSettled }) => {
-      onSettled();
+    const loginSuccess = jest.fn((_, { onSuccess }) => {
+      onSuccess();
     });
 
     (useLogin as jest.Mock).mockReturnValue({

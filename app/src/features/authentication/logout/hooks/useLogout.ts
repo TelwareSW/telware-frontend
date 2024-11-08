@@ -11,6 +11,7 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.removeQueries();
       navigate("/login", { replace: true });
+      queryClient.invalidateQueries({ queryKey: ["isAuth"] });
     },
   });
 

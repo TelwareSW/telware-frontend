@@ -1,11 +1,14 @@
+import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useResetPassword } from "./hooks/useResetPassword";
+
 import { schema } from "./schema/schema";
-import styled from "styled-components";
+
 import PasswordInputField from "@components/inputs/input-field/PasswordInputField";
 import Button from "@components/Button";
+
+import { useResetPassword } from "./hooks/useResetPassword";
 import useAuthCheck from "../login/hooks/useAuthCheck";
 
 type ResetPassword = {
@@ -70,7 +73,10 @@ const Inputs = styled.div`
 
 function ResetPasswordModal() {
   const { resetPassword, isPending, isSuccess, isError } = useResetPassword();
+  const { token } = useParams();
   const navigate = useNavigate();
+  useAuthCheck();
+
   const {
     register,
     handleSubmit,
@@ -81,13 +87,10 @@ function ResetPasswordModal() {
     resolver: yupResolver(schema),
   });
 
-  const { token } = useParams();
   if (!token) {
     console.error("Token is missing in the URL.");
     return null;
   }
-
-  useAuthCheck(`/password-reset/${token}`);
 
   const handleResetPassword = () => {
     resetPassword({

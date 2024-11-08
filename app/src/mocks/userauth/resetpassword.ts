@@ -21,11 +21,9 @@ type PasswordResponseError = {
 
 type PasswordResponseBody = PasswordResponseSuccess | PasswordResponseError;
 
-const API_ENDPOINT = "";
-
 export const forgetPassword = [
   http.post<object, PasswordRequestBodySend, PasswordResponseBody>(
-    `${API_ENDPOINT}/auth/password/forget`,
+    `/auth/password/forget`,
     async ({ request }) => {
       await request.json();
       const isValid = false;
@@ -36,7 +34,7 @@ export const forgetPassword = [
             message: "Cannot send the email, please retry",
             status: "error",
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
 
@@ -45,15 +43,15 @@ export const forgetPassword = [
           message: "Check your email.",
           status: "success",
         },
-        { status: 201 },
+        { status: 201 }
       );
-    },
+    }
   ),
 ];
 
 export const resetPassword = [
   http.post<object, PasswordRequestBodyVerify, PasswordResponseBody>(
-    `${API_ENDPOINT}/auth/password/reset/1`,
+    `/auth/password/reset/1`,
     async ({ request }) => {
       await request.json();
       const isValid = false;
@@ -64,7 +62,7 @@ export const resetPassword = [
             message: "Incorrect code , please retry",
             status: "error",
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
 
@@ -73,8 +71,8 @@ export const resetPassword = [
           message: "Successful! Redirecting...",
           status: "success",
         },
-        { status: 201 },
+        { status: 201 }
       );
-    },
+    }
   ),
 ];

@@ -4,14 +4,19 @@ import { updateSideBarView } from "@state/side-bar/sideBar";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import {
   activitySettingsID,
+  permissionSettingsID,
   privacySettingsID,
-  privacyStates,
+  StatusType,
 } from "types/sideBar";
 import { getIcon, iconStrings } from "@data/icons";
 import { useEffect, useState } from "react";
 import { statusMap } from "@data/sideBar";
-import { RadioOptionInterface } from "@components/inputs/radio-input/RadioInput";
-import { activeStates } from "types/user";
+import {
+  activitySettingsInterface,
+  permissionsSettingsInterface,
+  privacySettingsInterface,
+} from "types/user";
+import { DataInterface, ExtractData } from "./getDataFactory";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;
@@ -56,97 +61,68 @@ const StyledP = styled.p`
 interface SideBarRowProps {
   icon?: iconStrings;
   title: string;
-  activityStatus?: activitySettingsID;
-  privacyStatus?: privacySettingsID;
-  count?: number;
+  type?: StatusType;
+  status?: activitySettingsID | privacySettingsID | permissionSettingsID;
   redirect?: number;
+  id: number;
 }
 
-function ExtractData(
-  privacyStatus: privacySettingsID | undefined,
-  activityStatus: activitySettingsID | undefined,
-  currStatus: string | undefined,
-) {
-  let keyOptions;
-  let valueOptions: string[];
-  let data: any;
-
-  if (activityStatus !== undefined || privacyStatus !== undefined) {
-    const rowInfo =
-      privacyStatus !== undefined
-        ? statusMap.privacy[privacyStatus]
-        : activityStatus !== undefined
-          ? statusMap.activity[activityStatus]
-          : undefined;
-
-    valueOptions =
-      privacyStatus !== undefined
-        ? Object.values(privacyStates)
-        : Object.values(activeStates);
-
-    keyOptions =
-      privacyStatus !== undefined
-        ? Object.keys(privacyStates)
-        : Object.keys(activeStates);
-
-    const radioOptions: RadioOptionInterface[] = [];
-
-    keyOptions.map((item, index) => {
-      radioOptions.push({
-        id: item,
-        label: valueOptions[index],
-        value: item,
-      } as RadioOptionInterface);
-    });
-
-    data = {
-      header: rowInfo?.name,
-      state: currStatus,
-      data: {
-        id: rowInfo?.id,
-        title: rowInfo?.subtitle,
-        options: radioOptions,
-      },
-      updateFnType: activityStatus !== undefined ? 0 : 1,
-    };
-  }
-  return data;
-}
-
-function SideBarRow({
-  redirect,
-  icon,
-  title,
-  activityStatus,
-  privacyStatus,
-  count,
-}: SideBarRowProps) {
+function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
   const userData = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const renderedIcon = getIcon(icon);
 
   const [currStatus, setCurrStatus] = useState<string | undefined>(undefined);
+  let key:
+    | {
+        id: keyof privacySettingsInterface;
+        name: string;
+        subtitle: string;
+      }
+    | {
+        id: keyof activitySettingsInterface;
+        name: string;
+        subtitle: string;
+      }
+    | {
+        id: keyof permissionsSettingsInterface;
+        name: string;
+        subtitle: string;
+      }
+    | undefined;
+
+  const dataExtractor: DataInterface = ExtractData(type, currStatus, status);
+  const data = dataExtractor.getData();
 
   useEffect(() => {
-    let key;
-    if (privacyStatus !== undefined) {
-      key = statusMap.privacy[privacyStatus];
-      setCurrStatus(userData?.privacySettings?.[key.id] || "everyone");
-    } else if (activityStatus !== undefined) {
-      key = statusMap.activity[activityStatus];
-      setCurrStatus(userData?.activitySettings?.[key.id] || "enabled");
+    if (status !== undefined && type !== undefined) {
+      switch (type) {
+        case StatusType.PRIVACY:
+          key = statusMap.privacy[status];
+          setCurrStatus(userData?.privacySettings?.[key.id] || "everyone");
+          break;
+        case StatusType.ACTIVITY:
+          key = statusMap.activity[status as activitySettingsID];
+          setCurrStatus(userData?.activitySettings?.[key.id] || "everyone");
+          break;
+        case StatusType.PERMISSION:
+          key = statusMap.permission[status as permissionSettingsID];
+          setCurrStatus(userData?.permissionSettings?.[key.id] || "everyone");
+          break;
+        default:
+          throw new Error("Type not valid");
+      }
     } else {
       setCurrStatus(undefined);
     }
-  }, [userData, privacyStatus, activityStatus]);
-
-  const data = ExtractData(privacyStatus, activityStatus, currStatus);
+  }, [userData, status]);
 
   return (
     <StyledSideBarRow
       onClick={() =>
         redirect && dispatch(updateSideBarView({ redirect, data }))
       }
+      data-testid={key && `menu-item-${key.id}`}
     >
       <RowInfo>
         {renderedIcon}
@@ -159,7 +135,6 @@ function SideBarRow({
           <Heading as="h5">{title}</Heading>
         )}
       </RowInfo>
-      {count && <StyledP>{count}</StyledP>}
     </StyledSideBarRow>
   );
 }

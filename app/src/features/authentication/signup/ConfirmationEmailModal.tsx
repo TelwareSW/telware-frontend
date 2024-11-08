@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UseVerifyEmail } from "./hooks/useVerifyEmail";
@@ -27,6 +27,11 @@ const ModalContainer = styled.div`
   text-align: center;
   width: 400px;
 `;
+const CodeWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+`;
 
 const Button = styled.button<{ disabled?: boolean }>`
   border: none;
@@ -50,7 +55,7 @@ const ModalTitle = styled.h2`
 `;
 
 const ModalMessage = styled.span`
-  margin-bottom: 2rem;
+  margin-bottom: 3em;
   color: var(--color-text);
 `;
 
@@ -106,14 +111,20 @@ function ConfirmationEmailModal({
   } = UseVerifyEmail();
   const { SendConfirmationCode, isSuccess: isCodeRensent } =
     UseSendConfirmationEmail();
+
   const navigate = useNavigate();
+  useEffect(() => {
+    SendConfirmationCode(email);
+  }, [email, SendConfirmationCode]);
   if (!isOpen) return null;
   function handleConfirmCode() {
+    setError("");
     const code = codeDisplay.join("");
     verifyCode(
-      { email, code },
+      { email, verificationCode: code },
       {
         onSuccess: () => {
+          onClose();
           setTimeout(() => {
             navigate("/login", { replace: true });
           }, 500);
@@ -141,11 +152,13 @@ function ConfirmationEmailModal({
           A confirmation email has been sent to your email address. Please check
           your inbox to verify your account.
         </ModalMessage>
-        <CodeInputField
-          data-testid="code-input"
-          code={codeDisplay}
-          setCode={setCodeDisplay}
-        />
+        <CodeWrapper>
+          <CodeInputField
+            data-testid="code-input"
+            code={codeDisplay}
+            setCode={setCodeDisplay}
+          />
+        </CodeWrapper>
         <Button
           onClick={handleConfirmCode}
           disabled={codeDisplay.join("").length < 6}
@@ -155,16 +168,14 @@ function ConfirmationEmailModal({
         </Button>
         <Error data-testid="error-msg">{error}</Error>
         {isVerified && (
-          <Success data-testid="verified-msg">
-            you are verified,redirecting...{" "}
-          </Success>
+          <Success data-testid="verified-msg">Email verified!</Success>
         )}
         <ModalMessage>
           Didn't get an email?{" "}
           <ResendText onClick={handleResendEmail}>resend email</ResendText>
           {isCodeRensent && (
             <Success data-testid="email-resent-msg">
-              Code is resent! check your email
+              Code is sent! check your email
             </Success>
           )}
         </ModalMessage>
