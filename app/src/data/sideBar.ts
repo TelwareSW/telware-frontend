@@ -76,6 +76,7 @@ const pagesMap: { [K in pagesStrings]: string } = {
   SETTINGS_UPDATE: "SettingsUpdate",
   PROFILE_UPDATE: "ProfileUpdate",
   BLOCKED_USERS: "blockList",
+  DEVICES: "Devices",
 };
 
 const settingsRows = [
@@ -95,6 +96,7 @@ const settingsRows = [
   {
     icon: "DevicesOutlinedIcon",
     title: "Devices",
+    redirect: sideBarPages.DEVICES,
   },
 ] as SideBarRowProps[];
 
@@ -185,6 +187,12 @@ const blockList: SideBarView = {
   },
 };
 
+const devices: SideBarView = {
+  title: "Devices",
+  backView: sideBarPages.SETTINGS,
+  page: "DEVICES",
+};
+
 export {
   chats,
   contacts,
@@ -199,6 +207,7 @@ export {
   sideBarPages,
   settingsUpdate,
   profileUpdate,
+  devices,
   pagesMap,
   blockList,
 };
