@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 :root {
@@ -241,4 +241,35 @@ button {
 }
 `;
 
+const ScrollContainer = styled.div`
+  width: 100%;
+  height: 500px;
+  overflow-y: auto;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    border: 1px solid black;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(220, 220, 220, 0.6);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4c8bf5, #8ccef2); /* gradient effect */
+    border-radius: 10px;
+    border: 2px solid rgba(220, 220, 220, 0.6);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4c8bf5, #66b5ff);
+  }
+
+  scroll-behavior: smooth;
+`;
+
 export default GlobalStyles;
+
+export { ScrollContainer };

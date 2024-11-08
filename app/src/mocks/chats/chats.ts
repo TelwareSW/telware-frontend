@@ -1,4 +1,4 @@
-import { allChats } from "@mocks/data/Chats";
+import { allChats } from "@mocks/data/chats";
 import { http, HttpResponse } from "msw";
 
 export const chats = [

@@ -14,8 +14,6 @@ export const allChats: Chat[] = [
     lastMessage: "See you soon!",
     timestamp: "1h ago",
     lastSeen: "10 minutes ago",
-    image:
-      "https://i.pinimg.com/564x/26/76/a1/2676a1898da6edae9fc648c94332903f.jpg",
   },
   {
     id: 2,

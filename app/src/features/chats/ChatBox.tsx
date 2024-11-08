@@ -1,5 +1,5 @@
-import ChatInput from "@features/Chats/ChatInput";
-import Topbar from "@features/Chats/Topbar";
+import ChatInput from "@features/chats/ChatInput";
+import Topbar from "@features/chats/Topbar";
 
 import { useCloseChat } from "@hooks/useCloseChat";
 

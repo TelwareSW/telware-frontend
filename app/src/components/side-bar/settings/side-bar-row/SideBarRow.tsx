@@ -63,26 +63,16 @@ interface SideBarRowProps {
   title: string;
   type?: StatusType;
   status?: activitySettingsID | privacySettingsID | permissionSettingsID;
-  count?: number;
   redirect?: number;
   id: number;
 }
 
-function SideBarRow({
-  redirect,
-  icon,
-  title,
-  status,
-  count,
-  type,
-}: SideBarRowProps) {
+function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
   const userData = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const renderedIcon = getIcon(icon);
 
-
   const [currStatus, setCurrStatus] = useState<string | undefined>(undefined);
-
   let key:
     | {
         id: keyof privacySettingsInterface;
@@ -145,7 +135,6 @@ function SideBarRow({
           <Heading as="h5">{title}</Heading>
         )}
       </RowInfo>
-      {count && <StyledP>{count}</StyledP>}
     </StyledSideBarRow>
   );
 }
