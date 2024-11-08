@@ -1,7 +1,6 @@
 import Heading from "@components/Heading";
 import { styled, keyframes } from "styled-components";
 import SignupSection from "@features/authentication/signup/SignupSection";
-import useAuthCheck from "@features/authentication/login/hooks/useAuthCheck";
 
 const SignupLayout = styled.div`
   display: grid;
@@ -36,8 +35,6 @@ const AnimatedTitle = styled(Heading).attrs({ as: "h1" })`
 `;
 
 function Signup() {
-  useAuthCheck("/signup");
-
   return (
     <SignupLayout>
       <SideBar />

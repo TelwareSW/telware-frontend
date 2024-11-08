@@ -12,19 +12,18 @@ export const profileSettingsMock = [
         status: "success",
         data: MOCK_USER,
       },
-      { status: 200 },
+      { status: 200 }
     );
   }),
 
   http.patch("/users/me", async ({ request }) => {
     const newProfileSettings = await request.json();
-
     return HttpResponse.json(
       {
         status: "success",
         data: newProfileSettings,
       },
-      { status: 200 },
+      { status: 200 }
     );
   }),
 ];

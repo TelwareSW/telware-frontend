@@ -18,6 +18,14 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import NoEncryptionOutlinedIcon from "@mui/icons-material/NoEncryptionOutlined";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import SearchIcon from "@mui/icons-material/Search";
+import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 enum icons {
   BlockIcon,
@@ -41,6 +49,14 @@ enum icons {
   Show,
   Hide,
   Unlock,
+  Record,
+  Attatch,
+  Emojie,
+  More,
+  Call,
+  Search,
+  Delete,
+  AddPhoto,
 }
 
 type iconStrings = keyof typeof icons;
@@ -151,6 +167,68 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     <NoEncryptionOutlinedIcon
       sx={{
         color: `var(--color-icon-secondary)`,
+      }}
+    />
+  ),
+
+  Record: <KeyboardVoiceIcon sx={{ fontSize: "1rem" }} />,
+
+  Attatch: (
+    <AttachFileIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  Emojie: (
+    <SentimentSatisfiedAltIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  More: (
+    <MoreVertIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  Search: (
+    <SearchIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  Call: (
+    <LocalPhoneIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  AddPhoto: <AddAPhotoOutlined fontSize="large" />,
+
+  Delete: (
+    <DeleteOutlineOutlinedIcon
+      sx={{
+        color: "white",
       }}
     />
   ),
