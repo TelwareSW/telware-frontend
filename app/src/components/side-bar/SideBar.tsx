@@ -16,6 +16,7 @@ import ChatList from "@features/chats/ChatsList";
 
 import { useAppSelector } from "@hooks/useGlobalState";
 import BlockList from "@features/privacy-settings/BlockList";
+import Devices from "@features/devices/Devices";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -87,6 +88,7 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
         <BlockList />
       </SettingsSideBar>
     ),
+    Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
   };
 
 function Sidebar() {

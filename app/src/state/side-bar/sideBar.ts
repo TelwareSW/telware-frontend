@@ -3,6 +3,7 @@ import {
   chats,
   settings,
   contacts,
+  devices,
   privacySettings,
   settingsUpdate,
   profileUpdate,
@@ -35,6 +36,8 @@ function getSideBarPage(type: number): SideBarView {
       return profileUpdate;
     case sideBarPages.BLOCKED_USERS:
       return blockList;
+    case sideBarPages.DEVICES:
+      return devices;
     default:
       throw new Error("Unknown Type");
   }
