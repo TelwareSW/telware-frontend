@@ -1,13 +1,24 @@
-import useAuthCheck from "@features/authentication/login/hooks/useAuthCheck";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useAuthStatus } from "@features/authentication/login/hooks/useAuthStatus";
 
 type prortectedRouteType = {
   children: ReactNode;
 };
 
-function ProtectedRoute({ children }: prortectedRouteType) {  
-  const isAuthenticated = useAuthCheck("/login");
-  if (isAuthenticated) return children;
+function ProtectedRoute({ children }: prortectedRouteType) {
+  const navigate = useNavigate();
+  const { isAuth, isPending } = useAuthStatus();
+
+  useEffect(() => {
+    if (!isAuth && !isPending) {
+      navigate("/login");
+    }
+  }, [navigate, isAuth, isPending]);
+
+  if (isAuth) return children;
+  else return null;
 }
 
 export default ProtectedRoute;
