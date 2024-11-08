@@ -4,6 +4,9 @@ import { useGetAllSessions } from "./hooks/useGetAllSessions";
 import { useGetCurrentSession } from "./hooks/useGetCurrentSessions";
 import SessionItem from "./components/SessionItem";
 import laptopAnimation from "@data/animations/devices.json";
+import { DoDisturbOnOutlined } from "@mui/icons-material";
+import Icon from "@components/Icon";
+import { useLogoutOtherSessions } from "./hooks/useLogoutOtherSessions";
 
 const SideBarContainer = styled.div`
   overflow-y: auto;
@@ -45,9 +48,26 @@ const HeaderAnimatinoContainer = styled.div`
   }
 `;
 
+const TerminateOtherSessionsButton = styled.button`
+  color: var(--color-error);
+  background-color: var(--color-background);
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
 function Devices() {
   const { data: allDevices } = useGetAllSessions();
   const { data: activeSession } = useGetCurrentSession();
+  const { logoutOtherSessions } = useLogoutOtherSessions();
+
+  const handleLogoutOthers = () => {
+    logoutOtherSessions();
+  };
 
   return (
     <SideBarContainer>
@@ -59,6 +79,12 @@ function Devices() {
       <SettingSection>
         <SectionTitle>THIS DEVICE</SectionTitle>
         <SessionItem session={activeSession} />
+        <TerminateOtherSessionsButton onClick={handleLogoutOthers}>
+          <Icon>
+            <DoDisturbOnOutlined fontSize="large" />
+          </Icon>
+          <span>Terminate All Other Sessions</span>
+        </TerminateOtherSessionsButton>
       </SettingSection>
       <SettingSection>
         <SectionTitle>Active sessions</SectionTitle>

@@ -10,6 +10,7 @@ import { profileSettingsMock } from "./profile-settings/profile-settings";
 import { profilePictureMock } from "./profile-settings/profile-picture";
 import { storiesMock } from "./stories/stories";
 import { chats } from "./chats/chats";
+import { devicesMock } from "./devices/devices";
 
 export default [
   ...loginMock,
@@ -23,7 +24,7 @@ export default [
   ...logoutMock,
   ...profileSettingsMock,
   ...chats,
-  
   ...profilePictureMock,
   ...storiesMock,
+  ...devicesMock,
 ];
