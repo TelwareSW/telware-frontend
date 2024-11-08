@@ -11,6 +11,7 @@ export function useOauthLogin() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], { user: data.user });
       navigate("/", { replace: true });
+      queryClient.invalidateQueries({ queryKey: ["isAuth"] });
     },
   });
 

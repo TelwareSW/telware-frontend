@@ -23,41 +23,47 @@ type ResponseBodyFail = {
 type ResponseBody = ResponseBodySuccess | ResponseBodyFail;
 
 export const OauthMock = [
-  http.post<{}, RequestBody, ResponseBody>("/auth/oauth/google", async () => {
-    return HttpResponse.json(
-      {
-        message: "Successful login",
-        status: "success",
-        data: {
-          user: MOCK_USER,
-          sessionID: TOKEN,
+  http.post<{}, RequestBody, ResponseBody>(
+    "/auth/oauth/google?platform=web",
+    async () => {
+      return HttpResponse.json(
+        {
+          message: "Successful login",
+          status: "success",
+          data: {
+            user: MOCK_USER,
+            sessionID: TOKEN,
+          },
         },
-      },
-      {
-        status: 201,
-        headers: {
-          "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
-        },
-      }
-    );
-  }),
+        {
+          status: 201,
+          headers: {
+            "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
+          },
+        }
+      );
+    }
+  ),
 
-  http.post<{}, RequestBody, ResponseBody>("/auth/oauth/github", async () => {
-    return HttpResponse.json(
-      {
-        message: "Successful login",
-        status: "success",
-        data: {
-          user: MOCK_USER,
-          sessionID: TOKEN,
+  http.post<{}, RequestBody, ResponseBody>(
+    "/auth/oauth/github?platform=web",
+    async () => {
+      return HttpResponse.json(
+        {
+          message: "Successful login",
+          status: "success",
+          data: {
+            user: MOCK_USER,
+            sessionID: TOKEN,
+          },
         },
-      },
-      {
-        status: 201,
-        headers: {
-          "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
-        },
-      }
-    );
-  }),
+        {
+          status: 201,
+          headers: {
+            "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
+          },
+        }
+      );
+    }
+  ),
 ];

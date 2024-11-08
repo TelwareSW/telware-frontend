@@ -4,14 +4,13 @@ import google from "/oauth/google.png";
 import githubLight from "/oauth/githubLight.png";
 import githubDark from "/oauth/githubDark.png";
 
+import { apiGithubOauth, apiGoogleOauth } from "./services/apiOauth";
 import LoginWith from "./LoginWith";
 
-import { useAppSelector } from "hooks/useGlobalState";
 import { Theme } from "state/theme/theme";
 
 import { useOauth } from "./hooks/useOauth";
-import { apiGithubOauth } from "./services/apiGithubOauth";
-import { apiGoogleOauth } from "./services/apiGoogleOauth";
+import { useAppSelector } from "hooks/useGlobalState";
 
 const Icons = styled.div`
   display: flex;
