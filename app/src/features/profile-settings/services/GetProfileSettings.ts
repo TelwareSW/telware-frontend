@@ -18,7 +18,7 @@ async function GetProfileSettings() {
   const user = data.data?.user;
 
   const profileSettings = {
-    profilePicture: user?.photo,
+    photo: user?.photo,
     firstName: user?.screenFirstName,
     lastName: user?.screenLastName,
     bio: user?.bio,

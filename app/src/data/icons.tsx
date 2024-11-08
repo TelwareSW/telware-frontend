@@ -23,6 +23,8 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import SearchIcon from "@mui/icons-material/Search";
+import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 enum icons {
   BlockIcon,
@@ -51,6 +53,8 @@ enum icons {
   More,
   Call,
   Search,
+  Delete,
+  AddPhoto,
 }
 
 type iconStrings = keyof typeof icons;
@@ -206,6 +210,16 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
         cursor: "pointer",
         color: `var(--color-icon-secondary)`,
         fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  AddPhoto: <AddAPhotoOutlined fontSize="large" />,
+
+  Delete: (
+    <DeleteOutlineOutlinedIcon
+      sx={{
+        color: "white",
       }}
     />
   ),

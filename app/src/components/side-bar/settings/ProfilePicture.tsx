@@ -1,3 +1,4 @@
+import { STATIC_MEDIA_URL } from "@constants";
 import { useProfileSettings } from "@features/profile-settings/hooks/useProfileSettings";
 import styled from "styled-components";
 
@@ -5,7 +6,7 @@ const ProfilePictureContainer = styled.div`
   position: relative;
 `;
 
-const StyledImg = styled.img`
+const StyledImg = styled.img<{ $isCircleStyle?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,6 +14,7 @@ const StyledImg = styled.img`
   aspect-ratio: 1/1;
   width: 100%;
   object-fit: fill;
+  border-radius: ${({ $isCircleStyle }) => ($isCircleStyle ? "50%" : "0")};
 `;
 
 const ProfileInfo = styled.div`
@@ -46,23 +48,26 @@ const LastSeenP = styled.p`
   opacity: 0.5;
 `;
 
-function ProfilePicture() {
+function ProfilePicture({ isCircleStyle }: { isCircleStyle?: boolean }) {
   const { data: profileSettings } = useProfileSettings();
-
   return (
     <ProfilePictureContainer>
       <StyledImg
+        alt="profile"
+        $isCircleStyle={isCircleStyle}
         data-testid="profile-picture"
-        src="https://i.pinimg.com/564x/26/76/a1/2676a1898da6edae9fc648c94332903f.jpg"
+        src={STATIC_MEDIA_URL + profileSettings?.photo}
       />
-      <ProfileInfo>
-        <ProfileNameH2>
-          {profileSettings?.firstName} {profileSettings?.lastName}
-        </ProfileNameH2>
-        <LastSeenP>
-          {profileSettings?.lastSeen || "Last seen recently"}
-        </LastSeenP>
-      </ProfileInfo>
+      {!isCircleStyle && (
+        <ProfileInfo>
+          <ProfileNameH2>
+            {profileSettings?.firstName} {profileSettings?.lastName}
+          </ProfileNameH2>
+          <LastSeenP>
+            {profileSettings?.lastSeen || "Last seen recently"}
+          </LastSeenP>
+        </ProfileInfo>
+      )}
     </ProfilePictureContainer>
   );
 }

@@ -1,4 +1,11 @@
-import { privacyStates, activeStates, permissionStates, permissionStatesStrings, activeStatesStrings, privacyStatesStrings } from "./sideBar";
+import {
+  privacyStates,
+  activeStates,
+  permissionStates,
+  permissionStatesStrings,
+  activeStatesStrings,
+  privacyStatesStrings,
+} from "./sideBar";
 
 interface privacySettingsInterface {
   storiesSeenPrivacy: privacyStates;
@@ -38,6 +45,16 @@ interface updateActivityInterface {
   key: keyof activitySettingsInterface;
   value: activeStatesStrings;
 }
+interface otherUserInfoInterface {
+  username: string;
+  phoneNumber: string;
+  screenFirstName: string;
+  screenLastName: string;
+  email: string;
+  photo: string | undefined;
+  status: string;
+  bio: string;
+}
 
 interface updatePermissionInterface {
   key: keyof permissionsSettingsInterface;
@@ -52,6 +69,9 @@ export type {
   updateInfoInterface,
   updatePrivacyInterface,
   userInfoInterface,
+  otherUserInfoInterface,
   permissionsSettingsInterface,
   updatePermissionInterface,
+  privacyStatesStrings,
+  activeStatesStrings,
 };

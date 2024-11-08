@@ -5,9 +5,10 @@ import { media } from "data/deviceSize";
 
 import Main from "./Main";
 import SideBar from "./side-bar/SideBar";
+import { MOBILE_VIEW } from "@constants";
 
 const StyledApp = styled.div<{ $isChatOpen: boolean }>`
-  @media ${media.mobile} {
+  @media ${MOBILE_VIEW} {
     & > main {
       display: ${({ $isChatOpen }) => ($isChatOpen ? "contents" : "none")};
     }
