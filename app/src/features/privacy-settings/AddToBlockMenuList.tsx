@@ -1,9 +1,9 @@
-import { useChats } from "@features/chats/hooks/useChats";
 import styled from "styled-components";
 import BlockItem, { BlockedUserProps } from "./BlockItem";
 import { useBlock } from "./hooks/useBlock";
-import { Chat } from "@mocks/data/chats";
 import { ScrollContainer } from "styles/GlobalStyles";
+import { useChats } from "@features/chats/hooks/useChats";
+import { Chat } from "@mocks/data/chats";
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
