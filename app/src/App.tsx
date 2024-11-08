@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
 import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
+import SocketProvider from "sockets/SocketProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,11 +43,12 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <AppLayout />
+                <SocketProvider>
+                  <AppLayout />
+                </SocketProvider>
               </ProtectedRoute>
             }
           />
-
           <Route path="login" element={<Login />} />
           <Route
             path="password-reset/:token"

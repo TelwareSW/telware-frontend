@@ -5,5 +5,5 @@ const {
   VITE_PORT: PORT,
   VITE_ENV: ENV,
 } = import.meta.env;
-
+console.log(ENVIRONMENT, RECAPTCHA_SITE_KEY, API_URL, PORT, ENV);
 export { ENVIRONMENT, RECAPTCHA_SITE_KEY, API_URL, PORT, ENV };
