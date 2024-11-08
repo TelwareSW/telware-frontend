@@ -12,9 +12,10 @@ import { RadioInputProps } from "@components/inputs/radio-input/RadioInput";
 import { SideBarRowProps } from "./settings/side-bar-row/SideBarRow";
 import ProfileSettings from "@features/profile-settings/ProfileSettings";
 import ProfileInfo from "@features/profile-info/ProfileInfo";
-import ChatList from "@features/Chats/ChatsList";
+import ChatList from "@features/chats/ChatsList";
 
 import { useAppSelector } from "@hooks/useGlobalState";
+import BlockList from "@features/privacy-settings/BlockList";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -81,6 +82,11 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
       </SettingsSideBar>
     ),
     ProfileUpdate: () => <ProfileSettings />,
+    blockList: () => (
+      <SettingsSideBar rows={[]}>
+        <BlockList />
+      </SettingsSideBar>
+    ),
   };
 
 function Sidebar() {

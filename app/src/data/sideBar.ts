@@ -75,6 +75,7 @@ const pagesMap: { [K in pagesStrings]: string } = {
   PRIVACY_SETTINGS: "Privacy",
   SETTINGS_UPDATE: "SettingsUpdate",
   PROFILE_UPDATE: "ProfileUpdate",
+  BLOCKED_USERS: "blockList",
 };
 
 const settingsRows = [
@@ -101,7 +102,7 @@ const privacySettingsRows = [
   {
     icon: "BlockIcon",
     title: "Blocked Users",
-    count: 2,
+    redirect: sideBarPages.BLOCKED_USERS,
   },
   {
     title: "Who can see my stories?",
@@ -173,6 +174,17 @@ const profileUpdate: SideBarView = {
   backView: sideBarPages.SETTINGS,
   page: "PROFILE_UPDATE",
 };
+
+const blockList: SideBarView = {
+  title: "Blocked Users",
+  backView: sideBarPages.PRIVACY_SETTINGS,
+  page: "BLOCKED_USERS",
+  props: {
+    subtitle:
+      "Blocked users can't send you messages or add you to groups. They will not see your profile photos, stories, online and last seen status.",
+  },
+};
+
 export {
   chats,
   contacts,
@@ -188,4 +200,5 @@ export {
   settingsUpdate,
   profileUpdate,
   pagesMap,
+  blockList,
 };

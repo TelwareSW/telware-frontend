@@ -7,6 +7,7 @@ import {
   settingsUpdate,
   profileUpdate,
   sideBarPages,
+  blockList,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -32,6 +33,8 @@ function getSideBarPage(type: number): SideBarView {
       return settingsUpdate;
     case sideBarPages.PROFILE_UPDATE:
       return profileUpdate;
+    case sideBarPages.BLOCKED_USERS:
+      return blockList;
     default:
       throw new Error("Unknown Type");
   }
@@ -60,6 +63,9 @@ const sideBarSlice = createSlice({
       if (redirect === sideBarPages.SETTINGS_UPDATE) {
         state.props = { data: data };
         state.title = data.header;
+      } else if (redirect === sideBarPages.BLOCKED_USERS) {
+        state.props = { ...newData.props, data: data };
+        state.title = newData.title;
       } else {
         state.title = newData.title;
         state.props = { ...newData.props };
