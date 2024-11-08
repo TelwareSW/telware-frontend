@@ -3,6 +3,7 @@ import styled from "styled-components";
 import BlockItem, { BlockedUserProps } from "./BlockItem";
 import { useBlock } from "./hooks/useBlock";
 import { Chat } from "@mocks/data/chats";
+import { ScrollContainer } from "styles/GlobalStyles";
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
@@ -25,6 +26,7 @@ const StyledList = styled.ul<StyledListProps>`
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius-default);
 `;
+
 
 interface StyledListProps {
   $bottom?: number;
@@ -71,18 +73,20 @@ function AddToBlockMenuList({ setIsMenuOpened }: any) {
 
   return (
     <StyledList {...menuStyles}>
-      {filteredChats?.map((item) => {
-        const data: BlockedUserProps = {
-          name: item.name,
-          id: item.id,
-          username: item.name.toLowerCase() + 123,
-        };
-        return (
-          <StylingWrapper onClick={() => handleClick(item)} key={data.id}>
-            <BlockItem {...data} />
-          </StylingWrapper>
-        );
-      })}
+      <ScrollContainer>
+        {filteredChats?.map((item) => {
+          const data: BlockedUserProps = {
+            name: item.name,
+            id: item.id,
+            username: item.name.toLowerCase() + 123,
+          };
+          return (
+            <StylingWrapper onClick={() => handleClick(item)} key={data.id}>
+              <BlockItem {...data} />
+            </StylingWrapper>
+          );
+        })}
+      </ScrollContainer>
     </StyledList>
   );
 }
