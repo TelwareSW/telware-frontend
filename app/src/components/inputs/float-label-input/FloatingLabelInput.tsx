@@ -188,5 +188,5 @@ function FloatingLabelInput<TFormValues extends FieldValues>({
     </InputGroup>
   );
 }
-
+export type { FloatingLabelInputProps };
 export default FloatingLabelInput;

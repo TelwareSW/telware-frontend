@@ -4,7 +4,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import styled from "styled-components";
 
-import { useLogin } from "../hooks/useLogin";
 import { schema } from "../schema/login";
 
 import ForgotPasswordModal from "../ForgotPasswordModal";
@@ -14,6 +13,9 @@ import InputField from "@components/inputs/input-field/InputField";
 import PasswordInputField from "@components/inputs/password-input-field/PasswordInputField";
 import SpinnerMini from "@components/SpinnerMini";
 import ConfirmationEmailModal from "@features/authentication/signup/ConfirmationEmailModal";
+
+import { useLogin } from "../hooks/useLogin";
+import useAuthCheck from "../hooks/useAuthCheck";
 
 const MAX_PASSWORD_LENGTH = 128;
 const MAX_EMAIL_LENGTH = 254;
@@ -73,6 +75,7 @@ const StyledSpan = styled.span`
 `;
 
 export default function LoginForm() {
+  useAuthCheck();
   const { login, isPending } = useLogin();
 
   const [error, setError] = useState("");

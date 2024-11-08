@@ -33,10 +33,9 @@ const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     });
 
     socket.on("receive_message", (message: MessageInterface) => {
-      console.log(message);
       handleIncomingMessage(dispatch, message);
     });
-    socket.on("typing", () => setIs);
+    socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
     return () => {
       socket.off("connect");
       socket.off("disconnect");
