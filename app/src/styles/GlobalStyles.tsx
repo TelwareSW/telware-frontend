@@ -39,12 +39,12 @@ const GlobalStyles = createGlobalStyle`
     --color-background-secondary-accent: rgb(228, 228, 229);
     
     --color-text-button: var(--color-background);
-    
     --color-chat-active: #56a2c9;
     --color-chat-hover: rgb(244, 244, 245);
-
+    
+    --scrollbar-color:rgba(0, 0, 0, .2);
     --color-default-shadow: rgb(114, 114, 114, 0.251);
-
+    
     
     --color-item-hover: rgb(244, 244, 245);
     --color-item-active: rgb(237, 237, 237);
@@ -58,9 +58,9 @@ const GlobalStyles = createGlobalStyle`
     
     --color-border: rgb(244, 244, 245);
     --color-borders-input: rgb(218, 220, 224);
-
+    
     --color-search-border: #3390ec;
-
+    
     --image-grayscale: 0;
     --image-opacity: 30%;
   }
@@ -78,18 +78,19 @@ const GlobalStyles = createGlobalStyle`
     
     --accent-color: #56a2c9;
     --accent-color-shade: #447f9c;
-
+    
     --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64);;
     --color-chat-wallpaper-2: linear-gradient(90deg, #3e1f3f, #562a48, #7a5b42);
     --bg-image-opacity: 100%;
-
+    
     --chat-wallpaper-bg: url("/assets/bg-dark.png");
     
     --color-background: #192b35;
     --color-background-secondary: #24343e;
     --color-background-secondary-accent: #22313a;
     --color-chat-hover: #2c2c2c;
-
+    
+    --scrollbar-color:rgba(255, 255, 255, .2);
     --color-default-shadow: rgb(16, 16, 16, 0.612);
     
     --color-chat-active: #2d637c;
@@ -113,7 +114,12 @@ const GlobalStyles = createGlobalStyle`
     --color-item-active: rgb(237, 237, 237);
   }
 
-  
+  --transition-standard-easing: cubic-bezier(.4, 0, .2, 1);
+  --transition-standard-in-time: .3s;
+  --transition-standard-out-time: .25s;
+  --transition-standard-in: var(--transition-standard-in-time) var(--transition-standard-easing);
+  --transition-standard-out: var(--transition-standard-out-time) var(--transition-standard-easing);
+
   --color-background-own-1: #6573F8;
   --color-background-own-2: #7644CB;
   --color-background-own-3: #8849B4;
@@ -222,6 +228,7 @@ button {
 *:disabled {
   cursor: not-allowed;
 }
+
 `;
 
 export default GlobalStyles;

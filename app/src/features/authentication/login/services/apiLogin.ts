@@ -13,8 +13,9 @@ export async function login(user: User) {
   });
 
   const data = await res.json();
-
+  console.log(data);
   if (data.status !== "success") {
+    console.log("in error");
     throw new Error(data.message);
   }
 

@@ -74,4 +74,5 @@ export type {
   updatePermissionInterface,
   privacyStatesStrings,
   activeStatesStrings,
+  storyView,
 };

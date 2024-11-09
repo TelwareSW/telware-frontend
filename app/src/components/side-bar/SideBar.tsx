@@ -28,15 +28,15 @@ const fadeOut = keyframes`
 `;
 
 const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
-  height: 100dvh;
+  height: 100vh;
   background-color: var(--color-background);
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s;
-  animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s
-    ease-in-out;
+  padding: 0;
+  animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)}
+    var(--transition-standard-in-time) var(--transition-standard-easing);
 `;
 
 const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =

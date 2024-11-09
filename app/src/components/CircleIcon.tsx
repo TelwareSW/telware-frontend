@@ -10,6 +10,7 @@ interface CircleIconProps {
   $color?: string;
   $bgColor?: string;
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
 const StyledIcon = styled.div<CircleIconProps>`
@@ -53,6 +54,7 @@ function CircleIcon({
   $color = "var(--color-search-border)",
   $bgColor = "transparent",
   onClick,
+  children,
 }: CircleIconProps) {
   return (
     <StyledIcon
@@ -60,6 +62,7 @@ function CircleIcon({
       {...{ $icon, $bottom, $right, $size, $padding, $color, $bgColor }}
     >
       {getIcon($icon)}
+      {children}
     </StyledIcon>
   );
 }

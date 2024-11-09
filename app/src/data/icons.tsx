@@ -19,6 +19,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import SendIcon from "@mui/icons-material/Send";
+
 enum icons {
   BlockIcon,
   SettingsOutlinedIcon,
@@ -42,6 +44,7 @@ enum icons {
   Hide,
   Delete,
   AddPhoto,
+  Send,
 }
 
 type iconStrings = keyof typeof icons;
@@ -156,6 +159,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
+  Send: <SendIcon />,
 };
 
 function getIcon(iconName?: iconStrings) {

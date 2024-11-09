@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import CircleIcon from "../../CircleIcon";
 import ChatsSidebarHeader from "./ChatsSideBarHeader";
 import StartNewChat from "./StartNewChat";
+import CreateStory from "@features/stories/components/CreateStory";
 
 interface ChatsSideBarProps {
   children?: React.ReactNode;
@@ -21,16 +21,7 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
     <StyledChatsSideBar>
       <ChatsSidebarHeader />
       {children}
-      <CircleIcon
-        data-testid="add-story-icon"
-        $icon="AddStory"
-        $right={1}
-        $bottom={1}
-        $size={3.3}
-        $padding={0.5}
-        $color="white"
-        $bgColor="var(--accent-color)"
-      />
+      <CreateStory />
       <StartNewChat />
     </StyledChatsSideBar>
   );
