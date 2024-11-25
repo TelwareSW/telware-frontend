@@ -9,6 +9,7 @@ interface StoryIconProps {
   onView?: (userId: string) => void;
   isCollapsed?: boolean;
   userId?: string;
+  isMyStory?: boolean;
 }
 
 const StyledContainer = styled.div<{ $isCollapsed: boolean }>`
@@ -25,46 +26,59 @@ const StyledContainer = styled.div<{ $isCollapsed: boolean }>`
 `;
 const StyledImageContainer = styled.div<{
   $segmentColors: string;
+  $isMyStory?: boolean;
 }>`
-  height: 45px;
-  width: 45px;
+  height: 46px;
+  width: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: conic-gradient(${(props) => props.$segmentColors});
-  padding: 2px;
+  background: ${(props) =>
+    props?.$isMyStory
+      ? "var(--accent-color)"
+      : `conic-gradient(${props.$segmentColors})`};
+  padding: 3px;
   display: block;
 `;
 
 const StyledName = styled.p`
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-  color: var(--color-text);
+  margin-top: 0.3rem;
+  font-size: 0.7rem;
+  color: var(--secondary-text-color);
   text-align: center;
   white-space: nowrap;
 `;
 
 function StoryIcon(props: StoryIconProps) {
-  const { stories, avatar, name, userId, onView, isCollapsed = false } = props;
+  const {
+    stories,
+    avatar,
+    name,
+    userId,
+    onView,
+    isMyStory,
+    isCollapsed = false,
+  } = props;
 
-  // Calculate the segment degree based on the number of stories
-  const segmentDegree = 360 / stories.length;
-  const segmentColors = stories
-    .map((story, index) =>
-      story.viewed
-        ? `gray ${index * segmentDegree}deg ${(index + 1) * segmentDegree}deg`
-        : `var(--accent-color) ${index * segmentDegree}deg ${(index + 1) * segmentDegree}deg`
-    )
-    .join(", ");
+  let segmentColors = "";
+  if (!isMyStory) {
+    const segmentDegree = 360 / stories.length;
+    segmentColors = stories
+      .map((story, index) =>
+        story.viewed
+          ? `gray ${index * segmentDegree}deg ${(index + 1) * segmentDegree}deg`
+          : `var(--accent-color) ${index * segmentDegree}deg ${(index + 1) * segmentDegree}deg`
+      )
+      .join(", ");
+  }
 
-  //Handle the name display
   const firstName =
-    name?.split(" ")[0]?.slice(0, 3) +
-      (name?.split(" ")[0]?.length > 3 ? "..." : "") || "";
+    name?.split(" ")[0]?.slice(0, 4) +
+      (name?.split(" ")[0]?.length > 4 ? "..." : "") || "";
   const lastName =
-    name?.split(" ")[1]?.slice(0, 3) +
-      (name?.split(" ")[1]?.length > 3 ? "..." : "") || "";
+    name?.split(" ")[1]?.slice(0, 4) +
+      (name?.split(" ")[1]?.length > 4 ? "..." : "") || "";
   const displayName = `${firstName} ${lastName}`.trim();
 
   const handleIconClicked = () => {
@@ -75,7 +89,10 @@ function StoryIcon(props: StoryIconProps) {
 
   return (
     <StyledContainer $isCollapsed={isCollapsed} onClick={handleIconClicked}>
-      <StyledImageContainer $segmentColors={segmentColors}>
+      <StyledImageContainer
+        $segmentColors={segmentColors}
+        $isMyStory={isMyStory}
+      >
         <Avatar name={name} avatar={avatar} />
       </StyledImageContainer>
       {!isCollapsed && <StyledName>{displayName}</StyledName>}

@@ -20,6 +20,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import SendIcon from "@mui/icons-material/Send";
+import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 enum icons {
   BlockIcon,
@@ -45,6 +47,8 @@ enum icons {
   Delete,
   AddPhoto,
   Send,
+  Pause,
+  Play,
 }
 
 type iconStrings = keyof typeof icons;
@@ -160,6 +164,8 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     />
   ),
   Send: <SendIcon />,
+  Pause: <PauseOutlinedIcon />,
+  Play: <PlayArrowIcon />,
 };
 
 function getIcon(iconName?: iconStrings) {

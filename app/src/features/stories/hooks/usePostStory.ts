@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { postStory as postStoryAPI } from "../services/postStory";
-import { story } from "types/story";
+import toast from "react-hot-toast";
 function usePostStory() {
   const queryClient = useQueryClient();
 
@@ -13,10 +13,12 @@ function usePostStory() {
   } = useMutation({
     mutationFn: ({ story, caption }: { story: File; caption: string }) =>
       postStoryAPI(story, caption),
-    onSuccess: (newStory) => {
-      queryClient.setQueryData(["myStories"], (oldStories: story[] = []) => {
-        return [...oldStories, { ...newStory, viewed: false }];
-      });
+    onSuccess: () => {
+      toast.success("Story successfully uploaded");
+      queryClient.invalidateQueries({ queryKey: ["myStories"] });
+    },
+    onError: () => {
+      toast.error("Error uploading story");
     },
   });
 

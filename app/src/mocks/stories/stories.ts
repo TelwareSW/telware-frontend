@@ -1,5 +1,9 @@
 import { http, HttpResponse } from "msw";
-import { MOCK_MY_STORIES, MOCK_OTHER_USERS_STORIES } from "./mockStoriesData";
+import {
+  MOCK_MY_STORIES,
+  MOCK_OTHER_USERS_STORIES,
+  MOCK_VIEWS,
+} from "./mockStoriesData";
 import { story } from "types/story";
 
 type AddStoryRequestBody = {
@@ -22,6 +26,24 @@ type AddStoryResponseBodyFail = {
 type AddStoryResponseBody =
   | AddStoryResponseBodySuccess
   | AddStoryResponseBodyFail;
+
+type ViewStoryRequestBody = {
+  data: story;
+};
+type ViewStoryResponseBodySuccess = {
+  status: "success";
+  message: string;
+  data: {};
+};
+type ViewStoryResponseBodyFail = {
+  status: "fail" | "error";
+  message: string;
+  data: {};
+};
+
+type ViewStoryResponseBody =
+  | ViewStoryResponseBodySuccess
+  | ViewStoryResponseBodyFail;
 
 export const storiesMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
@@ -71,12 +93,58 @@ export const storiesMock = [
       }
     }
   ),
-  http.delete("/users/stories", async ({ params }) => {
+  http.post<{ storyId: string }, ViewStoryRequestBody, ViewStoryResponseBody>(
+    "/stories/:storyId/views",
+    async ({ params }) => {
+      const { storyId } = params;
+
+      let userIndex = -1;
+      let storyIndex = -1;
+
+      MOCK_OTHER_USERS_STORIES.some((user, uIndex) => {
+        const sIndex = user.stories.findIndex((story) => story.id === storyId);
+        if (sIndex !== -1) {
+          userIndex = uIndex;
+          storyIndex = sIndex;
+          MOCK_OTHER_USERS_STORIES[userIndex].stories[storyIndex].viewed = true;
+          return true;
+        }
+        return false;
+      });
+
+      if (userIndex !== -1 && storyIndex !== -1) {
+        return HttpResponse.json(
+          {
+            status: "success",
+            message: "Story view recorded successfully",
+            data: MOCK_OTHER_USERS_STORIES[userIndex].stories[storyIndex]
+              .viewed,
+          },
+          {
+            status: 201,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else {
+        return HttpResponse.json(
+          {
+            status: "fail",
+            message: "Story not found",
+            data: {},
+          },
+          {
+            status: 404,
+          }
+        );
+      }
+    }
+  ),
+  http.delete("/users/stories/:storyId", async ({ params }) => {
     const { storyId } = params;
     if (storyId) {
-      const index = MOCK_MY_STORIES.findIndex(
-        (story) => story.id === Number(storyId)
-      );
+      const index = MOCK_MY_STORIES.findIndex((story) => story.id === storyId);
       if (index !== -1) {
         MOCK_MY_STORIES.splice(index, 1);
       }
@@ -117,6 +185,17 @@ export const storiesMock = [
     return HttpResponse.json(
       {
         data: MOCK_OTHER_USERS_STORIES,
+      },
+      {
+        status: 200,
+      }
+    );
+  }),
+
+  http.get("/stories/:storyId/views", async ({ params }) => {
+    return HttpResponse.json(
+      {
+        data: MOCK_VIEWS,
       },
       {
         status: 200,

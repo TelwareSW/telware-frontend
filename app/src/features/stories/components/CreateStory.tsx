@@ -39,7 +39,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #000;
 `;
 const StyledImageContainer = styled.div`
   width: 80%;
@@ -69,7 +69,7 @@ const StyledCaption = styled.input`
   color: var(--text-color);
   font-size: 1rem;
 `;
-const SendContainer = styled.div`
+const SendContainer = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -175,8 +175,13 @@ function CreateStory() {
               onChange={(e) => setCaption(e.target.value)}
               placeholder="Add a caption"
               value={caption}
+              maxLength={100}
             />
-            <SubmitButton onClick={sendStory} data-testid="send-story">
+            <SubmitButton
+              onClick={sendStory}
+              data-testid="send-story"
+              type="submit"
+            >
               {getIcon("Send")}
             </SubmitButton>
           </SendContainer>

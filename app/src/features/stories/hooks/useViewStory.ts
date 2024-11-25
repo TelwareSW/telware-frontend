@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { viewStory as viewStoryAPI } from "../services/viewStory";
-import { story } from "types/story";
-function useViewStory(storyId: string) {
+
+function useViewStory() {
   const queryClient = useQueryClient();
 
   const {
@@ -9,18 +9,18 @@ function useViewStory(storyId: string) {
     data,
     error,
     isPending,
+    isSuccess,
   } = useMutation({
-    mutationFn: () => viewStoryAPI(storyId),
+    mutationFn: (storyId: string) => viewStoryAPI(storyId),
     onSuccess: () => {
-      queryClient.setQueryData(["stories"], (oldStories: story[] = []) =>
-        oldStories.map((story) =>
-          story.id === storyId ? { ...story, viewed: true } : story
-        )
-      );
+      queryClient.invalidateQueries({ queryKey: ["stories"] });
+    },
+    onError: (error) => {
+      console.error("Error viewing story:", error);
     },
   });
 
-  return { viewStory, data, error, isPending };
+  return { viewStory, data, error, isPending, isSuccess };
 }
 
 export { useViewStory };

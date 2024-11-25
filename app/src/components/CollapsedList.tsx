@@ -1,10 +1,9 @@
-import { userStories } from "types/story";
-import StoryIcon from "./StoryIcon";
 import styled from "styled-components";
 
-interface CollapsedStoryListProps {
-  userStories: userStories[];
+interface CollapsedListProps {
   onOpen: () => void;
+  render: (data: any) => JSX.Element;
+  list: any[];
 }
 
 const StyledCollapsedContainer = styled.div`
@@ -29,23 +28,19 @@ const StyledCollapsed = styled.div<{ $index: number }>`
   height: 40px;
 `;
 
-function CollapsedStoryList(Props: CollapsedStoryListProps) {
-  const { userStories, onOpen } = Props;
-  const displayedStories = userStories?.slice(0, 3);
+function CollapsedList(Props: CollapsedListProps) {
+  const { onOpen, render, list } = Props;
+  const displayedItems = list?.slice(0, 3);
+
   return (
     <StyledCollapsedContainer onClick={onOpen}>
-      {displayedStories?.map((userStory, index) => (
-        <StyledCollapsed key={userStory.id} $index={index}>
-          <StoryIcon
-            isCollapsed={true}
-            name={userStory.name}
-            avatar={userStory.avatar}
-            stories={userStory.stories}
-          />
+      {displayedItems?.map((element, index) => (
+        <StyledCollapsed key={index} $index={index}>
+          {render(element)}
         </StyledCollapsed>
       ))}
     </StyledCollapsedContainer>
   );
 }
 
-export default CollapsedStoryList;
+export default CollapsedList;
