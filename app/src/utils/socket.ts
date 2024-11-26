@@ -1,5 +1,14 @@
-import { io } from "socket.io-client";
+import { DefaultEventsMap } from "@socket.io/component-emitter";
+import { io, Socket } from "socket.io-client";
 
-const socket = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`); //for testing
+let socketInstance: Socket<DefaultEventsMap, DefaultEventsMap>;
 
-export default socket;
+export const getSocket = () => {
+  if (!socketInstance) {
+    socketInstance = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`, {
+      autoConnect: false,
+    });
+    console.log("Socket instance created");
+  }
+  return socketInstance;
+};

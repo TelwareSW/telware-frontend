@@ -5,9 +5,10 @@ import {
   MessageInterface,
   setIsTyping,
 } from "@state/messages/messages";
-import socket from "utils/socket";
+
 import { SocketContext } from "./SocketContext";
 import { Dispatch } from "redux";
+import { getSocket } from "utils/socket";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -21,11 +22,12 @@ const handleIsTyping = (dispatch: Dispatch, isTyping: boolean) => {
 const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useDispatch();
+  const socket = getSocket();
 
   useEffect(() => {
+    socket.connect();
     socket.on("connect", () => {
       const engine = socket.io.engine;
-      console.log("Connected to socket");
       setIsConnected(true);
       engine.on("close", (reason) => {
         console.log(reason);
@@ -36,12 +38,15 @@ const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       handleIncomingMessage(dispatch, message);
     });
     socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
+    socket.emit("typing");
     return () => {
+      socket.disconnect();
       socket.off("connect");
       socket.off("disconnect");
       socket.off("receive_message");
+      socket.off("typing");
     };
-  }, [dispatch]);
+  }, [dispatch, socket]);
 
   const sendMessage = (message: MessageInterface) => {
     if (isConnected) {
