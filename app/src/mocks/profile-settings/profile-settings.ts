@@ -10,7 +10,9 @@ export const profileSettingsMock = [
     return HttpResponse.json(
       {
         status: "success",
-        data: MOCK_USER,
+        data: {
+          user: MOCK_USER,
+        },
       },
       { status: 200 }
     );
