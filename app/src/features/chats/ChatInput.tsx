@@ -1,19 +1,15 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import { getIcon } from "@data/icons";
 
-import CircleIcon from "@components/CircleIcon";
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
+import RecordInput from "./SendButton";
+import { useSocket } from "@hooks/useSocket";
 
 const Container = styled.div`
-  position: absolute;
-  z-index: 1000;
-  bottom: 1rem;
-  left: 0;
-  right: 0;
-
-  margin: auto;
+  margin: 0.5rem auto 1rem;
 
   width: 80%;
   max-width: 600px;
@@ -48,7 +44,7 @@ const InputWrapper = styled.div`
   flex: 1;
 `;
 
-const AnotherContainer = styled.div`
+const Input = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 1rem;
@@ -57,26 +53,45 @@ const AnotherContainer = styled.div`
 `;
 
 function ChatInput() {
+  const [input, setInput] = useState("");
+  const { sendMessage } = useSocket();
+
+  function handleSubmit() {
+    if (input) {
+      const message = {
+        id: "",
+        content: input,
+        senderId: "",
+        type: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        chatId: "",
+        parentMessageId: "",
+        isDeleted: false,
+        deleteType: 2,
+        status: 0,
+      };
+      setInput("");
+      sendMessage(message);
+    }
+  }
+
   return (
     <Container>
-      <AnotherContainer>
+      <Input>
         <InputContainer>
           <InputWrapper>
             <Icon>{getIcon("Emojie")}</Icon>
-            <ExpandingTextArea />
+            <ExpandingTextArea input={input} setInput={setInput} />
             <Icon>{getIcon("Attatch")}</Icon>
           </InputWrapper>
         </InputContainer>
 
-        <CircleIcon
-          data-testid="record-icon"
-          $icon="Record"
-          $size={3.3}
-          $padding={0.5}
-          $color="white"
-          $bgColor="var(--accent-color)"
+        <RecordInput
+          onClick={handleSubmit}
+          type={!input ? "record" : "message"}
         />
-      </AnotherContainer>
+      </Input>
     </Container>
   );
 }

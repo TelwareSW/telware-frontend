@@ -2,6 +2,8 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 
+const PORT = 4000;
+
 const app = express();
 const server = http.createServer(app);
 
@@ -25,7 +27,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// Start server on port 4000
-server.listen(4000, () => {
-  console.log("Socket.io server running on http://localhost:4000/socket-io");
+server.listen(PORT, () => {
+  console.log(`Socket.io server running on http://localhost:${PORT}`);
 });

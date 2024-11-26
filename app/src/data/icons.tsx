@@ -26,6 +26,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import SearchIcon from "@mui/icons-material/Search";
 import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import SendIcon from "@mui/icons-material/Send";
 
 enum icons {
   BlockIcon,
@@ -57,6 +58,7 @@ enum icons {
   Search,
   Delete,
   AddPhoto,
+  SendMessage,
 }
 
 type iconStrings = keyof typeof icons;
@@ -232,6 +234,8 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
+
+  SendMessage: <SendIcon />,
 };
 
 function getIcon(iconName?: iconStrings) {

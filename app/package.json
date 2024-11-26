@@ -33,6 +33,7 @@
     "react-international-phone": "^4.3.0",
     "react-router-dom": "^6.27.0",
     "redux-mock-store": "^1.5.5",
+    "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "styled-components": "^6.1.13",
     "yup": "^1.4.0"

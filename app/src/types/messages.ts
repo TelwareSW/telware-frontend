@@ -3,6 +3,7 @@ export enum MessageTypes {
   "forward",
   "normal",
 }
+
 export enum DeleteType {
   "all",
   "only-me",
