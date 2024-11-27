@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { TOKEN } from "@mocks/mockData";
+import { SESSIONS } from "@mocks/data/Sessions";
 
 export const logoutMock = [
   http.get("/auth/me", ({ cookies }) => {
@@ -7,7 +8,16 @@ export const logoutMock = [
       return new HttpResponse(null, { status: 403 });
     }
 
-    return new HttpResponse(null, { status: 201 });
+    return HttpResponse.json(
+      {
+        status: "success",
+        message: "Session fetched successfully",
+        data: {
+          ...SESSIONS[0],
+        },
+      },
+      { status: 201 },
+    );
   }),
 
   http.post("/auth/logout", async () => {
