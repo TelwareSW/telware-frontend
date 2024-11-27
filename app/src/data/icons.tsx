@@ -17,8 +17,21 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import NoEncryptionOutlinedIcon from "@mui/icons-material/NoEncryptionOutlined";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import SearchIcon from "@mui/icons-material/Search";
 import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CircularProgress from "@mui/material/CircularProgress";
+
 enum icons {
   BlockIcon,
   SettingsOutlinedIcon,
@@ -29,7 +42,7 @@ enum icons {
   Contacts,
   Settings,
   NightMode,
-  AddContacts,
+  Add,
   Edit,
   AddStory,
   Logout,
@@ -40,8 +53,20 @@ enum icons {
   Close,
   Show,
   Hide,
+  Unlock,
+  Record,
+  Attatch,
+  Emojie,
+  More,
+  Call,
+  Search,
   Delete,
   AddPhoto,
+  CalendarToday,
+  KeyboardArrowUp,
+  KeyboardArrowDown,
+  ContentCopy,
+  CircularProgress,
 }
 
 type iconStrings = keyof typeof icons;
@@ -88,7 +113,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-  AddContacts: (
+  Add: (
     <AddIcon fontSize="large" sx={{ color: `var(--color-search-border)` }} />
   ),
   Edit: (
@@ -144,8 +169,61 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
   Close: (
     <CloseOutlinedIcon
-      fontSize="large"
-      sx={{ color: `var(--color-icon-secondary)` }}
+      sx={{ color: `var(--color-icon-secondary)`, fontSize: "1.5rem" }}
+    />
+  ),
+  Unlock: (
+    <NoEncryptionOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+      }}
+    />
+  ),
+  Record: <KeyboardVoiceIcon sx={{ fontSize: "1rem" }} />,
+  Attatch: (
+    <AttachFileIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+
+  Emojie: (
+    <SentimentSatisfiedAltIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  More: (
+    <MoreVertIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  Search: (
+    <SearchIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  Call: (
+    <LocalPhoneIcon
+      sx={{
+        cursor: "pointer",
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
     />
   ),
   AddPhoto: <AddAPhotoOutlined fontSize="large" />,
@@ -154,6 +232,47 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       sx={{
         color: "white",
       }}
+    />
+  ),
+  CalendarToday: (
+    <CalendarTodayIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  ContentCopy: (
+    <ContentCopyIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  KeyboardArrowUp: (
+    <KeyboardArrowUpIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  KeyboardArrowDown: (
+    <KeyboardArrowDownIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  CircularProgress: (
+    <CircularProgress
+      sx={{
+        color: `var(--accent-color)`,
+        fontSize: "1.5rem",
+      }}
+      style={{ width: "1.5rem", height: "1.5rem" }}
     />
   ),
 };

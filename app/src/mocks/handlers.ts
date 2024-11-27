@@ -4,9 +4,13 @@ import { forgetPassword, resetPassword } from "./userauth/resetpassword";
 import { verifyEmailMock } from "./userauth/verfiyEmail";
 import { loginMock } from "./userauth/login";
 import { logoutMock } from "./userauth/logout";
-import { privacySettingsMock } from "./privacySettings";
+import { privacySettingsMock } from "./privacy-settings/privacySettings";
 import { OauthMock } from "./oauth/oauth";
 import { profileSettingsMock } from "./profile-settings/profile-settings";
+import { profilePictureMock } from "./profile-settings/profile-picture";
+import { storiesMock } from "./stories/stories";
+import { chats } from "./chats/chats";
+import { devicesMock } from "./devices/devices";
 
 export default [
   ...loginMock,
@@ -19,4 +23,8 @@ export default [
   ...privacySettingsMock,
   ...logoutMock,
   ...profileSettingsMock,
+  ...chats,
+  ...profilePictureMock,
+  ...storiesMock,
+  ...devicesMock,
 ];

@@ -4,6 +4,14 @@ import FilerobotImageEditor, {
 } from "react-filerobot-image-editor";
 import styled from "styled-components";
 
+interface imageEditorProps {
+  isOpen: boolean;
+  closeImgEditor: () => void;
+  src: string;
+  onImageSave: (file: File) => void;
+  isProfileImage?: boolean;
+}
+
 const StyledContainer = styled.div<{ $isOpen: boolean }>`
   display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
   position: fixed;
@@ -22,13 +30,7 @@ function ImageEditor({
   src,
   onImageSave,
   isProfileImage,
-}: {
-  isOpen: boolean;
-  closeImgEditor: () => void;
-  src: string;
-  onImageSave: (file: File) => void;
-  isProfileImage?: boolean;
-}) {
+}: imageEditorProps) {
   const handleSave = async (editedImageObject: { imageBase64?: string }) => {
     if (editedImageObject.imageBase64) {
       const response = await fetch(editedImageObject.imageBase64);
@@ -51,6 +53,7 @@ function ImageEditor({
         <div>
           <FilerobotImageEditor
             source={src}
+            forceToPngInEllipticalCrop={true}
             onSave={(editedImageObject) => handleSave(editedImageObject)}
             onClose={closeImgEditor}
             annotationsCommon={{
@@ -61,8 +64,7 @@ function ImageEditor({
             Crop={
               isProfileImage
                 ? {
-                    minWidth: 180,
-                    minHeight: 180,
+                    ratio: 1,
                   }
                 : {
                     presetsItems: [
@@ -70,19 +72,16 @@ function ImageEditor({
                         titleKey: "classicTv",
                         descriptionKey: "4:3",
                         ratio: 4 / 3,
-                        // icon: CropClassicTv, // optional, CropClassicTv is a React Function component. Possible (React Function component, string or HTML Element)
                       },
                       {
                         titleKey: "cinemascope",
                         descriptionKey: "21:9",
                         ratio: 21 / 9,
-                        // icon: CropCinemaScope, // optional, CropCinemaScope is a React Function component.  Possible (React Function component, string or HTML Element)
                       },
                     ],
                     presetsFolders: [
                       {
-                        titleKey: "socialMedia", // will be translated into Social Media as backend contains this translation key
-                        // icon: Social, // optional, Social is a React Function component. Possible (React Function component, string or HTML Element)
+                        titleKey: "socialMedia",
                         groups: [
                           {
                             titleKey: "facebook",
@@ -113,11 +112,16 @@ function ImageEditor({
                 "warning-hover": "#ff0000",
               },
             }}
-            tabsIds={[TABS.ADJUST, TABS.ANNOTATE]} // or {['Adjust', 'Annotate', 'Watermark']}
-            defaultTabId={isProfileImage ? TABS.ADJUST : TABS.ANNOTATE} // or 'Annotate'
-            defaultToolId={TOOLS.TEXT} // or 'Text'
+            tabsIds={
+              isProfileImage
+                ? [TABS.ADJUST]
+                : [TABS.ADJUST, TABS.ANNOTATE, TABS.FINETUNE, TABS.RESIZE]
+            }
+            defaultTabId={isProfileImage ? TABS.ADJUST : TABS.ANNOTATE}
+            defaultToolId={TOOLS.RESIZE}
+            defaultSavedImageQuality={0.95}
             savingPixelRatio={4}
-            previewPixelRatio={window.devicePixelRatio}
+            previewPixelRatio={4}
           />
         </div>
       )}

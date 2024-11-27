@@ -17,7 +17,8 @@
       "@state/*": ["./state/*"],
       "types/*": ["./types/*"],
       "@data/*": ["./data/*"],
-      "@tests/*": ["./tests/*"]
+      "@tests/*": ["./tests/*"],
+      "@services": ["./services/*"]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

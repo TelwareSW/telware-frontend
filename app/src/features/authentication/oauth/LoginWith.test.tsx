@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import LoginWith from "./LoginWith";
+import LoginWith from "../oauth/LoginWith";
 
 describe("LoginWith Component", () => {
   const mockOnClick = jest.fn();

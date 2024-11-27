@@ -18,7 +18,7 @@ function ContactsSideBar({ children }: ContactsSideBarProps) {
       <ContactsSidebarHeader />
       {children}
       <CircleIcon
-        $icon="AddContacts"
+        $icon="Add"
         $right={1}
         $bottom={1}
         $size={3.3}
