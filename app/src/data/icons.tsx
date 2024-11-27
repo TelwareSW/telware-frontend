@@ -26,6 +26,11 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import SearchIcon from "@mui/icons-material/Search";
 import AddAPhotoOutlined from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CircularProgress from "@mui/material/CircularProgress";
 
 enum icons {
   BlockIcon,
@@ -57,6 +62,11 @@ enum icons {
   Search,
   Delete,
   AddPhoto,
+  CalendarToday,
+  KeyboardArrowUp,
+  KeyboardArrowDown,
+  ContentCopy,
+  CircularProgress,
 }
 
 type iconStrings = keyof typeof icons;
@@ -159,8 +169,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
   Close: (
     <CloseOutlinedIcon
-      fontSize="large"
-      sx={{ color: `var(--color-icon-secondary)` }}
+      sx={{ color: `var(--color-icon-secondary)`, fontSize: "1.5rem" }}
     />
   ),
   Unlock: (
@@ -170,9 +179,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-
   Record: <KeyboardVoiceIcon sx={{ fontSize: "1rem" }} />,
-
   Attatch: (
     <AttachFileIcon
       sx={{
@@ -192,7 +199,6 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-
   More: (
     <MoreVertIcon
       sx={{
@@ -202,7 +208,6 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-
   Search: (
     <SearchIcon
       sx={{
@@ -212,7 +217,6 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-
   Call: (
     <LocalPhoneIcon
       sx={{
@@ -222,14 +226,53 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
-
   AddPhoto: <AddAPhotoOutlined fontSize="large" />,
-
   Delete: (
     <DeleteOutlineOutlinedIcon
       sx={{
         color: "white",
       }}
+    />
+  ),
+  CalendarToday: (
+    <CalendarTodayIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  ContentCopy: (
+    <ContentCopyIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  KeyboardArrowUp: (
+    <KeyboardArrowUpIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  KeyboardArrowDown: (
+    <KeyboardArrowDownIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  CircularProgress: (
+    <CircularProgress
+      sx={{
+        color: `var(--accent-color)`,
+        fontSize: "1.5rem",
+      }}
+      style={{ width: "1.5rem", height: "1.5rem" }}
     />
   ),
 };
