@@ -1,10 +1,10 @@
 import styled from "styled-components";
-
+import { useState } from "react";
+import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
-
 import CircleIcon from "@components/CircleIcon";
 import ExpandingTextArea from "@components/ExpandingTextArea";
-import Icon from "@components/Icon";
+import EmojiPickerItem from "./emojies/EmojiPicker";
 
 const Container = styled.div`
   position: absolute;
@@ -55,29 +55,41 @@ const AnotherContainer = styled.div`
 
   flex: 1;
 `;
-
+const InvisibleButton = styled.button`
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+`;
 function ChatInput() {
+  const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
+  const toggleShowEmojies = () => {
+    setIsEmojiSelectorOpen((show) => !show);
+  };
   return (
-    <Container>
-      <AnotherContainer>
-        <InputContainer>
-          <InputWrapper>
-            <Icon>{getIcon("Emojie")}</Icon>
-            <ExpandingTextArea />
-            <Icon>{getIcon("Attatch")}</Icon>
-          </InputWrapper>
-        </InputContainer>
-
-        <CircleIcon
-          data-testid="record-icon"
-          $icon="Record"
-          $size={3.3}
-          $padding={0.5}
-          $color="white"
-          $bgColor="var(--accent-color)"
-        />
-      </AnotherContainer>
-    </Container>
+    <>
+      {isEmojiSelectorOpen && <EmojiPickerItem />}
+      <Container>
+        <AnotherContainer>
+          <InputContainer>
+            <InputWrapper>
+              <InvisibleButton onClick={toggleShowEmojies}>
+                <Icon>{getIcon("Emojie")}</Icon>
+              </InvisibleButton>
+              <ExpandingTextArea />
+              <Icon>{getIcon("Attatch")}</Icon>
+            </InputWrapper>
+          </InputContainer>
+          <CircleIcon
+            data-testid="record-icon"
+            $icon="Record"
+            $size={3.3}
+            $padding={0.5}
+            $color="white"
+            $bgColor="var(--accent-color)"
+          />
+        </AnotherContainer>
+      </Container>
+    </>
   );
 }
 
