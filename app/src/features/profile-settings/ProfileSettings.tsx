@@ -29,7 +29,7 @@ const SideBarContainer = styled.div`
     flex-direction: column;
     gap: 1rem;
     width: 100%;
-    min-height: 100dvh;
+    height: 90vh;
     background-color: var(--color-background-secondary);
   }
 `;

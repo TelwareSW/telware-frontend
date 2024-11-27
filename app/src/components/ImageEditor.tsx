@@ -76,6 +76,7 @@ function ImageEditor({
           <FilerobotImageEditor
             source={src}
             forceToPngInEllipticalCrop={true}
+            forceToPngInEllipticalCrop={true}
             onSave={(editedImageObject) => handleSave(editedImageObject)}
             onClose={closeImgEditor}
             annotationsCommon={{
@@ -86,6 +87,7 @@ function ImageEditor({
             Crop={
               isProfileImage
                 ? {
+                    ratio: 1,
                     ratio: 1,
                   }
                 : {
@@ -103,6 +105,7 @@ function ImageEditor({
                     ],
                     presetsFolders: [
                       {
+                        titleKey: "socialMedia",
                         titleKey: "socialMedia",
                         groups: [
                           {

@@ -10,7 +10,6 @@ export async function Signup(user: User) {
   });
   const data = await res.json();
   if (data.status !== "success") throw new Error(data.message);
-  console.log(data);
 
   return user.email;
 }

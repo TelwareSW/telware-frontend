@@ -75,6 +75,8 @@ const pagesMap: { [K in pagesStrings]: string } = {
   PRIVACY_SETTINGS: "Privacy",
   SETTINGS_UPDATE: "SettingsUpdate",
   PROFILE_UPDATE: "ProfileUpdate",
+  BLOCKED_USERS: "blockList",
+  DEVICES: "Devices",
 };
 
 const settingsRows = [
@@ -94,6 +96,7 @@ const settingsRows = [
   {
     icon: "DevicesOutlinedIcon",
     title: "Devices",
+    redirect: sideBarPages.DEVICES,
   },
 ] as SideBarRowProps[];
 
@@ -101,7 +104,7 @@ const privacySettingsRows = [
   {
     icon: "BlockIcon",
     title: "Blocked Users",
-    count: 2,
+    redirect: sideBarPages.BLOCKED_USERS,
   },
   {
     title: "Who can see my stories?",
@@ -173,6 +176,23 @@ const profileUpdate: SideBarView = {
   backView: sideBarPages.SETTINGS,
   page: "PROFILE_UPDATE",
 };
+
+const blockList: SideBarView = {
+  title: "Blocked Users",
+  backView: sideBarPages.PRIVACY_SETTINGS,
+  page: "BLOCKED_USERS",
+  props: {
+    subtitle:
+      "Blocked users can't send you messages or add you to groups. They will not see your profile photos, stories, online and last seen status.",
+  },
+};
+
+const devices: SideBarView = {
+  title: "Devices",
+  backView: sideBarPages.SETTINGS,
+  page: "DEVICES",
+};
+
 export {
   chats,
   contacts,
@@ -187,5 +207,7 @@ export {
   sideBarPages,
   settingsUpdate,
   profileUpdate,
+  devices,
   pagesMap,
+  blockList,
 };

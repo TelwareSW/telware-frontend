@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import useAuthCheck from "@features/authentication/login/hooks/useAuthCheck";
 import LoginSection from "@features/authentication/login/LoginSection";
 import Heading from "@components/Heading";
 
@@ -24,8 +23,6 @@ const SideBar = styled.div`
 `;
 
 function Login() {
-  useAuthCheck("/login");
-
   return (
     <LoginLayout>
       <SideBar />

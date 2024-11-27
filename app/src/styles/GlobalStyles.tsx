@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 :root {
@@ -39,10 +39,10 @@ const GlobalStyles = createGlobalStyle`
     --color-background-secondary-accent: rgb(228, 228, 229);
     
     --color-text-button: var(--color-background);
-    --color-chat-active: #56a2c9;
-    --color-chat-hover: rgb(244, 244, 245);
     
-    --scrollbar-color:rgba(0, 0, 0, .2);
+    --color-chat-active: #c6deeb;
+    --color-chat-hover: #f5f5f5;
+
     --color-default-shadow: rgb(114, 114, 114, 0.251);
     
     
@@ -56,14 +56,18 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu: rgb(255, 255, 255, 0.733);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.067);
     
-    --color-border: rgb(244, 244, 245);
+    --color-border: #dfe1e5;
     --color-borders-input: rgb(218, 220, 224);
     
     --color-search-border: #3390ec;
     
     --image-grayscale: 0;
     --image-opacity: 30%;
+
+    --scrollbar-color: rgba(0, 0, 0, .2);
+    --color-avatar: linear-gradient(135deg, #d6d46c, #5e924e);
   }
+  
   &.dark-mode {
     --color-text: #f5f5f5;
     --color-text-secondary: rgb(170, 170, 170);
@@ -71,16 +75,27 @@ const GlobalStyles = createGlobalStyle`
     --color-text-button: var(--color-text);
     --color-background: #050709;
     --color-interactive-element-hover: rgba(var(--color-text-secondary-rgb), 0.08);
-    --theme-background-color-down-right: #172431;
-    --theme-background-color-down-left: #0E141A;
-    --theme-background-color-top-left: #0F171E;
-    --theme-background-color-top-right: #141C2B;
+
+    --chat-background-left: #0E141A;
+    --chat-background-mid-left: #0F171E;
+    --chat-background-mid-right: #141C2B;
+    --chat-background-right: #1d2d3d;
     
     --accent-color: #56a2c9;
     --accent-color-shade: #447f9c;
-    
-    --color-chat-wallpaper-1: linear-gradient(90deg, #49175d, #1c1042, #202656, #262b64);;
-    --color-chat-wallpaper-2: linear-gradient(90deg, #3e1f3f, #562a48, #7a5b42);
+
+    --color-chat-wallpaper-1: linear-gradient(90deg,
+      var(--chat-background-left),
+      var(--chat-background-mid-left),
+      var(--chat-background-mid-right),
+      var(--chat-background-right)
+    );
+    --color-chat-wallpaper-2: linear-gradient(90deg,
+      var(--chat-background-right),
+      var(--chat-background-mid-right), 
+      var(--chat-background-mid-left)
+    );
+
     --bg-image-opacity: 100%;
     
     --chat-wallpaper-bg: url("/assets/bg-dark.png");
@@ -93,7 +108,7 @@ const GlobalStyles = createGlobalStyle`
     --scrollbar-color:rgba(255, 255, 255, .2);
     --color-default-shadow: rgb(16, 16, 16, 0.612);
     
-    --color-chat-active: #2d637c;
+    --color-chat-active: #1e4454;
     --color-chat-hover: #25353f;
     
     --color-icon-secondary:  rgb(170, 170, 170);
@@ -102,7 +117,7 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu: rgb(33, 33, 33, 0.867);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.4);
  
-    --color-border: #25353f;
+    --color-border: #09182299;
     --color-borders-input: var(--color-text-secondary);
 
     --color-search-border: #7644CB;
@@ -110,15 +125,12 @@ const GlobalStyles = createGlobalStyle`
     --image-grayscale: 10%;
     --image-opacity: 90%;
 
-     --color-item-hover: rgb(244, 244, 245);
+    --color-item-hover: var(--color-chat-hover);
     --color-item-active: rgb(237, 237, 237);
-  }
 
-  --transition-standard-easing: cubic-bezier(.4, 0, .2, 1);
-  --transition-standard-in-time: .3s;
-  --transition-standard-out-time: .25s;
-  --transition-standard-in: var(--transition-standard-in-time) var(--transition-standard-easing);
-  --transition-standard-out: var(--transition-standard-out-time) var(--transition-standard-easing);
+    --scrollbar-color: rgba(255, 255, 255, .2);
+    --color-avatar: linear-gradient(135deg, #72C6EF, #004E92);
+  }
 
   --color-background-own-1: #6573F8;
   --color-background-own-2: #7644CB;
@@ -228,7 +240,37 @@ button {
 *:disabled {
   cursor: not-allowed;
 }
+`;
 
+const ScrollContainer = styled.div`
+  width: 100%;
+  height: 500px;
+  overflow-y: auto;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    border: 1px solid black;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(220, 220, 220, 0.6);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4c8bf5, #8ccef2); /* gradient effect */
+    border-radius: 10px;
+    border: 2px solid rgba(220, 220, 220, 0.6);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4c8bf5, #66b5ff);
+  }
+
+  scroll-behavior: smooth;
 `;
 
 export default GlobalStyles;
+
+export { ScrollContainer };

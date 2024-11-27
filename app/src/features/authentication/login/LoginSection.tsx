@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 import LoginForm from "./LoginForm/LoginForm";
-import OauthOptions from "./OauthOptions";
 
 import StyledLink from "@components/StyledLink";
+import OauthOptions from "../oauth/OauthOptions";
 
 const Container = styled.div`
   max-width: 120rem;
