@@ -6,11 +6,11 @@ import styled from "styled-components";
 const StyledEmojiPickerContainer = styled.div`
   width: 30vw;
   height: 35vh;
-  max-height: 450px;
+  max-height: 400px;
   position: absolute;
-  z-index: 1;
-  bottom: 7%;
-  left: 10%;
+  z-index: 2000;
+  bottom: 10vh;
+  left: 10vw;
   background: var(--color-secondary);
   border: 1px solid #e6e6e6;
   border-radius: 10px;
