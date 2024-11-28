@@ -9,6 +9,7 @@ import {
 import { SocketContext } from "./SocketContext";
 import { Dispatch } from "redux";
 import { getSocket } from "utils/socket";
+import { useChats } from "@features/chats/hooks/useChats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -16,13 +17,21 @@ const handleIncomingMessage = (
 ) => {
   dispatch(addMessage(message));
 };
+
 const handleIsTyping = (dispatch: Dispatch, isTyping: boolean) => {
   dispatch(setIsTyping({ isTyping: isTyping }));
 };
-const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+
+type SocketProviderProps = {
+  children: ReactNode;
+};
+
+function SocketProvider({ children }: SocketProviderProps) {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useDispatch();
   const socket = getSocket();
+
+  const { chats, isPending } = useChats();
 
   useEffect(() => {
     socket.connect();
@@ -30,8 +39,8 @@ const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     socket.on("connect", () => {
       const engine = socket.io.engine;
       setIsConnected(true);
-      console.log('connected');
-      
+      console.log("connected");
+
       engine.on("close", (reason) => {
         console.log(reason);
       });
@@ -52,6 +61,18 @@ const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
   }, [dispatch, socket]);
 
+  useEffect(() => {
+    if (isConnected && !isPending && chats?.length) {
+      chats.forEach((chat) => {
+        socket.emit("join", { chatId: chat.id });
+      });
+      console.log(
+        "Joined all chats:",
+        chats.map((chat) => chat.id)
+      );
+    }
+  }, [isConnected, isPending, chats, socket]);
+
   const sendMessage = (message: MessageInterface) => {
     if (isConnected) {
       socket.emit("send_message", { message });
@@ -65,6 +86,6 @@ const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       {children}
     </SocketContext.Provider>
   );
-};
+}
 
 export default SocketProvider;

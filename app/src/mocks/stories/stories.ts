@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { MOCK_MY_STORIES, MOCK_OTHER_USER_STORIES } from "@mocks/mockData";
+import { MOCK_MY_STORIES, MOCK_OTHER_USER_STORIES } from "@mocks/data/users";
 
 type AddStoryRequestBody = {
   file: File;

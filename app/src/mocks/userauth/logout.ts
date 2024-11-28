@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { TOKEN } from "@mocks/mockData";
+import { TOKEN } from "@mocks/data/users";
 
 export const logoutMock = [
   http.get("/auth/me", ({ cookies }) => {

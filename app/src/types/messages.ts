@@ -22,8 +22,8 @@ export interface MessageInterface {
   content: string;
   senderId: string;
   type: MessageTypes;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   chatId: string;
   parentMessageId: string;
   isDeleted: boolean;

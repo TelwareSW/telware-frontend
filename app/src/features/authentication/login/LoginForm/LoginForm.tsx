@@ -102,6 +102,8 @@ export default function LoginForm() {
       return;
     }
 
+    console.log(data);
+
     login(data, {
       onSettled: (_, error) => {
         setError(error ? error.message : "");

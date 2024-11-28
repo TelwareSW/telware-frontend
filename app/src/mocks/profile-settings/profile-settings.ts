@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { MOCK_USER } from "@mocks/mockData";
+import { MOCK_USER1 } from "@mocks/data/users";
 
 export const profileSettingsMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {
@@ -7,10 +7,11 @@ export const profileSettingsMock = [
   }),
 
   http.get("/users/me", async () => {
+    
     return HttpResponse.json(
       {
         status: "success",
-        data: MOCK_USER,
+        data: MOCK_USER1,
       },
       { status: 200 }
     );

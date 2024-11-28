@@ -8,11 +8,11 @@ import Icon from "@components/Icon";
 import { useChat } from "@features/chats/hooks/useChat";
 
 const Container = styled.div`
-  /* position: absolute;
+  position: absolute;
   top: 0;
-  z-index: 1000;
+  z-index: 1001;
 
-  height: 3.5rem; */
+  height: 3.5rem;
   width: 100%;
 
   background-color: var(--color-background);

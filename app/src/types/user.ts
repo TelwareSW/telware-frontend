@@ -29,6 +29,7 @@ interface userInfoInterface {
   photo?: string;
   status: string;
   bio: string;
+  id: string;
 }
 
 interface updatePrivacyInterface {

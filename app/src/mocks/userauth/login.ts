@@ -1,5 +1,6 @@
+import { MOCK_USER2, TOKEN } from "@mocks/data/users";
+import { MOCK_USER1 } from "@mocks/data/users";
 import { http, HttpResponse } from "msw";
-import { MOCK_USER, TOKEN } from "@mocks/mockData";
 
 type LoginRequestBody = {
   email: string;
@@ -34,7 +35,7 @@ export const loginMock = [
       const { email, password } = await request.json();
 
       const isValidUser =
-        email === MOCK_USER.email && password === MOCK_USER.password;
+        email === MOCK_USER1.email && password === MOCK_USER1.password;
 
       if (!isValidUser) {
         return HttpResponse.json(
@@ -43,7 +44,7 @@ export const loginMock = [
             status: "error",
             data: {},
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
 
@@ -52,9 +53,7 @@ export const loginMock = [
           message: "Successful login",
           status: "success",
           data: {
-            user: {
-              email: "test@example.com",
-            },
+            user: MOCK_USER2,
             sessionID: TOKEN,
           },
         },
@@ -63,8 +62,8 @@ export const loginMock = [
           headers: {
             "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
           },
-        },
+        }
       );
-    },
+    }
   ),
 ];

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { getIcon } from "@data/icons";
@@ -6,10 +7,16 @@ import { getIcon } from "@data/icons";
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
 import RecordInput from "./SendButton";
+
+import { addMessage } from "@state/messages/messages";
+import { RootState } from "@state/store";
+
 import { useSocket } from "@hooks/useSocket";
 
 const Container = styled.div`
-  margin: 0.5rem auto 1rem;
+  z-index: 1000;
+
+  margin: auto;
 
   width: 80%;
   max-width: 600px;
@@ -55,16 +62,20 @@ const Input = styled.div`
 function ChatInput() {
   const [input, setInput] = useState("");
   const { sendMessage } = useSocket();
+  const dispatch = useDispatch();
+  const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
   function handleSubmit() {
+    console.log("sending message");
+
     if (input) {
       const message = {
-        id: "",
+        id: "19008",
         content: input,
-        senderId: "",
+        senderId: userId,
         type: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         chatId: "",
         parentMessageId: "",
         isDeleted: false,
@@ -73,6 +84,7 @@ function ChatInput() {
       };
       setInput("");
       sendMessage(message);
+      dispatch(addMessage(message));
     }
   }
 
