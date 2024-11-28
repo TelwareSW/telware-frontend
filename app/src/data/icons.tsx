@@ -39,7 +39,6 @@ enum icons {
   Settings,
   NightMode,
   Add,
-  Add,
   Edit,
   AddStory,
   Logout,
@@ -107,7 +106,6 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     />
   ),
   Add: (
-  Add: (
     <AddIcon fontSize="large" sx={{ color: `var(--color-search-border)` }} />
   ),
   Edit: (
@@ -152,13 +150,11 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   Show: (
     <VisibilityIcon
       fontSize="medium"
-      fontSize="medium"
       sx={{ color: `var(--color-icon-secondary)` }}
     />
   ),
   Hide: (
     <VisibilityOffIcon
-      fontSize="medium"
       fontSize="medium"
       sx={{ color: `var(--color-icon-secondary)` }}
     />
