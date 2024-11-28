@@ -31,7 +31,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -74,6 +75,8 @@ enum icons {
   KeyboardArrowDown,
   ContentCopy,
   CircularProgress,
+  RightArrow,
+  LeftArrow,
 }
 
 type iconStrings = keyof typeof icons;
@@ -283,6 +286,22 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
         fontSize: "1.5rem",
       }}
       style={{ width: "1.5rem", height: "1.5rem" }}
+    />
+  ),
+  RightArrow: (
+    <KeyboardArrowRightOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  LeftArrow: (
+    <KeyboardArrowLeftOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
     />
   ),
 };

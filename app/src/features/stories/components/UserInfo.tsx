@@ -28,6 +28,9 @@ const StyledUserInfo = styled.div<{ $isVertical?: boolean }>`
       justify-content: center;
       align-items: flex-start;
     `};
+  & > h5 {
+    color: white !important;
+  }
 `;
 const StyledElapsedTime = styled.p`
   font-size: 0.8rem;
@@ -39,7 +42,7 @@ function UserInfo(props: UserInfoProps) {
 
   return (
     <StyledStoryHeader>
-      <Avatar name={name} avatar={avatar} />
+      <Avatar name={name} image={avatar} />
       <StyledUserInfo $isVertical={isVertical}>
         <Heading as="h5">{name}</Heading>
         <StyledElapsedTime>{elapsedTime}</StyledElapsedTime>

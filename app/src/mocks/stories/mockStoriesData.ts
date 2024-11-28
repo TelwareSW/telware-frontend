@@ -100,6 +100,21 @@ const MOCK_OTHER_USERS_STORIES = [
       },
     ],
   },
+  {
+    id: "5",
+    name: "Peter Barker",
+    avatar: "https://i.pravatar.cc/70?=0.05",
+    stories: [
+      {
+        id: "110010",
+        content:
+          "https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png",
+        timestamp: new Date().toISOString(),
+        caption: "Spiderman",
+        viewed: true,
+      },
+    ],
+  },
 ];
 const MOCK_VIEWS: storyView[] = [
   {

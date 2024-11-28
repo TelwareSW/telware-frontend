@@ -1,8 +1,7 @@
 import styled from "styled-components";
-
 import SideBarToolsButton from "./SideBarToolsButton";
 import SearchBar from "./SearchBar";
-import StoryListContainer from "@features/stories/components/StoryListContainer";
+
 const StyledHeader = styled.header`
   background: var(--color-background);
   display: flex;
@@ -19,7 +18,6 @@ function ChatsSidebarHeader() {
     <StyledHeader data-testid="chatlist-header">
       <SideBarToolsButton />
       <SearchBar />
-      <StoryListContainer />
     </StyledHeader>
   );
 }

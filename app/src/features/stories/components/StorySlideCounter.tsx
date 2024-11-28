@@ -14,13 +14,16 @@ interface SegmentProps {
 
 const StyledSliderContainer = styled.div`
   position: absolute;
-  top: 0.5rem;
+  top: 0;
   left: 0;
   right: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
   background: rgba(0, 0, 0, 0.5);
+  height: 2rem;
   z-index: 100;
 `;
 

@@ -27,5 +27,9 @@ function getElapsedTime(timestamp: string): string {
     return `${seconds}s`;
   }
 }
-
-export { getElapsedTime };
+function getAvatarName(name: string | undefined): string {
+  const firstName = name?.split(" ")[0];
+  const lastName = name?.split(" ")[1];
+  return `${firstName?.charAt(0) || ""} ${lastName?.charAt(0) || ""}`;
+}
+export { getElapsedTime, getAvatarName };

@@ -28,8 +28,8 @@ const StyledImageContainer = styled.div<{
   $segmentColors: string;
   $isMyStory?: boolean;
 }>`
-  height: 46px;
-  width: 46px;
+  height: 48px;
+  width: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,7 +93,7 @@ function StoryIcon(props: StoryIconProps) {
         $segmentColors={segmentColors}
         $isMyStory={isMyStory}
       >
-        <Avatar name={name} avatar={avatar} />
+        <Avatar name={name} image={avatar} />
       </StyledImageContainer>
       {!isCollapsed && <StyledName>{displayName}</StyledName>}
     </StyledContainer>

@@ -1,29 +1,37 @@
 import styled from "styled-components";
-import DefaultImage from "./DefaultImage";
-import { STATIC_MEDIA_URL } from "@constants";
+import { getAvatarName } from "utils/helpers";
 
-interface Props {
-  avatar?: string;
-  name: string;
-}
-const StyledImage = styled.img`
-  position: relative;
-  width: 40px;
-  height: 40px;
+const StyledAvatar = styled.div<{ $image?: string }>`
+  width: 2.625rem;
+  height: 2.625rem;
+
   border-radius: 50%;
-  object-fit: cover;
-`;
-function Avatar(props: Props) {
-  const { name, avatar } = props;
+  margin-right: 1rem;
 
+  background: ${({ $image }) =>
+    $image ? `url(${$image}) center/cover no-repeat` : "var(--color-avatar)"};
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+`;
+
+type PropsType = {
+  image?: string | undefined;
+  name: string | undefined;
+};
+
+function Avatar({ image, name }: PropsType) {
   return (
-    <>
-      {avatar ? (
-        <StyledImage src={STATIC_MEDIA_URL + avatar} />
-      ) : (
-        <DefaultImage name={name} />
-      )}
-    </>
+    <StyledAvatar $image={image}>{!image && getAvatarName(name)}</StyledAvatar>
   );
 }
 

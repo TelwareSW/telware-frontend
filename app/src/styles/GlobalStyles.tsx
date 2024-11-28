@@ -52,9 +52,11 @@ const GlobalStyles = createGlobalStyle`
     --color-icon-secondary: rgb(112, 117, 121);
     
     --pattern-color: #c3bfc5a6;
+
   
     --color-background-compact-menu: rgb(255, 255, 255, 0.733);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.067);
+    --new-chat-color: #f5f5f5;
     
     --color-border: #dfe1e5;
     --color-borders-input: rgb(218, 220, 224);
@@ -116,6 +118,7 @@ const GlobalStyles = createGlobalStyle`
     
     --color-background-compact-menu: rgb(33, 33, 33, 0.867);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.4);
+    --new-chat-color: #2d394e;
  
     --color-border: #09182299;
     --color-borders-input: var(--color-text-secondary);

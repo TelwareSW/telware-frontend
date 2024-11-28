@@ -8,16 +8,11 @@ import { getIcon } from "@data/icons";
 
 const StyledStoryCreator = styled.div`
   cursor: pointer;
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  height: 3.5rem;
-  width: 3.5rem;
 `;
 const StyledImageInput = styled.input`
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 2rem;
   height: 3.3rem;
   width: 3.3rem;
   padding: 0.5rem;
@@ -30,7 +25,7 @@ const StyledContainer = styled.div`
   cursor: pointer;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 1rem;
   z-index: 1000;
   width: 100%;
   height: 100%;
@@ -91,7 +86,7 @@ const SubmitButton = styled.button`
   box-shadow: 0 0 0.1rem var(--accent-color);
 `;
 
-function CreateStory() {
+function AddStory() {
   const { postStory } = usePostStory();
   const [isImageEditorOpen, setIsImageEditorOpen] = useState(false);
   const [story, setStory] = useState<File | null>(null);
@@ -104,6 +99,7 @@ function CreateStory() {
     if (file) {
       setStory(file);
       setIsImageEditorOpen(true);
+      clearParams();
     }
   };
   const handleClose = () => {
@@ -131,12 +127,13 @@ function CreateStory() {
         <CircleIcon
           data-testid="add-story-icon"
           $icon="AddStory"
-          $right={0}
+          $right={0.25}
           $bottom={0}
           $size={3.3}
           $padding={0.5}
           $color="white"
           $bgColor="var(--accent-color)"
+          $opacity={1}
         />
         <StyledImageInput
           type="file"
@@ -191,4 +188,4 @@ function CreateStory() {
   );
 }
 
-export default CreateStory;
+export default AddStory;

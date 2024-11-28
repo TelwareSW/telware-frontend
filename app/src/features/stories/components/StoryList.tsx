@@ -17,10 +17,13 @@ const StyledStoryList = styled.ul`
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   overflow-x: auto;
-  background-color: var(--bg-secondary);
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-start;
+  &::-webkit-scrollbar {
+    display: block;
+    height: 0.4rem;
+  }
 `;
 function StoryList(props: StoryListProps) {
   const { userStories, myStories, userInfo } = props;

@@ -2,7 +2,7 @@ import { useInView } from "../hooks/useInView";
 import { story } from "types/story";
 import StorySlideCounter from "./StorySlideCounter";
 import UserInfo from "./UserInfo";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useViewStory } from "../hooks/useViewStory";
 import Story from "./Story";
 import styled from "styled-components";
@@ -45,6 +45,26 @@ const StyledSlide = styled.div`
   overflow-x: hidden;
   width: 60%;
 `;
+const StyledNavButton = styled.div<{ isLeft?: boolean }>`
+  position: absolute;
+  top: 50%;
+  ${({ isLeft }) => (isLeft ? "left: 0;" : "right: 0;")}
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 100;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+`;
 const StyledCloseButton = styled.div`
   position: absolute;
   top: 0.5rem;
@@ -75,19 +95,54 @@ function StorySlide(props: StorySlideProps) {
       setIndex(0);
     }
   };
+  const handlePause = () => {
+    setIsPaused(!isPaused);
+  };
+
+  const handleRightArrow = useCallback(() => {
+    if (index < stories.length - 1) {
+      setIndex(index + 1);
+    } else {
+      getNextUserStories();
+    }
+  }, [index, stories.length, getNextUserStories]);
+
+  const handleLeftArrow = useCallback(() => {
+    if (index > 0) {
+      setIndex(index - 1);
+    } else {
+      getNextUserStories();
+    }
+  }, [index, getNextUserStories]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        handleRightArrow();
+      } else if (e.key === "ArrowLeft") {
+        handleLeftArrow();
+      }
+    },
+    [handleRightArrow, handleLeftArrow]
+  );
+
+  const handleDelete = () => {
+    deleteStory(stories[index].id);
+    onClose();
+  };
   useEffect(() => {
     if (inView && !isMine) {
       viewStory(stories[index]?.id);
     }
   }, [inView, stories, index, viewStory, isMine]);
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
 
-  const handlePause = () => {
-    setIsPaused(!isPaused);
-  };
-  const handleDelete = () => {
-    deleteStory(stories[index].id);
-    onClose();
-  };
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [index, handleKeyDown]);
+
   if (!stories.length) {
     return null;
   }
@@ -97,6 +152,12 @@ function StorySlide(props: StorySlideProps) {
         {getIcon("Close")}
       </StyledCloseButton>
       <StyledSlide ref={ref} className="story">
+        <StyledNavButton isLeft onClick={handleLeftArrow}>
+          {getIcon("LeftArrow")}
+        </StyledNavButton>
+        <StyledNavButton onClick={handleRightArrow}>
+          {getIcon("RightArrow")}
+        </StyledNavButton>
         <StorySlideCounter
           isPaused={isPaused}
           currentIndex={index}

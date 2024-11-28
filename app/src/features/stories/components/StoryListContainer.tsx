@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useStroies } from "../hooks/useStories";
 import { useMyStroies } from "../hooks/useMyStories";
 import { useAppSelector } from "@hooks/useGlobalState";
@@ -9,13 +9,17 @@ import StoryList from "./StoryList";
 import StoryIcon from "./StoryIcon";
 
 const StyledContainer = styled.div<{ $isOpened: boolean }>`
-  position: absolute;
-  width: ${(props) => (props.$isOpened ? "94%" : "3%")};
-  left: ${(props) => (props.$isOpened ? "3%" : "97%")};
-  top: ${(props) => (props.$isOpened ? "4rem" : 0)};
-  background-color: ${(props) =>
-    props.$isOpened ? "var(--background-color)" : "transparent"};
-  height: 4rem;
+  position: relative;
+  width: 100%;
+  ${(props) =>
+    !props.$isOpened &&
+    css`
+      position: absolute;
+      width: 3%;
+      left: 97%;
+      top: 0;
+    `}
+  height: 6rem;
   z-index: 100;
 `;
 
