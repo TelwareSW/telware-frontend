@@ -1,5 +1,4 @@
-import { MOCK_USER2, TOKEN } from "@mocks/data/users";
-import { MOCK_USER1 } from "@mocks/data/users";
+import { MOCK_USER1, TOKEN } from "@mocks/data/users";
 import { http, HttpResponse } from "msw";
 
 type LoginRequestBody = {
@@ -53,7 +52,7 @@ export const loginMock = [
           message: "Successful login",
           status: "success",
           data: {
-            user: MOCK_USER2,
+            user: MOCK_USER1,
             sessionID: TOKEN,
           },
         },

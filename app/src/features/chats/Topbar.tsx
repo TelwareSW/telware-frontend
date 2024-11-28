@@ -1,11 +1,11 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-import { getIcon } from "@data/icons";
-
 import Avatar from "@features/chats/Avatar";
-import Icon from "@components/Icon";
-
 import { useChat } from "@features/chats/hooks/useChat";
+import { getIcon } from "@data/icons";
+import Icon from "@components/Icon";
+import SearchBar from "@features/search/components/SearchBar";
 
 const Container = styled.div`
   position: absolute;
@@ -49,39 +49,61 @@ const Name = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-
   font-weight: 500;
-
   line-height: 1.3125rem;
 `;
 
 const Icons = styled.div`
   display: flex;
   align-items: center;
-
   gap: 1.5rem;
+`;
+
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 function Topbar() {
   const { chat } = useChat();
   const { name, lastSeen, image } = chat || {};
+  const [isSearching, setIsSearching] = useState(false);
 
-  if (!chat) return;
+  if (!chat) return null;
+
+  const toggleSearch = () => {
+    setIsSearching(!isSearching);
+  };
+
+  const handleSearch = (term: string) => {};
 
   return (
     <Container>
-      <Info>
-        <Avatar image={image} name={name?.charAt(0)} />
-        <Content>
-          <Name>{name}</Name>
-          <LastSeen>last seen {lastSeen}</LastSeen>
-        </Content>
-      </Info>
-      <Icons>
-        <Icon>{getIcon("Call")}</Icon>
-        <Icon>{getIcon("Search")}</Icon>
-        <Icon>{getIcon("More")}</Icon>
-      </Icons>
+      <Avatar image={image} name={name?.charAt(0)} />
+      {isSearching ? (
+        <SearchBar onClose={toggleSearch} onSearch={handleSearch} />
+      ) : (
+        <>
+          <Info>
+            <Content>
+              <Name>{name}</Name>
+              <LastSeen>last seen {lastSeen}</LastSeen>
+            </Content>
+          </Info>
+          <Icons>
+            <Icon>{getIcon("Call")}</Icon>
+            <IconButton onClick={toggleSearch}>{getIcon("Search")}</IconButton>
+            <Icon>{getIcon("More")}</Icon>
+          </Icons>
+        </>
+      )}
+      {isSearching && <IconButton>{getIcon("CalendarToday")}</IconButton>}
     </Container>
   );
 }

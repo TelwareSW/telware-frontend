@@ -1,5 +1,7 @@
 import { useState, useEffect, ReactNode } from "react";
 import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+
 import {
   addMessage,
   MessageInterface,
@@ -7,7 +9,6 @@ import {
 } from "@state/messages/messages";
 
 import { SocketContext } from "./SocketContext";
-import { Dispatch } from "redux";
 import { getSocket } from "utils/socket";
 import { useChats } from "@features/chats/hooks/useChats";
 
@@ -49,6 +50,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     socket.on("receive_message", (message: MessageInterface) => {
       handleIncomingMessage(dispatch, message);
     });
+    
     socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
     socket.emit("typing");
     return () => {

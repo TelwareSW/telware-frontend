@@ -30,7 +30,7 @@ const SideBarContainer = styled.div`
     flex-direction: column;
     gap: 1rem;
     width: 100%;
-    min-height: 100dvh;
+    height: 90vh;
     background-color: var(--color-background-secondary);
   }
 `;
@@ -217,7 +217,7 @@ function ProfileSettings() {
   const userHandle = `https://telware.tech/${watch("username") || "username"}`;
 
   const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (event.target.files) {
       setPhotoChanged(true);
@@ -249,12 +249,12 @@ function ProfileSettings() {
           updateSideBarView({
             redirect: sideBarPages.SETTINGS,
             data: undefined,
-          })
+          }),
         );
       }
     } catch (error) {
       toast.error(
-        (error as Error).message || "Failed to update profile settings"
+        (error as Error).message || "Failed to update profile settings",
       );
     }
   };

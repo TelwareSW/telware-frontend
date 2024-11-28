@@ -41,8 +41,6 @@ function Message({
 
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
-  console.log(userId);
-
   return (
     <StyledMessage
       ref={index === messagesLength - 1 ? lastMessageRef : null}
@@ -50,7 +48,6 @@ function Message({
       $isMine={senderId === userId}
     >
       <Bubble $isMine={senderId === userId}>{content}</Bubble>
-      {/* <Timestamp>10 AM</Timestamp> */}
     </StyledMessage>
   );
 }

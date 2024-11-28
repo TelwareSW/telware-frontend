@@ -7,11 +7,12 @@ export const profileSettingsMock = [
   }),
 
   http.get("/users/me", async () => {
-    
     return HttpResponse.json(
       {
         status: "success",
-        data: MOCK_USER1,
+        data: {
+          user: MOCK_USER1,
+        },
       },
       { status: 200 }
     );
