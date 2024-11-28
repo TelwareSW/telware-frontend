@@ -30,6 +30,10 @@ const StyledIcon = styled.div<CircleIconProps>`
   opacity: 0.9;
   box-shadow: var(--box-shadow);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &:hover {
     opacity: 1;
     cursor: pointer;
