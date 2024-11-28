@@ -7,7 +7,7 @@ const Textarea = styled.textarea`
 
   flex: 1;
   align-self: center;
-  
+
   caret-color: var(--accent-color);
   color: var(--color-text);
 
@@ -20,7 +20,12 @@ const Textarea = styled.textarea`
   max-height: 300px;
 `;
 
-function ExpandingTextArea() {
+type PropsType = {
+  input: string;
+  setInput: (value: string) => void;
+};
+
+function ExpandingTextArea({ input, setInput }: PropsType) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   function handleInput() {
@@ -33,6 +38,8 @@ function ExpandingTextArea() {
   return (
     <Textarea
       ref={ref}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
       placeholder="Message"
       rows={1}
       onInput={handleInput}

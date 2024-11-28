@@ -1,17 +1,16 @@
-import styled from "styled-components";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
-import CircleIcon from "@components/CircleIcon";
 import ExpandingTextArea from "@components/ExpandingTextArea";
-import EmojiPickerItem from "./emojies/EmojiPicker";
+import RecordInput from "./SendButton";
+import { addMessage } from "@state/messages/messages";
+import { RootState } from "@state/store";
+import { useSocket } from "@hooks/useSocket";
 
 const Container = styled.div`
-  position: absolute;
   z-index: 1000;
-  bottom: 1rem;
-  left: 0;
-  right: 0;
 
   margin: auto;
 
@@ -48,7 +47,7 @@ const InputWrapper = styled.div`
   flex: 1;
 `;
 
-const AnotherContainer = styled.div`
+const Input = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 1rem;
@@ -61,35 +60,51 @@ const InvisibleButton = styled.button`
   cursor: pointer;
 `;
 function ChatInput() {
-  const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
-  const toggleShowEmojies = () => {
-    setIsEmojiSelectorOpen((show) => !show);
-  };
+  const [input, setInput] = useState("");
+  const { sendMessage } = useSocket();
+  const dispatch = useDispatch();
+  const userId = useSelector((state: RootState) => state.user.userInfo.id);
+
+  function handleSubmit() {
+    console.log("sending message");
+
+    if (input) {
+      const message = {
+        id: "19008",
+        content: input,
+        senderId: userId,
+        type: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        chatId: "",
+        parentMessageId: "",
+        isDeleted: false,
+        deleteType: 2,
+        status: 0,
+      };
+      setInput("");
+      sendMessage(message);
+      dispatch(addMessage(message));
+    }
+  }
+
   return (
-    <>
-      {isEmojiSelectorOpen && <EmojiPickerItem />}
-      <Container>
-        <AnotherContainer>
-          <InputContainer>
-            <InputWrapper>
-              <InvisibleButton onClick={toggleShowEmojies}>
-                <Icon>{getIcon("Emojie")}</Icon>
-              </InvisibleButton>
-              <ExpandingTextArea />
-              <Icon>{getIcon("Attatch")}</Icon>
-            </InputWrapper>
-          </InputContainer>
-          <CircleIcon
-            data-testid="record-icon"
-            $icon="Record"
-            $size={3.3}
-            $padding={0.5}
-            $color="white"
-            $bgColor="var(--accent-color)"
-          />
-        </AnotherContainer>
-      </Container>
-    </>
+    <Container>
+      <Input>
+        <InputContainer>
+          <InputWrapper>
+            <Icon>{getIcon("Emojie")}</Icon>
+            <ExpandingTextArea input={input} setInput={setInput} />
+            <Icon>{getIcon("Attatch")}</Icon>
+          </InputWrapper>
+        </InputContainer>
+
+        <RecordInput
+          onClick={handleSubmit}
+          type={!input ? "record" : "message"}
+        />
+      </Input>
+    </Container>
   );
 }
 
