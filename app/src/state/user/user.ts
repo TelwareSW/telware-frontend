@@ -5,6 +5,11 @@ import {
   permissionStates,
 } from "../../types/sideBar";
 import {
+  privacyStates,
+  activeStates,
+  permissionStates,
+} from "../../types/sideBar";
+import {
   userInfoInterface,
   privacySettingsInterface,
   activitySettingsInterface,
@@ -13,12 +18,15 @@ import {
   updateActivityInterface,
   permissionsSettingsInterface,
   updatePermissionInterface,
+  permissionsSettingsInterface,
+  updatePermissionInterface,
 } from "../../types/user";
 
 interface userState {
   userInfo: userInfoInterface;
   privacySettings: privacySettingsInterface;
   activitySettings: activitySettingsInterface;
+  permissionSettings: permissionsSettingsInterface;
   permissionSettings: permissionsSettingsInterface;
 }
 
@@ -41,6 +49,10 @@ const initialState: userState = {
   },
   activitySettings: {
     readReceiptsPrivacy: activeStates.ENABLED,
+  },
+  permissionSettings: {
+    addToGroupPrivacy: permissionStates.EVERYONE,
+    addToChannelPrivacy: permissionStates.EVERYONE,
   },
   permissionSettings: {
     addToGroupPrivacy: permissionStates.EVERYONE,
@@ -78,6 +90,13 @@ const userSlice = createSlice({
     ) => {
       const { key, value } = action.payload;
       state.activitySettings[key] = activeStates[value];
+    },
+    updateUserPermission: (
+      state: userState,
+      action: PayloadAction<updatePermissionInterface>
+    ) => {
+      const { key, value } = action.payload;
+      state.permissionSettings[key] = permissionStates[value];
     },
     updateUserPermission: (
       state: userState,

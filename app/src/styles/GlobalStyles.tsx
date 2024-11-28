@@ -248,16 +248,23 @@ const ScrollContainer = styled.div`
   position: relative;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 10px;
+    border: 1px solid black;
   }
 
   &::-webkit-scrollbar-track {
-    background: inherit;
+    background: rgba(220, 220, 220, 0.6);
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-color);
-    border-radius: 5px;
+    background: linear-gradient(180deg, #4c8bf5, #8ccef2); /* gradient effect */
+    border-radius: 10px;
+    border: 2px solid rgba(220, 220, 220, 0.6);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4c8bf5, #66b5ff);
   }
 
   scroll-behavior: smooth;
