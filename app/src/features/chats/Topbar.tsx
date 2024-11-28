@@ -9,13 +9,18 @@ import SearchBar from "@features/search/components/SearchBar";
 
 const Container = styled.div`
   position: absolute;
-  z-index: 1000;
+  top: 0;
+  z-index: 1001;
+
   height: 3.5rem;
-  background-color: var(--color-background);
   width: 100%;
+
+  background-color: var(--color-background);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding-inline: 1rem;
 `;
 

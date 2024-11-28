@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { TOKEN } from "@mocks/mockData";
+import { TOKEN } from "@mocks/data/users";
 import { SESSIONS } from "@mocks/data/Sessions";
 
 export const logoutMock = [

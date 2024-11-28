@@ -2,6 +2,8 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 
+const PORT = 4000;
+
 const app = express();
 const server = http.createServer(app);
 
@@ -17,7 +19,12 @@ io.on("connection", (socket) => {
   socket.on("send_message", (data) => {
     console.log("Message received from client:", data);
 
-    io.emit("receive_message", data);
+    socket.broadcast.emit("receive_message", data);
+  });
+
+  socket.on("join", ({ chatId }) => {
+    socket.join(chatId);
+    console.log(`User ${socket.id} joined chat ${chatId}`);
   });
 
   socket.on("disconnect", () => {
@@ -25,7 +32,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// Start server on port 4000
-server.listen(4000, () => {
-  console.log("Socket.io server running on http://localhost:4000/socket-io");
+server.listen(PORT, () => {
+  console.log(`Socket.io server running on http://localhost:${PORT}`);
 });
