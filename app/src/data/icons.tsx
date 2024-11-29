@@ -34,6 +34,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import SendIcon from "@mui/icons-material/Send";
+import ShortcutIcon from "@mui/icons-material/Shortcut";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import PinIcon from "@mui/icons-material/Pin";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -78,6 +79,8 @@ enum icons {
   CircularProgress,
   RightArrow,
   LeftArrow,
+  Forward,
+  MessagingOptions,
   Pin,
 }
 
@@ -181,7 +184,10 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
   Close: (
     <CloseOutlinedIcon
-      sx={{ color: `var(--color-icon-secondary)`, fontSize: "1.5rem" }}
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.75rem",
+      }}
     />
   ),
   Unlock: (
@@ -306,6 +312,17 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
+
+  Forward: (
+    <ShortcutIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.75rem",
+      }}
+    />
+  ),
+
+  MessagingOptions: <KeyboardArrowDownIcon />,
   Pin: (
     <PinIcon
       sx={{

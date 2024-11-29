@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+
 import { getIcon } from "@data/icons";
 
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
-import RecordInput from "./SendButton";
-import { addMessage } from "@state/messages/messages";
+
 import { RootState } from "@state/store";
-import { useSocket } from "@hooks/useSocket";
+import { setShowCheckBox } from "@state/messages/messages";
+
+
+import RecordInput from "./SendButton";
+import ForwardingInputBar from "@features/forward/ForwardingInputBar";
+import ScrollableChats from "@features/forward/ScrollableChats";
 import EmojiPickerItem from "./emojies/EmojiPicker";
+
+import { useMessageSender } from "./hooks/useMessageSender";
 
 const Container = styled.div`
   z-index: 1;
-
 
   position: absolute;
   bottom: 3%;
@@ -70,43 +76,37 @@ const Input = styled.div`
 function ChatInput() {
   const [input, setInput] = useState("");
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
-  const { sendMessage } = useSocket();
+  const { handleSendMessage } = useMessageSender();
   const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.user.userInfo.id);
-
 
   const toggleShowEmojies = () => {
     setIsEmojiSelectorOpen((show) => !show);
   };
 
-  function handleSubmit() {
-    console.log("sending message");
+  const handleSubmit = () => {
+    handleSendMessage(input);
+    setInput("");
+  };
 
-    if (input) {
-      const message = {
-        id: "19008",
-        content: input,
-        senderId: userId,
-        type: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        chatId: "",
-        parentMessageId: "",
-        isDeleted: false,
-        deleteType: 2,
-        status: 0,
-      };
-      setInput("");
-      sendMessage(message);
-      dispatch(addMessage(message));
-    }
+  const showCheckBox = useSelector(
+    (state: RootState) => state.messages.showCheckBox
+  );
+
+  const [showForwardUsers, setShowForwardUsers] = useState(false);
+
+  function handleClose() {
+    setShowForwardUsers(false);
+    dispatch(setShowCheckBox({ showCheckBox: false }));
+  }
+  function handleForward() {
+    setShowForwardUsers(true);
   }
 
   return (
     <Container>
-      <Input>
-        {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
+      {!showCheckBox ? (
         <Input>
+          {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
           <InputContainer>
             <InputWrapper>
               <InvisibleButton onClick={toggleShowEmojies}>
@@ -120,10 +120,14 @@ function ChatInput() {
 
           <RecordInput
             onClick={handleSubmit}
-            type={!input.length ? "record" : "message"}
+            type={!input ? "record" : "message"}
           />
         </Input>
-      </Input>
+      ) : (
+        <ForwardingInputBar onClose={handleClose} onForward={handleForward} />
+      )}
+
+      {showForwardUsers && <ScrollableChats onClose={handleClose} />}
     </Container>
   );
 }
