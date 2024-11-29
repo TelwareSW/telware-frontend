@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -17,6 +17,7 @@ import EmojiPickerItem from "./emojies/EmojiPicker";
 
 import { useMessageSender } from "./hooks/useMessageSender";
 import ReplyWrapper from "./ReplyWrapper";
+import { clearActiveMessage } from "@state/messages/activeMessage";
 
 const Container = styled.div`
   z-index: 1;
@@ -76,7 +77,11 @@ const Input = styled.div`
 
 function ChatInput() {
   const activeMessage = useSelector((state: RootState) => state.activeMessage);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState<string>("");
+
+  useEffect(() => {
+    if (activeMessage?.content) setInput(activeMessage?.content);
+  }, [activeMessage]);
 
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
   const { handleSendMessage } = useMessageSender();
@@ -89,6 +94,7 @@ function ChatInput() {
 
   const handleSubmit = () => {
     handleSendMessage(input);
+    dispatch(clearActiveMessage());
     setInput("");
   };
 
@@ -102,7 +108,7 @@ function ChatInput() {
     setShowForwardUsers(false);
     dispatch(setShowCheckBox({ showCheckBox: false }));
   }
-  
+
   function handleForward() {
     setShowForwardUsers(true);
   }
