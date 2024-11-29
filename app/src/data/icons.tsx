@@ -31,6 +31,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CircularProgress from "@mui/material/CircularProgress";
+import SendIcon from "@mui/icons-material/Send";
 
 enum icons {
   BlockIcon,
@@ -67,6 +68,7 @@ enum icons {
   KeyboardArrowDown,
   ContentCopy,
   CircularProgress,
+  SendMessage,
 }
 
 type iconStrings = keyof typeof icons;
@@ -275,6 +277,8 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       style={{ width: "1.5rem", height: "1.5rem" }}
     />
   ),
+
+  SendMessage: <SendIcon />,
 };
 
 function getIcon(iconName?: iconStrings) {

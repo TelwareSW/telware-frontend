@@ -1,4 +1,5 @@
-export const MOCK_USER = {
+export const MOCK_USER1 = {
+  id: "1",
   email: "johndoe@example.com",
   password: "1234",
   screenFirstName: "John",
@@ -8,6 +9,22 @@ export const MOCK_USER = {
   username: "johndoe",
   phoneNumber: "0123456789",
   status: "Online",
+  screenName: "John Doe",
+};
+
+export const MOCK_USER2 = {
+  id: "2",
+  email: "ay7aga@example.com",
+  password: "1234",
+  firstName: "ay",
+  lastName: "7aga",
+  bio: "Hello, I'm ay 7aga",
+  photo:
+    "https://i.pinimg.com/564x/26/76/a1/2676a1898da6edae9fc648c94332903f.jpg",
+  username: "Ay 7aga",
+  phoneNumber: "0123456798",
+  status: "Online",
+  screenName: "Ay 7aga",
 };
 
 export const MOCK_MY_STORIES = [
@@ -32,6 +49,7 @@ export const MOCK_MY_STORIES = [
     views: 20,
   },
 ];
+
 export const MOCK_OTHER_USER_STORIES = [
   {
     content:

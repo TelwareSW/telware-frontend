@@ -4,6 +4,7 @@ import {
   activeStates,
   permissionStates,
 } from "../../types/sideBar";
+
 import {
   userInfoInterface,
   privacySettingsInterface,
@@ -11,8 +12,8 @@ import {
   updatePrivacyInterface,
   updateInfoInterface,
   updateActivityInterface,
-  permissionsSettingsInterface,
   updatePermissionInterface,
+  permissionsSettingsInterface,
 } from "../../types/user";
 
 interface userState {
@@ -25,6 +26,7 @@ interface userState {
 const initialState: userState = {
   // TODO: set at login
   userInfo: {
+    id: "",
     username: "",
     screenName: "",
     email: "",
@@ -32,6 +34,7 @@ const initialState: userState = {
     status: "",
     bio: "",
   },
+  
   privacySettings: {
     storiesSeenPrivacy: privacyStates.EVERYONE,
     lastSeenPrivacy: privacyStates.EVERYONE,
@@ -50,6 +53,12 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setUserInfo: (
+      state: userState,
+      action: PayloadAction<userInfoInterface>
+    ) => {
+      state.userInfo = action.payload;
+    },
     updateUserPrivacy: (
       state: userState,
       action: PayloadAction<updatePrivacyInterface>
@@ -82,6 +91,7 @@ const userSlice = createSlice({
 });
 
 export const {
+  setUserInfo,
   updateUserPrivacy,
   updateUserInfo,
   updateUserActivity,

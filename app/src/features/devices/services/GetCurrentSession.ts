@@ -2,7 +2,7 @@ import { API_URL } from "@constants";
 import { Session } from "../types/sessions";
 
 async function GetCurrentSession(): Promise<Session> {
-  const res = await fetch(`${API_URL}/auth/sessions`, {
+  const res = await fetch(`${API_URL}/auth/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -12,13 +12,9 @@ async function GetCurrentSession(): Promise<Session> {
 
   const data = await res.json();
 
-  if (res.status !== 200) {
-    throw new Error(data.message);
-  }
+  const session = data.data as Session;
 
-  const sessions = data.data?.sessions;
-
-  return sessions[0];
+  return session;
 }
 
 export { GetCurrentSession };
