@@ -75,10 +75,11 @@ const Input = styled.div`
 `;
 
 function ChatInput() {
+  const activeMessage = useSelector((state: RootState) => state.activeMessage);
   const [input, setInput] = useState("");
+
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
   const { handleSendMessage } = useMessageSender();
-  const activeMessage = useSelector((state: RootState) => state.activeMessage);
 
   const dispatch = useDispatch();
 
@@ -101,6 +102,7 @@ function ChatInput() {
     setShowForwardUsers(false);
     dispatch(setShowCheckBox({ showCheckBox: false }));
   }
+  
   function handleForward() {
     setShowForwardUsers(true);
   }

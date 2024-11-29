@@ -27,7 +27,7 @@ const messagesSlice = createSlice({
 
     deleteMessage: (
       state,
-      action: PayloadAction<{ id: string; chatId: string }>,
+      action: PayloadAction<{ id: string; chatId: string }>
     ) => {
       state.messages = state.messages.filter((message) => {
         const { chatId, id } = action.payload;
@@ -38,24 +38,32 @@ const messagesSlice = createSlice({
 
     editMessage: (
       state,
-      action: PayloadAction<{ id: string; content: string; chatId: string }>,
+      action: PayloadAction<{
+        chatId: string;
+        messageId: string;
+        content: string;
+      }>
     ) => {
-      const { id, content, chatId } = action.payload;
+      const { chatId, messageId, content } = action.payload;
+      console.log(chatId, messageId, content);
+
       const message = state.messages.find(
-        (msg) => msg.id === id && msg.chatId == chatId,
+        (msg) => msg.id === messageId
       );
+
       if (message) {
         message.content = content;
+        console.log("done");
       }
     },
 
     pinMessage: (
       state,
-      action: PayloadAction<{ messageId: string; chatId: string }>,
+      action: PayloadAction<{ messageId: string; chatId: string }>
     ) => {
       const { messageId, chatId } = action.payload;
       const message = state.messages.find(
-        (msg) => msg.id === messageId && msg.chatId == chatId,
+        (msg) => msg.id === messageId && msg.chatId == chatId
       );
       if (message) {
         message.isPinned = true;
@@ -64,11 +72,11 @@ const messagesSlice = createSlice({
 
     unpinMessage: (
       state,
-      action: PayloadAction<{ messageId: string; chatId: string }>,
+      action: PayloadAction<{ messageId: string; chatId: string }>
     ) => {
       const { messageId, chatId } = action.payload;
       const message = state.messages.find(
-        (msg) => msg.id === messageId && msg.chatId == chatId,
+        (msg) => msg.id === messageId && msg.chatId == chatId
       );
       if (message) {
         message.isPinned = false;
@@ -86,7 +94,7 @@ const messagesSlice = createSlice({
 
     setShowCheckBox: (
       state,
-      action: PayloadAction<{ showCheckBox: boolean }>,
+      action: PayloadAction<{ showCheckBox: boolean }>
     ) => {
       const { showCheckBox } = action.payload;
       if (!showCheckBox) {
@@ -97,7 +105,7 @@ const messagesSlice = createSlice({
 
     setIsOptionListOpen: (
       state,
-      action: PayloadAction<{ value: boolean; id: string }>,
+      action: PayloadAction<{ value: boolean; id: string }>
     ) => {
       const { id, value } = action.payload;
       state.messages.forEach((msg) => {
@@ -117,7 +125,7 @@ const messagesSlice = createSlice({
     removeSelectedMessage: (state, action: PayloadAction<{ id: string }>) => {
       const { id } = action.payload;
       state.selectedMessages = state.selectedMessages.filter(
-        (msgId) => msgId !== id,
+        (msgId) => msgId !== id
       );
     },
   },

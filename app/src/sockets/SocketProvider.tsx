@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 
 import {
   addMessage,
+  editMessage,
   MessageInterface,
   pinMessage,
   setIsTyping,
@@ -16,7 +17,7 @@ import { useChats } from "@features/chats/hooks/useChats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
-  message: MessageInterface,
+  message: MessageInterface
 ) => {
   dispatch(addMessage(message));
 };
@@ -57,14 +58,22 @@ function SocketProvider({ children }: SocketProviderProps) {
       "PIN_MESSAGE_SERVER",
       (chatId: string, messageId: string, userId: string) => {
         dispatch(pinMessage({ chatId, messageId }));
-      },
+      }
     );
 
     socket.on(
       "UNPIN_MESSAGE_SERVER",
       (chatId: string, messageId: string, userId: string) => {
         dispatch(unpinMessage({ chatId, messageId }));
-      },
+      }
+    );
+
+    socket.on(
+      "EDIT_MESSAGE_SERVER",
+      (chatId: string, messageId: string, content: string) => {
+        console.log("EDIT_MESSAGE_SERVER", chatId, messageId, content);
+        dispatch(editMessage({ chatId, messageId, content }));
+      }
     );
 
     socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
@@ -86,7 +95,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       });
       console.log(
         "Joined all chats:",
-        chats.map((chat) => chat.id),
+        chats.map((chat) => chat.id)
       );
     }
   }, [isConnected, isPending, chats, socket]);
@@ -99,10 +108,22 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   };
 
+  const editMessageSocket = (
+    messageId: string,
+    content: string,
+    chatId: string
+  ) => {
+    if (isConnected) {
+      socket.emit("EDIT_MESSAGE_CLIENT", { messageId, content, chatId });
+    } else {
+      console.warn("Cannot edit message: not connected to socket server");
+    }
+  };
+
   const pinMessageSocket = (
     chatId: string,
     messageId: string,
-    userId: string,
+    userId: string
   ) => {
     if (isConnected) {
       socket.emit("PIN_MESSAGE_CLIENT", { messageId, chatId, userId });
@@ -114,7 +135,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const unpinMessageSocket = (
     chatId: string,
     messageId: string,
-    userId: string,
+    userId: string
   ) => {
     if (isConnected) {
       socket.emit("UNPIN_MESSAGE_CLIENT", { messageId, chatId, userId });
@@ -130,6 +151,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         sendMessage,
         pinMessage: pinMessageSocket,
         unpinMessage: unpinMessageSocket,
+        editMessage: editMessageSocket,
       }}
     >
       {children}

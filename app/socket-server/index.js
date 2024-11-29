@@ -44,6 +44,19 @@ io.on("connection", (socket) => {
       .to(chatId)
       .emit("UNPIN_MESSAGE_SERVER", { messageId, chatId, userId });
   });
+
+  socket.on("EDIT_MESSAGE_CLIENT", ({ messageId, content, chatId }) => {
+    const room = io.sockets.adapter.rooms.get(chatId);
+
+    if (room) {
+      console.log(`Room ${chatId} members:`, [...room]);
+    } else {
+      console.log(`No members in room: ${chatId}`);
+    }
+    socket.join(chatId);
+    console.log("EDIT_MESSAGE_CLIENT:", messageId, content, chatId);
+    io.to(chatId).emit("EDIT_MESSAGE_SERVER", chatId, messageId, content); //TODO: handle user disjoin the room for some reason
+  });
 });
 
 server.listen(PORT, () => {
