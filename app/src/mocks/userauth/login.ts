@@ -46,6 +46,7 @@ export const loginMock = [
             data: {},
           },
           { status: 401 }
+          { status: 401 }
         );
       }
 
@@ -66,7 +67,9 @@ export const loginMock = [
             "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
           },
         }
+        }
       );
+    }
     }
   ),
 ];
