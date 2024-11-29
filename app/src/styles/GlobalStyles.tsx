@@ -44,7 +44,7 @@ const GlobalStyles = createGlobalStyle`
     --color-chat-hover: #f5f5f5;
 
     --color-default-shadow: rgb(114, 114, 114, 0.251);
-
+    
     
     --color-item-hover: rgb(244, 244, 245);
     --color-item-active: rgb(237, 237, 237);
@@ -52,15 +52,17 @@ const GlobalStyles = createGlobalStyle`
     --color-icon-secondary: rgb(112, 117, 121);
     
     --pattern-color: #c3bfc5a6;
+
   
     --color-background-compact-menu: rgb(255, 255, 255, 0.733);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.067);
+    --new-chat-color: #f5f5f5;
     
     --color-border: #dfe1e5;
     --color-borders-input: rgb(218, 220, 224);
-
+    
     --color-search-border: #3390ec;
-
+    
     --image-grayscale: 0;
     --image-opacity: 30%;
 
@@ -97,14 +99,15 @@ const GlobalStyles = createGlobalStyle`
     );
 
     --bg-image-opacity: 100%;
-
+    
     --chat-wallpaper-bg: url("/assets/bg-dark.png");
     
     --color-background: #192b35;
     --color-background-secondary: #24343e;
     --color-background-secondary-accent: #22313a;
     --color-chat-hover: #2c2c2c;
-
+    
+    --scrollbar-color:rgba(255, 255, 255, .2);
     --color-default-shadow: rgb(16, 16, 16, 0.612);
     
     --color-chat-active: #1e4454;
@@ -115,6 +118,7 @@ const GlobalStyles = createGlobalStyle`
     
     --color-background-compact-menu: rgb(33, 33, 33, 0.867);
     --color-background-compact-menu-hover: rgb(0, 0, 0, 0.4);
+    --new-chat-color: #2d394e;
  
     --color-border: #09182299;
     --color-borders-input: var(--color-text-secondary);
@@ -131,6 +135,8 @@ const GlobalStyles = createGlobalStyle`
     --color-avatar: linear-gradient(135deg, #72C6EF, #004E92);
   }
 
+  --story-views-background: #181a1b;
+  --story-views-background-hover: #1e2021;
   --color-background-own-1: #6573F8;
   --color-background-own-2: #7644CB;
   --color-background-own-3: #8849B4;

@@ -13,7 +13,6 @@ export async function login(user: User) {
   });
 
   const data = await res.json();
-
   if (data.status !== "success") {
     throw new Error(data.message);
   }
