@@ -20,6 +20,7 @@ export const useMessageSender = () => {
         chatId: "",
         parentMessageId: "",
         isDeleted: false,
+        isPinned: false,
         deleteType: 2,
         status: 0,
         isOptionListOpen: false,
