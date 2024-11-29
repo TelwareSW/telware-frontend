@@ -39,7 +39,7 @@ const StyledCustomBox = styled.span`
   display: inline-block;
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-borders-input);
   border-radius: 0.2rem;
   position: relative;
   transition: all 0.3s;
