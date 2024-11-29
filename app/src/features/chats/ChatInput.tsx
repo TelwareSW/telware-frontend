@@ -119,7 +119,7 @@ function ChatInput() {
         <Input>
           {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
           <InputContainer>
-            {activeMessage.id && <ReplyWrapper />}
+            {activeMessage.id && <ReplyWrapper setInput={setInput} />}
             <InputWrapper>
               <InvisibleButton onClick={toggleShowEmojies}>
                 <Icon>{getIcon("Emojie")}</Icon>
