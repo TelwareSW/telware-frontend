@@ -46,10 +46,10 @@
       ],
       "@services": [
         "./services/*"
-      ]
+      ],
       "@utils/*": [
         "./utils/*"
-      ],
+      ]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
