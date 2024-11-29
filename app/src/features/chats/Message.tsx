@@ -24,6 +24,7 @@ import renderWithHighlight from "@utils/renderWithHighlight";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
+import { setActiveMessage } from "@state/messages/activeMessage";
 import { useSocket } from "@hooks/useSocket";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
@@ -156,6 +157,14 @@ function Message({
     dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
   }
 
+  function handleEditMessage() {
+    dispatch(setActiveMessage({ id, content, state: "edit" }));
+  }
+
+  function handleReply() {
+    dispatch(setActiveMessage({ id, content, state: "reply" }));
+  }
+
   return (
     <MessageRow $isChecked={isChecked}>
       {showCheckbox && (
@@ -182,7 +191,8 @@ function Message({
               forwardOnClick={forwardOnClick}
               isPinned={isPinned}
               pinOnClick={pinOnClick}
-              replyOnClick={() => {}} //TODO: Implement replyOnClick
+              replyOnClick={handleReply} //TODO: Implement replyOnClick
+              editOnClick={handleEditMessage}
             />
           )}
         </Bubble>
