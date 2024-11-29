@@ -10,13 +10,13 @@ import Icon from "@components/Icon";
 import { RootState } from "@state/store";
 import { setShowCheckBox } from "@state/messages/messages";
 
-
 import RecordInput from "./SendButton";
 import ForwardingInputBar from "@features/forward/ForwardingInputBar";
 import ScrollableChats from "@features/forward/ScrollableChats";
 import EmojiPickerItem from "./emojies/EmojiPicker";
 
 import { useMessageSender } from "./hooks/useMessageSender";
+import ReplyWrapper from "./ReplyWrapper";
 
 const Container = styled.div`
   z-index: 1;
@@ -44,8 +44,9 @@ const InputContainer = styled.div`
   flex: 3 auto;
 
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   align-self: center;
+  flex-direction: column;
 
   height: 100%;
 `;
@@ -108,6 +109,7 @@ function ChatInput() {
         <Input>
           {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
           <InputContainer>
+            <ReplyWrapper state="Edit" message="message" />
             <InputWrapper>
               <InvisibleButton onClick={toggleShowEmojies}>
                 <Icon>{getIcon("Emojie")}</Icon>
