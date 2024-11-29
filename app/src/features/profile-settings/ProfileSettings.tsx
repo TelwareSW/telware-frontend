@@ -83,7 +83,7 @@ const DeleteProfilePictureContainer = styled.div`
   position: absolute;
   bottom: 1rem;
   right: calc(50% - 4rem);
-  z-index: 5000;
+  z-index: 5;
   background-color: red;
   border: 0.1rem solid var(--color-border);
   border-radius: 50%;
@@ -217,7 +217,7 @@ function ProfileSettings() {
   const userHandle = `https://telware.tech/${watch("username") || "username"}`;
 
   const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files) {
       setPhotoChanged(true);
@@ -249,12 +249,12 @@ function ProfileSettings() {
           updateSideBarView({
             redirect: sideBarPages.SETTINGS,
             data: undefined,
-          }),
+          })
         );
       }
     } catch (error) {
       toast.error(
-        (error as Error).message || "Failed to update profile settings",
+        (error as Error).message || "Failed to update profile settings"
       );
     }
   };
