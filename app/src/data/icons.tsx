@@ -32,6 +32,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CircularProgress from "@mui/material/CircularProgress";
 import SendIcon from "@mui/icons-material/Send";
+import ShortcutIcon from "@mui/icons-material/Shortcut";
 
 enum icons {
   BlockIcon,
@@ -69,6 +70,8 @@ enum icons {
   ContentCopy,
   CircularProgress,
   SendMessage,
+  Forward,
+  MessagingOptions,
 }
 
 type iconStrings = keyof typeof icons;
@@ -171,7 +174,10 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
   Close: (
     <CloseOutlinedIcon
-      sx={{ color: `var(--color-icon-secondary)`, fontSize: "1.5rem" }}
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.75rem",
+      }}
     />
   ),
   Unlock: (
@@ -279,6 +285,17 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
 
   SendMessage: <SendIcon />,
+
+  Forward: (
+    <ShortcutIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.75rem",
+      }}
+    />
+  ),
+
+  MessagingOptions: <KeyboardArrowDownIcon />,
 };
 
 function getIcon(iconName?: iconStrings) {

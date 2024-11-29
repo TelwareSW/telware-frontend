@@ -29,4 +29,5 @@ export interface MessageInterface {
   isDeleted: boolean;
   deleteType: DeleteType;
   status: MessageStatus;
+  isOptionListOpen: boolean;
 }

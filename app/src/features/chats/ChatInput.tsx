@@ -8,12 +8,14 @@ import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
 import RecordInput from "./SendButton";
 
-import { addMessage } from "@state/messages/messages";
+import { setShowCheckBox } from "@state/messages/messages";
 import { RootState } from "@state/store";
 
-import { useSocket } from "@hooks/useSocket";
+import ForwardingInputBar from "@features/forward/ForwardingInputBar";
+import ScrollableChats from "@features/forward/ScrollableChats";
+import { useMessageSender } from "./hooks/useMessageSender";
 
-const Container = styled.div`
+export const Container = styled.div`
   z-index: 1000;
 
   margin: auto;
@@ -61,49 +63,50 @@ const Input = styled.div`
 
 function ChatInput() {
   const [input, setInput] = useState("");
-  const { sendMessage } = useSocket();
+  const { handleSendMessage } = useMessageSender();
   const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
-  function handleSubmit() {
-    console.log("sending message");
+  const handleSubmit = () => {
+    handleSendMessage(input);
+    setInput("");
+  };
 
-    if (input) {
-      const message = {
-        id: "19008",
-        content: input,
-        senderId: userId,
-        type: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        chatId: "",
-        parentMessageId: "",
-        isDeleted: false,
-        deleteType: 2,
-        status: 0,
-      };
-      setInput("");
-      sendMessage(message);
-      dispatch(addMessage(message));
-    }
+  const showCheckBox = useSelector(
+    (state: RootState) => state.messages.showCheckBox
+  );
+
+  const [showForwardUsers, setShowForwardUsers] = useState(false);
+
+  function handleClose() {
+    setShowForwardUsers(false);
+    dispatch(setShowCheckBox({ showCheckBox: false }));
+  }
+  function handleForward() {
+    setShowForwardUsers(true);
   }
 
   return (
     <Container>
-      <Input>
-        <InputContainer>
-          <InputWrapper>
-            <Icon>{getIcon("Emojie")}</Icon>
-            <ExpandingTextArea input={input} setInput={setInput} />
-            <Icon>{getIcon("Attatch")}</Icon>
-          </InputWrapper>
-        </InputContainer>
+      {!showCheckBox ? (
+        <Input>
+          <InputContainer>
+            <InputWrapper>
+              <Icon>{getIcon("Emojie")}</Icon>
+              <ExpandingTextArea input={input} setInput={setInput} />
+              <Icon>{getIcon("Attatch")}</Icon>
+            </InputWrapper>
+          </InputContainer>
 
-        <RecordInput
-          onClick={handleSubmit}
-          type={!input ? "record" : "message"}
-        />
-      </Input>
+          <RecordInput
+            onClick={handleSubmit}
+            type={!input ? "record" : "message"}
+          />
+        </Input>
+      ) : (
+        <ForwardingInputBar onClose={handleClose} onForward={handleForward} />
+      )}
+
+      {showForwardUsers && <ScrollableChats onClose={handleClose} />}
     </Container>
   );
 }
