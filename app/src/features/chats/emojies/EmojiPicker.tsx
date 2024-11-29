@@ -8,7 +8,7 @@ import EmojiPicker, {
 import styled from "styled-components";
 
 const StyledEmojiPickerContainer = styled.div`
-  z-index: 3;
+  z-index: 4;
   position: absolute;
   width: 30%;
   min-width: 300px;

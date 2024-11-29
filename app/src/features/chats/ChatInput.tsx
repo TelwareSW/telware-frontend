@@ -1,29 +1,17 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
 import { getIcon } from "@data/icons";
-
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
 import RecordInput from "./SendButton";
-
 import { addMessage } from "@state/messages/messages";
 import { RootState } from "@state/store";
-
-import { useSocket } from "@hooks/useSocket";
-import RecordInput from "./SendButton";
-
-import { addMessage } from "@state/messages/messages";
-import { RootState } from "@state/store";
-
 import { useSocket } from "@hooks/useSocket";
 import EmojiPickerItem from "./emojies/EmojiPicker";
 
 const Container = styled.div`
-  z-index: 1000;
+  z-index: 1;
 
   position: absolute;
   bottom: 3%;
@@ -70,7 +58,6 @@ const InputWrapper = styled.div`
 `;
 
 const Input = styled.div`
-const Input = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 1rem;
@@ -80,39 +67,11 @@ const Input = styled.div`
 
 function ChatInput() {
   const [input, setInput] = useState("");
-  const { sendMessage } = useSocket();
-  const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.user.userInfo.id);
-
-  function handleSubmit() {
-    console.log("sending message");
-
-    if (input) {
-      const message = {
-        id: "19008",
-        content: input,
-        senderId: userId,
-        type: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        chatId: "",
-        parentMessageId: "",
-        isDeleted: false,
-        deleteType: 2,
-        status: 0,
-      };
-      setInput("");
-      sendMessage(message);
-      dispatch(addMessage(message));
-    }
-  }
-
-  const [input, setInput] = useState("");
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
-
   const { sendMessage } = useSocket();
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
+
   const toggleShowEmojies = () => {
     setIsEmojiSelectorOpen((show) => !show);
   };
@@ -142,29 +101,24 @@ function ChatInput() {
   return (
     <Container>
       <Input>
-      {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
-      <Input>
-        <InputContainer>
-          <InputWrapper>
-            <Icon>{getIcon("Emojie")}</Icon>
-            <ExpandingTextArea input={input} setInput={setInput} />
-            <InvisibleButton onClick={toggleShowEmojies}>
-              <Icon>{getIcon("Emojie")}</Icon>
-            </InvisibleButton>
+        {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
+        <Input>
+          <InputContainer>
+            <InputWrapper>
+              <InvisibleButton onClick={toggleShowEmojies}>
+                <Icon>{getIcon("Emojie")}</Icon>
+              </InvisibleButton>
 
-            <ExpandingTextArea input={input} setInput={setInput} />
-            <Icon>{getIcon("Attatch")}</Icon>
-          </InputWrapper>
-        </InputContainer>
+              <ExpandingTextArea input={input} setInput={setInput} />
+              <Icon>{getIcon("Attatch")}</Icon>
+            </InputWrapper>
+          </InputContainer>
 
-        <RecordInput
-          onClick={handleSubmit}
-          type={!input ? "record" : "message"}
-        <RecordInput
-          onClick={handleSubmit}
-          type={!input ? "record" : "message"}
-        />
-      </Input>
+          <RecordInput
+            onClick={handleSubmit}
+            type={!input.length ? "record" : "message"}
+          />
+        </Input>
       </Input>
     </Container>
   );

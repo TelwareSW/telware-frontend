@@ -26,7 +26,7 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   background-color: ${({ $isMine }) => ($isMine ? "#0084ff" : "#e5e5ea")};
   color: ${({ $isMine }) => ($isMine ? "#fff" : "#000")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
-  z-index: 1000;
+  z-index: 1;
 `;
 
 type MessageProps = {

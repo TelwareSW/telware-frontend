@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const HighlightedText = styled.span<{ $highlight?: boolean }>`
@@ -10,7 +9,7 @@ function renderWithHighlight(
   content: string,
   searchTerm?: string,
   searchResults?: any,
-  id?: string,
+  id?: string
 ) {
   if (!searchTerm) {
     return content;
@@ -25,7 +24,7 @@ function renderWithHighlight(
   const before = content.slice(0, result.highlightIndex);
   const highlighted = content.slice(
     result.highlightIndex,
-    result.highlightIndex + searchTerm.length,
+    result.highlightIndex + searchTerm.length
   );
   const after = content.slice(result.highlightIndex + searchTerm.length);
 

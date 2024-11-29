@@ -11,7 +11,7 @@ const StyledCloseButton = styled.div`
   right: 0.5rem;
   cursor: pointer;
   color: white;
-  z-index: 2000;
+  z-index: 2;
 `;
 
 function CloseButton(props: CloseButtonProps) {

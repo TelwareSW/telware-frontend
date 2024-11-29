@@ -13,7 +13,7 @@ const StyledStoryHeader = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 0.7rem;
-  z-index: 100;
+  z-index: 1;
 `;
 const StyledUserInfo = styled.div<{ $isVertical?: boolean }>`
   display: flex;
