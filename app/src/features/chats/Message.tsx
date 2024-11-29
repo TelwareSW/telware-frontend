@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@state/store";
 import useScrollToSearchResultsMsg from "@features/search/hooks/useScrollToSearchResultsMsg";
 import { useEffect, useRef } from "react";
-
 import renderWithHighlight from "@utils/renderWithHighlight";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
@@ -78,7 +77,6 @@ function Message({
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
   return (
-
     <StyledMessage
       ref={mergedRef}
       key={id}
@@ -86,7 +84,6 @@ function Message({
       data-message-id={id}
       data-testid={`message-${id}`}
     >
-
       <Bubble $isMine={senderId === userId}>
         {renderWithHighlight(content, searchTerm, searchResults, id)}
       </Bubble>

@@ -50,7 +50,6 @@
       "@utils/*": [
         "./utils/*"
       ]
-
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
