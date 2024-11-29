@@ -1,3 +1,4 @@
+import { messages } from "@mocks/data/messages";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MessageInterface } from "types/messages";
 
@@ -7,7 +8,7 @@ interface MessagesState {
 }
 
 const initialState: MessagesState = {
-  messages: [],
+  messages: messages,
   isTyping: false,
 };
 
@@ -16,6 +17,7 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: PayloadAction<MessageInterface>) => {
+      console.log(action.payload);
       state.messages.push(action.payload);
     },
 

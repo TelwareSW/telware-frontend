@@ -14,4 +14,16 @@ export const devicesMock = [
       { status: 200 },
     );
   }),
+  http.post("/auth/logout/others", async () => {
+    return HttpResponse.json(
+      {
+        status: "success",
+        message: "Other sessions logged out successfully",
+        data: {
+          sessions: [],
+        },
+      },
+      { status: 200 },
+    );
+  }),
 ];

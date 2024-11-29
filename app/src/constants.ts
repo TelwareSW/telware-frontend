@@ -6,6 +6,7 @@ const {
   VITE_ENV: ENV,
   VITE_BACKEND_STORGAE: STATIC_MEDIA_URL,
 } = import.meta.env;
+
 const MOBILE_VIEW = "(max-width: 600px)";
 const DESKTOP_VIEW = "(min-width: 600px)";
 
