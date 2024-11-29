@@ -81,13 +81,11 @@ function Topbar() {
     setIsSearching(!isSearching);
   };
 
-  const handleSearch = (term: string) => {};
-
   return (
     <Container>
       <Avatar image={image} name={name?.charAt(0)} />
       {isSearching ? (
-        <SearchBar onClose={toggleSearch} onSearch={handleSearch} />
+        <SearchBar onClose={toggleSearch} />
       ) : (
         <>
           <Info>
