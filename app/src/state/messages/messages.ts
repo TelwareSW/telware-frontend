@@ -49,6 +49,32 @@ const messagesSlice = createSlice({
       }
     },
 
+    pinMessage: (
+      state,
+      action: PayloadAction<{ messageId: string; chatId: string }>,
+    ) => {
+      const { messageId, chatId } = action.payload;
+      const message = state.messages.find(
+        (msg) => msg.id === messageId && msg.chatId == chatId,
+      );
+      if (message) {
+        message.isPinned = true;
+      }
+    },
+
+    unpinMessage: (
+      state,
+      action: PayloadAction<{ messageId: string; chatId: string }>,
+    ) => {
+      const { messageId, chatId } = action.payload;
+      const message = state.messages.find(
+        (msg) => msg.id === messageId && msg.chatId == chatId,
+      );
+      if (message) {
+        message.isPinned = false;
+      }
+    },
+
     clearMessages: (state, action: PayloadAction<{ chatId: string }>) => {
       const { chatId } = action.payload;
       state.messages.filter((msg) => msg.chatId !== chatId);
@@ -60,7 +86,7 @@ const messagesSlice = createSlice({
 
     setShowCheckBox: (
       state,
-      action: PayloadAction<{ showCheckBox: boolean }>
+      action: PayloadAction<{ showCheckBox: boolean }>,
     ) => {
       const { showCheckBox } = action.payload;
       if (!showCheckBox) {
@@ -71,7 +97,7 @@ const messagesSlice = createSlice({
 
     setIsOptionListOpen: (
       state,
-      action: PayloadAction<{ value: boolean; id: string }>
+      action: PayloadAction<{ value: boolean; id: string }>,
     ) => {
       const { id, value } = action.payload;
       state.messages.forEach((msg) => {
@@ -91,7 +117,7 @@ const messagesSlice = createSlice({
     removeSelectedMessage: (state, action: PayloadAction<{ id: string }>) => {
       const { id } = action.payload;
       state.selectedMessages = state.selectedMessages.filter(
-        (msgId) => msgId !== id
+        (msgId) => msgId !== id,
       );
     },
   },
@@ -102,6 +128,8 @@ export const {
   deleteMessage,
   editMessage,
   clearMessages,
+  pinMessage,
+  unpinMessage,
   setIsTyping,
   setShowCheckBox,
   setIsOptionListOpen,

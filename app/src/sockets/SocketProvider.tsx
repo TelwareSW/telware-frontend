@@ -5,7 +5,9 @@ import { Dispatch } from "redux";
 import {
   addMessage,
   MessageInterface,
+  pinMessage,
   setIsTyping,
+  unpinMessage,
 } from "@state/messages/messages";
 
 import { SocketContext } from "./SocketContext";
@@ -14,7 +16,7 @@ import { useChats } from "@features/chats/hooks/useChats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
-  message: MessageInterface
+  message: MessageInterface,
 ) => {
   dispatch(addMessage(message));
 };
@@ -50,7 +52,21 @@ function SocketProvider({ children }: SocketProviderProps) {
     socket.on("receive_message", (message: MessageInterface) => {
       handleIncomingMessage(dispatch, message);
     });
-    
+
+    socket.on(
+      "PIN_MESSAGE_SERVER",
+      (chatId: string, messageId: string, userId: string) => {
+        dispatch(pinMessage({ chatId, messageId }));
+      },
+    );
+
+    socket.on(
+      "UNPIN_MESSAGE_SERVER",
+      (chatId: string, messageId: string, userId: string) => {
+        dispatch(unpinMessage({ chatId, messageId }));
+      },
+    );
+
     socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
     socket.emit("typing");
     return () => {
@@ -70,21 +86,52 @@ function SocketProvider({ children }: SocketProviderProps) {
       });
       console.log(
         "Joined all chats:",
-        chats.map((chat) => chat.id)
+        chats.map((chat) => chat.id),
       );
     }
   }, [isConnected, isPending, chats, socket]);
 
   const sendMessage = (message: MessageInterface) => {
     if (isConnected) {
-      socket.emit("send_message",  message );
+      socket.emit("send_message", message);
     } else {
       console.warn("Cannot send message: not connected to socket server");
     }
   };
 
+  const pinMessageSocket = (
+    chatId: string,
+    messageId: string,
+    userId: string,
+  ) => {
+    if (isConnected) {
+      socket.emit("PIN_MESSAGE_CLIENT", { messageId, chatId, userId });
+    } else {
+      console.warn("Cannot pin message: not connected to socket server");
+    }
+  };
+
+  const unpinMessageSocket = (
+    chatId: string,
+    messageId: string,
+    userId: string,
+  ) => {
+    if (isConnected) {
+      socket.emit("UNPIN_MESSAGE_CLIENT", { messageId, chatId, userId });
+    } else {
+      console.warn("Cannot unpin message: not connected to socket server");
+    }
+  };
+
   return (
-    <SocketContext.Provider value={{ isConnected, sendMessage }}>
+    <SocketContext.Provider
+      value={{
+        isConnected,
+        sendMessage,
+        pinMessage: pinMessageSocket,
+        unpinMessage: unpinMessageSocket,
+      }}
+    >
       {children}
     </SocketContext.Provider>
   );
