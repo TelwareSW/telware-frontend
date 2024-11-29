@@ -24,7 +24,6 @@ import { useDeleteProfilePicture } from "./hooks/useDeleteProfilePicture";
 
 const SideBarContainer = styled.div`
   overflow-y: auto;
-
   & > form {
     display: flex;
     flex-direction: column;

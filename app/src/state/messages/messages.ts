@@ -17,6 +17,7 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: PayloadAction<MessageInterface>) => {
+      console.log(action.payload);
       state.messages.push(action.payload);
     },
 

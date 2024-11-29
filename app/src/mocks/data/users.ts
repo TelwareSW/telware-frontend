@@ -12,7 +12,6 @@ export const MOCK_USER1 = {
   screenName: "John Doe",
 };
 
-
 export const MOCK_USER2 = {
   id: "2",
   email: "ay7aga@example.com",
@@ -50,6 +49,7 @@ export const MOCK_MY_STORIES = [
     views: 20,
   },
 ];
+
 export const MOCK_OTHER_USER_STORIES = [
   {
     content:

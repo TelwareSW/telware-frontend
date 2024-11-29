@@ -4,6 +4,8 @@ import { SearchOutlined } from "@mui/icons-material";
 const StyledSearchBar = styled.div`
   margin-left: 1rem;
   position: relative;
+  width: 100%;
+
   &:focus-within > svg {
     color: var(--color-search-border);
   }

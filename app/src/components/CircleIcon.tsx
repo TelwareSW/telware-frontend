@@ -9,7 +9,9 @@ interface CircleIconProps {
   $padding?: number;
   $color?: string;
   $bgColor?: string;
+  $opacity?: number;
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
 const StyledIcon = styled.div<CircleIconProps>`
@@ -25,9 +27,7 @@ const StyledIcon = styled.div<CircleIconProps>`
   padding: ${(props) => props.$padding}rem;
   background-color: ${(props) => props.$bgColor};
   border-radius: var(--border-radius-circle);
-  opacity: 0.9;
-  box-shadow: var(--box-shadow);
-  opacity: 0.9;
+  opacity: ${(props) => props.$opacity};
   box-shadow: var(--box-shadow);
 
   display: flex;
@@ -35,13 +35,10 @@ const StyledIcon = styled.div<CircleIconProps>`
   justify-content: center;
 
   &:hover {
-    opacity: 1;
+    scale: 1.05;
     cursor: pointer;
   }
   & > svg {
-    width: 100%;
-    height: 100%;
-    color: ${(props) => props.$color};
     width: 100%;
     height: 100%;
     color: ${(props) => props.$color};
@@ -56,14 +53,26 @@ function CircleIcon({
   $padding = 0,
   $color = "var(--color-search-border)",
   $bgColor = "transparent",
+  $opacity = 0.9,
   onClick,
+  children,
 }: CircleIconProps) {
   return (
     <StyledIcon
       onClick={onClick}
-      {...{ $icon, $bottom, $right, $size, $padding, $color, $bgColor }}
+      {...{
+        $icon,
+        $bottom,
+        $right,
+        $size,
+        $padding,
+        $color,
+        $bgColor,
+        $opacity,
+      }}
     >
       {getIcon($icon)}
+      {children}
     </StyledIcon>
   );
 }

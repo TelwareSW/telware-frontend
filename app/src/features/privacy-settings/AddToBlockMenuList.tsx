@@ -7,10 +7,12 @@ import { Chat } from "@mocks/data/chats";
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
-  width: ${(props) => props.$size}%;
-  right: ${(props) => (props.$right ?? 3) + 2}rem;
+  width: 70%;
+  right: 20%;
   bottom: ${(props) => (props.$bottom ?? 3) + 3}rem;
-  height: ${(props) => (props.$height ?? 3) + 3}rem;
+  height: fit-content;
+  max-height: ${(props) => (props.$height ?? 3) + 3}rem;
+  min-height: 3rem;
   z-index: 1;
   overflow: auto;
 
@@ -29,20 +31,23 @@ const StyledList = styled.ul<StyledListProps>`
 
 interface StyledListProps {
   $bottom?: number;
-  $right?: number;
-  $size?: number;
   $height?: number;
 }
 
 const menuStyles: StyledListProps = {
   $bottom: 5,
-  $right: 4,
-  $size: 70,
   $height: 30,
 };
 
 const StylingWrapper = styled.div`
   width: 100%;
+`;
+
+const StyledP = styled.p`
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  justify-self: center;
+  align-self: center;
 `;
 
 function filterChats(blockList: BlockedUserProps[], chats: Chat[]) {
@@ -73,22 +78,26 @@ function AddToBlockMenuList({ setIsMenuOpened }: any) {
   return (
     <StyledList {...menuStyles}>
       <ScrollContainer>
-        {filteredChats?.map((item) => {
-          const data: BlockedUserProps = {
-            name: item.name,
-            id: item.id,
-            username: item.name.toLowerCase() + 123,
-          };
-          return (
-            <StylingWrapper
-              onClick={() => handleClick(item)}
-              key={data.id}
-              data-testid={`block-user-${data.id}`}
-            >
-              <BlockItem {...data} />
-            </StylingWrapper>
-          );
-        })}
+        {filteredChats.length ? (
+          filteredChats.map((item) => {
+            const data: BlockedUserProps = {
+              name: item.name,
+              id: item.id,
+              username: item.name.toLowerCase() + 123,
+            };
+            return (
+              <StylingWrapper
+                onClick={() => handleClick(item)}
+                key={data.id}
+                data-testid={`block-user-${data.id}`}
+              >
+                <BlockItem {...data} />
+              </StylingWrapper>
+            );
+          })
+        ) : (
+          <StyledP>No Unblocked users found</StyledP>
+        )}
       </ScrollContainer>
     </StyledList>
   );
