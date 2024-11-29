@@ -1,7 +1,8 @@
+import { MOCK_USER1 } from "@mocks/data/users";
 import { http, HttpResponse } from "msw";
 
 const savedUser = localStorage.getItem("user");
-const user = savedUser ? JSON.parse(savedUser) : null;
+const user = savedUser ? JSON.parse(savedUser) : MOCK_USER1;
 
 export const profileSettingsMock = [
   http.get(/.*\.(png|jpg|jpeg|gif|svg)$/, async () => {

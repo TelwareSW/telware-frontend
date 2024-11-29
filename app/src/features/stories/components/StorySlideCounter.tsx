@@ -24,7 +24,7 @@ const StyledSliderContainer = styled.div`
   padding: 0.5rem;
   background: rgba(0, 0, 0, 0.5);
   height: 2rem;
-  z-index: 1;
+  z-index: 100;
 `;
 
 const Segment = styled.div<SegmentProps>`

@@ -10,7 +10,7 @@ import SearchBar from "@features/search/components/SearchBar";
 const Container = styled.div`
   position: absolute;
   top: 0;
-  z-index: 2;
+  z-index: 1001;
 
   height: 3.5rem;
   width: 100%;
@@ -81,13 +81,11 @@ function Topbar() {
     setIsSearching(!isSearching);
   };
 
-  const handleSearch = (term: string) => {};
-
   return (
     <Container>
       <Avatar image={image} name={name?.charAt(0)} />
       {isSearching ? (
-        <SearchBar onClose={toggleSearch} onSearch={handleSearch} />
+        <SearchBar onClose={toggleSearch} />
       ) : (
         <>
           <Info>

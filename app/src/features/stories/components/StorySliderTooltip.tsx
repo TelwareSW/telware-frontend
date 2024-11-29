@@ -13,7 +13,7 @@ const StyledToolTip = styled.div`
   top: 2rem;
   right: 2rem;
   display: flex;
-  z-index: 4;
+  z-index: 100;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
