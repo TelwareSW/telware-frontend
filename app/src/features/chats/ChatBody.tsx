@@ -24,7 +24,10 @@ const ScrollContainer = styled.div`
   }
 
   scroll-behavior: smooth;
+
   z-index: 1;
+
+
 
   display: flex;
   flex-direction: column;

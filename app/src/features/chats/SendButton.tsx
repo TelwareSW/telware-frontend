@@ -10,7 +10,9 @@ function RecordInput({ type, onClick }: ButtonType) {
     <CircleIcon
       onClick={onClick}
       data-testid="record-icon"
+
       $icon={type === "record" ? "Record" : "Send"}
+
       $padding={0.6}
       $color="white"
       $bgColor="var(--accent-color)"

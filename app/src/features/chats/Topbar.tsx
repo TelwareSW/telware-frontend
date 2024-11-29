@@ -10,7 +10,9 @@ import SearchBar from "@features/search/components/SearchBar";
 const Container = styled.div`
   position: absolute;
   top: 0;
+
   z-index: 2;
+
 
   height: 3.5rem;
   width: 100%;

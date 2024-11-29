@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getIcon } from "@data/icons";
+
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
 import RecordInput from "./SendButton";
@@ -12,6 +13,7 @@ import EmojiPickerItem from "./emojies/EmojiPicker";
 
 const Container = styled.div`
   z-index: 1;
+
 
   position: absolute;
   bottom: 3%;
@@ -72,9 +74,11 @@ function ChatInput() {
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
+
   const toggleShowEmojies = () => {
     setIsEmojiSelectorOpen((show) => !show);
   };
+
   function handleSubmit() {
     console.log("sending message");
 

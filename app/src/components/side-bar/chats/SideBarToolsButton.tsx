@@ -34,7 +34,9 @@ const StyledList = styled.ul<{ $isOpened?: boolean }>`
   box-shadow: 0 0.25rem 0.5rem 0.125rem var(--color-default-shadow);
   border-radius: var(--border-radius-default);
   visibility: ${({ $isOpened }) => ($isOpened ? "visible" : "hidden")};
+
   z-index: 2;
+
 `;
 
 function SettingsToolbar() {

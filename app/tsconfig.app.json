@@ -2,24 +2,55 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "baseUrl": "./src/",
     "paths": {
-      "@components/*": ["./components/*"],
-      "@inputs/*": ["./components/inputs/*"],
-      "@mocks/*": ["./mocks/*"],
-      "@features/*": ["./features/*"],
-      "@pages/*": ["./pages/*"],
-      "@hooks/*": ["./hooks/*"],
-      "@constants": ["./constants"],
-      "@state/*": ["./state/*"],
-      "types/*": ["./types/*"],
-      "@data/*": ["./data/*"],
-      "@tests/*": ["./tests/*"],
-      "@services": ["./services/*"],
-      "@utils/*": ["./utils/*"]
+      "@components/*": [
+        "./components/*"
+      ],
+      "@inputs/*": [
+        "./components/inputs/*"
+      ],
+      "@mocks/*": [
+        "./mocks/*"
+      ],
+      "@features/*": [
+        "./features/*"
+      ],
+      "@pages/*": [
+        "./pages/*"
+      ],
+      "@hooks/*": [
+        "./hooks/*"
+      ],
+      "@constants": [
+        "./constants"
+      ],
+      "@state/*": [
+        "./state/*"
+      ],
+      "types/*": [
+        "./types/*"
+      ],
+      "@data/*": [
+        "./data/*"
+      ],
+      "@tests/*": [
+        "./tests/*"
+      ],
+      "@services": [
+        "./services/*"
+      ],
+      "@utils/*": [
+        "./utils/*"
+      ]
+
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

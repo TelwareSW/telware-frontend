@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@state/store";
 import useScrollToSearchResultsMsg from "@features/search/hooks/useScrollToSearchResultsMsg";
 import { useEffect, useRef } from "react";
-import renderWithHighlight from "utils/renderWithHighlight";
+
+import renderWithHighlight from "@utils/renderWithHighlight";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -26,7 +27,9 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   background-color: ${({ $isMine }) => ($isMine ? "#0084ff" : "#e5e5ea")};
   color: ${({ $isMine }) => ($isMine ? "#fff" : "#000")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
+
   z-index: 1;
+
 `;
 
 type MessageProps = {
@@ -41,7 +44,9 @@ function Message({
   data: { id, senderId, content },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
-    (state: RootState) => state.search
+
+    (state: RootState) => state.search,
+
   );
 
   const mergedRef = useRef<HTMLDivElement>(null);
@@ -54,6 +59,7 @@ function Message({
       index === messagesLength - 1 ? mergedRef.current : null;
     const isSearchResult = searchResults.find(
       (result) => result.messageId === id
+
     );
     const isCurrentResult =
       isSearchResult && searchResults[currentResultIndex]?.messageId === id;
@@ -72,7 +78,15 @@ function Message({
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
   return (
-    <StyledMessage ref={mergedRef} key={id} $isMine={senderId === userId}>
+
+    <StyledMessage
+      ref={mergedRef}
+      key={id}
+      $isMine={senderId === userId}
+      data-message-id={id}
+      data-testid={`message-${id}`}
+    >
+
       <Bubble $isMine={senderId === userId}>
         {renderWithHighlight(content, searchTerm, searchResults, id)}
       </Bubble>
