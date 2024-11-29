@@ -32,6 +32,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CircularProgress from "@mui/material/CircularProgress";
 import SendIcon from "@mui/icons-material/Send";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 
 enum icons {
   BlockIcon,
@@ -69,6 +70,7 @@ enum icons {
   ContentCopy,
   CircularProgress,
   SendMessage,
+  Reply,
 }
 
 type iconStrings = keyof typeof icons;
@@ -118,9 +120,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   Add: (
     <AddIcon fontSize="large" sx={{ color: `var(--color-search-border)` }} />
   ),
-  Edit: (
-    <EditIcon fontSize="large" sx={{ color: `var(--color-icon-secondary)` }} />
-  ),
+  Edit: <EditIcon sx={{ color: `var(--color-icon-secondary)` }} />,
   AddStory: (
     <PhotoCameraIcon
       fontSize="large"
@@ -279,6 +279,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
 
   SendMessage: <SendIcon />,
+  Reply: <ReplyOutlinedIcon />,
 };
 
 function getIcon(iconName?: iconStrings) {

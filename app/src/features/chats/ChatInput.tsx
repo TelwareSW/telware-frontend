@@ -12,6 +12,8 @@ import { addMessage } from "@state/messages/messages";
 import { RootState } from "@state/store";
 
 import { useSocket } from "@hooks/useSocket";
+import { useParams } from "react-router-dom";
+import ReplyWrapper from "./ReplyWrapper";
 
 const Container = styled.div`
   z-index: 1000;
@@ -35,8 +37,9 @@ const InputContainer = styled.div`
   flex: 3 auto;
 
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   align-self: center;
+  flex-direction: column;
 
   height: 100%;
 `;
@@ -64,6 +67,7 @@ function ChatInput() {
   const { sendMessage } = useSocket();
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
+  const { chatId } = useParams<{ chatId: string }>();
 
   function handleSubmit() {
     console.log("sending message");
@@ -76,7 +80,7 @@ function ChatInput() {
         type: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        chatId: "",
+        chatId: chatId!,
         parentMessageId: "",
         isDeleted: false,
         deleteType: 2,
@@ -92,6 +96,7 @@ function ChatInput() {
     <Container>
       <Input>
         <InputContainer>
+          <ReplyWrapper state="Edit" message="message" />
           <InputWrapper>
             <Icon>{getIcon("Emojie")}</Icon>
             <ExpandingTextArea input={input} setInput={setInput} />
