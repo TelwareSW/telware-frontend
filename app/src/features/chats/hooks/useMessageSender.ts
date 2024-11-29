@@ -15,7 +15,6 @@ export const useMessageSender = () => {
 
   const handleSendMessage = (data: string) => {
     if (activeMessage?.id) {
-      console.log(activeMessage);
       editMessage(activeMessage?.id!, data, chatId!);
       return;
     }

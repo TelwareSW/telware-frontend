@@ -45,15 +45,14 @@ const messagesSlice = createSlice({
       }>
     ) => {
       const { chatId, messageId, content } = action.payload;
-      console.log(chatId, messageId, content);
 
       const message = state.messages.find(
-        (msg) => msg.id === messageId
+        (msg) => msg.id === messageId && msg,
+        chatId === chatId
       );
 
       if (message) {
         message.content = content;
-        console.log("done");
       }
     },
 
