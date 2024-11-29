@@ -31,17 +31,6 @@ function BlockList() {
 
   return (
     <StyledOptionsList>
-      <CircleIcon
-        $icon="Add"
-        $right={1}
-        $bottom={1}
-        $size={3.3}
-        $color="white"
-        $bgColor="var(--accent-color)"
-        onClick={() => setIsMenuOpened(!isMenuOpened)}
-        data-testid="block-user-menu-icon"
-      />
-
       {isMenuOpened && <AddToBlockMenuList setIsMenuOpened={setIsMenuOpened} />}
 
       <PlaceHeader>
@@ -53,6 +42,17 @@ function BlockList() {
       {blockList?.map((item) => {
         return <BlockItem {...item} key={item.id} />;
       })}
+
+      <CircleIcon
+        $icon="Add"
+        $right={1}
+        $bottom={1}
+        $size={3.3}
+        $color="white"
+        $bgColor="var(--accent-color)"
+        onClick={() => setIsMenuOpened(!isMenuOpened)}
+        data-testid="block-user-menu-icon"
+      />
     </StyledOptionsList>
   );
 }

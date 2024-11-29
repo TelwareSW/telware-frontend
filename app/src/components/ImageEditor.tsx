@@ -10,16 +10,31 @@ interface imageEditorProps {
   src: string;
   onImageSave: (file: File) => void;
   isProfileImage?: boolean;
+  widthRatio?: number;
+  heightRatio?: number;
 }
-
-const StyledContainer = styled.div<{ $isOpen: boolean }>`
+interface styledContainerProps {
+  $widthRatio: number;
+  $heightRatio: number;
+}
+const StyledBackGround = styled.div<{ $isOpen: boolean }>`
   display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1000;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+`;
+
+const StyledContainer = styled.div<styledContainerProps>`
+  width: ${(props) => props.$widthRatio}%;
+  height: ${(props) => props.$heightRatio}%;
+  display: flex;
   justify-content: center;
   align-items: center;
 `;
@@ -30,6 +45,8 @@ function ImageEditor({
   src,
   onImageSave,
   isProfileImage,
+  widthRatio = 50,
+  heightRatio = 50,
 }: imageEditorProps) {
   const handleSave = async (editedImageObject: { imageBase64?: string }) => {
     if (editedImageObject.imageBase64) {
@@ -44,13 +61,18 @@ function ImageEditor({
       onImageSave(file);
       closeImgEditor();
     } else {
-      console.error("Image base64 data is undefined");
+      throw new Error("something went wrong with image editing");
     }
   };
   return (
-    <StyledContainer $isOpen={isOpen}>
+    <StyledBackGround $isOpen={isOpen}>
       {isOpen && (
-        <div>
+        <StyledContainer
+          {...{
+            $widthRatio: widthRatio,
+            $heightRatio: heightRatio,
+          }}
+        >
           <FilerobotImageEditor
             source={src}
             forceToPngInEllipticalCrop={true}
@@ -115,17 +137,18 @@ function ImageEditor({
             tabsIds={
               isProfileImage
                 ? [TABS.ADJUST]
-                : [TABS.ADJUST, TABS.ANNOTATE, TABS.FINETUNE, TABS.RESIZE]
+                : [TABS.ADJUST, TABS.ANNOTATE, TABS.FINETUNE]
             }
             defaultTabId={isProfileImage ? TABS.ADJUST : TABS.ANNOTATE}
             defaultToolId={TOOLS.RESIZE}
             defaultSavedImageQuality={0.95}
             savingPixelRatio={4}
             previewPixelRatio={4}
+            data-testid="image-editor"
           />
-        </div>
+        </StyledContainer>
       )}
-    </StyledContainer>
+    </StyledBackGround>
   );
 }
 

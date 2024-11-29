@@ -8,6 +8,7 @@ const {
 } = import.meta.env;
 
 const MOBILE_VIEW = "(max-width: 600px)";
+const DESKTOP_VIEW = "(min-width: 600px)";
 
 export {
   ENVIRONMENT,
@@ -15,6 +16,7 @@ export {
   API_URL,
   PORT,
   ENV,
-  MOBILE_VIEW,
   STATIC_MEDIA_URL,
+  MOBILE_VIEW,
+  DESKTOP_VIEW,
 };

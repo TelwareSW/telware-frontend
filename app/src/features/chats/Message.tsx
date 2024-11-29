@@ -15,6 +15,9 @@ import {
 } from "@state/messages/messages";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import MessageOptionList from "./MessageOptionList";
+import useScrollToSearchResultsMsg from "@features/search/hooks/useScrollToSearchResultsMsg";
+import { useRef } from "react";
+import renderWithHighlight from "utils/renderWithHighlight";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -38,13 +41,6 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   color: ${({ $isMine }) => ($isMine ? "#fff" : "#000")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
   z-index: 1000;
-`;
-
-const ContentStyling = styled.div`
-  overflow-wrap: break-word;
-  hyphens: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 const StyledIcon = styled.div`
@@ -79,7 +75,34 @@ function Message({
   messagesLength,
   data: { id, senderId, content, isOptionListOpen },
 }: MessageProps) {
+  const { searchTerm, searchResults, currentResultIndex } = useSelector(
+    (state: RootState) => state.search
+  );
+
+  const mergedRef = useRef<HTMLDivElement>(null);
   const { lastMessageRef } = useScrollToLastMsg();
+  const { searchResultRef } = useScrollToSearchResultsMsg();
+
+  // TODO: make merge ref util
+  useEffect(() => {
+    lastMessageRef.current =
+      index === messagesLength - 1 ? mergedRef.current : null;
+    const isSearchResult = searchResults.find(
+      (result) => result.messageId === id
+    );
+    const isCurrentResult =
+      isSearchResult && searchResults[currentResultIndex]?.messageId === id;
+
+    searchResultRef.current = isCurrentResult ? mergedRef.current : null;
+  }, [
+    mergedRef.current,
+    searchResults,
+    currentResultIndex,
+    searchTerm,
+    id,
+    index,
+    messagesLength,
+  ]);
 
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
@@ -120,13 +143,10 @@ function Message({
           <CheckBox id={id} isChecked={isChecked} onChange={toggleCheckBox} />
         </CheckBoxWrapper>
       )}
-      <StyledMessage
-        ref={index === messagesLength - 1 ? lastMessageRef : null}
-        key={id}
-        $isMine={senderId === userId}
-      >
+
+      <StyledMessage ref={mergedRef} key={id} $isMine={senderId === userId}>
         <Bubble $isMine={senderId === userId}>
-          <ContentStyling>{content}</ContentStyling>
+          {renderWithHighlight(content, searchTerm, searchResults, id)}
           <StyledIcon onClick={handleIconClick}>
             {getIcon("MessagingOptions")}
           </StyledIcon>

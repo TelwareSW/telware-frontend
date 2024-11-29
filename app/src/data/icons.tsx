@@ -31,8 +31,12 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CircularProgress from "@mui/material/CircularProgress";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import ShortcutIcon from "@mui/icons-material/Shortcut";
+import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 enum icons {
   BlockIcon,
@@ -64,12 +68,16 @@ enum icons {
   Search,
   Delete,
   AddPhoto,
+  Send,
+  Pause,
+  Play,
   CalendarToday,
   KeyboardArrowUp,
   KeyboardArrowDown,
   ContentCopy,
   CircularProgress,
-  SendMessage,
+  RightArrow,
+  LeftArrow,
   Forward,
   MessagingOptions,
 }
@@ -242,6 +250,9 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
+  Send: <SendIcon />,
+  Pause: <PauseOutlinedIcon />,
+  Play: <PlayArrowIcon />,
   CalendarToday: (
     <CalendarTodayIcon
       sx={{
@@ -283,8 +294,22 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       style={{ width: "1.5rem", height: "1.5rem" }}
     />
   ),
-
-  SendMessage: <SendIcon />,
+  RightArrow: (
+    <KeyboardArrowRightOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "3.5rem",
+      }}
+    />
+  ),
+  LeftArrow: (
+    <KeyboardArrowLeftOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "3.5rem",
+      }}
+    />
+  ),
 
   Forward: (
     <ShortcutIcon
