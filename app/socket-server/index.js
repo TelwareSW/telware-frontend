@@ -30,6 +30,20 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
   });
+
+  socket.on("PIN_MESSAGE_CLIENT", ({ messageId, chatId, userId }) => {
+    console.log("PIN_MESSAGE_CLIENT", messageId, chatId, userId);
+    socket.broadcast
+      .to(chatId)
+      .emit("PIN_MESSAGE_SERVER", { messageId, chatId, userId });
+  });
+
+  socket.on("UNPIN_MESSAGE_CLIENT", ({ messageId, chatId, userId }) => {
+    console.log("UNPIN_MESSAGE_CLIENT", messageId, chatId, userId);
+    socket.broadcast
+      .to(chatId)
+      .emit("UNPIN_MESSAGE_SERVER", { messageId, chatId, userId });
+  });
 });
 
 server.listen(PORT, () => {

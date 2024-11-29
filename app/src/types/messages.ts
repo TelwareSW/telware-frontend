@@ -30,4 +30,5 @@ export interface MessageInterface {
   isPinned: boolean;
   deleteType: DeleteType;
   status: MessageStatus;
+  isOptionListOpen: boolean;
 }
