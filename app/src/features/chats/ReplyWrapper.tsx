@@ -61,12 +61,17 @@ const Message = styled.div`
   opacity: 0.9;
 `;
 
-export default function ReplyWrapper() {
+type Props = {
+  setInput: (state: string) => void;
+};
+
+export default function ReplyWrapper({ setInput }: Props) {
   const dispatch = useDispatch();
   const activeMessage = useSelector((state: RootState) => state.activeMessage);
 
   function handleHideWrapper() {
     dispatch(clearActiveMessage());
+    if (activeMessage.state === "edit") setInput("");
   }
 
   return (
