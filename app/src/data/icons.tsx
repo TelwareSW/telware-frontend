@@ -31,8 +31,14 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CircularProgress from "@mui/material/CircularProgress";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import ShortcutIcon from "@mui/icons-material/Shortcut";
+import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import PinIcon from "@mui/icons-material/Pin";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 enum icons {
   BlockIcon,
@@ -64,12 +70,19 @@ enum icons {
   Search,
   Delete,
   AddPhoto,
+  Send,
+  Pause,
+  Play,
   CalendarToday,
   KeyboardArrowUp,
   KeyboardArrowDown,
   ContentCopy,
   CircularProgress,
-  SendMessage,
+  RightArrow,
+  LeftArrow,
+  Forward,
+  MessagingOptions,
+  Pin,
   Reply,
 }
 
@@ -171,7 +184,10 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
   Close: (
     <CloseOutlinedIcon
-      sx={{ color: `var(--color-icon-secondary)`, fontSize: "1.5rem" }}
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.75rem",
+      }}
     />
   ),
   Unlock: (
@@ -236,6 +252,9 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
+  Send: <SendIcon />,
+  Pause: <PauseOutlinedIcon />,
+  Play: <PlayArrowIcon />,
   CalendarToday: (
     <CalendarTodayIcon
       sx={{
@@ -277,8 +296,41 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       style={{ width: "1.5rem", height: "1.5rem" }}
     />
   ),
+  RightArrow: (
+    <KeyboardArrowRightOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "3.5rem",
+      }}
+    />
+  ),
+  LeftArrow: (
+    <KeyboardArrowLeftOutlinedIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "3.5rem",
+      }}
+    />
+  ),
 
-  SendMessage: <SendIcon />,
+  Forward: (
+    <ShortcutIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.75rem",
+      }}
+    />
+  ),
+
+  MessagingOptions: <KeyboardArrowDownIcon />,
+  Pin: (
+    <PinIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
   Reply: <ReplyOutlinedIcon />,
 };
 

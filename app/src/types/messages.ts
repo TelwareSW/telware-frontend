@@ -27,6 +27,8 @@ export interface MessageInterface {
   chatId: string;
   parentMessageId: string;
   isDeleted: boolean;
+  isPinned: boolean;
   deleteType: DeleteType;
   status: MessageStatus;
+  isOptionListOpen: boolean;
 }

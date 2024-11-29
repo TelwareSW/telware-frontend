@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import SideBarMenuItem, { SideBarMenuItemProps } from "./SideBarMenuItem";
+import SideBarMenuItem, {
+  SideBarMenuItemProps,
+} from "@components/side-bar/chats/SideBarMenuItem";
 import CircleIcon from "@components/CircleIcon";
 import { useMouseLeave } from "@hooks/useMouseLeave";
 
@@ -14,6 +16,13 @@ const items: SideBarMenuItemProps[] = [
   { title: "New Group", iconMapValue: "NewGroup" },
   { title: "New Chat", iconMapValue: "NewChat" },
 ];
+
+const StyledCircleIconContainer = styled.div`
+  cursor: pointer;
+  position: relative;
+  height: 3.5rem;
+  width: 3.5rem;
+`;
 const menuStyles: StyledListProps = {
   $bottom: 5,
   $right: 1.25,
@@ -23,9 +32,7 @@ const menuStyles: StyledListProps = {
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
   width: ${(props) => props.$size}rem;
-
   right: ${(props) => (props.$right ?? 3) + 2}rem;
-
   bottom: ${(props) => (props.$bottom ?? 3) + 3}rem;
   display: flex;
   flex-direction: column;
@@ -34,7 +41,6 @@ const StyledList = styled.ul<StyledListProps>`
   list-style: none;
   padding: 0.5rem 0.2rem;
   background-color: var(--color-background);
-  box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius-default);
 `;
@@ -47,17 +53,20 @@ function StartNewChat() {
   };
   return (
     <>
-      <CircleIcon
-        data-testid="start-new-chat-icon"
-        $icon={isMenuOpened ? "Close" : "Edit"}
-        $right={1.25}
-        $bottom={5}
-        $size={2.8}
-        $padding={0.5}
-        $color="var(--color-icon-secondary)"
-        $bgColor="var(--color-pattern)"
-        onClick={handleOpenMenu}
-      />
+      <StyledCircleIconContainer>
+        <CircleIcon
+          data-testid="start-new-chat-icon"
+          $icon={isMenuOpened ? "Close" : "Edit"}
+          $right={0.5}
+          $bottom={0}
+          $size={2.8}
+          $padding={0.5}
+          $color="var(--color-icon-secondary)"
+          $bgColor="var(--new-chat-color)"
+          $opacity={1}
+          onClick={handleOpenMenu}
+        />
+      </StyledCircleIconContainer>
       {isMenuOpened && (
         <StyledList
           {...menuStyles}

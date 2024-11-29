@@ -6,11 +6,14 @@ import { useChat } from "@features/chats/hooks/useChat";
 import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
+import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
 
 const Container = styled.div`
   position: absolute;
   top: 0;
-  z-index: 1001;
+
+  z-index: 2;
+
 
   height: 3.5rem;
   width: 100%;
@@ -81,13 +84,11 @@ function Topbar() {
     setIsSearching(!isSearching);
   };
 
-  const handleSearch = (term: string) => {};
-
   return (
     <Container>
       <Avatar image={image} name={name?.charAt(0)} />
       {isSearching ? (
-        <SearchBar onClose={toggleSearch} onSearch={handleSearch} />
+        <SearchBar onClose={toggleSearch} />
       ) : (
         <>
           <Info>
@@ -96,6 +97,7 @@ function Topbar() {
               <LastSeen>last seen {lastSeen}</LastSeen>
             </Content>
           </Info>
+          <PinnedMessages />
           <Icons>
             <Icon>{getIcon("Call")}</Icon>
             <IconButton onClick={toggleSearch}>{getIcon("Search")}</IconButton>

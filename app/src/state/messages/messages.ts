@@ -5,11 +5,15 @@ import { MessageInterface } from "types/messages";
 interface MessagesState {
   messages: MessageInterface[];
   isTyping: boolean;
+  showCheckBox: boolean;
+  selectedMessages: string[]; //indicates ids only of selected messages
 }
 
 const initialState: MessagesState = {
   messages: messages,
   isTyping: false,
+  showCheckBox: false,
+  selectedMessages: [],
 };
 
 const messagesSlice = createSlice({
@@ -23,7 +27,7 @@ const messagesSlice = createSlice({
 
     deleteMessage: (
       state,
-      action: PayloadAction<{ id: string; chatId: string }>
+      action: PayloadAction<{ id: string; chatId: string }>,
     ) => {
       state.messages = state.messages.filter((message) => {
         const { chatId, id } = action.payload;
@@ -34,11 +38,11 @@ const messagesSlice = createSlice({
 
     editMessage: (
       state,
-      action: PayloadAction<{ id: string; content: string; chatId: string }>
+      action: PayloadAction<{ id: string; content: string; chatId: string }>,
     ) => {
       const { id, content, chatId } = action.payload;
       const message = state.messages.find(
-        (msg) => msg.id === id && msg.chatId == chatId
+        (msg) => msg.id === id && msg.chatId == chatId,
       );
       if (message) {
         message.content = content;
@@ -53,6 +57,43 @@ const messagesSlice = createSlice({
       const { isTyping } = action.payload;
       state.isTyping = isTyping;
     },
+
+    setShowCheckBox: (
+      state,
+      action: PayloadAction<{ showCheckBox: boolean }>
+    ) => {
+      const { showCheckBox } = action.payload;
+      if (!showCheckBox) {
+        state.selectedMessages = [];
+      }
+      state.showCheckBox = showCheckBox;
+    },
+
+    setIsOptionListOpen: (
+      state,
+      action: PayloadAction<{ value: boolean; id: string }>
+    ) => {
+      const { id, value } = action.payload;
+      state.messages.forEach((msg) => {
+        if (msg.id === id) {
+          msg.isOptionListOpen = value;
+        } else {
+          msg.isOptionListOpen = false;
+        }
+      });
+    },
+
+    SelectMessage: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload;
+      state.selectedMessages.push(id);
+    },
+
+    removeSelectedMessage: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload;
+      state.selectedMessages = state.selectedMessages.filter(
+        (msgId) => msgId !== id
+      );
+    },
   },
 });
 
@@ -62,6 +103,10 @@ export const {
   editMessage,
   clearMessages,
   setIsTyping,
+  setShowCheckBox,
+  setIsOptionListOpen,
+  SelectMessage,
+  removeSelectedMessage,
 } = messagesSlice.actions;
 export default messagesSlice.reducer;
 export type { MessageInterface, MessagesState };

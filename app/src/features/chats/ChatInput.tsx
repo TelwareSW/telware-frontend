@@ -6,23 +6,30 @@ import { getIcon } from "@data/icons";
 
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
-import RecordInput from "./SendButton";
 
-import { addMessage } from "@state/messages/messages";
 import { RootState } from "@state/store";
+import { setShowCheckBox } from "@state/messages/messages";
 
-import { useSocket } from "@hooks/useSocket";
-import { useParams } from "react-router-dom";
+import RecordInput from "./SendButton";
+import ForwardingInputBar from "@features/forward/ForwardingInputBar";
+import ScrollableChats from "@features/forward/ScrollableChats";
+import EmojiPickerItem from "./emojies/EmojiPicker";
+
+import { useMessageSender } from "./hooks/useMessageSender";
 import ReplyWrapper from "./ReplyWrapper";
 
 const Container = styled.div`
-  z-index: 1000;
+  z-index: 1;
 
+  position: absolute;
+  bottom: 3%;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
   margin: auto;
 
   width: 80%;
   max-width: 600px;
-
   display: flex;
 `;
 
@@ -42,6 +49,11 @@ const InputContainer = styled.div`
   flex-direction: column;
 
   height: 100%;
+`;
+const InvisibleButton = styled.button`
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
 `;
 
 const InputWrapper = styled.div`
@@ -64,51 +76,60 @@ const Input = styled.div`
 
 function ChatInput() {
   const [input, setInput] = useState("");
-  const { sendMessage } = useSocket();
+  const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
+  const { handleSendMessage } = useMessageSender();
   const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.user.userInfo.id);
-  const { chatId } = useParams<{ chatId: string }>();
 
-  function handleSubmit() {
-    console.log("sending message");
+  const toggleShowEmojies = () => {
+    setIsEmojiSelectorOpen((show) => !show);
+  };
 
-    if (input) {
-      const message = {
-        id: "19008",
-        content: input,
-        senderId: userId,
-        type: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        chatId: chatId!,
-        parentMessageId: "",
-        isDeleted: false,
-        deleteType: 2,
-        status: 0,
-      };
-      setInput("");
-      sendMessage(message);
-      dispatch(addMessage(message));
-    }
+  const handleSubmit = () => {
+    handleSendMessage(input);
+    setInput("");
+  };
+
+  const showCheckBox = useSelector(
+    (state: RootState) => state.messages.showCheckBox
+  );
+
+  const [showForwardUsers, setShowForwardUsers] = useState(false);
+
+  function handleClose() {
+    setShowForwardUsers(false);
+    dispatch(setShowCheckBox({ showCheckBox: false }));
+  }
+  function handleForward() {
+    setShowForwardUsers(true);
   }
 
   return (
     <Container>
-      <Input>
-        <InputContainer>
-          <ReplyWrapper state="Edit" message="message" />
-          <InputWrapper>
-            <Icon>{getIcon("Emojie")}</Icon>
-            <ExpandingTextArea input={input} setInput={setInput} />
-            <Icon>{getIcon("Attatch")}</Icon>
-          </InputWrapper>
-        </InputContainer>
+      {!showCheckBox ? (
+        <Input>
+          {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
+          <InputContainer>
+            <ReplyWrapper state="Edit" message="message" />
+            <InputWrapper>
+              <InvisibleButton onClick={toggleShowEmojies}>
+                <Icon>{getIcon("Emojie")}</Icon>
+              </InvisibleButton>
 
-        <RecordInput
-          onClick={handleSubmit}
-          type={!input ? "record" : "message"}
-        />
-      </Input>
+              <ExpandingTextArea input={input} setInput={setInput} />
+              <Icon>{getIcon("Attatch")}</Icon>
+            </InputWrapper>
+          </InputContainer>
+
+          <RecordInput
+            onClick={handleSubmit}
+            type={!input ? "record" : "message"}
+          />
+        </Input>
+      ) : (
+        <ForwardingInputBar onClose={handleClose} onForward={handleForward} />
+      )}
+
+      {showForwardUsers && <ScrollableChats onClose={handleClose} />}
     </Container>
   );
 }
