@@ -10,10 +10,10 @@ import { useAppSelector } from "@hooks/useGlobalState";
 
 const OuterContainer = styled.ul`
   position: absolute;
-  width: 40%;
+  width: 60%;
   right: auto;
   left: auto;
-  top: 4rem;
+  top: -40rem;
   height: 30rem;
   z-index: 1000;
   overflow: auto;
@@ -63,7 +63,6 @@ function ScrollableChats(props: Props) {
   const { handleSendMessage } = useMessageSender();
 
   const handleSubmit = () => {
-
     const messagesToForward = messages.filter((message) =>
       selectedMessages.includes(message.id)
     );
