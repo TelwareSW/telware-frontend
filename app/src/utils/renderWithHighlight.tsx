@@ -9,7 +9,9 @@ function renderWithHighlight(
   content: string,
   searchTerm?: string,
   searchResults?: any,
+
   id?: string,
+
 ) {
   if (!searchTerm) {
     return content;
@@ -24,7 +26,9 @@ function renderWithHighlight(
   const before = content.slice(0, result.highlightIndex);
   const highlighted = content.slice(
     result.highlightIndex,
+
     result.highlightIndex + searchTerm.length,
+
   );
   const after = content.slice(result.highlightIndex + searchTerm.length);
 

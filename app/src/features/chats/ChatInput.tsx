@@ -1,26 +1,29 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
 import { getIcon } from "@data/icons";
 
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
 import RecordInput from "./SendButton";
-
 import { addMessage } from "@state/messages/messages";
 import { RootState } from "@state/store";
-
 import { useSocket } from "@hooks/useSocket";
+import EmojiPickerItem from "./emojies/EmojiPicker";
 
 const Container = styled.div`
-  z-index: 1000;
+  z-index: 1;
 
+
+  position: absolute;
+  bottom: 3%;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
   margin: auto;
 
   width: 80%;
   max-width: 600px;
-
   display: flex;
 `;
 
@@ -39,6 +42,11 @@ const InputContainer = styled.div`
   align-self: center;
 
   height: 100%;
+`;
+const InvisibleButton = styled.button`
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
 `;
 
 const InputWrapper = styled.div`
@@ -61,9 +69,15 @@ const Input = styled.div`
 
 function ChatInput() {
   const [input, setInput] = useState("");
+  const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
   const { sendMessage } = useSocket();
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
+
+
+  const toggleShowEmojies = () => {
+    setIsEmojiSelectorOpen((show) => !show);
+  };
 
   function handleSubmit() {
     console.log("sending message");
@@ -91,18 +105,24 @@ function ChatInput() {
   return (
     <Container>
       <Input>
-        <InputContainer>
-          <InputWrapper>
-            <Icon>{getIcon("Emojie")}</Icon>
-            <ExpandingTextArea input={input} setInput={setInput} />
-            <Icon>{getIcon("Attatch")}</Icon>
-          </InputWrapper>
-        </InputContainer>
+        {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
+        <Input>
+          <InputContainer>
+            <InputWrapper>
+              <InvisibleButton onClick={toggleShowEmojies}>
+                <Icon>{getIcon("Emojie")}</Icon>
+              </InvisibleButton>
 
-        <RecordInput
-          onClick={handleSubmit}
-          type={!input ? "record" : "message"}
-        />
+              <ExpandingTextArea input={input} setInput={setInput} />
+              <Icon>{getIcon("Attatch")}</Icon>
+            </InputWrapper>
+          </InputContainer>
+
+          <RecordInput
+            onClick={handleSubmit}
+            type={!input.length ? "record" : "message"}
+          />
+        </Input>
       </Input>
     </Container>
   );

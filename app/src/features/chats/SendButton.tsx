@@ -7,7 +7,8 @@ interface ButtonType {
 
 function RecordInput({ type, onClick }: ButtonType) {
   return (
-    <>
+
+   
       <CircleIcon
         onClick={onClick}
         data-testid="record-icon"
@@ -16,7 +17,7 @@ function RecordInput({ type, onClick }: ButtonType) {
         $color="white"
         $bgColor="var(--accent-color)"
       />
-    </>
+
   );
 }
 
