@@ -1,6 +1,4 @@
-import { MOBILE_VIEW, STATIC_MEDIA_URL } from "@constants";
-import useIndexedDB from "@hooks/useIndexedDB";
-import { useEffect, useState } from "react";
+import { STATIC_MEDIA_URL } from "@constants";
 import ModalImage from "react-modal-image";
 import styled from "styled-components";
 
@@ -21,7 +19,7 @@ const StyledImageContainer = styled.div`
     img {
       width: 100vw;
       height: 100vh;
-      object-fit: contain !important;
+      object-fit: cover !important;
     }
   }
   ::before {
@@ -56,30 +54,6 @@ const StyledCaption = styled.p<{ $captionLength: number }>`
 `;
 function Story(props: StoryProps) {
   const { content, caption } = props;
-  // const { getItem, setItem } = useIndexedDB("image-store", "images");
-  // const [imageSrc, setImageSrc] = useState(null);
-
-  // useEffect(() => {
-  //   const loadImage = async () => {
-  //     let imageBlob = await getItem(5);
-
-  //     if (imageBlob) {
-  //       setImageSrc(URL.createObjectURL(imageBlob));
-  //     } else {
-  //       // If the image is not in IndexedDB, fetch it from the server
-  //       const response = await fetch(imageUrl);
-  //       imageBlob = await response.blob();
-
-  //       // Store the fetched image in IndexedDB
-  //       await setItem(imageKey, imageBlob);
-
-  //       // Display the fetched image
-  //       setImageSrc(URL.createObjectURL(imageBlob));
-  //     }
-  //   };
-
-  //   loadImage();
-  // }, [imageUrl, imageKey, getItem, setItem]);
   return (
     <StyledImageContainer>
       <ModalImage

@@ -1,3 +1,4 @@
+import ReactDOM from "react-dom";
 import { useInView } from "../hooks/useInView";
 import { story } from "types/story";
 import StorySlideCounter from "./StorySlideCounter";
@@ -11,6 +12,8 @@ import StorySliderTooltip from "./StorySliderTooltip";
 import { getIcon } from "@data/icons";
 import { useDeleteStory } from "../hooks/useDeleteStory";
 import StoryViews from "./StoryViews";
+import CloseButton from "@components/CloseButton";
+import Popup from "@components/Popup";
 
 interface StorySlideProps {
   userId?: string;
@@ -20,6 +23,7 @@ interface StorySlideProps {
   stories: story[];
   onClose: () => void;
 }
+
 const StyledContainer = styled.div`
   cursor: pointer;
   position: fixed;
@@ -35,6 +39,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   background-color: #000;
 `;
+
 const StyledSlide = styled.div`
   display: flex;
   position: relative;
@@ -45,6 +50,7 @@ const StyledSlide = styled.div`
   overflow-x: hidden;
   width: 60%;
 `;
+
 const StyledNavButton = styled.div<{ isLeft?: boolean }>`
   position: absolute;
   top: 50%;
@@ -57,27 +63,17 @@ const StyledNavButton = styled.div<{ isLeft?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   color: white;
+`;
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-  }
-`;
-const StyledCloseButton = styled.div`
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  cursor: pointer;
-  color: white;
-`;
 const StyledUserInfo = styled.div`
   position: absolute;
   top: 2rem;
   left: 2.5rem;
   z-index: 100;
 `;
+
 function StorySlide(props: StorySlideProps) {
   const { avatar, name, stories, getNextUserStories, onClose } = props;
   const { ref, inView } = useInView({ threshold: 0.5 });
@@ -85,7 +81,7 @@ function StorySlide(props: StorySlideProps) {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const { deleteStory } = useDeleteStory();
-  const isMine = name == "My Story";
+  const isMine = name === "My Story";
 
   const handleSlideChange = () => {
     if (index < stories.length - 1) {
@@ -95,9 +91,10 @@ function StorySlide(props: StorySlideProps) {
       setIndex(0);
     }
   };
-  const handlePause = () => {
-    setIsPaused(!isPaused);
-  };
+
+  const handlePause = useCallback(() => {
+    setIsPaused((prev) => !prev);
+  }, []);
 
   const handleRightArrow = useCallback(() => {
     if (index < stories.length - 1) {
@@ -107,6 +104,22 @@ function StorySlide(props: StorySlideProps) {
     }
   }, [index, stories.length, getNextUserStories]);
 
+  const handleEcsKey = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+  const handleSpaceKey = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === " ") {
+        handlePause();
+      }
+    },
+    [handlePause]
+  );
   const handleLeftArrow = useCallback(() => {
     if (index > 0) {
       setIndex(index - 1);
@@ -121,70 +134,77 @@ function StorySlide(props: StorySlideProps) {
         handleRightArrow();
       } else if (e.key === "ArrowLeft") {
         handleLeftArrow();
+      } else if (e.key === " ") {
+        handleSpaceKey(e);
+      } else if (e.key === "Escape") {
+        handleEcsKey(e);
       }
     },
-    [handleRightArrow, handleLeftArrow]
+    [handleRightArrow, handleLeftArrow, handleSpaceKey, handleEcsKey]
   );
 
   const handleDelete = () => {
     deleteStory(stories[index].id);
     onClose();
   };
+
   useEffect(() => {
     if (inView && !isMine) {
       viewStory(stories[index]?.id);
     }
   }, [inView, stories, index, viewStory, isMine]);
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [index, handleKeyDown]);
+  }, [handleKeyDown]);
 
   if (!stories.length) {
     return null;
   }
+
   return (
-    <StyledContainer>
-      <StyledCloseButton onClick={onClose}>
-        {getIcon("Close")}
-      </StyledCloseButton>
-      <StyledSlide ref={ref} className="story">
-        <StyledNavButton isLeft onClick={handleLeftArrow}>
-          {getIcon("LeftArrow")}
-        </StyledNavButton>
-        <StyledNavButton onClick={handleRightArrow}>
-          {getIcon("RightArrow")}
-        </StyledNavButton>
-        <StorySlideCounter
-          isPaused={isPaused}
-          currentIndex={index}
-          totalSlides={stories.length}
-          onSlideChange={handleSlideChange}
-        />
-        <StorySliderTooltip
-          isMine={isMine}
-          onPause={handlePause}
-          isPaused={isPaused}
-          onDelete={handleDelete}
-        />
-        <StyledUserInfo>
-          <UserInfo
-            name={name}
-            avatar={avatar || ""}
-            isVertical={true}
-            elapsedTime={getElapsedTime(stories[index].timestamp)}
+    <Popup isOpen={true} onClose={onClose}>
+      <StyledContainer>
+        <CloseButton onClose={onClose} />
+        <StyledSlide ref={ref} className="story">
+          <StyledNavButton isLeft onClick={handleLeftArrow}>
+            {getIcon("LeftArrow")}
+          </StyledNavButton>
+          <StyledNavButton onClick={handleRightArrow}>
+            {getIcon("RightArrow")}
+          </StyledNavButton>
+          <StorySlideCounter
+            isPaused={isPaused}
+            currentIndex={index}
+            totalSlides={stories.length}
+            onSlideChange={handleSlideChange}
           />
-        </StyledUserInfo>
-        <Story
-          content={stories[index].content}
-          caption={stories[index].caption || ""}
-        />
-        {isMine && <StoryViews storyId={stories[index].id} />}
-      </StyledSlide>
-    </StyledContainer>
+          <StorySliderTooltip
+            isMine={isMine}
+            onPause={handlePause}
+            isPaused={isPaused}
+            onDelete={handleDelete}
+          />
+          <StyledUserInfo>
+            <UserInfo
+              name={name}
+              avatar={avatar || ""}
+              isVertical={true}
+              elapsedTime={getElapsedTime(stories[index].timestamp)}
+            />
+          </StyledUserInfo>
+          <Story
+            content={stories[index].content}
+            caption={stories[index].caption || ""}
+          />
+          {isMine && <StoryViews storyId={stories[index].id} />}
+        </StyledSlide>
+      </StyledContainer>
+    </Popup>
   );
 }
 

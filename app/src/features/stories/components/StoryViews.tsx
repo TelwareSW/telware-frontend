@@ -19,7 +19,7 @@ const StyledViewsContainer = styled.div<{ $isOpened: boolean }>`
   min-height: ${({ $isOpened }) => ($isOpened ? "60vh" : "auto")};
   padding: ${({ $isOpened }) => ($isOpened ? "1rem" : "0.5rem 1rem")};
   background-color: ${({ $isOpened }) =>
-    $isOpened ? "var(--color-background)" : "var(--accent-color-shade)"};
+    $isOpened ? "var(--story-views-background)" : "var(--accent-color-shade)"};
 
   box-shadow: ${({ $isOpened }) =>
     $isOpened ? "0 4px 10px rgba(0, 0, 0, 0.2)" : "none"};
@@ -35,6 +35,7 @@ const StyledViews = styled.ul`
   justify-content: flex-start;
   overflow-y: auto;
   width: 100%;
+  height: 100%;
 `;
 const StyledView = styled.li`
   display: flex;
@@ -58,7 +59,7 @@ const StyledViewButton = styled.button`
   display: flex;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background-color: var(--accent-color);
+  background-color: var(--story-views-background);
   align-items: center;
   justify-content: flex-start;
   border: none;
@@ -69,12 +70,12 @@ const StyledViewButton = styled.button`
   left: 0;
   height: 3rem;
   &:hover {
-    background-color: var(--accent-color-shade);
+    background-color: var(--story-views-background-hover);
   }
   ${({ disabled }) =>
     disabled &&
     `
-    background-color: var(--accent-color);
+    background-color: var(--story-views-background-hover);
     pointer-events: none;
   `}
 `;

@@ -3,23 +3,28 @@ import styled, { css } from "styled-components";
 import { useStroies } from "../hooks/useStories";
 import { useMyStroies } from "../hooks/useMyStories";
 import { useAppSelector } from "@hooks/useGlobalState";
-import { useMouseLeave } from "@hooks/useMouseLeave";
 import CollapsedList from "@components/CollapsedList";
 import StoryList from "./StoryList";
 import StoryIcon from "./StoryIcon";
 
 const StyledContainer = styled.div<{ $isOpened: boolean }>`
-  position: relative;
   width: 100%;
   ${(props) =>
-    !props.$isOpened &&
-    css`
-      position: absolute;
-      width: 3%;
-      left: 97%;
-      top: 0;
-    `}
-  height: 6rem;
+    !props.$isOpened
+      ? css`
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: flex;
+          justify-content: end;
+          align-items: end;
+          flex-direction: row;
+        `
+      : css`
+          position: relative;
+          height: 10rem;
+          margin-bottom: -1rem;
+        `}
   z-index: 100;
 `;
 
@@ -33,23 +38,18 @@ function StoryListContainer() {
   const myStories = myStoriesData?.data;
   const { userInfo } = useAppSelector((state) => state.user);
 
-  const ref = useMouseLeave(() => setIsOpened(false), false);
-
   const handleOpen = () => {
     setIsOpened(true);
   };
   return (
-    <StyledContainer
-      ref={ref as React.RefObject<HTMLDivElement>}
-      $isOpened={isOpened}
-      data-testid="story-list-container"
-    >
+    <StyledContainer $isOpened={isOpened} data-testid="story-list-container">
       {isOpened ? (
         <StoryList
           userStories={userStories}
           userInfo={userInfo}
           myStories={myStories}
           data-testid="story-list"
+          onClose={() => setIsOpened(false)}
         />
       ) : (
         <CollapsedList

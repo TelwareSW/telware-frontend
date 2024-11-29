@@ -17,9 +17,13 @@ const StyledContainer = styled.div<{ $isCollapsed: boolean }>`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+
   padding: ${(props) => (props.$isCollapsed ? "0" : "0.5rem")};
   min-width: ${(props) => (props.$isCollapsed ? "55px" : "90px")};
-  border-radius: var(--border-radius-default);
+  border-radius: ${(props) =>
+    props.$isCollapsed
+      ? "var(--border-radius-circle)"
+      : "var(--border-radius-default)"};
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }

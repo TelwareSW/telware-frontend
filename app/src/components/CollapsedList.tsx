@@ -13,11 +13,13 @@ const StyledCollapsedContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  height: 100%;
+  width: 100%;
 `;
 const StyledCollapsed = styled.div<{ $index: number }>`
   position: absolute;
   z-index: 30 - index;
-  right: ${(props) => props.$index * 4 + 20}px;
+  right: ${(props) => props.$index * 15 + 20}px;
   top: 0.7rem;
   transform: scale(0.8);
   transition: transform 0.3s;

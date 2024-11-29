@@ -3,15 +3,28 @@ import StoryIcon from "./StoryIcon";
 import { story, userStories } from "types/story";
 import StorySlide from "./StorySlide";
 import { useEffect, useState } from "react";
+import { Close } from "@mui/icons-material";
+import CloseButton from "@components/CloseButton";
 
 interface StoryListProps {
   userStories: userStories[];
   myStories: story[];
+  onClose: () => void;
   userInfo: {
     screenName: string;
     photo?: string;
   };
 }
+
+const StyledStoryListContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 10rem;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const StyledStoryList = styled.ul`
   display: flex;
   gap: 0.5rem;
@@ -26,7 +39,7 @@ const StyledStoryList = styled.ul`
   }
 `;
 function StoryList(props: StoryListProps) {
-  const { userStories, myStories, userInfo } = props;
+  const { userStories, myStories, userInfo, onClose } = props;
   const [currentStoryUserId, setCurrentStoryUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
@@ -77,30 +90,33 @@ function StoryList(props: StoryListProps) {
           onClose={() => handleStoryClick("")}
         />
       )}
-      <StyledStoryList data-testid="storylist">
-        {myStories.length > 0 && (
-          <StoryIcon
-            data-testid="my-story-icon"
-            name="My Story"
-            avatar={userInfo.photo}
-            stories={myStories}
-            isMyStory={true}
-            onView={handleStoryClick}
-            userId="me"
-          />
-        )}
-        {userStories.map((userStory: userStories) => (
-          <StoryIcon
-            key={userStory.id}
-            data-testid={`story-icon-${userStory.id}`}
-            name={userStory.name}
-            avatar={userStory.avatar}
-            stories={userStory.stories}
-            userId={userStory.id}
-            onView={handleStoryClick}
-          />
-        ))}
-      </StyledStoryList>
+      <StyledStoryListContainer>
+        <CloseButton onClose={onClose} data-testid="close-story-list" />
+        <StyledStoryList data-testid="storylist">
+          {myStories.length > 0 && (
+            <StoryIcon
+              data-testid="my-story-icon"
+              name="My Story"
+              avatar={userInfo.photo}
+              stories={myStories}
+              isMyStory={true}
+              onView={handleStoryClick}
+              userId="me"
+            />
+          )}
+          {userStories.map((userStory: userStories) => (
+            <StoryIcon
+              key={userStory.id}
+              data-testid={`story-icon-${userStory.id}`}
+              name={userStory.name}
+              avatar={userStory.avatar}
+              stories={userStory.stories}
+              userId={userStory.id}
+              onView={handleStoryClick}
+            />
+          ))}
+        </StyledStoryList>
+      </StyledStoryListContainer>
     </>
   );
 }

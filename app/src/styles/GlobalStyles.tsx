@@ -135,6 +135,8 @@ const GlobalStyles = createGlobalStyle`
     --color-avatar: linear-gradient(135deg, #72C6EF, #004E92);
   }
 
+  --story-views-background: #181a1b;
+  --story-views-background-hover: #1e2021;
   --color-background-own-1: #6573F8;
   --color-background-own-2: #7644CB;
   --color-background-own-3: #8849B4;

@@ -292,7 +292,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     <KeyboardArrowRightOutlinedIcon
       sx={{
         color: `var(--color-icon-secondary)`,
-        fontSize: "1.5rem",
+        fontSize: "3.5rem",
       }}
     />
   ),
@@ -300,7 +300,7 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     <KeyboardArrowLeftOutlinedIcon
       sx={{
         color: `var(--color-icon-secondary)`,
-        fontSize: "1.5rem",
+        fontSize: "3.5rem",
       }}
     />
   ),
