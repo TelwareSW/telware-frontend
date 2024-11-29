@@ -1,5 +1,4 @@
 import CircleIcon from "@components/CircleIcon";
-import { Delete } from "@mui/icons-material";
 
 interface ButtonType {
   type: "record" | "message";

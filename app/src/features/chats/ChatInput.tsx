@@ -98,6 +98,9 @@ function ChatInput() {
             <Icon>{getIcon("Attatch")}</Icon>
           </InputWrapper>
         </InputContainer>
+        {
+          input? (
+        }
 
         <RecordInput
           onClick={handleSubmit}
