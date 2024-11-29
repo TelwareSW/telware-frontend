@@ -36,6 +36,7 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 import SendIcon from "@mui/icons-material/Send";
 import ShortcutIcon from "@mui/icons-material/Shortcut";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import PinIcon from "@mui/icons-material/Pin";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 enum icons {
@@ -80,6 +81,7 @@ enum icons {
   LeftArrow,
   Forward,
   MessagingOptions,
+  Pin,
 }
 
 type iconStrings = keyof typeof icons;
@@ -321,6 +323,14 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
   ),
 
   MessagingOptions: <KeyboardArrowDownIcon />,
+  Pin: (
+    <PinIcon
+      sx={{
+        color: `var(--color-icon-secondary)`,
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
 };
 
 function getIcon(iconName?: iconStrings) {

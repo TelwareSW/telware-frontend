@@ -7,14 +7,17 @@ interface ButtonType {
 
 function RecordInput({ type, onClick }: ButtonType) {
   return (
-    <CircleIcon
-      onClick={onClick}
-      data-testid="record-icon"
-      $icon={type === "record" ? "Record" : "SendMessage"}
-      $padding={0.6}
-      $color="white"
-      $bgColor="var(--accent-color)"
-    />
+
+   
+      <CircleIcon
+        onClick={onClick}
+        data-testid="record-icon"
+        $icon={type === "record" ? "Record" : "Send"}
+        $padding={0.6}
+        $color="white"
+        $bgColor="var(--accent-color)"
+      />
+
   );
 }
 

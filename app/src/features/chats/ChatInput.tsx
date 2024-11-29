@@ -6,23 +6,30 @@ import { getIcon } from "@data/icons";
 
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
-import RecordInput from "./SendButton";
 
-import { setShowCheckBox } from "@state/messages/messages";
 import { RootState } from "@state/store";
+import { setShowCheckBox } from "@state/messages/messages";
 
+
+import RecordInput from "./SendButton";
 import ForwardingInputBar from "@features/forward/ForwardingInputBar";
 import ScrollableChats from "@features/forward/ScrollableChats";
+import EmojiPickerItem from "./emojies/EmojiPicker";
+
 import { useMessageSender } from "./hooks/useMessageSender";
 
-export const Container = styled.div`
-  z-index: 1000;
+const Container = styled.div`
+  z-index: 1;
 
+  position: absolute;
+  bottom: 3%;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
   margin: auto;
 
   width: 80%;
   max-width: 600px;
-
   display: flex;
 `;
 
@@ -41,6 +48,11 @@ const InputContainer = styled.div`
   align-self: center;
 
   height: 100%;
+`;
+const InvisibleButton = styled.button`
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
 `;
 
 const InputWrapper = styled.div`
@@ -63,8 +75,13 @@ const Input = styled.div`
 
 function ChatInput() {
   const [input, setInput] = useState("");
+  const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
   const { handleSendMessage } = useMessageSender();
   const dispatch = useDispatch();
+
+  const toggleShowEmojies = () => {
+    setIsEmojiSelectorOpen((show) => !show);
+  };
 
   const handleSubmit = () => {
     handleSendMessage(input);
@@ -89,9 +106,13 @@ function ChatInput() {
     <Container>
       {!showCheckBox ? (
         <Input>
+          {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
           <InputContainer>
             <InputWrapper>
-              <Icon>{getIcon("Emojie")}</Icon>
+              <InvisibleButton onClick={toggleShowEmojies}>
+                <Icon>{getIcon("Emojie")}</Icon>
+              </InvisibleButton>
+
               <ExpandingTextArea input={input} setInput={setInput} />
               <Icon>{getIcon("Attatch")}</Icon>
             </InputWrapper>

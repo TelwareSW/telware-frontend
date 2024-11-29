@@ -1,23 +1,27 @@
+import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
-import { MessageInterface } from "types/messages";
-import { useSelector } from "react-redux";
-import { RootState } from "@state/store";
-import { getIcon } from "@data/icons";
-import { useEffect, useState } from "react";
-import CheckBox from "@features/forward/checkBox";
 import {
   setShowCheckBox,
   setIsOptionListOpen,
   SelectMessage,
   removeSelectedMessage,
 } from "@state/messages/messages";
-import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+
+import { MessageInterface } from "types/messages";
+import { RootState } from "@state/store";
+
+import { getIcon } from "@data/icons";
+
+import CheckBox from "@features/forward/checkBox";
 import MessageOptionList from "./MessageOptionList";
 import useScrollToSearchResultsMsg from "@features/search/hooks/useScrollToSearchResultsMsg";
-import { useRef } from "react";
-import renderWithHighlight from "utils/renderWithHighlight";
+
+import renderWithHighlight from "@utils/renderWithHighlight";
+
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -40,16 +44,11 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   background-color: ${({ $isMine }) => ($isMine ? "#0084ff" : "#e5e5ea")};
   color: ${({ $isMine }) => ($isMine ? "#fff" : "#000")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
-  z-index: 1000;
+  z-index: 1;
 `;
 
 const StyledIcon = styled.div`
   cursor: pointer;
-`;
-
-const CheckBoxWrapper = styled.div`
-  padding-left: 1rem;
-  align-self: center;
 `;
 
 const MessageRow = styled.div<{ $isChecked: boolean }>`
@@ -62,6 +61,11 @@ const MessageRow = styled.div<{ $isChecked: boolean }>`
     $isChecked ? `var(--color-chat-hover)` : "none"};
 
   width: 100%;
+`;
+
+const CheckBoxWrapper = styled.div`
+  padding-left: 1rem;
+  align-self: center;
 `;
 
 type MessageProps = {
@@ -144,7 +148,13 @@ function Message({
         </CheckBoxWrapper>
       )}
 
-      <StyledMessage ref={mergedRef} key={id} $isMine={senderId === userId}>
+      <StyledMessage
+        ref={mergedRef}
+        key={id}
+        $isMine={senderId === userId}
+        data-message-id={id}
+        data-testid={`message-${id}`}
+      >
         <Bubble $isMine={senderId === userId}>
           {renderWithHighlight(content, searchTerm, searchResults, id)}
           <StyledIcon onClick={handleIconClick}>
