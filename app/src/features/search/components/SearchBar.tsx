@@ -72,7 +72,9 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
   const dispatch = useDispatch();
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
-    (state: RootState) => state.search,
+
+    (state: RootState) => state.search
+
   );
   const { messages } = useSelector((state: RootState) => state.messages);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
