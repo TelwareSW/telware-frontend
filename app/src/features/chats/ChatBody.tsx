@@ -36,14 +36,16 @@ function ChatBody() {
 
   return (
     <ScrollContainer>
-      {messages.map((data, index) => (
-        <Message
-          key={index}
-          index={index}
-          messagesLength={messages.length}
-          data={data}
-        />
-      ))}
+      {messages.map((data, index) => {
+        return (
+          <Message
+            key={index}
+            index={index}
+            messagesLength={messages.length}
+            data={data}
+          />
+        );
+      })}
     </ScrollContainer>
   );
 }

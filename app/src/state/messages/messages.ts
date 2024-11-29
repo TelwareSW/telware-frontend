@@ -23,7 +23,7 @@ const messagesSlice = createSlice({
 
     deleteMessage: (
       state,
-      action: PayloadAction<{ id: string; chatId: string }>
+      action: PayloadAction<{ id: string; chatId: string }>,
     ) => {
       state.messages = state.messages.filter((message) => {
         const { chatId, id } = action.payload;
@@ -34,11 +34,11 @@ const messagesSlice = createSlice({
 
     editMessage: (
       state,
-      action: PayloadAction<{ id: string; content: string; chatId: string }>
+      action: PayloadAction<{ id: string; content: string; chatId: string }>,
     ) => {
       const { id, content, chatId } = action.payload;
       const message = state.messages.find(
-        (msg) => msg.id === id && msg.chatId == chatId
+        (msg) => msg.id === id && msg.chatId == chatId,
       );
       if (message) {
         message.content = content;
