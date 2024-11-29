@@ -20,7 +20,7 @@ const StyledStoryListContainer = styled.div`
   position: relative;
   width: 100%;
   height: 10rem;
-  z-index: 100;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;

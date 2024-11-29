@@ -25,7 +25,7 @@ const StyledContainer = styled.div<{ $isOpened: boolean }>`
           height: 10rem;
           margin-bottom: -1rem;
         `}
-  z-index: 100;
+  z-index: 1;
 `;
 
 function StoryListContainer() {

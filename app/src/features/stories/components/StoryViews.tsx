@@ -14,7 +14,7 @@ const StyledViewsContainer = styled.div<{ $isOpened: boolean }>`
   position: absolute;
   bottom: 5%;
   left: auto;
-  z-index: 1000;
+  z-index: 1;
   width: 100%;
   min-height: ${({ $isOpened }) => ($isOpened ? "60vh" : "auto")};
   padding: ${({ $isOpened }) => ($isOpened ? "1rem" : "0.5rem 1rem")};
@@ -26,7 +26,7 @@ const StyledViewsContainer = styled.div<{ $isOpened: boolean }>`
   color: white;
 `;
 const StyledViews = styled.ul`
-  z-index: 100;
+  z-index: 1;
   display: flex;
   gap: 0.5rem;
   flex-direction: column;

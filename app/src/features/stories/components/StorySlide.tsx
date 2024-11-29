@@ -29,7 +29,7 @@ const StyledContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 3;
   width: 100%;
   height: 100%;
   gap: 1rem;
@@ -57,7 +57,7 @@ const StyledNavButton = styled.div<{ isLeft?: boolean }>`
   ${({ isLeft }) => (isLeft ? "left: 0;" : "right: 0;")}
   transform: translateY(-50%);
   cursor: pointer;
-  z-index: 100;
+  z-index: 3;
   width: 3rem;
   height: 3rem;
   display: flex;
@@ -71,7 +71,7 @@ const StyledUserInfo = styled.div`
   position: absolute;
   top: 2rem;
   left: 2.5rem;
-  z-index: 100;
+  z-index: 3;
 `;
 
 function StorySlide(props: StorySlideProps) {

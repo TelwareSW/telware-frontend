@@ -12,10 +12,14 @@ import { addMessage } from "@state/messages/messages";
 import { RootState } from "@state/store";
 
 import { useSocket } from "@hooks/useSocket";
+import EmojiPickerItem from "./emojies/EmojiPicker";
 
 const Container = styled.div`
-  z-index: 1000;
-
+  position: absolute;
+  bottom: 3%;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
   margin: auto;
 
   width: 80%;
@@ -65,10 +69,14 @@ const Input = styled.div`
 
 function ChatInput() {
   const [input, setInput] = useState("");
+  const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
+
   const { sendMessage } = useSocket();
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
-
+  const toggleShowEmojies = () => {
+    setIsEmojiSelectorOpen((show) => !show);
+  };
   function handleSubmit() {
     console.log("sending message");
 
@@ -94,10 +102,14 @@ function ChatInput() {
 
   return (
     <Container>
+      {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
       <Input>
         <InputContainer>
           <InputWrapper>
-            <Icon>{getIcon("Emojie")}</Icon>
+            <InvisibleButton onClick={toggleShowEmojies}>
+              <Icon>{getIcon("Emojie")}</Icon>
+            </InvisibleButton>
+
             <ExpandingTextArea input={input} setInput={setInput} />
             <Icon>{getIcon("Attatch")}</Icon>
           </InputWrapper>

@@ -7,7 +7,6 @@ import EmojiPicker, {
 } from "emoji-picker-react";
 import styled from "styled-components";
 
-// Styled components
 const StyledEmojiPickerContainer = styled.div`
   z-index: 3;
   position: absolute;
