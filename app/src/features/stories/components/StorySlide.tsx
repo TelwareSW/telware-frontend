@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import { useInView } from "../hooks/useInView";
 import { story } from "types/story";
 import StorySlideCounter from "./StorySlideCounter";

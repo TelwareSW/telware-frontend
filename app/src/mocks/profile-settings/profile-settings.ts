@@ -17,7 +17,7 @@ export const profileSettingsMock = [
           user,
         },
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 
@@ -28,7 +28,7 @@ export const profileSettingsMock = [
         status: "success",
         data: newProfileSettings,
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 ];
