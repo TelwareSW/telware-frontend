@@ -7,12 +7,18 @@ import { RootState } from "@state/store";
 import { useSocket } from "@hooks/useSocket";
 
 export const useMessageSender = () => {
-  const { sendMessage } = useSocket();
+  const { sendMessage, editMessage } = useSocket();
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
+  const activeMessage = useSelector((state: RootState) => state.activeMessage);
   const { chatId } = useParams<{ chatId: string }>();
 
   const handleSendMessage = (data: string) => {
+    if (activeMessage?.id) {
+      editMessage(activeMessage?.id!, data, chatId!);
+      return;
+    }
+
     if (data) {
       const message = {
         id: "19008",
@@ -28,7 +34,6 @@ export const useMessageSender = () => {
         deleteType: 2,
         status: 0,
         isOptionListOpen: false,
-        isPinned: false,
       };
       sendMessage(message);
       dispatch(addMessage(message));
