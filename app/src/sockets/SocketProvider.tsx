@@ -77,7 +77,7 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   const sendMessage = (message: MessageInterface) => {
     if (isConnected) {
-      socket.emit("send_message", { message });
+      socket.emit("send_message",  message );
     } else {
       console.warn("Cannot send message: not connected to socket server");
     }
