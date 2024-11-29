@@ -56,7 +56,7 @@ const PinnedMessages: React.FC = () => {
         (prevIndex) => (prevIndex + 1) % pinnedMessages.length,
       );
       document
-        .querySelector("[data-message-id='" + currentPinnedMessage.id + "']")
+        .querySelector("[data-message-id='" + currentPinnedMessage?.id + "']")
         ?.scrollIntoView({
           behavior: "smooth",
           block: "center",
@@ -79,7 +79,7 @@ const PinnedMessages: React.FC = () => {
         </PinnedMessageTitle>
 
         <PinnedMessagePreview>
-          {currentPinnedMessage.content}
+          {currentPinnedMessage?.content}
         </PinnedMessagePreview>
       </PinnedMessageContent>
     </PinnedMessagesContainer>

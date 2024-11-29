@@ -49,10 +49,12 @@ interface Props {
   forwardOnClick: () => void;
   replyOnClick: () => void;
   editOnClick: () => void;
+  pinOnClick: () => void;
+  isPinned: boolean;
 }
 
 function MessageOptionList(props: Props) {
-  const { $isMine, forwardOnClick, replyOnClick, editOnClick } = props;
+  const { $isMine, forwardOnClick, replyOnClick, editOnClick, pinOnClick, isPinned } = props;
 
   return (
     <StyledList $isMine={$isMine}>
@@ -64,6 +66,9 @@ function MessageOptionList(props: Props) {
       </HoverMask>
       <HoverMask onClick={editOnClick}>
         <StyledP>Edit</StyledP>
+      </HoverMask>
+      <HoverMask onClick={pinOnClick}>
+        <StyledP>{isPinned ? "Unpin" : "Pin"}</StyledP>
       </HoverMask>
     </StyledList>
   );

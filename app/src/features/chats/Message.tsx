@@ -7,6 +7,8 @@ import {
   setIsOptionListOpen,
   SelectMessage,
   removeSelectedMessage,
+  pinMessage,
+  unpinMessage,
 } from "@state/messages/messages";
 
 import { MessageInterface } from "types/messages";
@@ -23,6 +25,7 @@ import renderWithHighlight from "@utils/renderWithHighlight";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 import { setActiveMessage } from "@state/messages/activeMessage";
+import { useSocket } from "@hooks/useSocket";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -78,22 +81,25 @@ type MessageProps = {
 function Message({
   index,
   messagesLength,
-  data: { id, senderId, content, isOptionListOpen },
+  data: { id, senderId, content, isOptionListOpen, isPinned, chatId },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
-    (state: RootState) => state.search
+    (state: RootState) => state.search,
   );
 
   const mergedRef = useRef<HTMLDivElement>(null);
   const { lastMessageRef } = useScrollToLastMsg();
   const { searchResultRef } = useScrollToSearchResultsMsg();
 
+  const { pinMessage: pinMessageSocket, unpinMessage: unpinMessageSocket } =
+    useSocket();
+
   // TODO: make merge ref util
   useEffect(() => {
     lastMessageRef.current =
       index === messagesLength - 1 ? mergedRef.current : null;
     const isSearchResult = searchResults.find(
-      (result) => result.messageId === id
+      (result) => result.messageId === id,
     );
     const isCurrentResult =
       isSearchResult && searchResults[currentResultIndex]?.messageId === id;
@@ -112,7 +118,7 @@ function Message({
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
   const showCheckbox = useSelector(
-    (state: RootState) => state.messages.showCheckBox
+    (state: RootState) => state.messages.showCheckBox,
   );
   const dispatch = useAppDispatch();
 
@@ -134,6 +140,16 @@ function Message({
 
   function handleIconClick() {
     dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
+  }
+
+  function pinOnClick() {
+    if (isPinned) {
+      dispatch(unpinMessage({ messageId: id, chatId: chatId }));
+      unpinMessageSocket(id, chatId, userId);
+      return;
+    }
+    dispatch(pinMessage({ messageId: id, chatId: chatId }));
+    pinMessageSocket(id, chatId, userId);
   }
 
   function forwardOnClick() {
@@ -173,6 +189,8 @@ function Message({
             <MessageOptionList
               $isMine={senderId === userId}
               forwardOnClick={forwardOnClick}
+              isPinned={isPinned}
+              pinOnClick={pinOnClick}
               replyOnClick={handleReply} //TODO: Implement replyOnClick
               editOnClick={handleEditMessage}
             />
