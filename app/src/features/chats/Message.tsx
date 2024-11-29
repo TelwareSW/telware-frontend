@@ -22,6 +22,7 @@ import renderWithHighlight from "@utils/renderWithHighlight";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
+import { setActiveMessage } from "@state/messages/activeMessage";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -140,6 +141,14 @@ function Message({
     dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
   }
 
+  function handleEditMessage() {
+    dispatch(setActiveMessage({ id, content, state: "edit" }));
+  }
+
+  function handleReply() {
+    dispatch(setActiveMessage({ id, content, state: "reply" }));
+  }
+
   return (
     <MessageRow $isChecked={isChecked}>
       {showCheckbox && (
@@ -164,7 +173,8 @@ function Message({
             <MessageOptionList
               $isMine={senderId === userId}
               forwardOnClick={forwardOnClick}
-              replyOnClick={() => {}} //TODO: Implement replyOnClick
+              replyOnClick={handleReply} //TODO: Implement replyOnClick
+              editOnClick={handleEditMessage}
             />
           )}
         </Bubble>

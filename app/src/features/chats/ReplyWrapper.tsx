@@ -1,6 +1,11 @@
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+
 import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
-import styled from "styled-components";
+
+import { clearActiveMessage } from "@state/messages/activeMessage";
+import { RootState } from "@state/store";
 
 const Container = styled.div`
   display: flex;
@@ -56,20 +61,22 @@ const Message = styled.div`
   opacity: 0.9;
 `;
 
-type Props = {
-  state: "Edit" | "Reply";
-  message: string;
-};
+export default function ReplyWrapper() {
+  const dispatch = useDispatch();
+  const activeMessage = useSelector((state: RootState) => state.activeMessage);
 
-export default function ReplyWrapper({ state = "Edit", message }: Props) {
+  function handleHideWrapper() {
+    dispatch(clearActiveMessage());
+  }
+
   return (
     <Container>
-      <Icon>{getIcon(state)}</Icon>
+      <Icon>{getIcon(activeMessage.state === "edit" ? "Edit" : "Reply")}</Icon>
       <MessageBox>
-        <State>{`${state}ing`}</State>
-        <Message>{message}</Message>
+        <State>{`${activeMessage.state}ing`}</State>
+        <Message>{activeMessage.content}</Message>
       </MessageBox>
-      <Icon>{getIcon("Close")}</Icon>
+      <Icon onClick={handleHideWrapper}>{getIcon("Close")}</Icon>
     </Container>
   );
 }

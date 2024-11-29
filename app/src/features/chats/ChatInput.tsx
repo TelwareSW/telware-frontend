@@ -78,6 +78,8 @@ function ChatInput() {
   const [input, setInput] = useState("");
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
   const { handleSendMessage } = useMessageSender();
+  const activeMessage = useSelector((state: RootState) => state.activeMessage);
+
   const dispatch = useDispatch();
 
   const toggleShowEmojies = () => {
@@ -109,7 +111,7 @@ function ChatInput() {
         <Input>
           {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
           <InputContainer>
-            <ReplyWrapper state="Edit" message="message" />
+            {activeMessage.id && <ReplyWrapper />}
             <InputWrapper>
               <InvisibleButton onClick={toggleShowEmojies}>
                 <Icon>{getIcon("Emojie")}</Icon>
