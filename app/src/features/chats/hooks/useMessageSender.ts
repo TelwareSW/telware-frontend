@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useSocket } from "@hooks/useSocket";
 import { useAppSelector } from "@hooks/useGlobalState";
+import { MessageInterface } from "types/messages";
 
 export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
@@ -17,7 +18,7 @@ export const useMessageSender = () => {
     const isReply = activeMessage.state === "reply";
 
     if (data) {
-      const message = {
+      const message: MessageInterface = {
         id: "",
         content: data,
         senderId: userId,
