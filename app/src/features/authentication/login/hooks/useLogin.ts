@@ -13,6 +13,7 @@ export function useLogin() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], { user: data.user });
       queryClient.invalidateQueries({ queryKey: ["isAuth"] });
+      localStorage.setItem("sessionId", data.sessionId);
       dispatch(setUserInfo(data.user));
     },
   });

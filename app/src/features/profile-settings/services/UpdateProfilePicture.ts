@@ -9,6 +9,9 @@ async function UpdateProfilePicture(imageFile: File) {
       method: "PATCH",
       body: formData,
       credentials: "include",
+      headers: {
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
     });
 
     if (!response.ok) {
