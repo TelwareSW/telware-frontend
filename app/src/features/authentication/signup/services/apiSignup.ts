@@ -11,5 +11,7 @@ export async function Signup(user: User) {
   const data = await res.json();
   if (data.status !== "success") throw new Error(data.message);
 
+  localStorage.setItem("sessionId", data.data.sessionId);
+
   return user.email;
 }
