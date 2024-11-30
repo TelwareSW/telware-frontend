@@ -80,7 +80,8 @@ function ChatInput() {
   const [input, setInput] = useState<string>("");
 
   useEffect(() => {
-    if (activeMessage?.content) setInput(activeMessage?.content);
+    if (activeMessage.state === "edit" && activeMessage?.content)
+      setInput(activeMessage?.content);
   }, [activeMessage]);
 
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
