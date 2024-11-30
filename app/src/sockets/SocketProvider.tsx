@@ -112,10 +112,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         "SEND_MESSAGE",
         sentMessage,
         ({ success, message, res }: AcknowledgmentResponse) => {
-          console.log("enta2 yasta b allah 3lek");
-          console.log(res, message, success);
           if (success) {
-            console.log(res, message);
+            console.log(message);
             const id = res;
             handleIncomingMessage(dispatch, { ...sentMessage, id });
           }
