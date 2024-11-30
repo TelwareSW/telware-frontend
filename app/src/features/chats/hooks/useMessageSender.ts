@@ -21,7 +21,7 @@ export const useMessageSender = () => {
 
     if (data) {
       const message = {
-        id: "19008",
+        id: "",
         content: data,
         senderId: userId,
         type: 0,
@@ -36,7 +36,6 @@ export const useMessageSender = () => {
         isOptionListOpen: false,
       };
       sendMessage(message);
-      dispatch(addMessage(message));
     }
   };
 
