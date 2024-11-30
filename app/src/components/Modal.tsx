@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 const ModalOverlay = styled.div`
@@ -48,11 +49,28 @@ const CloseButton = styled.button`
   }
 `;
 
+type ModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  message: string;
+  children: React.ReactNode;
+};
+
 function Modal({ onClose, isOpen, title, message, children }: ModalProps) {
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClickOutside = (e: React.MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      onClose();
+    }
+  };
+
   if (!isOpen) return null;
+
   return (
-    <ModalOverlay>
-      <ModalContainer>
+    <ModalOverlay onClick={handleClickOutside}>
+      <ModalContainer ref={modalRef}>
         <CloseButton type="button" onClick={onClose} data-testid="close-button">
           &times;
         </CloseButton>
@@ -63,11 +81,5 @@ function Modal({ onClose, isOpen, title, message, children }: ModalProps) {
     </ModalOverlay>
   );
 }
-type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  message: string;
-  children: React.ReactNode;
-};
+
 export default Modal;
