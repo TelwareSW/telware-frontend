@@ -4,6 +4,9 @@ async function DeleteProfilePicture() {
   const res = await fetch(`${API_URL}/users/picture`, {
     method: "DELETE",
     credentials: "include",
+    headers: {
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
+    },
   });
 
   const data = await res.json();

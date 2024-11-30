@@ -4,6 +4,9 @@ async function DeleteStory(storyId: string) {
   const res = await fetch(`${API_URL}/users/stories/${storyId}`, {
     method: "DELETE",
     credentials: "include",
+    headers: {
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
+    },
   });
 
   const data = await res.json();

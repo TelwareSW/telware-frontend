@@ -5,6 +5,9 @@ export async function logout() {
     const res = await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
       credentials: "include",
+      headers: {
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
     });
 
     if (!res.ok) {
