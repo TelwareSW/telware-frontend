@@ -33,4 +33,5 @@ export interface MessageInterface {
   isOptionListOpen: boolean;
   isReply: boolean;
   replyMessageId: string | null;
+  media: string;
 }
