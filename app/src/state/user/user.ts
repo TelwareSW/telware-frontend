@@ -39,6 +39,7 @@ const initialState: userState = {
     storiesSeenPrivacy: privacyStates.EVERYONE,
     lastSeenPrivacy: privacyStates.EVERYONE,
     profilePhotoPrivacy: privacyStates.EVERYONE,
+    blockPrivacy: "",
   },
   activitySettings: {
     readReceiptsPrivacy: activeStates.ENABLED,
