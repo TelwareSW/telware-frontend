@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 const StyledList = styled.ul<{ $isMine: boolean }>`
   position: absolute;
-  width: 6rem;
+  min-width: 150px;
   height: 6rem;
 
   right: ${(props) => !props.$isMine && -6.5}rem;
   left: ${(props) => props.$isMine && -6.5}rem;
 
-  z-index: 10;
+  z-index: 10 !important;
   overflow: auto;
 
   display: flex;
@@ -21,14 +21,18 @@ const StyledList = styled.ul<{ $isMine: boolean }>`
   padding: 0.2rem 0.2rem;
   background-color: var(--color-background);
   box-shadow: var(--box-shadow);
-  box-shadow: var(--box-shadow);
-  border-radius: var(--border-radius-default);
+  border-radius: var(--border-radius-default-small);
+
+  height: fit-content;
+
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(5px);
 `;
 
 const HoverMask = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: var(--border-radius-default);
+  border-radius: var(--border-radius-default-small);
   display: flex;
   align-items: center;
   justify-content: start;
