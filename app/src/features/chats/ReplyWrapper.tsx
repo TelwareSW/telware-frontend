@@ -39,7 +39,7 @@ export default function ReplyWrapper({ setInput }: Props) {
     <Container>
       <Icon>{getIcon(activeMessage.state === "edit" ? "Edit" : "Reply")}</Icon>
       <MessageBox />
-      <Icon onClick={handleHideWrapper}>{getIcon("Close")}</Icon>
+      <Icon onClick={handleHideWrapper} test-id="close-icon">{getIcon("Close")}</Icon>
     </Container>
   );
 }

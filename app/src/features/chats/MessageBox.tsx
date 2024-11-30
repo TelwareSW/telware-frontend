@@ -55,7 +55,7 @@ function extractMessageData(
   id: string
 ) {
   const msg = getMessageById(messages, messageId);
-  let name: string | undefined = undefined;
+  let name: string | undefined;
 
   if (id === msg?.senderId) name = "you";
   else {
@@ -78,8 +78,8 @@ function MessageBox({ messageId }: MessageBoxProps) {
   let id = useAppSelector((state) => state.user.userInfo.id);
   const messages = useAppSelector((state) => state.messages.messages);
 
-  let msg: MessageInterface | undefined = undefined;
-  let name: string | undefined = undefined;
+  let msg: MessageInterface | undefined;
+  let name: string | undefined;
 
   if (messageId) {
     const data = extractMessageData(messages, messageId, id);
