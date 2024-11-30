@@ -26,6 +26,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 import { setActiveMessage } from "@state/messages/activeMessage";
 import { useSocket } from "@hooks/useSocket";
+import MessageBox from "./MessageBox";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -44,7 +45,7 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   font-size: 14px;
   height: fit-content;
   position: relative;
-
+  width: max-content;
   background-color: ${({ $isMine }) => ($isMine ? "#0084ff" : "#e5e5ea")};
   color: ${({ $isMine }) => ($isMine ? "#fff" : "#000")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
@@ -72,6 +73,17 @@ const CheckBoxWrapper = styled.div`
   align-self: center;
 `;
 
+const MessageBoxWrapper = styled.div`
+  display: block;
+  background-color: var(--color-background);
+`;
+
+const StyledCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
 type MessageProps = {
   index: number;
   messagesLength: number;
@@ -81,10 +93,19 @@ type MessageProps = {
 function Message({
   index,
   messagesLength,
-  data: { id, senderId, content, isOptionListOpen, isPinned, chatId },
+  data: {
+    id,
+    senderId,
+    content,
+    isOptionListOpen,
+    isPinned,
+    chatId,
+    isReply,
+    replyMessageId,
+  },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
-    (state: RootState) => state.search,
+    (state: RootState) => state.search
   );
 
   const mergedRef = useRef<HTMLDivElement>(null);
@@ -99,7 +120,7 @@ function Message({
     lastMessageRef.current =
       index === messagesLength - 1 ? mergedRef.current : null;
     const isSearchResult = searchResults.find(
-      (result) => result.messageId === id,
+      (result) => result.messageId === id
     );
     const isCurrentResult =
       isSearchResult && searchResults[currentResultIndex]?.messageId === id;
@@ -118,7 +139,7 @@ function Message({
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
   const showCheckbox = useSelector(
-    (state: RootState) => state.messages.showCheckBox,
+    (state: RootState) => state.messages.showCheckBox
   );
   const dispatch = useAppDispatch();
 
@@ -165,6 +186,15 @@ function Message({
     dispatch(setActiveMessage({ id, content, state: "reply" }));
   }
 
+  function MoveToReplyMessage() {
+    document
+      .querySelector("[data-message-id='" + replyMessageId + "']")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+  }
+
   return (
     <MessageRow $isChecked={isChecked}>
       {showCheckbox && (
@@ -181,7 +211,15 @@ function Message({
         data-testid={`message-${id}`}
       >
         <Bubble $isMine={senderId === userId}>
-          {renderWithHighlight(content, searchTerm, searchResults, id)}
+          <StyledCol>
+            {isReply && (
+              <MessageBoxWrapper onClick={MoveToReplyMessage}>
+                <MessageBox messageId={replyMessageId} senderId={senderId} />
+              </MessageBoxWrapper>
+            )}
+            {renderWithHighlight(content, searchTerm, searchResults, id)}
+          </StyledCol>
+
           <StyledIcon onClick={handleIconClick}>
             {getIcon("MessagingOptions")}
           </StyledIcon>
@@ -191,7 +229,7 @@ function Message({
               forwardOnClick={forwardOnClick}
               isPinned={isPinned}
               pinOnClick={pinOnClick}
-              replyOnClick={handleReply} //TODO: Implement replyOnClick
+              replyOnClick={handleReply}
               editOnClick={handleEditMessage}
             />
           )}

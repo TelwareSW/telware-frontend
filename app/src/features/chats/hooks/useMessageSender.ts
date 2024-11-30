@@ -12,7 +12,11 @@ export const useMessageSender = () => {
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
   const { chatId } = useParams<{ chatId: string }>();
 
+  const activeMessage = useSelector((state: RootState) => state.activeMessage);
+
   const handleSendMessage = (data: string) => {
+    const isReply = activeMessage.state === "reply";
+
     if (data) {
       const message = {
         id: "19008",
@@ -28,7 +32,8 @@ export const useMessageSender = () => {
         deleteType: 2,
         status: 0,
         isOptionListOpen: false,
-        isPinned: false,
+        isReply: isReply,
+        replyMessageId: isReply ? activeMessage.id : null,
       };
       sendMessage(message);
       dispatch(addMessage(message));
