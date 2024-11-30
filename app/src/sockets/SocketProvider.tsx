@@ -30,6 +30,12 @@ type SocketProviderProps = {
   children: ReactNode;
 };
 
+interface AcknowledgmentResponse {
+  success: boolean;
+  message: string;
+  res: string;
+}
+
 function SocketProvider({ children }: SocketProviderProps) {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useDispatch();
@@ -50,7 +56,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       });
     });
 
-    socket.on("receive_message", (message: MessageInterface) => {
+    socket.on("RECEIVE_MESSAGE", (message: MessageInterface) => {
       handleIncomingMessage(dispatch, message);
     });
 
@@ -89,7 +95,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   }, [dispatch, socket]);
 
   useEffect(() => {
-    if (isConnected && !isPending && chats?.length) {
+    if (!isPending && chats?.length) {
       chats.forEach((chat) => {
         socket.emit("join", { chatId: chat.id });
       });
@@ -100,9 +106,19 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }, [isConnected, isPending, chats, socket]);
 
-  const sendMessage = (message: MessageInterface) => {
+  const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected) {
-      socket.emit("send_message", message);
+      socket.emit(
+        "SEND_MESSAGE",
+        sentMessage,
+        ({ success, message, res }: AcknowledgmentResponse) => {
+          if (success) {
+            console.log(message);
+            const id = res;
+            handleIncomingMessage(dispatch, { ...sentMessage, id });
+          }
+        }
+      );
     } else {
       console.warn("Cannot send message: not connected to socket server");
     }
