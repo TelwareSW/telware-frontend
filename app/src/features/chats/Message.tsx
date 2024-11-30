@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, MouseEvent } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -39,21 +39,30 @@ const StyledMessage = styled.div<{ $isMine: boolean }>`
 
 const Bubble = styled.div<{ $isMine: boolean }>`
   display: flex;
+  flex-direction: column;
+
   max-width: 70%;
   padding: 10px;
-  border-radius: 15px;
+  border-radius: var(--border-radius-messages);
   font-size: 14px;
   height: fit-content;
   position: relative;
-  width: max-content;
-  background-color: ${({ $isMine }) => ($isMine ? "#0084ff" : "#e5e5ea")};
-  color: ${({ $isMine }) => ($isMine ? "#fff" : "#000")};
+
+  background: ${({ $isMine }) =>
+    $isMine
+      ? "linear-gradient(to bottom, var(--color-background-own-1), var(--color-background-own-2), var(--color-background-own-3), var(--color-background-own-4))"
+      : "var(--color-background)"};
+
+  background-attachment: ${({ $isMine }) => ($isMine ? "fixed" : "initial")};
+  background-size: ${({ $isMine }) => ($isMine ? "cover" : "initial")};
+  background-position: ${({ $isMine }) => ($isMine ? "center" : "initial")};
+
+  color: ${({ $isMine }) => ($isMine ? "#fff" : "var(--color-text)")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
   z-index: 1;
-`;
 
-const StyledIcon = styled.div`
-  cursor: pointer;
+  word-break: break-word;
+  white-space: pre-wrap;
 `;
 
 const MessageRow = styled.div<{ $isChecked: boolean }>`
@@ -84,6 +93,26 @@ const StyledCol = styled.div`
   gap: 0.5rem;
 `;
 
+const TimeStamp = styled.div<{ $isMine: boolean }>`
+  font-size: x-small;
+  font-size: x-small;
+  color: ${({ $isMine }) =>
+    $isMine ? "var(--color-text)" : "var(--color-text-secondary)"};
+
+  float: none;
+  display: block;
+
+  float: none;
+  display: block;
+`;
+
+const Details = styled.div`
+  display: flex;
+  align-self: flex-end;
+
+  gap: 0.2rem;
+`;
+
 type MessageProps = {
   index: number;
   messagesLength: number;
@@ -111,6 +140,7 @@ function Message({
   const mergedRef = useRef<HTMLDivElement>(null);
   const { lastMessageRef } = useScrollToLastMsg();
   const { searchResultRef } = useScrollToSearchResultsMsg();
+  const [isHovered, setIsHovered] = useState(false);
 
   const { pinMessage: pinMessageSocket, unpinMessage: unpinMessageSocket } =
     useSocket();
@@ -159,10 +189,6 @@ function Message({
     setIsChecked(!isChecked);
   }
 
-  function handleIconClick() {
-    dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
-  }
-
   function pinOnClick() {
     if (isPinned) {
       dispatch(unpinMessage({ messageId: id, chatId: chatId }));
@@ -195,6 +221,15 @@ function Message({
       });
   }
 
+  function handleMouseLeave() {
+    setIsHovered(false);
+  }
+
+  function handleOpenList(e: MouseEvent<HTMLDivElement>) {
+    e.preventDefault();
+    setIsHovered(true);
+  }
+
   return (
     <MessageRow $isChecked={isChecked}>
       {showCheckbox && (
@@ -209,21 +244,20 @@ function Message({
         $isMine={senderId === userId}
         data-message-id={id}
         data-testid={`message-${id}`}
+        onMouseLeave={handleMouseLeave}
+        onContextMenu={handleOpenList}
       >
         <Bubble $isMine={senderId === userId}>
           <StyledCol>
             {isReply && (
               <MessageBoxWrapper onClick={MoveToReplyMessage}>
-                <MessageBox messageId={replyMessageId} senderId={senderId} />
+                <MessageBox messageId={replyMessageId}/>
               </MessageBoxWrapper>
             )}
             {renderWithHighlight(content, searchTerm, searchResults, id)}
           </StyledCol>
 
-          <StyledIcon onClick={handleIconClick}>
-            {getIcon("MessagingOptions")}
-          </StyledIcon>
-          {isOptionListOpen && (
+          {isHovered && (
             <MessageOptionList
               $isMine={senderId === userId}
               forwardOnClick={forwardOnClick}
@@ -233,6 +267,10 @@ function Message({
               editOnClick={handleEditMessage}
             />
           )}
+          <Details>
+            {isPinned && getIcon("PushPin")}
+            <TimeStamp $isMine={senderId === userId}>11:09AM</TimeStamp>
+          </Details>
         </Bubble>
       </StyledMessage>
     </MessageRow>

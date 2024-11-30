@@ -38,12 +38,19 @@ const messagesSlice = createSlice({
 
     editMessage: (
       state,
-      action: PayloadAction<{ id: string; content: string; chatId: string }>
+      action: PayloadAction<{
+        chatId: string;
+        messageId: string;
+        content: string;
+      }>
     ) => {
-      const { id, content, chatId } = action.payload;
+      const { chatId, messageId, content } = action.payload;
+
       const message = state.messages.find(
-        (msg) => msg.id === id && msg.chatId == chatId
+        (msg) => msg.id === messageId && msg,
+        chatId === chatId
       );
+
       if (message) {
         message.content = content;
       }

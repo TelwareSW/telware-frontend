@@ -16,10 +16,13 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
 
-  socket.on("send_message", (data) => {
+  socket.on("SEND_MESSAGE", (data, callback) => {
     console.log("Message received from client:", data);
-
-    socket.broadcast.emit("receive_message", data);
+    callback({ success: true, message: "sent seccussfully", res: Date.now() });
+    socket.join(data.chatId);
+    console.log(data.chatId);
+    //TODO: need to be socket.to(data.chatId).emit()
+    socket.broadcast.emit("RECEIVE_MESSAGE", { ...data, id: Date.now() });
   });
 
   socket.on("join", ({ chatId }) => {
@@ -43,6 +46,19 @@ io.on("connection", (socket) => {
     socket.broadcast
       .to(chatId)
       .emit("UNPIN_MESSAGE_SERVER", { messageId, chatId, userId });
+  });
+
+  socket.on("EDIT_MESSAGE_CLIENT", ({ messageId, content, chatId }) => {
+    const room = io.sockets.adapter.rooms.get(chatId);
+
+    if (room) {
+      console.log(`Room ${chatId} members:`, [...room]);
+    } else {
+      console.log(`No members in room: ${chatId}`);
+    }
+    socket.join(chatId);
+    console.log("EDIT_MESSAGE_CLIENT:", messageId, content, chatId);
+    io.to(chatId).emit("EDIT_MESSAGE_SERVER", chatId, messageId, content); //TODO: handle user disjoin the room for some reason
   });
 });
 

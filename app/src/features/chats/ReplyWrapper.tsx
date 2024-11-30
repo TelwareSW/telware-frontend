@@ -21,13 +21,18 @@ const Container = styled.div`
   }
 `;
 
-export default function ReplyWrapper() {
+type Props = {
+  setInput: (state: string) => void;
+};
+
+export default function ReplyWrapper({ setInput }: Props) {
   const dispatch = useDispatch();
 
   const activeMessage = useAppSelector((state) => state.activeMessage);
 
   function handleHideWrapper() {
     dispatch(clearActiveMessage());
+    if (activeMessage.state === "edit") setInput("");
   }
 
   return (
