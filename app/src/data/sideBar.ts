@@ -18,6 +18,11 @@ const privacySettingsMap: Record<
   privacySettingsID,
   { id: keyof privacySettingsInterface; name: string; subtitle: string }
 > = {
+  [privacySettingsID.BLOCK_PRIVACY]: {
+    id: "blockPrivacy",
+    subtitle: "",
+    name: "Block List",
+  },
   [privacySettingsID.STORIES_SEEN_PRIVACY]: {
     id: "storiesSeenPrivacy",
     subtitle: "Who can see my stories?",
@@ -105,6 +110,8 @@ const privacySettingsRows = [
     icon: "BlockIcon",
     title: "Blocked Users",
     redirect: sideBarPages.BLOCKED_USERS,
+    type: StatusType.PRIVACY,
+    status: privacySettingsID.BLOCK_PRIVACY,
   },
   {
     title: "Who can see my stories?",
