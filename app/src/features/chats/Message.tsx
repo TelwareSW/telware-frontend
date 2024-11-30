@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, MouseEvent } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -38,21 +38,35 @@ const StyledMessage = styled.div<{ $isMine: boolean }>`
 
 const Bubble = styled.div<{ $isMine: boolean }>`
   display: flex;
+  flex-direction: column;
+
   max-width: 70%;
   padding: 10px;
-  border-radius: 15px;
+  border-radius: var(--border-radius-messages);
   font-size: 14px;
   height: fit-content;
   position: relative;
 
-  background-color: ${({ $isMine }) => ($isMine ? "#0084ff" : "#e5e5ea")};
-  color: ${({ $isMine }) => ($isMine ? "#fff" : "#000")};
+  background-color: ${({ $isMine }) =>
+    $isMine
+      ? "linear-gradient(135deg, var(--color-background-own-1), var(--color-background-own-2), var(--color-background-own-3), var(--color-background-own-4))"
+      : "var(--color-background)"};
+
+  background: ${({ $isMine }) =>
+    $isMine
+      ? "linear-gradient(to bottom, var(--color-background-own-1), var(--color-background-own-2), var(--color-background-own-3), var(--color-background-own-4))"
+      : "var(--color-background)"};
+
+  background-attachment: ${({ $isMine }) => ($isMine ? "fixed" : "initial")};
+  background-size: ${({ $isMine }) => ($isMine ? "cover" : "initial")};
+  background-position: ${({ $isMine }) => ($isMine ? "center" : "initial")};
+
+  color: ${({ $isMine }) => ($isMine ? "#fff" : "var(--color-text)")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
   z-index: 1;
-`;
 
-const StyledIcon = styled.div`
-  cursor: pointer;
+  word-break: break-word;
+  white-space: pre-wrap;
 `;
 
 const MessageRow = styled.div<{ $isChecked: boolean }>`
@@ -72,6 +86,26 @@ const CheckBoxWrapper = styled.div`
   align-self: center;
 `;
 
+const TimeStamp = styled.div<{ $isMine: boolean }>`
+  font-size: x-small;
+  font-size: x-small;
+  color: ${({ $isMine }) =>
+    $isMine ? "var(--color-text)" : "var(--color-text-secondary)"};
+
+  float: none;
+  display: block;
+
+  float: none;
+  display: block;
+`;
+
+const Details = styled.div`
+  display: flex;
+  align-self: flex-end;
+
+  gap: 0.2rem;
+`;
+
 type MessageProps = {
   index: number;
   messagesLength: number;
@@ -84,12 +118,13 @@ function Message({
   data: { id, senderId, content, isOptionListOpen, isPinned, chatId },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
-    (state: RootState) => state.search,
+    (state: RootState) => state.search
   );
 
   const mergedRef = useRef<HTMLDivElement>(null);
   const { lastMessageRef } = useScrollToLastMsg();
   const { searchResultRef } = useScrollToSearchResultsMsg();
+  const [isHovered, setIsHovered] = useState(false);
 
   const { pinMessage: pinMessageSocket, unpinMessage: unpinMessageSocket } =
     useSocket();
@@ -99,7 +134,7 @@ function Message({
     lastMessageRef.current =
       index === messagesLength - 1 ? mergedRef.current : null;
     const isSearchResult = searchResults.find(
-      (result) => result.messageId === id,
+      (result) => result.messageId === id
     );
     const isCurrentResult =
       isSearchResult && searchResults[currentResultIndex]?.messageId === id;
@@ -118,7 +153,7 @@ function Message({
   const userId = useSelector((state: RootState) => state.user.userInfo.id);
 
   const showCheckbox = useSelector(
-    (state: RootState) => state.messages.showCheckBox,
+    (state: RootState) => state.messages.showCheckBox
   );
   const dispatch = useAppDispatch();
 
@@ -136,10 +171,6 @@ function Message({
       dispatch(removeSelectedMessage({ id: id }));
     }
     setIsChecked(!isChecked);
-  }
-
-  function handleIconClick() {
-    dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
   }
 
   function pinOnClick() {
@@ -165,6 +196,15 @@ function Message({
     dispatch(setActiveMessage({ id, content, state: "reply" }));
   }
 
+  function handleMouseLeave() {
+    setIsHovered(false);
+  }
+
+  function handleOpenList(e: MouseEvent<HTMLDivElement>) {
+    e.preventDefault();
+    setIsHovered(true);
+  }
+
   return (
     <MessageRow $isChecked={isChecked}>
       {showCheckbox && (
@@ -179,13 +219,12 @@ function Message({
         $isMine={senderId === userId}
         data-message-id={id}
         data-testid={`message-${id}`}
+        onMouseLeave={handleMouseLeave}
+        onContextMenu={handleOpenList}
       >
         <Bubble $isMine={senderId === userId}>
           {renderWithHighlight(content, searchTerm, searchResults, id)}
-          <StyledIcon onClick={handleIconClick}>
-            {getIcon("MessagingOptions")}
-          </StyledIcon>
-          {isOptionListOpen && (
+          {isHovered && (
             <MessageOptionList
               $isMine={senderId === userId}
               forwardOnClick={forwardOnClick}
@@ -195,6 +234,10 @@ function Message({
               editOnClick={handleEditMessage}
             />
           )}
+          <Details>
+            {isPinned && getIcon("PushPin")}
+            <TimeStamp $isMine={senderId === userId}>11:09AM</TimeStamp>
+          </Details>
         </Bubble>
       </StyledMessage>
     </MessageRow>
