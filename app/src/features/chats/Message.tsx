@@ -133,6 +133,9 @@ function Message({
     chatId,
     isReply,
     replyMessageId,
+    isSent,
+    isRecieved,
+    isViewed,
   },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useAppSelector(
@@ -232,6 +235,7 @@ function Message({
           <Details>
             {isPinned && getIcon("PushPin")}
             <TimeStamp $isMine={senderId === userId}>11:09AM</TimeStamp>
+            {isSent && getIcon("sent")}
           </Details>
         </Bubble>
       </StyledMessage>

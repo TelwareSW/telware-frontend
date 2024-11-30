@@ -40,6 +40,8 @@ import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import PinIcon from "@mui/icons-material/Pin";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
+import CheckIcon from "@mui/icons-material/Check";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 enum icons {
   BlockIcon,
@@ -86,6 +88,8 @@ enum icons {
   Pin,
   Reply,
   PushPin,
+  sent,
+  viewed,
 }
 
 type iconStrings = keyof typeof icons;
@@ -341,6 +345,9 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
       }}
     />
   ),
+
+  sent: <CheckIcon />,
+  viewed: <DoneAllIcon />,
 };
 
 function getIcon(iconName?: iconStrings) {

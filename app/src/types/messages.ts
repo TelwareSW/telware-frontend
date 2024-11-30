@@ -33,4 +33,7 @@ export interface MessageInterface {
   isOptionListOpen: boolean;
   isReply: boolean;
   replyMessageId: string | null;
+  isSent: boolean;
+  isViewed: boolean;
+  isRecieved: boolean;
 }

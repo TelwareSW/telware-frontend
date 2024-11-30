@@ -34,6 +34,9 @@ export const useMessageSender = () => {
         isOptionListOpen: false,
         isReply: isReply,
         replyMessageId: isReply ? activeMessage.id : null,
+        isSent: false,
+        isViewed: false,
+        isRecieved: false,
       };
       sendMessage(message);
     }

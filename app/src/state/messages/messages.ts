@@ -21,7 +21,6 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: PayloadAction<MessageInterface>) => {
-      console.log(action.payload);
       state.messages.push(action.payload);
     },
 
@@ -127,6 +126,34 @@ const messagesSlice = createSlice({
         (msgId) => msgId !== id
       );
     },
+
+    setIsSent: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload;
+
+      const msg = state.messages.find((msg) => msg.id === id);
+
+      if (msg) {
+        msg.isSent = true;
+      }
+    },
+
+    setIsViewed: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload;
+      state.messages.forEach((msg) => {
+        if (msg.id === id) {
+          msg.isViewed = true;
+        }
+      });
+    },
+
+    setIsRecieved: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload;
+      state.messages.forEach((msg) => {
+        if (msg.id === id) {
+          msg.isRecieved = true;
+        }
+      });
+    },
   },
 });
 
@@ -142,6 +169,9 @@ export const {
   setIsOptionListOpen,
   SelectMessage,
   removeSelectedMessage,
+  setIsSent,
+  setIsViewed,
+  setIsRecieved,
 } = messagesSlice.actions;
 export default messagesSlice.reducer;
 export type { MessageInterface, MessagesState };
