@@ -20,9 +20,7 @@ io.on("connection", (socket) => {
     console.log("Message received from client:", data);
     callback({ success: true, message: "sent seccussfully", res: Date.now() });
     socket.join(data.chatId);
-    console.log(data.chatId);
-    //TODO: need to be socket.to(data.chatId).emit()
-    socket.broadcast.emit("RECEIVE_MESSAGE", { ...data, id: Date.now() });
+    socket.to(data.chatId).emit("RECEIVE_MESSAGE", { ...data, id: Date.now() });
   });
 
   socket.on("join", ({ chatId }) => {

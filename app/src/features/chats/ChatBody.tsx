@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@state/store";
 import Message from "./Message";
+import { useInView } from "@features/stories/hooks/useInView";
+import { useFetchNextPage } from "./hooks/useFetchNextPage";
+import { useEffect } from "react";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -35,18 +38,38 @@ const ScrollContainer = styled.div`
 function ChatBody() {
   const messages = useSelector((state: RootState) => state.messages.messages);
 
+  const { fetchNextPage, data } = useFetchNextPage();
+
+  const { inView, ref } = useInView();
+
+  useEffect(() => {
+    console.log(inView);
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
+
+  console.log(data?.pages);
+
+  //TODO: fix the ordering of pages and message within each page
+  //TODO: fix new page scroll to the top most message
   return (
     <ScrollContainer>
-      {messages.map((data, index) => {
-        return (
-          <Message
-            key={index}
-            index={index}
-            messagesLength={messages.length}
-            data={data}
-          />
-        );
-      })}
+      <div ref={ref}></div>
+      {data?.pages
+        .slice()
+        .reverse()
+        .flatMap((page) => page.messages)
+        .map((data, index) => {
+          return (
+            <Message
+              key={index}
+              index={index}
+              messagesLength={messages.length}
+              data={data}
+            />
+          );
+        })}
     </ScrollContainer>
   );
 }

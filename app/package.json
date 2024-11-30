@@ -34,6 +34,7 @@
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
     "react-international-phone": "^4.3.0",
+    "react-intersection-observer": "^9.13.1",
     "react-modal-image": "^2.6.0",
     "react-router-dom": "^6.27.0",
     "redux-mock-store": "^1.5.5",
