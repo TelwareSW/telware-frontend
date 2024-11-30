@@ -14,7 +14,6 @@ const Container = styled.div`
 
   z-index: 2;
 
-
   height: 3.5rem;
   width: 100%;
 
@@ -75,7 +74,9 @@ const IconButton = styled.button`
 
 function Topbar() {
   const { chat } = useChat();
-  const { name, lastSeen, image } = chat || {};
+  const name = chat?.members[0]?.screenFirstName || chat?.members[0]?.username;
+  const lastSeen = "12:00 PM";
+  const image = chat?.members[0]?.photo;
   const [isSearching, setIsSearching] = useState(false);
 
   if (!chat) return null;

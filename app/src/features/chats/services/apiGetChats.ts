@@ -12,17 +12,15 @@ export async function getAllChatsApi() {
 
   const data = await res.json();
 
-  console.log(data);
-
   if (data.status !== "success") {
     throw new Error(data.message);
   }
 
-  return data.data;
+  return data.data?.chats;
 }
 
 export async function getChatApi(id: string) {
-  const res = await fetch(`${API_URL}/chat/${id}`, {
+  const res = await fetch(`${API_URL}/chats/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -33,9 +31,11 @@ export async function getChatApi(id: string) {
 
   const data = await res.json();
 
+  console.log(data);
+
   if (data.status !== "success") {
     throw new Error(data.message);
   }
 
-  return data.data;
+  return data.data?.chat;
 }
