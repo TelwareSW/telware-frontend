@@ -9,7 +9,7 @@ export const useMessageSender = () => {
   const activeMessage = useAppSelector((state) => state.activeMessage);
   const { chatId } = useParams<{ chatId: string }>();
 
-  const handleSendMessage = (data: string) => {
+  const handleSendMessage = (data: string, file: string) => {
     if (activeMessage?.id && activeMessage.state === "edit") {
       editMessage(activeMessage?.id!, data, chatId!);
       return;
@@ -17,7 +17,7 @@ export const useMessageSender = () => {
 
     const isReply = activeMessage.state === "reply";
 
-    if (data) {
+    if (data || file) {
       const message: MessageInterface = {
         id: "",
         content: data,
@@ -34,6 +34,7 @@ export const useMessageSender = () => {
         isOptionListOpen: false,
         isReply: isReply,
         replyMessageId: isReply ? activeMessage.id : null,
+        media: file,
       };
       sendMessage(message);
     }

@@ -25,6 +25,7 @@ import MessageBox from "./MessageBox";
 import useCheckBox from "@features/forward/hooks/useCheckBox";
 import useHover from "./hooks/useHover";
 import useOptionListAction from "./hooks/useOptionListAction";
+import FileViewer from "./media/FileViewer";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -133,6 +134,7 @@ function Message({
     chatId,
     isReply,
     replyMessageId,
+    media,
   },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useAppSelector(
@@ -158,13 +160,14 @@ function Message({
 
     searchResultRef.current = isCurrentResult ? mergedRef.current : null;
   }, [
-    mergedRef.current,
     searchResults,
     currentResultIndex,
     searchTerm,
     id,
     index,
     messagesLength,
+    lastMessageRef,
+    searchResultRef,
   ]);
 
   const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({ id });
@@ -216,6 +219,7 @@ function Message({
                 <MessageBox messageId={replyMessageId} />
               </MessageBoxWrapper>
             )}
+            {media && <FileViewer file={media} />}
             {renderWithHighlight(content, searchTerm, searchResults, id)}
           </StyledCol>
 
