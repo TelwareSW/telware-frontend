@@ -70,9 +70,9 @@ export interface ChatPopupItemProps {
   username: string;
 }
 
-function ChatPopupItem({ id, name, username }: ChatPopupItemProps) {
+function ChatPopupItem({ name, username }: ChatPopupItemProps) {
   return (
-    <StyledSideBarRow data-testid={`open-block-option-${id}`}>
+    <StyledSideBarRow>
       <RowInfo>
         <FancyAvatar name={name[0]} />
         <InnerDiv>
