@@ -84,7 +84,6 @@ const CheckBoxWrapper = styled.div`
 
 const MessageBoxWrapper = styled.div`
   display: block;
-  background-color: var(--color-background);
 `;
 
 const StyledCol = styled.div`
