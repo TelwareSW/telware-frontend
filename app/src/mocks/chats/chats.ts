@@ -6,9 +6,9 @@ export const chats = [
     return HttpResponse.json(
       {
         status: "success",
-        data: allChats,
+        data: { chats: allChats },
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 
@@ -18,9 +18,9 @@ export const chats = [
     return HttpResponse.json(
       {
         status: "success",
-        data: chat || null,
+        data: { chat: chat || null },
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 ];
