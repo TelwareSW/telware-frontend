@@ -39,6 +39,7 @@ import ShortcutIcon from "@mui/icons-material/Shortcut";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import PinIcon from "@mui/icons-material/Pin";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 
 enum icons {
   BlockIcon,
@@ -84,6 +85,7 @@ enum icons {
   MessagingOptions,
   Pin,
   Reply,
+  PushPin,
 }
 
 type iconStrings = keyof typeof icons;
@@ -332,6 +334,13 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     />
   ),
   Reply: <ReplyOutlinedIcon />,
+  PushPin: (
+    <PushPinOutlinedIcon
+      sx={{
+        fontSize: "0.9rem",
+      }}
+    />
+  ),
 };
 
 function getIcon(iconName?: iconStrings) {
