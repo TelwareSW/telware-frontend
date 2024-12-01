@@ -323,4 +323,36 @@ const messages: MessageInterface[] = [
   },
 ];
 
-export default messages;
+const generateMessages = (count: number): MessageInterface[] => {
+  return Array.from({ length: count }, (_, index) => {
+    const id = index + 21; // Start after the 20th message
+    const contentTypes = ["text", "file", "image", "audio", "video", "link"];
+    const statuses = [
+      MessageStatus.sent,
+      MessageStatus.delivered,
+      MessageStatus.seen,
+      MessageStatus.error,
+    ];
+
+    return {
+      _id: `msg${id}`,
+      timestamp: new Date().toISOString(),
+      content: `This is message number ${id}`,
+      contentType: contentTypes[index % contentTypes.length],
+      isPinned: id % 10 === 0, // Pin every 10th message
+      isForward: id % 5 === 0, // Mark every 5th message as forwarded
+      isAnnouncement: id % 7 === 0, // Mark every 7th message as an announcement
+      senderId: ((id % 3) + 1).toString(), // Rotate between sender IDs 1, 2, and 3
+      chatId: `chat00${(id % 10) + 1}`, // Assign to chat IDs 1 through 10
+      parentMessageId: "",
+      status: statuses[id % statuses.length], // Rotate between statuses
+      isReply: id % 4 === 0, // Mark every 4th message as a reply
+      replyMessageId: id % 4 === 0 ? `msg${Math.max(id - 1, 1)}` : null, // Reply to the previous message
+      media: id % 3 === 0 ? `https://example.com/media${id}` : "", // Add media for every 3rd message
+    };
+  });
+};
+
+// Generate 50 additional messages
+export const newMessages = generateMessages(50);
+export { messages };

@@ -1,4 +1,4 @@
-import messages from "@mocks/data/messages";
+import { newMessages } from "@mocks/data/messages";
 import { http, HttpResponse } from "msw";
 
 export const paginationMock = [
@@ -12,7 +12,7 @@ export const paginationMock = [
     return HttpResponse.json(
       {
         status: "success",
-        data: { messages, nextPage: page + 1 },
+        data: { messages: newMessages, nextPage: page + 1 },
         message: "Messages retrieved successfully",
       },
       { status: 200 }

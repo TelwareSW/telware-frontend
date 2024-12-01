@@ -57,21 +57,18 @@ function ChatBody() {
   return (
     <>
       <ScrollContainer>
-      <div ref={ref}></div>
-        {data?.pages
-          .slice()
-          .reverse()
-          .flatMap((page) => page.messages)
-          .map((data, index) => {
-            return (
-              <Message
-                key={index}
-                index={index}
-                messagesLength={messages.length}
-                data={data}
-              />
-            );
-          })}
+        <div ref={ref}></div>
+
+        {messages.map((data, index) => {
+          return (
+            <Message
+              key={data._id}
+              index={index}
+              messagesLength={messages.length}
+              data={data}
+            />
+          );
+        })}
       </ScrollContainer>
     </>
   );
