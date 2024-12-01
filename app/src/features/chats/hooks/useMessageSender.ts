@@ -11,7 +11,7 @@ export const useMessageSender = () => {
   const activeMessage = useSelector((state: RootState) => state.activeMessage);
   const { chatId } = useParams<{ chatId: string }>();
 
-  const handleSendMessage = (data: string) => {
+  const handleSendMessage = (data: any) => {
     if (activeMessage?.id) {
       editMessage(activeMessage?.id!, data, chatId!);
       return;

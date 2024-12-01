@@ -32,3 +32,9 @@ export interface MessageInterface {
   status: MessageStatus;
   isOptionListOpen: boolean;
 }
+
+export enum StickerTap {
+  gif,
+  emoji,
+  sticker,
+}

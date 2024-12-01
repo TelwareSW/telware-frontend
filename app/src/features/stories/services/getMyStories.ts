@@ -2,7 +2,7 @@ import { API_URL } from "@constants";
 
 async function getMyStories() {
   try {
-    const response = await fetch(`${API_URL}/users/stories/me`, {
+    const response = await fetch(`${API_URL}/users/stories`, {
       method: "GET",
       credentials: "include",
     });

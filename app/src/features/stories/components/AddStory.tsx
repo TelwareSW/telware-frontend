@@ -72,7 +72,7 @@ function AddStory() {
           ref={fileInputRef}
           accept="image/*"
           onChange={handleImageUpload}
-          data-testid="story-upload"
+          data-testid="story-upload-input"
           id="story-upload"
         />
       </StyledStoryCreator>

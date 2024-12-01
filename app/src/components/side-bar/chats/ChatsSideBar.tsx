@@ -31,7 +31,7 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
   return (
     <StyledChatsSideBar>
       <ChatsSidebarHeader />
-      {/* <StoryListContainer /> */}
+      <StoryListContainer />
       {children}
       <StyledButtonContainer>
         <AddStory />

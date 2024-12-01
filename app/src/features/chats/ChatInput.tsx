@@ -117,7 +117,13 @@ function ChatInput() {
     <Container>
       {!showCheckBox ? (
         <Input>
-          {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
+          {isEmojiSelectorOpen && (
+            <EmojiPickerItem
+              setInputText={setInput}
+              sendGIF={() => {}}
+              sendSticker={() => {}}
+            />
+          )}
           <InputContainer>
             {activeMessage.id && <ReplyWrapper setInput={setInput} />}
             <InputWrapper>

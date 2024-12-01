@@ -5,11 +5,13 @@ const {
   VITE_PORT: PORT,
   VITE_ENV: ENV,
   VITE_BACKEND_STORGAE: STATIC_MEDIA_URL,
+  VITE_GIPHY_API_KEY: GIPHY_API_KEY,
+  VITE_GIPHY_API_URL: GIPHY_API_URL,
 } = import.meta.env;
 
 const MOBILE_VIEW = "(max-width: 600px)";
 const DESKTOP_VIEW = "(min-width: 600px)";
-
+const GIPHY_LIMIT = 10;
 export {
   ENVIRONMENT,
   RECAPTCHA_SITE_KEY,
@@ -19,4 +21,7 @@ export {
   STATIC_MEDIA_URL,
   MOBILE_VIEW,
   DESKTOP_VIEW,
+  GIPHY_API_KEY,
+  GIPHY_API_URL,
+  GIPHY_LIMIT,
 };

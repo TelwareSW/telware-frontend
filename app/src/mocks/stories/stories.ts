@@ -172,7 +172,7 @@ export const storiesMock = [
     }
   }),
 
-  http.get("/users/stories/me", async () => {
+  http.get("/users/stories", async () => {
     return HttpResponse.json(
       {
         data: MOCK_MY_STORIES,
@@ -181,7 +181,7 @@ export const storiesMock = [
     );
   }),
 
-  http.get("/users/stories", async () => {
+  http.get("/users/contacts/stories", async () => {
     return HttpResponse.json(
       {
         data: MOCK_OTHER_USERS_STORIES,

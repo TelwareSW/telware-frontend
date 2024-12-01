@@ -53,6 +53,7 @@ const GlobalStyles = createGlobalStyle`
     
     --pattern-color: #c3bfc5a6;
   
+    --new-chat-color: #ffffff;
     --color-background-compact-menu: #4c90b218;
     --color-background-compact-menu-hover: #4c90b23b;
     
@@ -96,10 +97,12 @@ const GlobalStyles = createGlobalStyle`
       var(--chat-background-mid-left)
     );
 
+    
     --bg-image-opacity: 100%;
     
     --chat-wallpaper-bg: url("/assets/bg-dark.png");
     
+    --new-chat-color: #36373a;
     --color-background: #192b35;
     --color-background-secondary: #24343e;
     --color-background-secondary-accent: #22313a;
@@ -130,10 +133,12 @@ const GlobalStyles = createGlobalStyle`
 
     --scrollbar-color: rgba(255, 255, 255, .2);
     --color-avatar: linear-gradient(135deg, #72C6EF, #004E92);
+    
   }
 
   --story-views-background: #181a1b;
   --story-views-background-hover: #1e2021;
+
   --color-background-own-1: #6573F8;
   --color-background-own-2: #7644CB;
   --color-background-own-3: #8849B4;
@@ -156,6 +161,7 @@ const GlobalStyles = createGlobalStyle`
   --color-peer-5: #65aadd;
   --color-peer-bg-5: #65aadd1a;
   --color-peer-bg-active-5: #65aadd2b;
+  
 
   --color-peer-6: #ee7aae;
   --color-peer-bg-6: #ee7aae1a;
@@ -180,7 +186,6 @@ const GlobalStyles = createGlobalStyle`
   --color-error: #e53935;
   --color-error-shade: #c62828;
   --color-success: rgb(0, 199, 62);
-
   font-size: 16px;
 }
 
