@@ -11,9 +11,9 @@ export function useLogin() {
   const { mutate: login, isPending } = useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
+      localStorage.setItem("sessionId", data.sessionId);
       queryClient.setQueryData(["user"], { user: data.user });
       queryClient.invalidateQueries({ queryKey: ["isAuth"] });
-      localStorage.setItem("sessionId", data.sessionId);
       dispatch(setUserInfo(data.user));
     },
   });

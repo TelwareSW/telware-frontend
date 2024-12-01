@@ -16,7 +16,7 @@ export async function getAllChatsApi() {
     throw new Error(data.message);
   }
 
-  return data.data?.chats;
+  return data.data;
 }
 
 export async function getChatApi(id: string) {
@@ -30,8 +30,6 @@ export async function getChatApi(id: string) {
   });
 
   const data = await res.json();
-
-  console.log(data);
 
   if (data.status !== "success") {
     throw new Error(data.message);
