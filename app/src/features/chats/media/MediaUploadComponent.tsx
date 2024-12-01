@@ -20,10 +20,9 @@ export default function MediaUploadComponent({
   setIsFilePreviewOpen,
 }: ChildProps) {
   const fileInput = useRef(null);
-  console.log(file);
+
   const onAddFile = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && !file) {
-      console.log("adding file");
       setFile(e.target.files[0]);
     }
 
