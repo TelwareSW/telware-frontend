@@ -12,8 +12,8 @@ export const chats = [
     );
   }),
 
-  http.get("/chat/:id", async ({ params }) => {
-    const chat = allChats.find((chat) => chat.id.toString() === params.id);
+  http.get("/chats/:id", async ({ params }) => {
+    const chat = allChats.find((chat) => chat._id.toString() === params.id);
 
     return HttpResponse.json(
       {
