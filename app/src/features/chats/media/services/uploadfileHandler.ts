@@ -23,5 +23,5 @@ export async function uploadFile(file: File | null) {
     throw new Error(data.message || "Failed to upload file");
   }
 
-  return STATIC_MEDIA_URL + data.data?.mediaFileName || "";
+  return STATIC_MEDIA_URL + "/" + data.data?.mediaFileName || "";
 }

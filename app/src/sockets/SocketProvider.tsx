@@ -115,11 +115,11 @@ function SocketProvider({ children }: SocketProviderProps) {
   useEffect(() => {
     if (!isPending && chats?.length) {
       chats.forEach((chat) => {
-        socket.emit("join", { chatId: chat.id });
+        socket.emit("join", { chatId: chat._id });
       });
       console.log(
         "Joined all chats:",
-        chats.map((chat) => chat.id),
+        chats.map((chat) => chat._id),
       );
     }
   }, [isConnected, isPending, chats, socket]);
@@ -132,8 +132,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         ({ success, message, res }: AcknowledgmentResponse) => {
           if (success) {
             console.log(message);
-            const id = res;
-            handleIncomingMessage(dispatch, { ...sentMessage, id });
+            const _id = res;
+            handleIncomingMessage(dispatch, { ...sentMessage, _id });
           }
         },
       );
