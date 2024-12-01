@@ -6,6 +6,7 @@ async function GetAllSessions(): Promise<Session[]> {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     credentials: "include",
   });

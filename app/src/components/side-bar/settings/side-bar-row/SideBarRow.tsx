@@ -73,23 +73,13 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
   const renderedIcon = getIcon(icon);
 
   const [currStatus, setCurrStatus] = useState<string | undefined>(undefined);
-  let key:
-    | {
-        id: keyof privacySettingsInterface;
-        name: string;
-        subtitle: string;
-      }
-    | {
-        id: keyof activitySettingsInterface;
-        name: string;
-        subtitle: string;
-      }
-    | {
-        id: keyof permissionsSettingsInterface;
-        name: string;
-        subtitle: string;
-      }
-    | undefined;
+  const [key, setKey] = useState<
+    | keyof privacySettingsInterface
+    | keyof activitySettingsInterface
+    | keyof permissionsSettingsInterface
+    | string
+    | undefined
+  >(undefined);
 
   const dataExtractor: DataInterface = ExtractData(type, currStatus, status);
   const data = dataExtractor.getData();
@@ -98,31 +88,48 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
     if (status !== undefined && type !== undefined) {
       switch (type) {
         case StatusType.PRIVACY:
-          key = statusMap.privacy[status];
-          setCurrStatus(userData?.privacySettings?.[key.id] || "everyone");
+          setKey(statusMap.privacy[status].id);
+          if (status === privacySettingsID.BLOCK_PRIVACY)
+            setCurrStatus(undefined);
+          else
+            setCurrStatus(
+              userData?.privacySettings?.[
+                key as keyof privacySettingsInterface
+              ] || "everyone"
+            );
           break;
         case StatusType.ACTIVITY:
-          key = statusMap.activity[status as activitySettingsID];
-          setCurrStatus(userData?.activitySettings?.[key.id] || "everyone");
+          setKey(statusMap.activity[status as activitySettingsID].id);
+          setCurrStatus(
+            userData?.activitySettings?.[
+              key as keyof activitySettingsInterface
+            ] || "everyone"
+          );
           break;
         case StatusType.PERMISSION:
-          key = statusMap.permission[status as permissionSettingsID];
-          setCurrStatus(userData?.permissionSettings?.[key.id] || "everyone");
+          setKey(statusMap.permission[status as permissionSettingsID].id);
+          setCurrStatus(
+            userData?.permissionSettings?.[
+              key as keyof permissionsSettingsInterface
+            ] || "everyone"
+          );
           break;
         default:
+          if (title === "Blocked Users") setKey("block");
+
           throw new Error("Type not valid");
       }
     } else {
       setCurrStatus(undefined);
     }
-  }, [userData, status]);
+  });
 
   return (
     <StyledSideBarRow
       onClick={() =>
         redirect && dispatch(updateSideBarView({ redirect, data }))
       }
-      data-testid={key && `menu-item-${key.id}`}
+      data-testid={key && `menu-item-${key}`}
     >
       <RowInfo>
         {renderedIcon}

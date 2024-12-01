@@ -17,7 +17,7 @@ import { useChats } from "@features/chats/hooks/useChats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
-  message: MessageInterface
+  message: MessageInterface,
 ) => {
   dispatch(addMessage(message));
 };
@@ -62,16 +62,34 @@ function SocketProvider({ children }: SocketProviderProps) {
 
     socket.on(
       "PIN_MESSAGE_SERVER",
-      (chatId: string, messageId: string, userId: string) => {
-        dispatch(pinMessage({ chatId, messageId }));
-      }
+      ({
+        chatId,
+        messageId,
+        userId,
+      }: {
+        chatId: string;
+        messageId: string;
+        userId: string;
+      }) => {
+        console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
+        dispatch(pinMessage({ messageId, chatId }));
+      },
     );
 
     socket.on(
       "UNPIN_MESSAGE_SERVER",
-      (chatId: string, messageId: string, userId: string) => {
-        dispatch(unpinMessage({ chatId, messageId }));
-      }
+      ({
+        chatId,
+        messageId,
+        userId,
+      }: {
+        chatId: string;
+        messageId: string;
+        userId: string;
+      }) => {
+        console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
+        dispatch(unpinMessage({ messageId, chatId }));
+      },
     );
 
     socket.on(
@@ -79,7 +97,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       (chatId: string, messageId: string, content: string) => {
         console.log("EDIT_MESSAGE_SERVER", chatId, messageId, content);
         dispatch(editMessage({ chatId, messageId, content }));
-      }
+      },
     );
 
     socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
@@ -97,11 +115,11 @@ function SocketProvider({ children }: SocketProviderProps) {
   useEffect(() => {
     if (!isPending && chats?.length) {
       chats.forEach((chat) => {
-        socket.emit("join", { chatId: chat.id });
+        socket.emit("join", { chatId: chat._id });
       });
       console.log(
         "Joined all chats:",
-        chats.map((chat) => chat.id)
+        chats.map((chat) => chat._id),
       );
     }
   }, [isConnected, isPending, chats, socket]);
@@ -117,7 +135,7 @@ function SocketProvider({ children }: SocketProviderProps) {
             const id = res;
             handleIncomingMessage(dispatch, { ...sentMessage, id });
           }
-        }
+        },
       );
     } else {
       console.warn("Cannot send message: not connected to socket server");
@@ -127,7 +145,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const editMessageSocket = (
     messageId: string,
     content: string,
-    chatId: string
+    chatId: string,
   ) => {
     if (isConnected) {
       socket.emit("EDIT_MESSAGE_CLIENT", { messageId, content, chatId });
@@ -139,7 +157,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const pinMessageSocket = (
     chatId: string,
     messageId: string,
-    userId: string
+    userId: string,
   ) => {
     if (isConnected) {
       socket.emit("PIN_MESSAGE_CLIENT", { messageId, chatId, userId });
@@ -151,7 +169,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const unpinMessageSocket = (
     chatId: string,
     messageId: string,
-    userId: string
+    userId: string,
   ) => {
     if (isConnected) {
       socket.emit("UNPIN_MESSAGE_CLIENT", { messageId, chatId, userId });

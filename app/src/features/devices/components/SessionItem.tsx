@@ -88,11 +88,13 @@ function SessionItem({ session }: SessionItemProps) {
         <Lottie animationData={sessionIcon} />
       </SessionItemIcon>
       <SessionItemContent>
-        <SessionItemTitle>{session?.agent?.os || "Postman"}</SessionItemTitle>
-        <SessionItemDate>
+        <SessionItemTitle data-testid="session-title">
+          {session?.agent?.os || "Postman"}
+        </SessionItemTitle>
+        <SessionItemDate data-testid="session-date">
           {new Date(session?.lastSeenTime).toLocaleDateString()}
         </SessionItemDate>
-        <SessionItemSubtitle>
+        <SessionItemSubtitle data-testid="session-subtitle">
           {session?.agent?.browser || "Postman WebView"}
         </SessionItemSubtitle>
       </SessionItemContent>

@@ -31,6 +31,9 @@ export interface MessageInterface {
   deleteType: DeleteType;
   status: MessageStatus;
   isOptionListOpen: boolean;
+  isReply: boolean;
+  replyMessageId: string | null;
+  media: string;
 }
 
 export enum StickerTap {

@@ -19,12 +19,12 @@ async function changeSettings(data: {
   const endpt = endPts[key];
   const reqBody = { privacy: value.toLowerCase() };
 
-
   const res = await fetch(`${API_URL}/users/privacy/${endpt}`, {
     method: "PATCH",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     body: JSON.stringify(reqBody),
   });

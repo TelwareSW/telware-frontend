@@ -5,6 +5,7 @@ export async function getAllChatsApi() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     credentials: "include",
   });
@@ -19,10 +20,11 @@ export async function getAllChatsApi() {
 }
 
 export async function getChatApi(id: string) {
-  const res = await fetch(`${API_URL}/chat/${id}`, {
+  const res = await fetch(`${API_URL}/chats/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     credentials: "include",
   });
@@ -33,5 +35,5 @@ export async function getChatApi(id: string) {
     throw new Error(data.message);
   }
 
-  return data.data;
+  return data.data?.chat;
 }

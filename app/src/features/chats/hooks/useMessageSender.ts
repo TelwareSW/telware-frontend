@@ -1,24 +1,24 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-
-import { RootState } from "@state/store";
-
 import { useSocket } from "@hooks/useSocket";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { MessageInterface } from "types/messages";
 
 export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
-  const userId = useSelector((state: RootState) => state.user.userInfo.id);
-  const activeMessage = useSelector((state: RootState) => state.activeMessage);
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+  const activeMessage = useAppSelector((state) => state.activeMessage);
   const { chatId } = useParams<{ chatId: string }>();
 
-  const handleSendMessage = (data: any) => {
-    if (activeMessage?.id) {
+  const handleSendMessage = (data: string, file: string) => {
+    if (activeMessage?.id && activeMessage.state === "edit") {
       editMessage(activeMessage?.id!, data, chatId!);
       return;
     }
 
-    if (data) {
-      const message = {
+    const isReply = activeMessage.state === "reply";
+
+    if (data || file) {
+      const message: MessageInterface = {
         id: "",
         content: data,
         senderId: userId,
@@ -32,6 +32,9 @@ export const useMessageSender = () => {
         deleteType: 2,
         status: 0,
         isOptionListOpen: false,
+        isReply: isReply,
+        replyMessageId: isReply ? activeMessage.id : null,
+        media: file,
       };
       sendMessage(message);
     }

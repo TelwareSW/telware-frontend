@@ -72,9 +72,7 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
   const dispatch = useDispatch();
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
-
-    (state: RootState) => state.search
-
+    (state: RootState) => state.search,
   );
   const { messages } = useSelector((state: RootState) => state.messages);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
@@ -141,12 +139,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
         {isSearchLoading ? getIcon("CircularProgress") : getIcon("Search")}
       </Icon>
       <SearchInput
+        data-testid="search-input"
         type="text"
         placeholder="Search..."
         value={searchTerm}
         onChange={handleSearch}
       />
-      <ResultCounter>
+      <ResultCounter data-testid="search-result-counter">
+        {" "}
+        // Added for testing the result counter
         {searchResults.length > 0
           ? `${currentResultIndex + 1} of ${searchResults.length}`
           : searchTerm.length > 0
@@ -155,19 +156,23 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
       </ResultCounter>
       <SuggestionButtons>
         <IconButton
+          data-testid="previous-result-button"
           onClick={() => dispatch(moveToPreviousResult())}
           disabled={searchResults.length === 0}
         >
           {getIcon("KeyboardArrowUp")}
         </IconButton>
         <IconButton
+          data-testid="next-result-button"
           onClick={() => dispatch(moveToNextResult())}
           disabled={searchResults.length === 0}
         >
           {getIcon("KeyboardArrowDown")}
         </IconButton>
       </SuggestionButtons>
-      <IconButton onClick={handleClose}>{getIcon("Close")}</IconButton>
+      <IconButton onClick={handleClose} data-testid="close-search-button">
+        {getIcon("Close")}
+      </IconButton>
     </SearchContainer>
   );
 };

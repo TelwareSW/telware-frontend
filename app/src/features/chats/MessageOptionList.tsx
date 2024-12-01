@@ -68,23 +68,22 @@ function MessageOptionList(props: Props) {
   } = props;
 
   return (
-    <StyledList $isMine={$isMine}>
-      <HoverMask onClick={forwardOnClick}>
+    <StyledList $isMine={$isMine} data-testid="message-option-list">
+      <HoverMask onClick={forwardOnClick} data-testid="forward-option">
         <StyledP>Forward</StyledP>
       </HoverMask>
-      <HoverMask onClick={replyOnClick}>
+      <HoverMask onClick={replyOnClick} data-testid="reply-option">
         <StyledP>Reply</StyledP>
       </HoverMask>
       {$isMine && (
-        <HoverMask onClick={editOnClick}>
+        <HoverMask onClick={editOnClick} data-testid="edit-option">
           <StyledP>Edit</StyledP>
         </HoverMask>
       )}
-      <HoverMask onClick={pinOnClick}>
+      <HoverMask onClick={pinOnClick} data-testid="pin-option">
         <StyledP>{isPinned ? "Unpin" : "Pin"}</StyledP>
       </HoverMask>
     </StyledList>
   );
 }
-
 export default MessageOptionList;

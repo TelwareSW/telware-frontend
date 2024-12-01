@@ -15,6 +15,7 @@ async function UpdateProfileSettings(newProfileSettings: EditProfileForm) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     body: JSON.stringify(formattedNewProfileSettings),
     credentials: "include",

@@ -5,6 +5,7 @@ async function LogoutOtherSessions() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     credentials: "include",
   });

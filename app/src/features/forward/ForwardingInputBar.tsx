@@ -42,11 +42,11 @@ function ForwardingInputBar(props: Props) {
 
   return (
     <Wrapper>
-      <IconButton onClick={onClose}>
+      <IconButton onClick={onClose} test-id="close-icon">
         <Icon>{getIcon("Close")}</Icon>
       </IconButton>
       <StyledHeader>{selectedMessages.length} messages selected</StyledHeader>
-      <IconButton onClick={onForward}>
+      <IconButton onClick={onForward} test-id="forward-icon">
         <Icon>{getIcon("Forward")}</Icon>
       </IconButton>
     </Wrapper>

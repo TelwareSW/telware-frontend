@@ -5,6 +5,9 @@ async function getMyStories() {
     const response = await fetch(`${API_URL}/users/stories`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
     });
 
     if (!response.ok) {
