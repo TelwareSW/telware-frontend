@@ -1,0 +1,5225 @@
+{
+  "totalFiles": 235,
+  "errorCount": 189,
+  "warningCount": 9,
+  "fixableErrorCount": 146,
+  "fixableWarningCount": 0,
+  "details": [
+    {
+      "filePath": "/app/src/App.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/AppLayout.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/Avatar.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/BackArrow.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/Button.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/CircleIcon.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/CloseButton.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/CollapsedList.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 5,
+          "column": 18,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 5,
+          "endColumn": 21,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  111,
+                  114
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  111,
+                  114
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 6,
+          "column": 9,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 6,
+          "endColumn": 12,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  140,
+                  143
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  140,
+                  143
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/ExpandingTextArea.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/Heading.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/Icon.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/ImageEditor.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/Main.tsx",
+      "errors": [],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "React Hook useEffect has a missing dependency: 'isPending'. Either include it or remove the dependency array.",
+          "line": 50,
+          "column": 6,
+          "nodeType": "ArrayExpression",
+          "endLine": 50,
+          "endColumn": 22,
+          "suggestions": [
+            {
+              "desc": "Update the dependencies array to be: [dispatch, isPending, user]",
+              "fix": {
+                "range": [
+                  1169,
+                  1185
+                ],
+                "text": "[dispatch, isPending, user]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/components/Modal.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/Popup.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 41,
+          "column": 18,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 41,
+          "endColumn": 18,
+          "fix": {
+            "range": [
+              901,
+              901
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/SpinnerMini.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/StyledLink.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/float-label-input/FloatingLabelInput.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/float-label-input/FloatingLabelInputDemo.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 87,
+          "column": 98,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 87,
+          "endColumn": 98,
+          "fix": {
+            "range": [
+              1974,
+              1974
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/float-label-input/FloatingLablelInput.test.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/input-field/CodeInputField.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 35,
+          "column": 18,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 35,
+          "endColumn": 18,
+          "fix": {
+            "range": [
+              749,
+              749
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/input-field/InputField.test.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 24,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 24,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              595,
+              595
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 40,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 40,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              977,
+              977
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 53,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 53,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              1246,
+              1246
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 66,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 66,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              1524,
+              1524
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 82,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 82,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              1897,
+              1897
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/input-field/InputField.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 68,
+          "column": 13,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 68,
+          "endColumn": 16,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  1013,
+                  1016
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  1013,
+                  1016
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/input-field/PasswordInputField.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 75,
+          "column": 13,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 75,
+          "endColumn": 16,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  1291,
+                  1294
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  1291,
+                  1294
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/input-field/TelephoneInputField.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 9,
+          "column": 12,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 9,
+          "endColumn": 15,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  276,
+                  279
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  276,
+                  279
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/password-input-field/PasswordInputField.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 75,
+          "column": 13,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 75,
+          "endColumn": 16,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  1283,
+                  1286
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  1283,
+                  1286
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/radio-input/RadioInput.test.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 66,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 66,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              2178,
+              2178
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 69,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 69,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              2278,
+              2278
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 72,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 72,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              2379,
+              2379
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 85,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 85,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              2689,
+              2689
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 92,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 92,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              2899,
+              2899
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 95,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 95,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              3000,
+              3000
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 98,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 98,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              3101,
+              3101
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 111,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 111,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              3412,
+              3412
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 114,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 114,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              3513,
+              3513
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 117,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 117,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              3614,
+              3614
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/inputs/radio-input/RadioInput.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 101,
+          "column": 40,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 101,
+          "endColumn": 43,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  2353,
+                  2356
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  2353,
+                  2356
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        },
+        {
+          "ruleId": "prefer-const",
+          "severity": 2,
+          "message": "'selectedValue' is never reassigned. Use 'const' instead.",
+          "line": 106,
+          "column": 7,
+          "nodeType": "Identifier",
+          "messageId": "useConst",
+          "endLine": 106,
+          "endColumn": 20,
+          "fix": {
+            "range": [
+              2434,
+              2469
+            ],
+            "text": "const selectedValue = watch(data.id);"
+          }
+        }
+      ],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "React Hook useEffect has missing dependencies: 'data.id' and 'handleSumbit'. Either include them or remove the dependency array.",
+          "line": 111,
+          "column": 6,
+          "nodeType": "ArrayExpression",
+          "endLine": 111,
+          "endColumn": 21,
+          "suggestions": [
+            {
+              "desc": "Update the dependencies array to be: [data.id, handleSumbit, selectedValue]",
+              "fix": {
+                "range": [
+                  2583,
+                  2598
+                ],
+                "text": "[data.id, handleSumbit, selectedValue]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/components/protected-route/ProtectedRoute.test.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 23,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 23,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              640,
+              640
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 36,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 36,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              985,
+              985
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/protected-route/ProtectedRoute.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/ContactsSideBar.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/ContactsSideBarHeader.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/SideBar.test.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-require-imports",
+          "severity": 2,
+          "message": "A `require()` style import is forbidden.",
+          "line": 26,
+          "column": 30,
+          "nodeType": "CallExpression",
+          "messageId": "noRequireImports",
+          "endLine": 26,
+          "endColumn": 62
+        },
+        {
+          "ruleId": "@typescript-eslint/no-require-imports",
+          "severity": 2,
+          "message": "A `require()` style import is forbidden.",
+          "line": 27,
+          "column": 30,
+          "nodeType": "CallExpression",
+          "messageId": "noRequireImports",
+          "endLine": 27,
+          "endColumn": 62
+        },
+        {
+          "ruleId": "@typescript-eslint/no-require-imports",
+          "severity": 2,
+          "message": "A `require()` style import is forbidden.",
+          "line": 29,
+          "column": 3,
+          "nodeType": "CallExpression",
+          "messageId": "noRequireImports",
+          "endLine": 29,
+          "endColumn": 61
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/SideBar.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/chats/ChatsSideBar.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'StoryListContainer' is defined but never used.",
+          "line": 5,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 5,
+          "endColumn": 26
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/chats/ChatsSideBarHeader.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/chats/SearchBar.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/chats/SideBarMenuItem.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/chats/SideBarToolsButton.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 39,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 40,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              1265,
+              1266
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 70,
+          "column": 19,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 70,
+          "endColumn": 19,
+          "fix": {
+            "range": [
+              2152,
+              2152
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 83,
+          "column": 19,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 83,
+          "endColumn": 19,
+          "fix": {
+            "range": [
+              2524,
+              2524
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/chats/theme-toggle/ThemeToggle.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/chats/theme-toggle/ToggleMode.test.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 11,
+          "column": 29,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 11,
+          "endColumn": 29,
+          "fix": {
+            "range": [
+              450,
+              450
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 22,
+          "column": 29,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 22,
+          "endColumn": 29,
+          "fix": {
+            "range": [
+              772,
+              772
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/OptionsList.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 35,
+          "column": 16,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 35,
+          "endColumn": 16,
+          "fix": {
+            "range": [
+              824,
+              824
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/ProfilePicture.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/SettingsSideBarBody.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/SettingsSideBarHeader.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 55,
+          "column": 77,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 55,
+          "endColumn": 77,
+          "fix": {
+            "range": [
+              1704,
+              1704
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/SettingsUpdate.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/side-bar-row/SideBarRow.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 98,
+          "column": 30,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 98,
+          "endColumn": 30,
+          "fix": {
+            "range": [
+              2594,
+              2594
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 106,
+          "column": 28,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 106,
+          "endColumn": 28,
+          "fix": {
+            "range": [
+              2879,
+              2879
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 114,
+          "column": 28,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 114,
+          "endColumn": 28,
+          "fix": {
+            "range": [
+              3173,
+              3173
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "React Hook useEffect contains a call to 'setKey'. Without a list of dependencies, this can lead to an infinite chain of updates. To fix this, pass [status, type, userData.privacySettings, userData.activitySettings, userData.permissionSettings, key, title] as a second argument to the useEffect Hook.",
+          "line": 87,
+          "column": 3,
+          "nodeType": "Identifier",
+          "endLine": 87,
+          "endColumn": 12,
+          "suggestions": [
+            {
+              "desc": "Add dependencies array: [status, type, userData.privacySettings, userData.activitySettings, userData.permissionSettings, key, title]",
+              "fix": {
+                "range": [
+                  3387,
+                  3387
+                ],
+                "text": ", [status, type, userData.privacySettings, userData.activitySettings, userData.permissionSettings, key, title]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/side-bar-row/getDataFactory.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 20,
+          "column": 16,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 20,
+          "endColumn": 16,
+          "fix": {
+            "range": [
+              486,
+              486
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 40,
+          "column": 33,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 40,
+          "endColumn": 33,
+          "fix": {
+            "range": [
+              1058,
+              1058
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 46,
+          "column": 17,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 46,
+          "endColumn": 20,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  1182,
+                  1185
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  1182,
+                  1185
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 81,
+          "column": 33,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 81,
+          "endColumn": 33,
+          "fix": {
+            "range": [
+              2075,
+              2075
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 87,
+          "column": 17,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 87,
+          "endColumn": 20,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  2199,
+                  2202
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  2199,
+                  2202
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 122,
+          "column": 33,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 122,
+          "endColumn": 33,
+          "fix": {
+            "range": [
+              3100,
+              3100
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 128,
+          "column": 17,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 128,
+          "endColumn": 20,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  3224,
+                  3227
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  3224,
+                  3227
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/components/side-bar/settings/side-bar-row/sideBarRow.test.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-require-imports",
+          "severity": 2,
+          "message": "A `require()` style import is forbidden.",
+          "line": 18,
+          "column": 30,
+          "nodeType": "CallExpression",
+          "messageId": "noRequireImports",
+          "endLine": 18,
+          "endColumn": 62
+        },
+        {
+          "ruleId": "@typescript-eslint/no-require-imports",
+          "severity": 2,
+          "message": "A `require()` style import is forbidden.",
+          "line": 19,
+          "column": 30,
+          "nodeType": "CallExpression",
+          "messageId": "noRequireImports",
+          "endLine": 19,
+          "endColumn": 62
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 88,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 88,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              2667,
+              2667
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 133,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 133,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              3938,
+              3938
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/constants.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/data/__mocks__/data/icons.js",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/data/icons.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'icons' is defined but only used as a type.",
+          "line": 44,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "usedOnlyAsType",
+          "endLine": 44,
+          "endColumn": 11
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/data/sideBar.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/ForgotPasswordModal.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/LoginForm/LoginForm.test.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 24,
+          "column": 75,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 24,
+          "endColumn": 75,
+          "fix": {
+            "range": [
+              765,
+              765
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 51,
+          "column": 27,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 51,
+          "endColumn": 27,
+          "fix": {
+            "range": [
+              1707,
+              1707
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 61,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 61,
+          "endColumn": 8,
+          "fix": {
+            "range": [
+              1992,
+              1992
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 112,
+          "column": 36,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 112,
+          "endColumn": 36,
+          "fix": {
+            "range": [
+              3515,
+              3515
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 141,
+          "column": 11,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 141,
+          "endColumn": 11,
+          "fix": {
+            "range": [
+              4276,
+              4276
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 144,
+          "column": 71,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 144,
+          "endColumn": 71,
+          "fix": {
+            "range": [
+              4370,
+              4370
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/LoginForm/LoginForm.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/LoginSection.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/hooks/useAuthCheck.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/hooks/useAuthStatus.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/hooks/useForgotPassword.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/hooks/useLogin.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/hooks/useUser.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `··`",
+          "line": 9,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 9,
+          "endColumn": 3,
+          "fix": {
+            "range": [
+              247,
+              249
+            ],
+            "text": ""
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/schema/login.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Replace `.string().email(\"Please·enter·a·valid·email\")` with `⏎····.string()⏎····.email(\"Please·enter·a·valid·email\")⏎····`",
+          "line": 4,
+          "column": 13,
+          "nodeType": null,
+          "messageId": "replace",
+          "endLine": 4,
+          "endColumn": 58,
+          "fix": {
+            "range": [
+              76,
+              121
+            ],
+            "text": "\n    .string()\n    .email(\"Please enter a valid email\")\n    "
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/services/apiForgotPassword.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/services/apiLogin.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/login/services/checkAuth.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/logout/hooks/useLogout.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/logout/services/apiLogout.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/oauth/LoginWith.test.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 22,
+          "column": 31,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 22,
+          "endColumn": 31,
+          "fix": {
+            "range": [
+              737,
+              737
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/oauth/LoginWith.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/oauth/OauthOptions.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/oauth/hooks/useOauth.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `;`",
+          "line": 5,
+          "column": 36,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 5,
+          "endColumn": 36,
+          "fix": {
+            "range": [
+              149,
+              149
+            ],
+            "text": ";"
+          }
+        }
+      ],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "React Hook useEffect has a missing dependency: 'login'. Either include it or remove the dependency array.",
+          "line": 14,
+          "column": 6,
+          "nodeType": "ArrayExpression",
+          "endLine": 14,
+          "endColumn": 8,
+          "suggestions": [
+            {
+              "desc": "Update the dependencies array to be: [login]",
+              "fix": {
+                "range": [
+                  324,
+                  326
+                ],
+                "text": "[login]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/features/authentication/oauth/hooks/useOauthLogin.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/oauth/services/apiOauth.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `·`",
+          "line": 4,
+          "column": 3,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 4,
+          "endColumn": 4,
+          "fix": {
+            "range": [
+              82,
+              83
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 10,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 11,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              267,
+              268
+            ],
+            "text": ""
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/oauth/services/apiUser.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/reset-password/ResetPasswordModal.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/reset-password/hooks/useResetPassword.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/reset-password/schema/schema.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/reset-password/services/apiResetPassword.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/ConfirmationEmailModal.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 135,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 135,
+          "endColumn": 8,
+          "fix": {
+            "range": [
+              3262,
+              3262
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/SignupForm.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/SignupSection.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/hooks/useSendConfirmationEmail.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/hooks/useSignup.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/hooks/useVerifyEmail.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/schema/signup.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/services/apiConfirmCode.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/services/apiSignup.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/authentication/signup/services/apiVerfiyCode.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/Avatar.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/ChatBody.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/ChatBox.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `;`",
+          "line": 14,
+          "column": 2,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 14,
+          "endColumn": 2,
+          "fix": {
+            "range": [
+              317,
+              317
+            ],
+            "text": ";"
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/ChatInput.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 106,
+          "column": 54,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 106,
+          "endColumn": 54,
+          "fix": {
+            "range": [
+              2646,
+              2646
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/ChatItem.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/ChatsList.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/Message.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 141,
+          "column": 28,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 141,
+          "endColumn": 28,
+          "fix": {
+            "range": [
+              3502,
+              3502
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 156,
+          "column": 42,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 156,
+          "endColumn": 42,
+          "fix": {
+            "range": [
+              3998,
+              3998
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/MessageBox.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 55,
+          "column": 13,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 55,
+          "endColumn": 13,
+          "fix": {
+            "range": [
+              1075,
+              1075
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 72,
+          "column": 20,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 72,
+          "endColumn": 20,
+          "fix": {
+            "range": [
+              1439,
+              1439
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prefer-const",
+          "severity": 2,
+          "message": "'id' is never reassigned. Use 'const' instead.",
+          "line": 78,
+          "column": 7,
+          "nodeType": "Identifier",
+          "messageId": "useConst",
+          "endLine": 78,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              1596,
+              1655
+            ],
+            "text": "const id = useAppSelector((state) => state.user.userInfo.id);"
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 91,
+          "column": 46,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 91,
+          "endColumn": 46,
+          "fix": {
+            "range": [
+              2015,
+              2015
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/MessageOptionList.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/ReplyWrapper.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Replace `{getIcon(\"Close\")}` with `⏎········{getIcon(\"Close\")}⏎······`",
+          "line": 42,
+          "column": 62,
+          "nodeType": null,
+          "messageId": "replace",
+          "endLine": 42,
+          "endColumn": 80,
+          "fix": {
+            "range": [
+              1031,
+              1049
+            ],
+            "text": "\n        {getIcon(\"Close\")}\n      "
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/SendButton.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Replace `⏎···⏎······` with `····`",
+          "line": 10,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "replace",
+          "endLine": 12,
+          "endColumn": 7,
+          "fix": {
+            "range": [
+              194,
+              205
+            ],
+            "text": "    "
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `··`",
+          "line": 13,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 13,
+          "endColumn": 3,
+          "fix": {
+            "range": [
+              217,
+              219
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `··`",
+          "line": 14,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 14,
+          "endColumn": 3,
+          "fix": {
+            "range": [
+              243,
+              245
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `··`",
+          "line": 15,
+          "column": 7,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 15,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              283,
+              285
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `··`",
+          "line": 16,
+          "column": 7,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 16,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              337,
+              339
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `··`",
+          "line": 17,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 17,
+          "endColumn": 3,
+          "fix": {
+            "range": [
+              354,
+              356
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `··`",
+          "line": 18,
+          "column": 7,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 18,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              383,
+              385
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Replace `··/>⏎` with `/>`",
+          "line": 19,
+          "column": 5,
+          "nodeType": null,
+          "messageId": "replace",
+          "endLine": 20,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              420,
+              425
+            ],
+            "text": "/>"
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/StartNewChat.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/Topbar.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/emojies/EmojiPicker.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'event' is defined but never used.",
+          "line": 57,
+          "column": 58,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 57,
+          "endColumn": 63
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/hooks/useChat.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/hooks/useChats.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/hooks/useHover.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/hooks/useMessageSender.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-non-null-asserted-optional-chain",
+          "severity": 2,
+          "message": "Optional chain expressions can return undefined by design - using a non-null assertion is unsafe and wrong.",
+          "line": 14,
+          "column": 19,
+          "nodeType": "TSNonNullExpression",
+          "messageId": "noNonNullOptionalChain",
+          "endLine": 14,
+          "endColumn": 37,
+          "suggestions": [
+            {
+              "messageId": "suggestRemovingNonNull",
+              "fix": {
+                "range": [
+                  647,
+                  648
+                ],
+                "text": ""
+              },
+              "desc": "You should remove the non-null assertion."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/hooks/useOptionListAction.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 24,
+          "column": 51,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 24,
+          "endColumn": 51,
+          "fix": {
+            "range": [
+              631,
+              631
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/hooks/useScrollToLastMsg.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/media/FileDetailsBanner.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/media/FilePreviewItem.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'uploadedUrl' is assigned a value but never used.",
+          "line": 49,
+          "column": 17,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 49,
+          "endColumn": 28
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/media/FileViewer.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/media/MediaUploadComponent.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/media/hooks/useUploadMedia.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/media/services/uploadfileHandler.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/chats/services/apiGetChats.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/Devices.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/components/SessionItem.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/hooks/useGetAllSessions.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/hooks/useGetCurrentSessions.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'GetAllSessions' is defined but never used.",
+          "line": 2,
+          "column": 10,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 2,
+          "endColumn": 24
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/hooks/useLogoutOtherSessions.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/services/GetAllSessions.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/services/GetCurrentSession.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/services/LogoutOtherSessions.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/devices/types/sessions.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/forward/ForwardingInputBar.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 40,
+          "column": 47,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 40,
+          "endColumn": 47,
+          "fix": {
+            "range": [
+              930,
+              930
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/forward/ScrollableChats.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 60,
+          "column": 47,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 60,
+          "endColumn": 47,
+          "fix": {
+            "range": [
+              1514,
+              1514
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 67,
+          "column": 44,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 67,
+          "endColumn": 44,
+          "fix": {
+            "range": [
+              1777,
+              1777
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/forward/chatPopupItem.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/forward/checkBox.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/forward/hooks/useCheckBox.ts",
+      "errors": [],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "React Hook useEffect has a missing dependency: 'isChecked'. Either include it or remove the dependency array. You can also do a functional update 'setIsChecked(i => ...)' if you only need 'isChecked' in the 'setIsChecked' call.",
+          "line": 12,
+          "column": 6,
+          "nodeType": "ArrayExpression",
+          "endLine": 12,
+          "endColumn": 20,
+          "suggestions": [
+            {
+              "desc": "Update the dependencies array to be: [isChecked, showCheckBox]",
+              "fix": {
+                "range": [
+                  495,
+                  509
+                ],
+                "text": "[isChecked, showCheckBox]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/features/pin-messages/components/PinnedMessageProgressBar.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/pin-messages/components/PinnedMessages.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/AddToBlockMenuList.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 62,
+          "column": 50,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 62,
+          "endColumn": 53,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  1537,
+                  1540
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  1537,
+                  1540
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 70,
+          "column": 20,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 70,
+          "endColumn": 20,
+          "fix": {
+            "range": [
+              1748,
+              1748
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/BlockItem.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/BlockList.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/hooks/useBlock.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'QueryClient' is defined but never used.",
+          "line": 2,
+          "column": 3,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 2,
+          "endColumn": 14
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/hooks/useUpdatePrivacy.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/service/blockUser.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/service/changeSettings.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-duplicate-enum-values",
+          "severity": 2,
+          "message": "Duplicate enum member value invite-permissions.",
+          "line": 10,
+          "column": 3,
+          "nodeType": "TSEnumMember",
+          "messageId": "duplicateValue",
+          "endLine": 10,
+          "endColumn": 45
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/service/getBlockList.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/privacy-settings/service/removeFromBlocks.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-info/ProfileInfo.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-info/components/ProfileItem.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/ProfilePictureSection.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'setSelectedImage' is assigned a value but never used.",
+          "line": 75,
+          "column": 25,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 75,
+          "endColumn": 41
+        },
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'setIsImageEditorOpen' is assigned a value but never used.",
+          "line": 76,
+          "column": 29,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 76,
+          "endColumn": 49
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/ProfileSettings.test.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/ProfileSettings.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 219,
+          "column": 47,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 219,
+          "endColumn": 47,
+          "fix": {
+            "range": [
+              5506,
+              5506
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 251,
+          "column": 13,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 251,
+          "endColumn": 13,
+          "fix": {
+            "range": [
+              6289,
+              6289
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 256,
+          "column": 72,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 256,
+          "endColumn": 72,
+          "fix": {
+            "range": [
+              6421,
+              6421
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/hooks/useDeleteProfilePicture.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/hooks/useProfileSettings.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/hooks/useUpdateProfilePicture.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/hooks/useUpdateProfileSettings.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/schema/EditProfileSchema.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/services/DeleteProfilePicture.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/services/GetProfileSettings.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/services/UpdateProfilePicture.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/profile-settings/services/UpdateProfileSettings.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/search/components/SearchBar.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Replace `⏎····(state:·RootState)·=>·state.search⏎` with `····(state:·RootState)·=>·state.search,`",
+          "line": 75,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "replace",
+          "endLine": 77,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              1684,
+              1724
+            ],
+            "text": "    (state: RootState) => state.search,"
+          }
+        }
+      ],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "React Hook useEffect has a missing dependency: 'performSearch'. Either include it or remove the dependency array.",
+          "line": 126,
+          "column": 6,
+          "nodeType": "ArrayExpression",
+          "endLine": 126,
+          "endColumn": 18,
+          "suggestions": [
+            {
+              "desc": "Update the dependencies array to be: [performSearch, searchTerm]",
+              "fix": {
+                "range": [
+                  3088,
+                  3100
+                ],
+                "text": "[performSearch, searchTerm]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/features/search/hooks/useScrollToSearchResultsMsg.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/AddStory.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/ContactStoryIcon.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/Story.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StoryIcon.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 75,
+          "column": 96,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 75,
+          "endColumn": 96,
+          "fix": {
+            "range": [
+              1840,
+              1840
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StoryList.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'Close' is defined but never used.",
+          "line": 6,
+          "column": 10,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 6,
+          "endColumn": 15
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 61,
+          "column": 17,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 61,
+          "endColumn": 17,
+          "fix": {
+            "range": [
+              1629,
+              1629
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 67,
+          "column": 29,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 67,
+          "endColumn": 29,
+          "fix": {
+            "range": [
+              1827,
+              1827
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 73,
+          "column": 30,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 73,
+          "endColumn": 30,
+          "fix": {
+            "range": [
+              2012,
+              2012
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StoryListContainer.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 30,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 31,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              816,
+              817
+            ],
+            "text": ""
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StoryPreview.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StorySlide.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 1,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 2,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              0,
+              1
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'ReactDOM' is defined but never used.",
+          "line": 2,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 2,
+          "endColumn": 16
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 82,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 83,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              1804,
+              1805
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 121,
+          "column": 14,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 121,
+          "endColumn": 14,
+          "fix": {
+            "range": [
+              2813,
+              2813
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 129,
+          "column": 18,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 129,
+          "endColumn": 18,
+          "fix": {
+            "range": [
+              2967,
+              2967
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 151,
+          "column": 70,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 151,
+          "endColumn": 70,
+          "fix": {
+            "range": [
+              3557,
+              3557
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StorySlideCounter.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 29,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 30,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              567,
+              568
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 46,
+          "column": 35,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 46,
+          "endColumn": 35,
+          "fix": {
+            "range": [
+              1043,
+              1043
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StorySliderTooltip.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/StoryViews.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 31,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 32,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              884,
+              885
+            ],
+            "text": ""
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/components/UserInfo.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 18,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 19,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              382,
+              383
+            ],
+            "text": ""
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/hooks/useDeleteStory.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/hooks/useInView.ts",
+      "errors": [],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "The ref value 'ref.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'ref.current' to a variable inside the effect, and use that variable in the cleanup function.",
+          "line": 21,
+          "column": 47,
+          "nodeType": "Identifier",
+          "endLine": 21,
+          "endColumn": 54
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/features/stories/hooks/useMyStories.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/hooks/usePostStory.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/hooks/useStories.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/hooks/useViewStory.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/hooks/useViews.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/services/deleteStory.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/services/getMyStories.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/services/getStories.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/services/getViews.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/services/postStory.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/features/stories/services/viewStory.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/hooks/useCloseChat.ts",
+      "errors": [],
+      "warnings": [
+        {
+          "ruleId": "react-hooks/exhaustive-deps",
+          "severity": 1,
+          "message": "React Hook useEffect has a missing dependency: 'navigate'. Either include it or remove the dependency array.",
+          "line": 19,
+          "column": 6,
+          "nodeType": "ArrayExpression",
+          "endLine": 19,
+          "endColumn": 8,
+          "suggestions": [
+            {
+              "desc": "Update the dependencies array to be: [navigate]",
+              "fix": {
+                "range": [
+                  445,
+                  447
+                ],
+                "text": "[navigate]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/hooks/useGlobalState.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/hooks/useIndexedDB.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 27,
+          "column": 20,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 27,
+          "endColumn": 20,
+          "fix": {
+            "range": [
+              725,
+              725
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 39,
+          "column": 20,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 39,
+          "endColumn": 20,
+          "fix": {
+            "range": [
+              1002,
+              1002
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/hooks/useMouseLeave.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 21,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 21,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              494,
+              494
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 30,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 30,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              671,
+              671
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/hooks/useSocket.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/main.tsx",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 22,
+          "column": 16,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 22,
+          "endColumn": 16,
+          "fix": {
+            "range": [
+              568,
+              568
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/browser.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/chats/chats.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/chats/media.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 15,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 15,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              404,
+              404
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 27,
+          "column": 22,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 27,
+          "endColumn": 22,
+          "fix": {
+            "range": [
+              639,
+              639
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/data/Sessions.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/data/blocklist.ts",
+      "errors": [
+        {
+          "ruleId": "prefer-const",
+          "severity": 2,
+          "message": "'blockList' is never reassigned. Use 'const' instead.",
+          "line": 3,
+          "column": 5,
+          "nodeType": "Identifier",
+          "messageId": "useConst",
+          "endLine": 3,
+          "endColumn": 34,
+          "fix": {
+            "range": [
+              74,
+              240
+            ],
+            "text": "const blockList: BlockedUserProps[] = [\n  {\n    id: 1,\n    name: \"Alice\",\n    username: \"alice123\",\n  },\n  {\n    id: 2,\n    name: \"Bob\",\n    username: \"bob123\",\n  },\n];"
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/data/chats.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/data/messages.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/data/users.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/devices/devices.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/fileMock.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/handlers.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/oauth/oauth.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 12,
+          "column": 11,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 12,
+          "endColumn": 13,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  228,
+                  230
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  228,
+                  230
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 20,
+          "column": 9,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 20,
+          "endColumn": 11,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  345,
+                  347
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  345,
+                  347
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 26,
+          "column": 13,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 26,
+          "endColumn": 15,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  453,
+                  455
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  453,
+                  455
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 41,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 41,
+          "endColumn": 8,
+          "fix": {
+            "range": [
+              861,
+              861
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 45,
+          "column": 13,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 45,
+          "endColumn": 15,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  888,
+                  890
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  888,
+                  890
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 60,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 60,
+          "endColumn": 8,
+          "fix": {
+            "range": [
+              1296,
+              1296
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/privacy-settings/privacySettings.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Delete `⏎`",
+          "line": 11,
+          "column": 1,
+          "nodeType": null,
+          "messageId": "delete",
+          "endLine": 12,
+          "endColumn": 1,
+          "fix": {
+            "range": [
+              366,
+              367
+            ],
+            "text": ""
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 19,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 19,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              677,
+              677
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prefer-const",
+          "severity": 2,
+          "message": "'user' is never reassigned. Use 'const' instead.",
+          "line": 30,
+          "column": 9,
+          "nodeType": "Identifier",
+          "messageId": "useConst",
+          "endLine": 30,
+          "endColumn": 13,
+          "fix": {
+            "range": [
+              879,
+              941
+            ],
+            "text": "const user = allChats.find((item) => item.id.toString() === id);"
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 50,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 50,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              1514,
+              1514
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/profile-settings/profile-picture.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 15,
+          "column": 22,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 15,
+          "endColumn": 22,
+          "fix": {
+            "range": [
+              370,
+              370
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 36,
+          "column": 10,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 36,
+          "endColumn": 10,
+          "fix": {
+            "range": [
+              952,
+              952
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 47,
+          "column": 10,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 47,
+          "endColumn": 10,
+          "fix": {
+            "range": [
+              1172,
+              1172
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/profile-settings/profile-settings.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/server.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/stories/mockStoriesData.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/stories/stories.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 17,
+          "column": 9,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 17,
+          "endColumn": 11,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  329,
+                  331
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  329,
+                  331
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 23,
+          "column": 9,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 23,
+          "endColumn": 11,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  426,
+                  428
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  426,
+                  428
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 36,
+          "column": 9,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 36,
+          "endColumn": 11,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  659,
+                  661
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  659,
+                  661
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 41,
+          "column": 9,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 41,
+          "endColumn": 11,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  756,
+                  758
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  756,
+                  758
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 53,
+          "column": 13,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 53,
+          "endColumn": 15,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  984,
+                  986
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  984,
+                  986
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 80,
+          "column": 12,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 80,
+          "endColumn": 12,
+          "fix": {
+            "range": [
+              1835,
+              1835
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 91,
+          "column": 12,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 91,
+          "endColumn": 12,
+          "fix": {
+            "range": [
+              2067,
+              2067
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 94,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 94,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              2092,
+              2092
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 128,
+          "column": 12,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 128,
+          "endColumn": 12,
+          "fix": {
+            "range": [
+              3129,
+              3129
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 139,
+          "column": 12,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 139,
+          "endColumn": 12,
+          "fix": {
+            "range": [
+              3353,
+              3353
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 142,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 142,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              3378,
+              3378
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 159,
+          "column": 10,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 159,
+          "endColumn": 10,
+          "fix": {
+            "range": [
+              3836,
+              3836
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 170,
+          "column": 10,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 170,
+          "endColumn": 10,
+          "fix": {
+            "range": [
+              4039,
+              4039
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 180,
+          "column": 22,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 180,
+          "endColumn": 22,
+          "fix": {
+            "range": [
+              4207,
+              4207
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 191,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 191,
+          "endColumn": 8,
+          "fix": {
+            "range": [
+              4388,
+              4388
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "severity": 2,
+          "message": "'params' is defined but never used.",
+          "line": 195,
+          "column": 48,
+          "nodeType": null,
+          "messageId": "unusedVar",
+          "endLine": 195,
+          "endColumn": 54
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 202,
+          "column": 8,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 202,
+          "endColumn": 8,
+          "fix": {
+            "range": [
+              4574,
+              4574
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/userauth/login.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 13,
+          "column": 11,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 13,
+          "endColumn": 13,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  271,
+                  273
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  271,
+                  273
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 21,
+          "column": 9,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 21,
+          "endColumn": 11,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  393,
+                  395
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  393,
+                  395
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "@typescript-eslint/no-empty-object-type",
+          "severity": 2,
+          "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
+          "line": 31,
+          "column": 13,
+          "nodeType": "TSTypeLiteral",
+          "messageId": "noEmptyObject",
+          "endLine": 31,
+          "endColumn": 15,
+          "suggestions": [
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "object"
+              },
+              "fix": {
+                "range": [
+                  601,
+                  603
+                ],
+                "text": "object"
+              },
+              "desc": "Replace `{}` with `object`."
+            },
+            {
+              "messageId": "replaceEmptyObjectType",
+              "data": {
+                "replacement": "unknown"
+              },
+              "fix": {
+                "range": [
+                  601,
+                  603
+                ],
+                "text": "unknown"
+              },
+              "desc": "Replace `{}` with `unknown`."
+            }
+          ]
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 47,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 47,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              1136,
+              1136
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 67,
+          "column": 10,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 67,
+          "endColumn": 10,
+          "fix": {
+            "range": [
+              1677,
+              1677
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 69,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 69,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              1692,
+              1692
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/userauth/logout.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/userauth/resetpassword.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 37,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 37,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              817,
+              817
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 46,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 46,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              983,
+              983
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 48,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 48,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              998,
+              998
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 65,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 65,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              1415,
+              1415
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 74,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 74,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              1590,
+              1590
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 76,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 76,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              1605,
+              1605
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/userauth/signup.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 39,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 39,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              870,
+              870
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 49,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 49,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              1056,
+              1056
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 51,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 51,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              1071,
+              1071
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/mocks/userauth/verfiyEmail.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 37,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 37,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              809,
+              809
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 46,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 46,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              999,
+              999
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 48,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 48,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              1014,
+              1014
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 65,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 65,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              1415,
+              1415
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 74,
+          "column": 24,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 74,
+          "endColumn": 24,
+          "fix": {
+            "range": [
+              1590,
+              1590
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 76,
+          "column": 6,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 76,
+          "endColumn": 6,
+          "fix": {
+            "range": [
+              1605,
+              1605
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/pages/Login.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/pages/Signup.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/sockets/SocketContext.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/sockets/SocketProvider.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/state/messages/activeMessage.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/state/messages/messages.ts",
+      "errors": [
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 29,
+          "column": 60,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 29,
+          "endColumn": 60,
+          "fix": {
+            "range": [
+              773,
+              773
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 44,
+          "column": 9,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 44,
+          "endColumn": 9,
+          "fix": {
+            "range": [
+              1149,
+              1149
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 50,
+          "column": 26,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 50,
+          "endColumn": 26,
+          "fix": {
+            "range": [
+              1337,
+              1337
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 60,
+          "column": 67,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 60,
+          "endColumn": 67,
+          "fix": {
+            "range": [
+              1517,
+              1517
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 64,
+          "column": 62,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 64,
+          "endColumn": 62,
+          "fix": {
+            "range": [
+              1685,
+              1685
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 73,
+          "column": 67,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 73,
+          "endColumn": 67,
+          "fix": {
+            "range": [
+              1864,
+              1864
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 77,
+          "column": 62,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 77,
+          "endColumn": 62,
+          "fix": {
+            "range": [
+              2032,
+              2032
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 95,
+          "column": 55,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 95,
+          "endColumn": 55,
+          "fix": {
+            "range": [
+              2547,
+              2547
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 106,
+          "column": 60,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 106,
+          "endColumn": 60,
+          "fix": {
+            "range": [
+              2826,
+              2826
+            ],
+            "text": ","
+          }
+        },
+        {
+          "ruleId": "prettier/prettier",
+          "severity": 2,
+          "message": "Insert `,`",
+          "line": 126,
+          "column": 32,
+          "nodeType": null,
+          "messageId": "insert",
+          "endLine": 126,
+          "endColumn": 32,
+          "fix": {
+            "range": [
+              3440,
+              3440
+            ],
+            "text": ","
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/state/messages/search.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/state/side-bar/sideBar.ts",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 48,
+          "column": 10,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 48,
+          "endColumn": 13,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  1092,
+                  1095
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  1092,
+                  1095
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/state/store.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/state/theme/theme.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/state/user/user.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/styles/GlobalStyles.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/tests/test-utils.tsx",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/types/media.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/types/messages.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/types/sideBar.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/types/socket.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/types/story.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/types/user.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/utils/helpers.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/utils/renderWithHighlight.tsx",
+      "errors": [
+        {
+          "ruleId": "@typescript-eslint/no-explicit-any",
+          "severity": 2,
+          "message": "Unexpected any. Specify a different type.",
+          "line": 11,
+          "column": 19,
+          "nodeType": "TSAnyKeyword",
+          "messageId": "unexpectedAny",
+          "endLine": 11,
+          "endColumn": 22,
+          "suggestions": [
+            {
+              "messageId": "suggestUnknown",
+              "fix": {
+                "range": [
+                  344,
+                  347
+                ],
+                "text": "unknown"
+              },
+              "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+            },
+            {
+              "messageId": "suggestNever",
+              "fix": {
+                "range": [
+                  344,
+                  347
+                ],
+                "text": "never"
+              },
+              "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+            }
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "ruleId": "react-refresh/only-export-components",
+          "severity": 1,
+          "message": "Fast refresh only works when a file only exports components. Move your component(s) to a separate file.",
+          "line": 3,
+          "column": 7,
+          "nodeType": "Identifier",
+          "messageId": "localComponents",
+          "endLine": 3,
+          "endColumn": 22
+        }
+      ]
+    },
+    {
+      "filePath": "/app/src/utils/socket.ts",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/utils/static-analysis-script.js",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "filePath": "/app/src/vite-env.d.ts",
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}
