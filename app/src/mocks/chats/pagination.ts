@@ -1,4 +1,4 @@
-import { messages } from "@mocks/data/messages";
+import messages from "@mocks/data/messages";
 import { http, HttpResponse } from "msw";
 
 export const paginationMock = [
@@ -8,18 +8,11 @@ export const paginationMock = [
     console.log(url.searchParams.get("page"));
 
     const page = parseInt(url.searchParams.get("page") || "1", 10);
-    const limit = parseInt(url.searchParams.get("limit") || "20", 10);
-
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedMessages = messages.slice(startIndex, endIndex);
-    console.log(startIndex, endIndex);
-    console.log(paginatedMessages);
 
     return HttpResponse.json(
       {
         status: "success",
-        data: { messages: paginatedMessages, nextPage: page + 1 },
+        data: { messages, nextPage: page + 1 },
         message: "Messages retrieved successfully",
       },
       { status: 200 }

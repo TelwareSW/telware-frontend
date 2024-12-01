@@ -112,6 +112,13 @@ const messagesSlice = createSlice({
         (msgId) => msgId !== id
       );
     },
+
+    mergeMessages: (
+      state,
+      action: PayloadAction<{ messages: MessageInterface[] }>
+    ) => {
+      state.messages = [...action.payload.messages, ...state.messages];
+    },
   },
 });
 
@@ -126,6 +133,7 @@ export const {
   setShowCheckBox,
   SelectMessage,
   removeSelectedMessage,
+  mergeMessages,
 } = messagesSlice.actions;
 export default messagesSlice.reducer;
 export type { MessageInterface, MessagesState };
