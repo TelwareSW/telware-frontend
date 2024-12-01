@@ -11,29 +11,29 @@ const MOCK_MY_STORIES: story[] = [
       {
         id: "1",
         userId: "1",
-        username: "Ahmed Hamdy",
-        avatar: "https://i.pravatar.cc/70?=0.2",
+        name: "Ahmed Hamdy",
+        photo: "https://i.pravatar.cc/70?=0.2",
         seenTime: new Date().toISOString(),
       },
       {
         id: "2",
         userId: "12",
-        username: "John Doe",
-        avatar: "https://i.pravatar.cc/70?=0.25",
+        name: "John Doe",
+        photo: "https://i.pravatar.cc/70?=0.25",
         seenTime: new Date().toISOString(),
       },
       {
         id: "3",
         userId: "13",
-        username: "Alice Bob",
-        avatar: "https://i.pravatar.cc/70?=0.35",
+        name: "Alice Bob",
+        photo: "https://i.pravatar.cc/70?=0.35",
         seenTime: new Date().toISOString(),
       },
       {
         id: "4",
         userId: "14",
-        username: "Bob Alice",
-        avatar: "https://i.pravatar.cc/70?=0.45",
+        name: "Bob Alice",
+        photo: "https://i.pravatar.cc/70?=0.45",
         seenTime: new Date().toISOString(),
       },
     ],
@@ -41,9 +41,9 @@ const MOCK_MY_STORIES: story[] = [
 ];
 const MOCK_OTHER_USERS_STORIES = [
   {
-    id: "1",
+    userId: "1",
     name: "Ahmed Hamdy",
-    avatar: "https://i.pravatar.cc/70?=0.7",
+    photo: "https://i.pravatar.cc/70?=0.7",
     stories: [
       {
         id: "110001",
@@ -56,9 +56,9 @@ const MOCK_OTHER_USERS_STORIES = [
     ],
   },
   {
-    id: "3",
+    userId: "3",
     name: "John Doe",
-    avatar: "https://i.pravatar.cc/70?=0.45",
+    photo: "https://i.pravatar.cc/70?=0.45",
     stories: [
       {
         id: "110004",
@@ -78,9 +78,9 @@ const MOCK_OTHER_USERS_STORIES = [
     ],
   },
   {
-    id: "4",
+    userId: "4",
     name: "Bob Alice",
-    avatar: "https://i.pravatar.cc/70?=0.55",
+    photo: "https://i.pravatar.cc/70?=0.55",
     stories: [
       {
         id: "110008",
@@ -101,9 +101,9 @@ const MOCK_OTHER_USERS_STORIES = [
     ],
   },
   {
-    id: "5",
+    userId: "5",
     name: "Peter Barker",
-    avatar: "https://i.pravatar.cc/70?=0.05",
+    photo: "https://i.pravatar.cc/70?=0.05",
     stories: [
       {
         id: "110010",
@@ -120,29 +120,29 @@ const MOCK_VIEWS: storyView[] = [
   {
     id: "1",
     userId: "1",
-    username: "Ahmed Hamdy",
-    avatar: "https://i.pravatar.cc/70?=0.2",
+    name: "Ahmed Hamdy",
+    photo: "https://i.pravatar.cc/70?=0.2",
     seenTime: new Date().toISOString(),
   },
   {
     id: "2",
     userId: "12",
-    username: "John Doe",
-    avatar: "https://i.pravatar.cc/70?=0.25",
+    name: "John Doe",
+    photo: "https://i.pravatar.cc/70?=0.25",
     seenTime: new Date().toISOString(),
   },
   {
     id: "3",
     userId: "13",
-    username: "Alice Bob",
-    avatar: "https://i.pravatar.cc/70?=0.35",
+    name: "Alice Bob",
+    photo: "https://i.pravatar.cc/70?=0.35",
     seenTime: new Date().toISOString(),
   },
   {
     id: "4",
     userId: "14",
-    username: "Bob Alice",
-    avatar: "https://i.pravatar.cc/70?=0.45",
+    name: "Bob Alice",
+    photo: "https://i.pravatar.cc/70?=0.45",
     seenTime: new Date().toISOString(),
   },
 ];

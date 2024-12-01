@@ -3,7 +3,6 @@ import StoryIcon from "./StoryIcon";
 import { story, userStories } from "types/story";
 import StorySlide from "./StorySlide";
 import { useEffect, useState } from "react";
-import { Close } from "@mui/icons-material";
 import CloseButton from "@components/CloseButton";
 
 interface StoryListProps {
@@ -57,19 +56,19 @@ function StoryList(props: StoryListProps) {
       setUserName(
         currentStoryUserId == "me"
           ? "My Story"
-          : userStories.find((user) => user.id === currentStoryUserId)?.name ||
-              ""
+          : userStories.find((user) => user.userId === currentStoryUserId)
+              ?.name || ""
       );
       setUserAvatar(
         currentStoryUserId == "me"
           ? userInfo.photo || ""
-          : userStories.find((user) => user.id === currentStoryUserId)
-              ?.avatar || ""
+          : userStories.find((user) => user.userId === currentStoryUserId)
+              ?.photo || ""
       );
       setStories(
         currentStoryUserId == "me"
           ? myStories
-          : userStories.find((user) => user.id === currentStoryUserId)
+          : userStories.find((user) => user.userId === currentStoryUserId)
               ?.stories || []
       );
     }
@@ -86,7 +85,7 @@ function StoryList(props: StoryListProps) {
         <StorySlide
           userId={currentStoryUserId}
           name={userName}
-          avatar={userAvatar}
+          photo={userAvatar}
           getNextUserStories={() => handleStoryClick("")}
           stories={stories}
           onClose={() => handleStoryClick("")}
@@ -99,7 +98,7 @@ function StoryList(props: StoryListProps) {
             <StoryIcon
               data-testid="my-story-icon"
               name="My Story"
-              avatar={userInfo.photo}
+              photo={userInfo.photo}
               stories={myStories}
               isMyStory={true}
               onView={handleStoryClick}
@@ -108,12 +107,12 @@ function StoryList(props: StoryListProps) {
           )}
           {userStories.map((userStory: userStories) => (
             <StoryIcon
-              key={userStory.id}
-              data-testid={`story-icon-${userStory.id}`}
+              key={userStory.userId}
+              data-testid={`story-icon-${userStory.userId}`}
               name={userStory.name}
-              avatar={userStory.avatar}
+              photo={userStory.photo}
               stories={userStory.stories}
-              userId={userStory.id}
+              userId={userStory.userId}
               onView={handleStoryClick}
             />
           ))}

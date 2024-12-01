@@ -27,3 +27,9 @@ export interface MessageInterface {
   isReply: boolean;
   replyMessageId: string | null;
 }
+
+export enum StickerTap {
+  gif,
+  emoji,
+  sticker,
+}

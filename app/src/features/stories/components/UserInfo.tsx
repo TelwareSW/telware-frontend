@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 interface UserInfoProps {
   name: string;
-  avatar: string;
+  photo: string;
   elapsedTime: string;
   isVertical?: boolean;
 }
@@ -15,7 +15,6 @@ const StyledStoryHeader = styled.div`
   gap: 0.7rem;
 
   z-index: 1;
-
 `;
 const StyledUserInfo = styled.div<{ $isVertical?: boolean }>`
   display: flex;
@@ -40,11 +39,11 @@ const StyledElapsedTime = styled.p`
   text-align: left;
 `;
 function UserInfo(props: UserInfoProps) {
-  const { name, avatar, elapsedTime, isVertical } = props;
+  const { name, photo, elapsedTime, isVertical } = props;
 
   return (
     <StyledStoryHeader>
-      <Avatar name={name} image={avatar} />
+      <Avatar name={name} image={photo} />
       <StyledUserInfo $isVertical={isVertical}>
         <Heading as="h5">{name}</Heading>
         <StyledElapsedTime>{elapsedTime}</StyledElapsedTime>
