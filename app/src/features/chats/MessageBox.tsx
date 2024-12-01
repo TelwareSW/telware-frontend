@@ -60,8 +60,8 @@ function extractMessageData(
   if (id === msg?.senderId) name = "you";
   else {
     const chat =
-      msg && allChats.find((chat) => chat.id.toString() === msg?.senderId);
-    name = chat?.name;
+      msg && allChats.find((chat) => chat._id === msg?.senderId);
+    name = `${chat?.members[0].screenFirstName} ${chat?.members[0].screenLastName}`; 
   }
 
   return { msg, name };
@@ -71,7 +71,7 @@ function getMessageById(
   messages: MessageInterface[],
   messageId: string
 ): MessageInterface | undefined {
-  return messages.find((message) => message.id === messageId);
+  return messages.find((message) => message._id === messageId);
 }
 
 function MessageBox({ messageId }: MessageBoxProps) {

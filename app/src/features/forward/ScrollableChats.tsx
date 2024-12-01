@@ -64,7 +64,7 @@ function ScrollableChats(props: Props) {
 
   const handleSubmit = () => {
     const messagesToForward = messages.filter((message) =>
-      selectedMessages.includes(message.id)
+      selectedMessages.includes(message._id)
     );
 
     messagesToForward.map((message) => {
@@ -85,9 +85,9 @@ function ScrollableChats(props: Props) {
       <ScrollContainer>
         {allChats?.map((item) => {
           const data: ChatPopupItemProps = {
-            id: item.id.toString(),
-            name: item.name,
-            username: item.name.toLowerCase() + 123,
+            id: item._id,
+            name: item.members[0].screenFirstName,
+            username: item.members[0].username,
           };
           return (
             <StylingWrapper
