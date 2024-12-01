@@ -7,6 +7,8 @@ export enum MessageStatus {
 
 export interface MessageInterface {
   _id: string;
+
+  //TODO: needs to be Date
   timestamp: string;
   content: string;
   contentType: string;
@@ -18,7 +20,10 @@ export interface MessageInterface {
 
   parentMessageId: string;
   status: MessageStatus;
+  
+  media?: string;
+
+  //TODO: should use parentMessageId
   isReply: boolean;
   replyMessageId: string | null;
-  media?: string;
 }
