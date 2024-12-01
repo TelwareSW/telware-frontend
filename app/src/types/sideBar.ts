@@ -15,6 +15,7 @@ enum privacySettingsID {
   STORIES_SEEN_PRIVACY,
   LAST_SEEN_PRIVACY,
   PROFILE_PHOTO_PRIVACY,
+  BLOCK_PRIVACY,
 }
 
 enum activitySettingsID {

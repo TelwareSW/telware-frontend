@@ -10,6 +10,7 @@ async function blockUser(data: requestType) {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
   });
 

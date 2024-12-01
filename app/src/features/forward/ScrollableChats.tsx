@@ -77,7 +77,7 @@ function ScrollableChats(props: Props) {
   return (
     <OuterContainer>
       <HeaderRow>
-        <IconWrapper onClick={onClose}>
+        <IconWrapper onClick={onClose} test-id="close-icon">
           <Icon>{getIcon("Close")}</Icon>
         </IconWrapper>
         <Heading as="h4">Forward To...</Heading>

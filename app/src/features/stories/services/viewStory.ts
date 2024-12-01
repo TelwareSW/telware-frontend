@@ -4,6 +4,9 @@ async function viewStory(storyId: string) {
   try {
     const response = await fetch(`${API_URL}/stories/${storyId}/views`, {
       method: "POST",
+      headers: {
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
       credentials: "include",
     });
 

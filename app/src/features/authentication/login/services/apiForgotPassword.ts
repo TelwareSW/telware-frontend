@@ -6,6 +6,7 @@ export async function forgotPassword(email: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
 
     body: JSON.stringify(emailObj),

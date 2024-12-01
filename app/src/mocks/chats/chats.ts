@@ -1,4 +1,4 @@
-import { allChats } from "@mocks/data/chats";
+import { allChats, lastMessages, members } from "@mocks/data/chats";
 import { http, HttpResponse } from "msw";
 
 export const chats = [
@@ -6,21 +6,21 @@ export const chats = [
     return HttpResponse.json(
       {
         status: "success",
-        data: allChats,
+        data: { chats: allChats, members: members, lastMessages: lastMessages },
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 
-  http.get("/chat/:id", async ({ params }) => {
-    const chat = allChats.find((chat) => chat.id.toString() === params.id);
+  http.get("/chats/:id", async ({ params }) => {
+    const chat = allChats.find((chat) => chat._id.toString() === params.id);
 
     return HttpResponse.json(
       {
         status: "success",
-        data: chat || null,
+        data: { chat: chat || null },
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 ];
