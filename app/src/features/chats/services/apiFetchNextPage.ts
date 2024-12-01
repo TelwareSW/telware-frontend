@@ -7,15 +7,28 @@ async function apiFetchNextPage({
   pageParam?: number;
   chatId: string;
 }) {
+  console.log(chatId);
   console.log(pageParam);
   const res = await fetch(
-    `${API_URL}/chats/messages/:${chatId}?page=${pageParam}`
+    `${API_URL}/chats/messages/${chatId}?page=${pageParam}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
+    }
   );
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+
 
   const data = await res.json();
+
+  if (data.status !== "success") {
+    throw new Error(data.message);
+  }
+
+  console.log(data);
 
   if (data.status !== "success") {
     throw new Error(data.message);
