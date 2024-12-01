@@ -82,7 +82,6 @@ function ChatInput() {
   const [input, setInput] = useState<string>("");
   const [file, setFile] = useState<File | string>(null);
   const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
-  console.log(file, isFilePreviewOpen);
   useEffect(() => {
     if (activeMessage.state === "edit" && activeMessage?.content)
       setInput(activeMessage?.content);
