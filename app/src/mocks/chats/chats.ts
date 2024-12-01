@@ -1,4 +1,4 @@
-import { allChats } from "@mocks/data/chats";
+import { allChats, lastMessages, members } from "@mocks/data/chats";
 import { http, HttpResponse } from "msw";
 
 export const chats = [
@@ -6,7 +6,7 @@ export const chats = [
     return HttpResponse.json(
       {
         status: "success",
-        data: { chats: allChats },
+        data: { chats: allChats, members: members, lastMessages: lastMessages },
       },
       { status: 200 },
     );

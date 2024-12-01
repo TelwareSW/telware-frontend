@@ -56,13 +56,15 @@ type ChatItemProps = {
   chat: Chat;
 };
 
-function ChatItem({ chat: { _id, members, type } }: ChatItemProps) {
+function ChatItem({
+  chat: { _id, members, type, lastMessage },
+}: ChatItemProps) {
   const name = members[0]?.screenFirstName || members[0]?.username;
   const image = members[0]?.photo?.length > 50 ? members[0]?.photo : undefined;
   const navigate = useNavigate();
 
-  const timestamp = "12:00 PM";
-  const lastMessage = "Hello";
+  const timestamp = lastMessage?.timestamp || "No messages";
+  const lastMessageContent = lastMessage?.content || "No messages";
 
   const { chatId } = useParams<{ chatId: string }>();
 
@@ -81,14 +83,17 @@ function ChatItem({ chat: { _id, members, type } }: ChatItemProps) {
       <ChatContent>
         <ChatHeader>
           <Name data-testid="chat-name">
-            {type === "private" ? name : "Group"}
+            {type === "private" ? name : `Group ${members[0]?.username}`}
           </Name>
           <Timestamp data-testid="chat-timestamp">
-            {timestamp || "No messages"}
+            {new Date(timestamp).toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }) || "No messages"}
           </Timestamp>
         </ChatHeader>
         <LastMessage data-testid="chat-last-message">
-          {lastMessage || "No messages"}
+          {lastMessageContent || "No messages"}
         </LastMessage>
       </ChatContent>
     </Container>
