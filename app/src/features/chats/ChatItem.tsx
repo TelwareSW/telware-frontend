@@ -72,17 +72,24 @@ function ChatItem({ chat: { _id, members, type } }: ChatItemProps) {
 
   return (
     <Container
+      data-testid="chat-container"
       $active={Number(chatId) === _id}
       onClick={handleOpenChat}
       key={_id}
     >
-      <Avatar image={image} name={name?.charAt(0)} />
+      <Avatar data-testid="chat-avatar" image={image} name={name?.charAt(0)} />
       <ChatContent>
         <ChatHeader>
-          <Name>{type === "private" ? name : "Group"}</Name>
-          <Timestamp>{timestamp || "No messages"}</Timestamp>
+          <Name data-testid="chat-name">
+            {type === "private" ? name : "Group"}
+          </Name>
+          <Timestamp data-testid="chat-timestamp">
+            {timestamp || "No messages"}
+          </Timestamp>
         </ChatHeader>
-        <LastMessage>{lastMessage || "No messages"}</LastMessage>
+        <LastMessage data-testid="chat-last-message">
+          {lastMessage || "No messages"}
+        </LastMessage>
       </ChatContent>
     </Container>
   );

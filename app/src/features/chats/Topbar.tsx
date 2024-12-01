@@ -87,21 +87,25 @@ function Topbar() {
 
   return (
     <Container>
-      <Avatar image={image} name={name?.charAt(0)} />
+      <Avatar data-testid="chat-avatar" image={image} name={name?.charAt(0)} />
       {isSearching ? (
         <SearchBar onClose={toggleSearch} />
       ) : (
         <>
-          <Info>
+          <Info data-testid="chat-info">
             <Content>
-              <Name>{name}</Name>
-              <LastSeen>last seen {lastSeen}</LastSeen>
+              <Name data-testid="chat-name">{name}</Name>
+              <LastSeen data-testid="chat-last-seen">
+                last seen {lastSeen}
+              </LastSeen>
             </Content>
           </Info>
           <PinnedMessages />
           <Icons>
             <Icon>{getIcon("Call")}</Icon>
-            <IconButton onClick={toggleSearch}>{getIcon("Search")}</IconButton>
+            <IconButton onClick={toggleSearch} data-testid="search-button">
+              {getIcon("Search")}
+            </IconButton>
             <Icon>{getIcon("More")}</Icon>
           </Icons>
         </>

@@ -103,7 +103,7 @@ function ChatInput() {
   };
 
   const showCheckBox = useSelector(
-    (state: RootState) => state.messages.showCheckBox
+    (state: RootState) => state.messages.showCheckBox,
   );
 
   const [showForwardUsers, setShowForwardUsers] = useState(false);
@@ -129,17 +129,26 @@ function ChatInput() {
           handleCloseFilePreview={handleCloseFilePreview}
           handleSendMessage={handleSendMessage}
           setFile={setFile}
+          data-testid="file-preview"
         />
       )}
-      <Container>
+      <Container data-testid="chat-input-container">
         {!showCheckBox ? (
-          <Input>
-            {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
+          <Input data-testid="chat-input">
+            {isEmojiSelectorOpen && (
+              <EmojiPickerItem
+                setInputText={setInput}
+                data-testid="emoji-picker"
+              />
+            )}
 
             <InputContainer>
               {activeMessage.id && <ReplyWrapper setInput={setInput} />}
               <InputWrapper>
-                <InvisibleButton onClick={toggleShowEmojies}>
+                <InvisibleButton
+                  onClick={toggleShowEmojies}
+                  data-testid="emoji-button"
+                >
                   <Icon>{getIcon("Emojie")}</Icon>
                 </InvisibleButton>
 
@@ -155,10 +164,15 @@ function ChatInput() {
             <RecordInput
               onClick={handleSubmit}
               type={!input ? "record" : "message"}
+              data-testid="send-button"
             />
           </Input>
         ) : (
-          <ForwardingInputBar onClose={handleClose} onForward={handleForward} />
+          <ForwardingInputBar
+            onClose={handleClose}
+            onForward={handleForward}
+            data-testid="forwarding-input-bar"
+          />
         )}
 
         {showForwardUsers && <ScrollableChats onClose={handleClose} />}

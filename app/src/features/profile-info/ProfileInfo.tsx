@@ -18,20 +18,36 @@ function ProfileInfo() {
   return (
     <ProfileInfoStyled>
       {profileSettings?.phone && (
-        <ProfileItem data={profileSettings.phone} ribbon="Phone" Icon={Phone} />
+        <ProfileItem
+          data={profileSettings.phone}
+          ribbon="Phone"
+          Icon={Phone}
+          data-testid="phone-profile-item"
+        />
       )}
       {profileSettings?.email && (
-        <ProfileItem data={profileSettings.email} ribbon="Email" Icon={Email} />
+        <ProfileItem
+          data={profileSettings.email}
+          ribbon="Email"
+          Icon={Email}
+          data-testid="email-profile-item"
+        />
       )}
       {profileSettings?.username && (
         <ProfileItem
           data={profileSettings.username}
           ribbon="Username"
           Icon={AlternateEmailTwoTone}
+          data-testid="username-profile-item"
         />
       )}
       {profileSettings?.bio && (
-        <ProfileItem data={profileSettings.bio} ribbon="Bio" Icon={Info} />
+        <ProfileItem
+          data={profileSettings.bio}
+          ribbon="Bio"
+          Icon={Info}
+          data-testid="bio-profile-item"
+        />
       )}
     </ProfileInfoStyled>
   );
