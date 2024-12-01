@@ -77,9 +77,12 @@ function Devices() {
         </HeaderAnimatinoContainer>
       </SettingSection>
       <SettingSection>
-        <SectionTitle>THIS DEVICE</SectionTitle>
+        <SectionTitle data-testid="this-device-title">THIS DEVICE</SectionTitle>
         <SessionItem session={activeSession} />
-        <TerminateOtherSessionsButton onClick={handleLogoutOthers}>
+        <TerminateOtherSessionsButton
+          onClick={handleLogoutOthers}
+          data-testid="terminate-other-sessions-button"
+        >
           <Icon>
             <DoDisturbOnOutlined fontSize="large" />
           </Icon>
@@ -87,7 +90,9 @@ function Devices() {
         </TerminateOtherSessionsButton>
       </SettingSection>
       <SettingSection>
-        <SectionTitle>Active sessions</SectionTitle>
+        <SectionTitle data-testid="active-sessions-title">
+          Active sessions
+        </SectionTitle>
         {allDevices?.map((session) => (
           <SessionItem key={session.lastSeenTime} session={session} />
         ))}

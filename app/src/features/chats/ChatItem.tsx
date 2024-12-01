@@ -57,28 +57,44 @@ type ChatItemProps = {
 };
 
 function ChatItem({
-  chat: { id, image, name, timestamp, lastMessage },
+  chat: { _id, members, type, lastMessage },
 }: ChatItemProps) {
+  const name = members[0]?.screenFirstName || members[0]?.username;
+  const image = members[0]?.photo?.length > 50 ? members[0]?.photo : undefined;
   const navigate = useNavigate();
+
+  const timestamp = lastMessage?.timestamp || "No messages";
+  const lastMessageContent = lastMessage?.content || "No messages";
+
   const { chatId } = useParams<{ chatId: string }>();
 
   const handleOpenChat = () => {
-    navigate(`/${id}`);
+    navigate(`/${_id}`);
   };
 
   return (
     <Container
-      $active={Number(chatId) === id}
+      data-testid="chat-container"
+      $active={Number(chatId) === _id}
       onClick={handleOpenChat}
-      key={id}
+      key={_id}
     >
-      <Avatar image={image} name={name?.charAt(0)} />
+      <Avatar data-testid="chat-avatar" image={image} name={name?.charAt(0)} />
       <ChatContent>
         <ChatHeader>
-          <Name>{name}</Name>
-          <Timestamp>{timestamp}</Timestamp>
+          <Name data-testid="chat-name">
+            {type === "private" ? name : `Group ${members[0]?.username}`}
+          </Name>
+          <Timestamp data-testid="chat-timestamp">
+            {new Date(timestamp).toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }) || "No messages"}
+          </Timestamp>
         </ChatHeader>
-        <LastMessage>{lastMessage}</LastMessage>
+        <LastMessage data-testid="chat-last-message">
+          {lastMessageContent || "No messages"}
+        </LastMessage>
       </ChatContent>
     </Container>
   );

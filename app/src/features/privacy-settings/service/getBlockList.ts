@@ -6,6 +6,9 @@ async function getBlockList() {
   const response = await fetch(`${API_URL}/users/block`, {
     method: "GET",
     credentials: "include",
+    headers: {
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
+    },
   });
 
   const data = await response.json();

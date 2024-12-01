@@ -9,6 +9,9 @@ async function postStory(story: File, caption: string) {
     const response = await fetch(`${API_URL}/users/stories`, {
       method: "POST",
       body: formData,
+      headers: {
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
       credentials: "include",
     });
 

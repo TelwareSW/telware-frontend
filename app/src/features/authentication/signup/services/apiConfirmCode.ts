@@ -5,6 +5,7 @@ export async function sendEmailVerification(email: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     body: JSON.stringify({ email: email }),
   });

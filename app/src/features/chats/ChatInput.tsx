@@ -18,6 +18,8 @@ import EmojiPickerItem from "./emojies/EmojiPicker";
 import { useMessageSender } from "./hooks/useMessageSender";
 import ReplyWrapper from "./ReplyWrapper";
 import { clearActiveMessage } from "@state/messages/activeMessage";
+import MediaUploadComponent from "./media/MediaUploadComponent";
+import FilePreviewItem from "./media/FilePreviewItem";
 
 const Container = styled.div`
   z-index: 1;
@@ -78,9 +80,11 @@ const Input = styled.div`
 function ChatInput() {
   const activeMessage = useSelector((state: RootState) => state.activeMessage);
   const [input, setInput] = useState<string>("");
-
+  const [file, setFile] = useState<File | string>(null);
+  const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
   useEffect(() => {
-    if (activeMessage?.content) setInput(activeMessage?.content);
+    if (activeMessage.state === "edit" && activeMessage?.content)
+      setInput(activeMessage?.content);
   }, [activeMessage]);
 
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
@@ -93,13 +97,13 @@ function ChatInput() {
   };
 
   const handleSubmit = () => {
-    handleSendMessage(input);
+    handleSendMessage(input, "");
     dispatch(clearActiveMessage());
     setInput("");
   };
 
   const showCheckBox = useSelector(
-    (state: RootState) => state.messages.showCheckBox
+    (state: RootState) => state.messages.showCheckBox,
   );
 
   const [showForwardUsers, setShowForwardUsers] = useState(false);
@@ -112,35 +116,68 @@ function ChatInput() {
   function handleForward() {
     setShowForwardUsers(true);
   }
+  function handleCloseFilePreview() {
+    setFile(null);
+    setIsFilePreviewOpen(false);
+  }
 
   return (
-    <Container>
-      {!showCheckBox ? (
-        <Input>
-          {isEmojiSelectorOpen && <EmojiPickerItem setInputText={setInput} />}
-          <InputContainer>
-            {activeMessage.id && <ReplyWrapper setInput={setInput} />}
-            <InputWrapper>
-              <InvisibleButton onClick={toggleShowEmojies}>
-                <Icon>{getIcon("Emojie")}</Icon>
-              </InvisibleButton>
-
-              <ExpandingTextArea input={input} setInput={setInput} />
-              <Icon>{getIcon("Attatch")}</Icon>
-            </InputWrapper>
-          </InputContainer>
-
-          <RecordInput
-            onClick={handleSubmit}
-            type={!input ? "record" : "message"}
-          />
-        </Input>
-      ) : (
-        <ForwardingInputBar onClose={handleClose} onForward={handleForward} />
+    <>
+      {isFilePreviewOpen && file && (
+        <FilePreviewItem
+          file={file}
+          handleCloseFilePreview={handleCloseFilePreview}
+          handleSendMessage={handleSendMessage}
+          setFile={setFile}
+          data-testid="file-preview"
+        />
       )}
+      <Container data-testid="chat-input-container">
+        {!showCheckBox ? (
+          <Input data-testid="chat-input">
+            {isEmojiSelectorOpen && (
+              <EmojiPickerItem
+                setInputText={setInput}
+                data-testid="emoji-picker"
+              />
+            )}
 
-      {showForwardUsers && <ScrollableChats onClose={handleClose} />}
-    </Container>
+            <InputContainer>
+              {activeMessage.id && <ReplyWrapper setInput={setInput} />}
+              <InputWrapper>
+                <InvisibleButton
+                  onClick={toggleShowEmojies}
+                  data-testid="emoji-button"
+                >
+                  <Icon>{getIcon("Emojie")}</Icon>
+                </InvisibleButton>
+
+                <ExpandingTextArea input={input} setInput={setInput} />
+                <MediaUploadComponent
+                  file={file}
+                  setFile={setFile}
+                  setIsFilePreviewOpen={setIsFilePreviewOpen}
+                />
+              </InputWrapper>
+            </InputContainer>
+
+            <RecordInput
+              onClick={handleSubmit}
+              type={!input ? "record" : "message"}
+              data-testid="send-button"
+            />
+          </Input>
+        ) : (
+          <ForwardingInputBar
+            onClose={handleClose}
+            onForward={handleForward}
+            data-testid="forwarding-input-bar"
+          />
+        )}
+
+        {showForwardUsers && <ScrollableChats onClose={handleClose} />}
+      </Container>
+    </>
   );
 }
 

@@ -34,11 +34,12 @@ const initialState: userState = {
     status: "",
     bio: "",
   },
-  
+
   privacySettings: {
     storiesSeenPrivacy: privacyStates.EVERYONE,
     lastSeenPrivacy: privacyStates.EVERYONE,
     profilePhotoPrivacy: privacyStates.EVERYONE,
+    blockPrivacy: "",
   },
   activitySettings: {
     readReceiptsPrivacy: activeStates.ENABLED,
@@ -55,34 +56,34 @@ const userSlice = createSlice({
   reducers: {
     setUserInfo: (
       state: userState,
-      action: PayloadAction<userInfoInterface>
+      action: PayloadAction<userInfoInterface>,
     ) => {
       state.userInfo = action.payload;
     },
     updateUserPrivacy: (
       state: userState,
-      action: PayloadAction<updatePrivacyInterface>
+      action: PayloadAction<updatePrivacyInterface>,
     ) => {
       const { key, value } = action.payload;
       state.privacySettings[key] = privacyStates[value];
     },
     updateUserInfo: (
       state: userState,
-      action: PayloadAction<updateInfoInterface>
+      action: PayloadAction<updateInfoInterface>,
     ) => {
       const { key, value } = action.payload;
       state.userInfo[key] = value;
     },
     updateUserActivity: (
       state: userState,
-      action: PayloadAction<updateActivityInterface>
+      action: PayloadAction<updateActivityInterface>,
     ) => {
       const { key, value } = action.payload;
       state.activitySettings[key] = activeStates[value];
     },
     updateUserPermission: (
       state: userState,
-      action: PayloadAction<updatePermissionInterface>
+      action: PayloadAction<updatePermissionInterface>,
     ) => {
       const { key, value } = action.payload;
       state.permissionSettings[key] = permissionStates[value];

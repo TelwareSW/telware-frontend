@@ -35,14 +35,14 @@ io.on("connection", (socket) => {
   socket.on("PIN_MESSAGE_CLIENT", ({ messageId, chatId, userId }) => {
     console.log("PIN_MESSAGE_CLIENT", messageId, chatId, userId);
     socket.broadcast
-      .to(chatId)
+      .to(chatId?.toString())
       .emit("PIN_MESSAGE_SERVER", { messageId, chatId, userId });
   });
 
   socket.on("UNPIN_MESSAGE_CLIENT", ({ messageId, chatId, userId }) => {
     console.log("UNPIN_MESSAGE_CLIENT", messageId, chatId, userId);
     socket.broadcast
-      .to(chatId)
+      .to(chatId?.toString())
       .emit("UNPIN_MESSAGE_SERVER", { messageId, chatId, userId });
   });
 

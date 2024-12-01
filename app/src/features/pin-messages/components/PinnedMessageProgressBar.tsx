@@ -35,7 +35,7 @@ const PinnedMessageProgressBar: React.FC<PinnedMessageProgressBarProps> = ({
   currentPinnedIndex,
 }) => {
   return (
-    <ProgressBarContainer>
+    <ProgressBarContainer data-testid="progress-bar-container">
       <ProgressBar>
         {pinnedMessages.map((_, index) => (
           <ProgressBarSegment

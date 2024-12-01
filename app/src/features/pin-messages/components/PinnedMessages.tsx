@@ -67,18 +67,21 @@ const PinnedMessages: React.FC = () => {
   if (pinnedMessages.length === 0) return null;
 
   return (
-    <PinnedMessagesContainer onClick={handleNextPinnedMessage}>
+    <PinnedMessagesContainer
+      onClick={handleNextPinnedMessage}
+      data-testid="pinned-messages-container"
+    >
       <PinnedMessageProgressBar
         pinnedMessages={pinnedMessages}
         currentPinnedIndex={currentPinnedIndex}
       />
 
       <PinnedMessageContent>
-        <PinnedMessageTitle>
+        <PinnedMessageTitle data-testid="pinned-message-title">
           Pinned Message {currentPinnedIndex + 1}
         </PinnedMessageTitle>
 
-        <PinnedMessagePreview>
+        <PinnedMessagePreview data-testid="pinned-message-preview">
           {currentPinnedMessage?.content}
         </PinnedMessagePreview>
       </PinnedMessageContent>

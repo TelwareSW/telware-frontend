@@ -5,6 +5,7 @@ async function GetProfileSettings() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     credentials: "include",
   });

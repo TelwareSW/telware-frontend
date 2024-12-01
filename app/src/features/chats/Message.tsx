@@ -1,18 +1,14 @@
-import { useEffect, useState, useRef, MouseEvent } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import {
   setShowCheckBox,
   setIsOptionListOpen,
-  SelectMessage,
-  removeSelectedMessage,
   pinMessage,
   unpinMessage,
 } from "@state/messages/messages";
 
 import { MessageInterface } from "types/messages";
-import { RootState } from "@state/store";
 
 import { getIcon } from "@data/icons";
 
@@ -24,8 +20,12 @@ import renderWithHighlight from "@utils/renderWithHighlight";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
-import { setActiveMessage } from "@state/messages/activeMessage";
 import { useSocket } from "@hooks/useSocket";
+import MessageBox from "./MessageBox";
+import useCheckBox from "@features/forward/hooks/useCheckBox";
+import useHover from "./hooks/useHover";
+import useOptionListAction from "./hooks/useOptionListAction";
+import FileViewer from "./media/FileViewer";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -34,6 +34,11 @@ const StyledMessage = styled.div<{ $isMine: boolean }>`
   width: 100%;
   ${({ $isMine }) =>
     $isMine ? "justify-content: flex-end;" : "justify-content: flex-start;"}
+
+  &.highlight {
+    background-color: var(--color-chat-hover);
+    transition: background-color 0.5s ease;
+  }
 `;
 
 const Bubble = styled.div<{ $isMine: boolean }>`
@@ -46,11 +51,6 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   font-size: 14px;
   height: fit-content;
   position: relative;
-
-  background-color: ${({ $isMine }) =>
-    $isMine
-      ? "linear-gradient(135deg, var(--color-background-own-1), var(--color-background-own-2), var(--color-background-own-3), var(--color-background-own-4))"
-      : "var(--color-background)"};
 
   background: ${({ $isMine }) =>
     $isMine
@@ -86,6 +86,16 @@ const CheckBoxWrapper = styled.div`
   align-self: center;
 `;
 
+const MessageBoxWrapper = styled.div`
+  display: block;
+`;
+
+const StyledCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
 const TimeStamp = styled.div<{ $isMine: boolean }>`
   font-size: x-small;
   font-size: x-small;
@@ -115,16 +125,25 @@ type MessageProps = {
 function Message({
   index,
   messagesLength,
-  data: { id, senderId, content, isOptionListOpen, isPinned, chatId },
+  data: {
+    id,
+    senderId,
+    content,
+    isOptionListOpen,
+    isPinned,
+    chatId,
+    isReply,
+    replyMessageId,
+    media,
+  },
 }: MessageProps) {
-  const { searchTerm, searchResults, currentResultIndex } = useSelector(
-    (state: RootState) => state.search
+  const { searchTerm, searchResults, currentResultIndex } = useAppSelector(
+    (state) => state.search
   );
 
   const mergedRef = useRef<HTMLDivElement>(null);
   const { lastMessageRef } = useScrollToLastMsg();
   const { searchResultRef } = useScrollToSearchResultsMsg();
-  const [isHovered, setIsHovered] = useState(false);
 
   const { pinMessage: pinMessageSocket, unpinMessage: unpinMessageSocket } =
     useSocket();
@@ -141,37 +160,22 @@ function Message({
 
     searchResultRef.current = isCurrentResult ? mergedRef.current : null;
   }, [
-    mergedRef.current,
     searchResults,
     currentResultIndex,
     searchTerm,
     id,
     index,
     messagesLength,
+    lastMessageRef,
+    searchResultRef,
   ]);
 
-  const userId = useSelector((state: RootState) => state.user.userInfo.id);
-
-  const showCheckbox = useSelector(
-    (state: RootState) => state.messages.showCheckBox
-  );
+  const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({ id });
+  const { isHovered, handleMouseLeave, handleOpenList } = useHover();
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+  const { handleEditMessage, handleReply, MoveToReplyMessage } =
+    useOptionListAction({ id, content, replyMessageId });
   const dispatch = useAppDispatch();
-
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-  const showCheckBox = useAppSelector((state) => state.messages.showCheckBox);
-
-  useEffect(() => {
-    setIsChecked(isChecked && showCheckBox);
-  }, [showCheckBox]);
-
-  function toggleCheckBox() {
-    if (!isChecked) {
-      dispatch(SelectMessage({ id: id }));
-    } else {
-      dispatch(removeSelectedMessage({ id: id }));
-    }
-    setIsChecked(!isChecked);
-  }
 
   function pinOnClick() {
     if (isPinned) {
@@ -184,30 +188,13 @@ function Message({
   }
 
   function forwardOnClick() {
-    dispatch(setShowCheckBox({ showCheckBox: !showCheckbox }));
+    dispatch(setShowCheckBox({ showCheckBox: !showCheckBox }));
     dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
-  }
-
-  function handleEditMessage() {
-    dispatch(setActiveMessage({ id, content, state: "edit" }));
-  }
-
-  function handleReply() {
-    dispatch(setActiveMessage({ id, content, state: "reply" }));
-  }
-
-  function handleMouseLeave() {
-    setIsHovered(false);
-  }
-
-  function handleOpenList(e: MouseEvent<HTMLDivElement>) {
-    e.preventDefault();
-    setIsHovered(true);
   }
 
   return (
     <MessageRow $isChecked={isChecked}>
-      {showCheckbox && (
+      {showCheckBox && (
         <CheckBoxWrapper>
           <CheckBox id={id} isChecked={isChecked} onChange={toggleCheckBox} />
         </CheckBoxWrapper>
@@ -223,14 +210,26 @@ function Message({
         onContextMenu={handleOpenList}
       >
         <Bubble $isMine={senderId === userId}>
-          {renderWithHighlight(content, searchTerm, searchResults, id)}
+          <StyledCol>
+            {isReply && (
+              <MessageBoxWrapper
+                onClick={MoveToReplyMessage}
+                test-id={`reply-box-${id}`}
+              >
+                <MessageBox messageId={replyMessageId} />
+              </MessageBoxWrapper>
+            )}
+            {media && <FileViewer file={media} />}
+            {renderWithHighlight(content, searchTerm, searchResults, id)}
+          </StyledCol>
+
           {isHovered && (
             <MessageOptionList
               $isMine={senderId === userId}
               forwardOnClick={forwardOnClick}
               isPinned={isPinned}
               pinOnClick={pinOnClick}
-              replyOnClick={handleReply} //TODO: Implement replyOnClick
+              replyOnClick={handleReply}
               editOnClick={handleEditMessage}
             />
           )}
