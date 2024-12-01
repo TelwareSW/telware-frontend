@@ -35,3 +35,9 @@ export interface MessageInterface {
   replyMessageId: string | null;
   media: string;
 }
+
+export enum StickerTap {
+  gif,
+  emoji,
+  sticker,
+}

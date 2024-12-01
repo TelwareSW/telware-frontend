@@ -103,7 +103,7 @@ function ChatInput() {
   };
 
   const showCheckBox = useSelector(
-    (state: RootState) => state.messages.showCheckBox,
+    (state: RootState) => state.messages.showCheckBox
   );
 
   const [showForwardUsers, setShowForwardUsers] = useState(false);

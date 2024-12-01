@@ -1,8 +1,8 @@
 interface storyView {
   id: string;
   userId: string;
-  username: string;
-  avatar?: string;
+  name: string;
+  photo?: string;
   seenTime: string;
 }
 interface story {
@@ -15,9 +15,9 @@ interface story {
   viewed?: boolean;
 }
 interface userStories {
-  id: string;
+  userId: string;
   name: string;
-  avatar: string;
+  photo: string;
   stories: story[];
 }
 

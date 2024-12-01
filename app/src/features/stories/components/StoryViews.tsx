@@ -28,7 +28,6 @@ const StyledViewsContainer = styled.div<{ $isOpened: boolean }>`
   color: white;
 `;
 const StyledViews = styled.ul`
-
   z-index: 1;
 
   display: flex;
@@ -98,8 +97,8 @@ function StoryViews(props: StoryViewsProps) {
           {views.map((view: storyView) => (
             <StyledView key={view.id}>
               <UserInfo
-                name={view.username}
-                avatar={view?.avatar || ""}
+                name={view.name}
+                photo={view?.photo || ""}
                 elapsedTime={getElapsedTime(view.seenTime)}
                 isVertical={true}
               />

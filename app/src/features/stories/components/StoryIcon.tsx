@@ -4,7 +4,7 @@ import Avatar from "@components/Avatar";
 
 interface StoryIconProps {
   stories: story[];
-  avatar?: string;
+  photo?: string;
   name: string;
   onView?: (userId: string) => void;
   isCollapsed?: boolean;
@@ -57,7 +57,7 @@ const StyledName = styled.p`
 function StoryIcon(props: StoryIconProps) {
   const {
     stories,
-    avatar,
+    photo,
     name,
     userId,
     onView,
@@ -97,7 +97,7 @@ function StoryIcon(props: StoryIconProps) {
         $segmentColors={segmentColors}
         $isMyStory={isMyStory}
       >
-        <Avatar name={name} image={avatar} />
+        <Avatar name={name} image={photo} />
       </StyledImageContainer>
       {!isCollapsed && <StyledName>{displayName}</StyledName>}
     </StyledContainer>
