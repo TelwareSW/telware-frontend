@@ -79,7 +79,13 @@ const MessageRow = styled.div<{ $isChecked: boolean }>`
 
   width: 100%;
 `;
-
+const Gif = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: fill;
+  cursor: pointer;
+  border-radius: 0.5rem;
+`;
 const CheckBoxWrapper = styled.div`
   padding-left: 1rem;
   align-self: center;
@@ -133,6 +139,7 @@ function Message({
     isReply,
     replyMessageId,
     media,
+    contentType,
   },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useAppSelector(
@@ -217,7 +224,12 @@ function Message({
                 <MessageBox messageId={replyMessageId} />
               </MessageBoxWrapper>
             )}
-            {media && <FileViewer file={media} />}
+            {(contentType === "gif" || contentType === "sticker") && media && (
+              <Gif src={media} loading="lazy" />
+            )}
+            {media && !(contentType === "gif" || contentType === "sticker") && (
+              <FileViewer file={media} />
+            )}
             {renderWithHighlight(content, searchTerm, searchResults, id)}
           </StyledCol>
 

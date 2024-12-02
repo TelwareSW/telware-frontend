@@ -20,7 +20,7 @@ export interface MessageInterface {
 
   parentMessageId: string;
   status: MessageStatus;
-  
+
   media?: string;
 
   //TODO: should use parentMessageId
@@ -33,9 +33,13 @@ export enum StickerTap {
   emoji,
   sticker,
 }
-
-export enum StickerTap {
-  gif,
-  emoji,
-  sticker,
+export interface Gif {
+  id: string;
+  title: string;
+  url: string;
+}
+export interface Sticker {
+  id: string;
+  title: string;
+  url: string;
 }
