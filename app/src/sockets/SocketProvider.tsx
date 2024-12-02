@@ -6,6 +6,13 @@ import { SocketContext } from "./SocketContext";
 import { getSocket } from "utils/socket";
 
 import { MessageInterface } from "types/messages";
+import {
+  addMessage,
+  setIsTyping,
+  pinMessage,
+  unpinMessage,
+  editMessage,
+} from "@state/messages/chats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -99,7 +106,9 @@ function SocketProvider({ children }: SocketProviderProps) {
         }
       );
 
-      socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
+      socket.on("typing", (isTyping, message) =>
+        handleIsTyping(dispatch, isTyping, message.chatId)
+      );
       socket.emit("typing");
       return () => {
         socket.disconnect();
@@ -112,17 +121,17 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }, [dispatch, socket]);
 
-  useEffect(() => {
-    if (!isPending && chats?.length) {
-      chats.forEach((chat) => {
-        socket.emit("join", { chatId: chat._id });
-      });
-      console.log(
-        "Joined all chats:",
-        chats.map((chat) => chat._id)
-      );
-    }
-  }, [isConnected, isPending, chats, socket]);
+  // useEffect(() => {
+  //   if (!isPending && chats?.length) {
+  //     chats.forEach((chat) => {
+  //       socket.emit("join", { chatId: chat._id });
+  //     });
+  //     console.log(
+  //       "Joined all chats:",
+  //       chats.map((chat) => chat._id)
+  //     );
+  //   }
+  // }, [isConnected, isPending, chats, socket]);
 
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
@@ -166,13 +175,13 @@ function SocketProvider({ children }: SocketProviderProps) {
         (response: any) => {
           if (response.success) {
             console.log("Message edited successfully:", response.res.message);
-             dispatch(
-               editMessage({
-                 chatId: response.res.message.chatId,
-                 messageId: response.res.message._id,
-                 content: response.res.message.content,
-               })
-             );
+            dispatch(
+              editMessage({
+                chatId: response.res.message.chatId,
+                messageId: response.res.message._id,
+                content: response.res.message.content,
+              })
+            );
           } else {
             console.error("Failed to edit message:", response.error);
           }
