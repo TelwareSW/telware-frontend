@@ -1,9 +1,5 @@
 import { http, HttpResponse } from "msw";
-import {
-  MOCK_MY_STORIES,
-  MOCK_OTHER_USERS_STORIES,
-  MOCK_VIEWS,
-} from "./mockStoriesData";
+import { MOCK_MY_STORIES, MOCK_OTHER_USERS_STORIES } from "../data/stories";
 import { story } from "types/story";
 
 type AddStoryRequestBody = {
@@ -58,14 +54,14 @@ export const storiesMock = [
       const caption = formData.get("caption") as string;
 
       if (file) {
-        const newStory: story = {
-          id: String(MOCK_MY_STORIES.length + 1),
+        const newStory = {
+          id: String(MOCK_MY_STORIES.stories.length + 1),
           content: URL.createObjectURL(file),
           timestamp: new Date().toISOString(),
           caption,
           views: [],
         };
-        MOCK_MY_STORIES.push(newStory);
+        MOCK_MY_STORIES.stories.push(newStory);
         return HttpResponse.json(
           {
             status: "success",
@@ -144,9 +140,11 @@ export const storiesMock = [
   http.delete("/users/stories/:storyId", async ({ params }) => {
     const { storyId } = params;
     if (storyId) {
-      const index = MOCK_MY_STORIES.findIndex((story) => story.id === storyId);
+      const index = MOCK_MY_STORIES.stories.findIndex(
+        (story) => story.id === storyId
+      );
       if (index !== -1) {
-        MOCK_MY_STORIES.splice(index, 1);
+        MOCK_MY_STORIES.stories.splice(index, 1);
       }
       return HttpResponse.json(
         {
@@ -185,17 +183,6 @@ export const storiesMock = [
     return HttpResponse.json(
       {
         data: MOCK_OTHER_USERS_STORIES,
-      },
-      {
-        status: 200,
-      }
-    );
-  }),
-
-  http.get("/stories/:storyId/views", async ({ params }) => {
-    return HttpResponse.json(
-      {
-        data: MOCK_VIEWS,
       },
       {
         status: 200,

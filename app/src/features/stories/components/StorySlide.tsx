@@ -10,7 +10,6 @@ import { getElapsedTime } from "utils/helpers";
 import StorySliderTooltip from "./StorySliderTooltip";
 import { getIcon } from "@data/icons";
 import { useDeleteStory } from "../hooks/useDeleteStory";
-import StoryViews from "./StoryViews";
 import CloseButton from "@components/CloseButton";
 import Popup from "@components/Popup";
 
@@ -78,6 +77,21 @@ const StyledUserInfo = styled.div`
   z-index: 1;
 `;
 
+const ViewsContainer = styled.div`
+  position: absolute;
+  height: 4rem;
+  font-size: 1.25rem;
+  line-height: 4rem;
+  padding-left: 1.5rem;
+
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 4rem;
+  color: white;
+  background-color: var(--story-views-background);
+  text-align: left;
+`;
 function StorySlide(props: StorySlideProps) {
   const { photo, name, stories, getNextUserStories, onClose } = props;
   const { ref, inView } = useInView({ threshold: 0.5 });
@@ -153,7 +167,7 @@ function StorySlide(props: StorySlideProps) {
   };
 
   useEffect(() => {
-    if (inView && !isMine) {
+    if (inView && !isMine && stories[index]?.viewed !== true) {
       viewStory(stories[index]?.id);
     }
   }, [inView, stories, index, viewStory, isMine]);
@@ -205,7 +219,13 @@ function StorySlide(props: StorySlideProps) {
             content={stories[index].content}
             caption={stories[index].caption || ""}
           />
-          {isMine && <StoryViews storyId={stories[index].id} />}
+          {isMine && stories[index].views && (
+            <ViewsContainer>
+              {stories[index].views.length > 0
+                ? `${stories[index].views.length} views`
+                : "No views"}
+            </ViewsContainer>
+          )}
         </StyledSlide>
       </StyledContainer>
     </Popup>

@@ -21,7 +21,7 @@ export const media = [
         status: "success",
         message: "File uploaded successfully",
         data: {
-          mediaFileName: "af32509b11fdb42b.jpg",
+          mediaFileName: "927b84545f5258ac.webm",
         },
       },
       { status: 200 }

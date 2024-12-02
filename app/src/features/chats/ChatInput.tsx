@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
 import { getIcon } from "@data/icons";
-
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
-
 import { RootState } from "@state/store";
 import { setShowCheckBox } from "@state/messages/messages";
-
 import RecordInput from "./SendButton";
 import ForwardingInputBar from "@features/forward/ForwardingInputBar";
 import ScrollableChats from "@features/forward/ScrollableChats";
 import EmojiPickerItem from "./emojies/EmojiPicker";
-
 import { useMessageSender } from "./hooks/useMessageSender";
 import ReplyWrapper from "./ReplyWrapper";
 import { clearActiveMessage } from "@state/messages/activeMessage";
 import MediaUploadComponent from "./media/MediaUploadComponent";
 import FilePreviewItem from "./media/FilePreviewItem";
+import VoiceRecorder, { RecordingStates } from "./audio/VoiceRecorder";
+import RecordingView from "./audio/RecordingView";
 
 const Container = styled.div`
   z-index: 1;
@@ -63,9 +60,7 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 1rem;
-
   position: relative;
-
   flex: 1;
 `;
 
@@ -82,6 +77,8 @@ function ChatInput() {
   const [input, setInput] = useState<string>("");
   const [file, setFile] = useState<File | string>(null);
   const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
+  const [isRecording, setIsRecording] = useState<RecordingStates>("idle");
+  const [error, setError] = useState<string>("");
   useEffect(() => {
     if (activeMessage.state === "edit" && activeMessage?.content)
       setInput(activeMessage?.content);
@@ -89,15 +86,14 @@ function ChatInput() {
 
   const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
   const { handleSendMessage } = useMessageSender();
-
   const dispatch = useDispatch();
 
   const toggleShowEmojies = () => {
     setIsEmojiSelectorOpen((show) => !show);
   };
 
-  const handleSubmit = () => {
-    handleSendMessage(input, "");
+  const handleSubmit = (e: Event, voiceNoteName = "") => {
+    handleSendMessage(input, voiceNoteName);
     dispatch(clearActiveMessage());
     setInput("");
   };
@@ -121,6 +117,9 @@ function ChatInput() {
     setIsFilePreviewOpen(false);
   }
 
+  if (error) {
+    alert(error);
+  }
   return (
     <>
       {isFilePreviewOpen && file && (
@@ -144,28 +143,47 @@ function ChatInput() {
 
             <InputContainer>
               {activeMessage.id && <ReplyWrapper setInput={setInput} />}
-              <InputWrapper>
-                <InvisibleButton
-                  onClick={toggleShowEmojies}
-                  data-testid="emoji-button"
-                >
-                  <Icon>{getIcon("Emojie")}</Icon>
-                </InvisibleButton>
 
-                <ExpandingTextArea input={input} setInput={setInput} />
-                <MediaUploadComponent
-                  file={file}
-                  setFile={setFile}
-                  setIsFilePreviewOpen={setIsFilePreviewOpen}
-                />
+              <InputWrapper>
+                {isRecording !== "idle" ? (
+                  <RecordingView
+                    setIsRecording={setIsRecording}
+                    isRecording={isRecording}
+                  />
+                ) : (
+                  <>
+                    <InvisibleButton
+                      onClick={toggleShowEmojies}
+                      data-testid="emoji-button"
+                    >
+                      <Icon>{getIcon("Emojie")}</Icon>
+                    </InvisibleButton>
+
+                    <ExpandingTextArea input={input} setInput={setInput} />
+
+                    <MediaUploadComponent
+                      file={file}
+                      setFile={setFile}
+                      setIsFilePreviewOpen={setIsFilePreviewOpen}
+                    />
+                  </>
+                )}
               </InputWrapper>
             </InputContainer>
-
-            <RecordInput
-              onClick={handleSubmit}
-              type={!input ? "record" : "message"}
-              data-testid="send-button"
-            />
+            {input ? (
+              <RecordInput
+                onClick={handleSubmit}
+                type={!input ? "record" : "message"}
+                data-testid="send-button"
+              />
+            ) : (
+              <VoiceRecorder
+                isRecording={isRecording}
+                setIsRecording={setIsRecording}
+                setError={setError}
+                handleSendMessage={handleSendMessage}
+              />
+            )}
           </Input>
         ) : (
           <ForwardingInputBar
