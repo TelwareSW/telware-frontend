@@ -99,13 +99,6 @@ function SocketProvider({ children }: SocketProviderProps) {
 
       socket.on("EDIT_MESSAGE_SERVER", (message: MessageInterface) => {
         console.log(message);
-
-        console.log("hii");
-        // const {message}
-
-        // console.log(message.chatId, message._id, message.content);
-
-        // console.log("EDIT_MESSAGE_SERVER", { chatId, messageId, content });
         dispatch(
           editMessage({
             chatId: message.chatId,
@@ -165,24 +158,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   };
 
-  // const editMessageSocket = (
-  //   messageId: string,
-  //   content: string,
-  //   chatId: string
-  // ) => {
-  //   if (isConnected) {
-  //     console.log(messageId, content, chatId);
-
-  //     socket.emit(
-  //       "EDIT_MESSAGE_CLIENT",
-  //       { messageId, content, chatId },
-  //       () => {}
-  //     );
-  //   } else {
-  //     console.warn("Cannot edit message: not connected to socket server");
-  //   }
-  // };
-
   const editMessageSocket = (
     messageId: string,
     content: string,
@@ -195,6 +170,13 @@ function SocketProvider({ children }: SocketProviderProps) {
         (response: any) => {
           if (response.success) {
             console.log("Message edited successfully:", response.res.message);
+             dispatch(
+               editMessage({
+                 chatId: response.res.message.chatId,
+                 messageId: response.res.message._id,
+                 content: response.res.message.content,
+               })
+             );
           } else {
             console.error("Failed to edit message:", response.error);
           }

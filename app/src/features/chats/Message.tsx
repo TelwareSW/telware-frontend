@@ -64,10 +64,9 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
   z-index: 1;
 
-  -webkit-user-select: text; /* Safari and older Chrome */
-  -moz-user-select: text; /* Firefox */
-  -ms-user-select: text; /* IE10+ */
-  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
   user-select: text !important;
   cursor: text;
 
@@ -189,7 +188,7 @@ function Message({
       return;
     }
     dispatch(pinMessage({ messageId: id, chatId: chatId }));
-    pinMessageSocket(id, chatId, userId);
+    pinMessageSocket(chatId, id, userId);
   }
 
   function forwardOnClick() {
