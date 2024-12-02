@@ -28,8 +28,8 @@ function getFileType(fileName: string): string {
   if (!extension) return "unknown";
 
   const imageTypes = ["png", "jpg", "jpeg", "gif", "bmp"];
-  const videoTypes = ["mp4", "webm"];
-  const audioTypes = ["mp3", "wav"];
+  const videoTypes = ["mp4"];
+  const audioTypes = ["mp3", "wav", "webm"];
   const pdfTypes = ["pdf"];
 
   if (imageTypes.includes(extension)) return "image";
