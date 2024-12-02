@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useStroies } from "../hooks/useStories";
 import { useMyStroies } from "../hooks/useMyStories";
@@ -30,18 +30,21 @@ const StyledContainer = styled.div<{ $isOpened: boolean }>`
 `;
 
 function StoryListContainer() {
-  const [isOpened, setIsOpened] = useState(false);
   const { stories: userStoriesData } = useStroies();
-
   const userStories = userStoriesData?.data;
-
   const { myStories: myStoriesData } = useMyStroies();
-  const myStories = myStoriesData?.data;
+  const myStories = myStoriesData?.data?.stories;
+  const [isOpened, setIsOpened] = useState(
+    userStories?.length !== 0 || myStories?.length !== 0
+  );
   const { userInfo } = useAppSelector((state) => state.user);
 
   const handleOpen = () => {
     setIsOpened(true);
   };
+  useEffect(() => {
+    setIsOpened(userStories?.length !== 0 || myStories?.length !== 0);
+  }, [myStories, userStories]);
   return (
     <StyledContainer $isOpened={isOpened} data-testid="story-list-container">
       {isOpened ? (
@@ -65,7 +68,7 @@ function StoryListContainer() {
               data-testid={`story-icon-${userStory.userId}`}
             />
           )}
-          list={userStories}
+          list={userStories?.length !== 0 ? userStories : myStories}
         />
       )}
     </StyledContainer>

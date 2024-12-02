@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useSocket } from "@hooks/useSocket";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { MessageInterface, MessageStatus } from "types/messages";
+import { useSocket } from "@hooks/useSocket";
 
 export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
@@ -29,10 +29,9 @@ export const useMessageSender = () => {
         senderId: userId,
         chatId: chatId!,
 
-        parentMessageId: "",
+        parentMessageId: isReply ? activeMessage.id : undefined,
+        isReply,
         status: MessageStatus.sent,
-        isReply: isReply,
-        replyMessageId: isReply ? activeMessage.id : null,
         media: file,
       };
       sendMessage(message);

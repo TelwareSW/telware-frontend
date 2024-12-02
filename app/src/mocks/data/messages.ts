@@ -323,7 +323,7 @@ const messages: MessageInterface[] = [
   },
 ];
 
-const generateMessages = (count: number) => {
+const generateMessages = (count: number): MessageInterface[] => {
   return Array.from({ length: count }, (_, index) => {
     const id = index + 21; // Start after the 20th message
     const contentTypes = ["text", "file", "image", "audio", "video", "link"];

@@ -35,7 +35,7 @@ const StyledIcon = styled.div<CircleIconProps>`
   justify-content: center;
 
   &:hover {
-    scale: 1.05;
+    opacity: 1;
     cursor: pointer;
   }
   & > svg {

@@ -24,18 +24,15 @@ export interface MessageInterface {
   contentType: ContentType;
   isPinned: boolean;
   isForward: boolean;
-  isAnnouncement: boolean;  
+  isAnnouncement: boolean;
   senderId: string;
   chatId: string;
 
-  parentMessageId: string;
+  parentMessageId: string | undefined;
+  isReply: boolean;
   status: MessageStatus;
 
   media?: string;
-
-  //TODO: should use parentMessageId
-  isReply: boolean;
-  replyMessageId: string | null;
 }
 
 export enum StickerTap {

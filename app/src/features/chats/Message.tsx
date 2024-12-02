@@ -13,7 +13,6 @@ import renderWithHighlight from "@utils/renderWithHighlight";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
-import { useSocket } from "@hooks/useSocket";
 import MessageBox from "./MessageBox";
 import useCheckBox from "@features/forward/hooks/useCheckBox";
 import useHover from "./hooks/useHover";
@@ -24,6 +23,7 @@ import {
   setShowCheckBox,
   unpinMessage,
 } from "@state/messages/chats";
+import { useSocket } from "@hooks/useSocket";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -62,6 +62,12 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   color: ${({ $isMine }) => ($isMine ? "#fff" : "var(--color-text)")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
   z-index: 1;
+
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text !important;
+  cursor: text;
 
   word-break: break-word;
   white-space: pre-wrap;
@@ -129,8 +135,7 @@ function Message({
     content,
     isPinned,
     chatId,
-    isReply,
-    replyMessageId,
+    parentMessageId,
     media,
   },
 }: MessageProps) {
@@ -174,17 +179,17 @@ function Message({
   const { isHovered, handleMouseLeave, handleOpenList } = useHover();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const { handleEditMessage, handleReply, MoveToReplyMessage } =
-    useOptionListAction({ id, content, replyMessageId });
+    useOptionListAction({ id, content, parentMessageId });
   const dispatch = useAppDispatch();
 
   function pinOnClick() {
     if (isPinned) {
       dispatch(unpinMessage({ messageId: id, chatId: chatId }));
-      unpinMessageSocket(id, chatId, userId);
+      unpinMessageSocket(chatId, id, userId);
       return;
     }
     dispatch(pinMessage({ messageId: id, chatId: chatId }));
-    pinMessageSocket(id, chatId, userId);
+    pinMessageSocket(chatId, id, userId);
   }
 
   function forwardOnClick() {
@@ -210,12 +215,12 @@ function Message({
       >
         <Bubble $isMine={senderId === userId}>
           <StyledCol>
-            {isReply && (
+            {parentMessageId && (
               <MessageBoxWrapper
                 onClick={MoveToReplyMessage}
                 test-id={`reply-box-${id}`}
               >
-                <MessageBox messageId={replyMessageId} />
+                <MessageBox messageId={parentMessageId} />
               </MessageBoxWrapper>
             )}
             {media && <FileViewer file={media} />}
