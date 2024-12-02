@@ -2,7 +2,7 @@ import CircleIcon from "@components/CircleIcon";
 
 interface ButtonType {
   type: "record" | "message";
-  onClick: () => void;
+  onClick: (e: Event, voiceNoteName?: string) => void;
 }
 
 function RecordInput({ type, onClick }: ButtonType) {
