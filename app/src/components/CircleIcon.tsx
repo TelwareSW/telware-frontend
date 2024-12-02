@@ -10,7 +10,7 @@ interface CircleIconProps {
   $color?: string;
   $bgColor?: string;
   $opacity?: number;
-  onClick?: () => void;
+  onClick?: (e: Event, voiceNoteName?: string) => void;
   children?: React.ReactNode;
 }
 
