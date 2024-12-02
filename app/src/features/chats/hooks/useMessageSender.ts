@@ -22,7 +22,7 @@ export const useMessageSender = () => {
         _id: "",
         timestamp: new Date().toISOString(),
         content: data,
-        contentType: "normal",
+        contentType: "text",
         isPinned: false,
         isForward: false,
         isAnnouncement: false,
