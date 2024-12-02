@@ -1,5 +1,4 @@
 import {
-  QueryClient,
   useMutation,
   useQuery,
   useQueryClient,

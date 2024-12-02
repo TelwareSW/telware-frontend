@@ -2,7 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import Avatar from "./Avatar";
-import { Chat } from "@mocks/data/Chats";
+import { DetailedChatInterface } from "@state/messages/chats";
+import { useChatMembers } from "./hooks/useChatMember";
 
 const Container = styled.li<{ $active?: boolean }>`
   display: flex;
@@ -53,14 +54,17 @@ const LastMessage = styled.p`
 `;
 
 type ChatItemProps = {
-  chat: Chat;
+  chat: DetailedChatInterface;
 };
 
 function ChatItem({
   chat: { _id, members, type, lastMessage },
 }: ChatItemProps) {
-  const name = members[0]?.screenFirstName || members[0]?.username;
-  const image = members[0]?.photo?.length > 50 ? members[0]?.photo : undefined;
+  const membersData = useChatMembers(members);
+
+  const name = membersData[0]?.screenFirstName || membersData[0]?.username;
+  const image =
+    membersData[0]?.photo?.length > 50 ? membersData[0]?.photo : undefined;
   const navigate = useNavigate();
 
   const timestamp = lastMessage?.timestamp || "No messages";
@@ -75,7 +79,7 @@ function ChatItem({
   return (
     <Container
       data-testid="chat-container"
-      $active={Number(chatId) === _id}
+      $active={chatId === _id}
       onClick={handleOpenChat}
       key={_id}
     >
@@ -83,7 +87,7 @@ function ChatItem({
       <ChatContent>
         <ChatHeader>
           <Name data-testid="chat-name">
-            {type === "private" ? name : `Group ${members[0]?.username}`}
+            {type === "private" ? name : `Group ${membersData[0]?.username}`}
           </Name>
           <Timestamp data-testid="chat-timestamp">
             {new Date(timestamp).toLocaleTimeString("en-US", {

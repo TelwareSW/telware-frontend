@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getIcon } from "@data/icons";
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Icon from "@components/Icon";
-import { RootState } from "@state/store";
-import { setShowCheckBox } from "@state/messages/messages";
+
 import RecordInput from "./SendButton";
 import ForwardingInputBar from "@features/forward/ForwardingInputBar";
 import ScrollableChats from "@features/forward/ScrollableChats";
@@ -15,6 +15,9 @@ import ReplyWrapper from "./ReplyWrapper";
 import { clearActiveMessage } from "@state/messages/activeMessage";
 import MediaUploadComponent from "./media/MediaUploadComponent";
 import FilePreviewItem from "./media/FilePreviewItem";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { setShowCheckBox } from "@state/messages/chats";
+import { getChatByID } from "./helpers";
 import VoiceRecorder, { RecordingStates } from "./audio/VoiceRecorder";
 import RecordingView from "./audio/RecordingView";
 
@@ -73,9 +76,9 @@ const Input = styled.div`
 `;
 
 function ChatInput() {
-  const activeMessage = useSelector((state: RootState) => state.activeMessage);
+  const activeMessage = useAppSelector((state) => state.activeMessage);
   const [input, setInput] = useState<string>("");
-  const [file, setFile] = useState<File | string>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
   const [isRecording, setIsRecording] = useState<RecordingStates>("idle");
   const [error, setError] = useState<string>("");
@@ -98,15 +101,21 @@ function ChatInput() {
     setInput("");
   };
 
-  const showCheckBox = useSelector(
-    (state: RootState) => state.messages.showCheckBox
-  );
+  const { chatId } = useParams<{ chatId: string }>();
+
+  const chats = useAppSelector((state) => state.chats.chats);
+  const showCheckBox =
+    chatId && getChatByID({ chats: chats, chatID: chatId })?.showCheckBox;
 
   const [showForwardUsers, setShowForwardUsers] = useState(false);
 
   function handleClose() {
+    if (!chatId) {
+      return;
+    }
+
     setShowForwardUsers(false);
-    dispatch(setShowCheckBox({ showCheckBox: false }));
+    dispatch(setShowCheckBox({ chatId: chatId, showCheckBox: false }));
   }
 
   function handleForward() {
@@ -131,16 +140,16 @@ function ChatInput() {
           data-testid="file-preview"
         />
       )}
+      // TODO: Fix the emoji picker
       <Container data-testid="chat-input-container">
         {!showCheckBox ? (
           <Input data-testid="chat-input">
-            {isEmojiSelectorOpen && (
+            {/* {isEmojiSelectorOpen && (
               <EmojiPickerItem
                 setInputText={setInput}
                 data-testid="emoji-picker"
               />
-            )}
-
+            )} */}
             <InputContainer>
               {activeMessage.id && <ReplyWrapper setInput={setInput} />}
 
@@ -192,7 +201,6 @@ function ChatInput() {
             data-testid="forwarding-input-bar"
           />
         )}
-
         {showForwardUsers && <ScrollableChats onClose={handleClose} />}
       </Container>
     </>

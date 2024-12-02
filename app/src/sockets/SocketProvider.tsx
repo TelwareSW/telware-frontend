@@ -2,28 +2,32 @@ import { useState, useEffect, ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
+import { SocketContext } from "./SocketContext";
+import { getSocket } from "utils/socket";
+
+import { MessageInterface } from "types/messages";
 import {
   addMessage,
-  editMessage,
-  MessageInterface,
-  pinMessage,
   setIsTyping,
+  pinMessage,
   unpinMessage,
-} from "@state/messages/messages";
-
-import { SocketContext } from "./SocketContext";
-import { getSocket } from "utils/socket.tsx";
+  editMessage,
+} from "@state/messages/chats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
-  message: MessageInterface
+  message: MessageInterface,
+  chatId: string
 ) => {
-  console.log(message);
-  dispatch(addMessage(message));
+  dispatch(addMessage({ chatId, message }));
 };
 
-const handleIsTyping = (dispatch: Dispatch, isTyping: boolean) => {
-  dispatch(setIsTyping({ isTyping: isTyping }));
+const handleIsTyping = (
+  dispatch: Dispatch,
+  isTyping: boolean,
+  chatId: string
+) => {
+  dispatch(setIsTyping({ chatId, isTyping }));
 };
 
 type SocketProviderProps = {
@@ -59,8 +63,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.on("RECEIVE_MESSAGE", (message: MessageInterface) => {
         console.log("inside recieve");
         console.log(message);
-
-        handleIncomingMessage(dispatch, message);
+        handleIncomingMessage(dispatch, message, message.chatId);
       });
 
       socket.on(
@@ -95,18 +98,17 @@ function SocketProvider({ children }: SocketProviderProps) {
         }
       );
 
-      socket.on("EDIT_MESSAGE_SERVER", (message: MessageInterface) => {
-        console.log(message);
-        dispatch(
-          editMessage({
-            chatId: message.chatId,
-            messageId: message._id,
-            content: message.content,
-          })
-        );
-      });
+      socket.on(
+        "EDIT_MESSAGE_SERVER",
+        (chatId: string, messageId: string, content: string) => {
+          console.log("EDIT_MESSAGE_SERVER", chatId, messageId, content);
+          dispatch(editMessage({ chatId, messageId, content }));
+        }
+      );
 
-      socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
+      socket.on("typing", (isTyping, message) =>
+        handleIsTyping(dispatch, isTyping, message.chatId)
+      );
       socket.emit("typing");
       return () => {
         socket.disconnect();
@@ -119,21 +121,40 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }, [dispatch, socket]);
 
+  // useEffect(() => {
+  //   if (!isPending && chats?.length) {
+  //     chats.forEach((chat) => {
+  //       socket.emit("join", { chatId: chat._id });
+  //     });
+  //     console.log(
+  //       "Joined all chats:",
+  //       chats.map((chat) => chat._id)
+  //     );
+  //   }
+  // }, [isConnected, isPending, chats, socket]);
+
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
       socket.emit(
         "SEND_MESSAGE",
         { ...sentMessage, isFirstTime: false, chatType: "private" },
         ({ success, message, res }: AcknowledgmentResponse) => {
-          console.log("message sent");
-          
+          console.log("I'm inside send event!!");
+          console.log(success);
           if (!success) {
             console.log(res);
           }
           if (success) {
             console.log(message);
             const _id = res.messageId;
-            handleIncomingMessage(dispatch, { ...sentMessage, _id });
+            handleIncomingMessage(
+              dispatch,
+              {
+                ...sentMessage,
+                _id,
+              },
+              sentMessage.chatId
+            );
           }
         }
       );
@@ -154,13 +175,13 @@ function SocketProvider({ children }: SocketProviderProps) {
         (response: any) => {
           if (response.success) {
             console.log("Message edited successfully:", response.res.message);
-             dispatch(
-               editMessage({
-                 chatId: response.res.message.chatId,
-                 messageId: response.res.message._id,
-                 content: response.res.message.content,
-               })
-             );
+            dispatch(
+              editMessage({
+                chatId: response.res.message.chatId,
+                messageId: response.res.message._id,
+                content: response.res.message.content,
+              })
+            );
           } else {
             console.error("Failed to edit message:", response.error);
           }

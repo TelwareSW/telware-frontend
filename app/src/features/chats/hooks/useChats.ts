@@ -1,22 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllChatsApi } from "../services/apiGetChats";
-import { ChatData } from "@mocks/data/chats";
+import { ChatDataType } from "@mocks/data/chats";
+import { ChatsState, setAllChats } from "@state/messages/chats";
+import { parseChatsToState } from "../helpers";
+import { useAppDispatch } from "@hooks/useGlobalState";
+import { useEffect } from "react";
 
 export function useChats() {
-  const { data: chatData, isPending } = useQuery<ChatData>({
+  const { data: chatData, isPending } = useQuery<ChatDataType>({
     queryKey: ["chats"],
     queryFn: getAllChatsApi,
   });
+  const dispatch = useAppDispatch();
 
-  const chats = chatData?.chats.map((chat) => ({
-    ...chat,
-    lastMessage: chatData.lastMessages.find(
-      (lastMessage) => lastMessage.chatId === chat._id,
-    )?.lastMessage,
-    members: chat.members.map((memberId) =>
-      chatData.members.find((member) => member._id === memberId),
-    ),
-  }));
+  useEffect(() => {
+    let initialChatState: ChatsState = {
+      chats: parseChatsToState(chatData),
+      members: chatData?.members || [],
+    };
 
-  return { chats, isPending };
+    dispatch(setAllChats({ chatsData: initialChatState }));
+  }, [isPending, chatData]);
+
+
+  return { isPending };
 }
