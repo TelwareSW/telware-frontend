@@ -79,6 +79,8 @@ const IconButton = styled.button`
 function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const chats = useAppSelector((state) => state.chats.chats);
+  const [isSearching, setIsSearching] = useState(false);
+
   const chat =
     chatId &&
     getChatByID({
@@ -86,12 +88,12 @@ function Topbar() {
       chats: chats,
     });
 
-  let membersData;
+  let membersData = useChatMembers(chat?.members);
+
   let name;
   let image;
   let lastSeen;
   if (chat) {
-    membersData = useChatMembers(chat?.members);
     name = membersData[0]?.screenFirstName || membersData[0]?.username;
 
     lastSeen = chat?.lastMessage?.timestamp;
@@ -99,10 +101,7 @@ function Topbar() {
       membersData[0]?.photo?.length > 50 ? membersData[0]?.photo : undefined;
   }
 
-  const [isSearching, setIsSearching] = useState(false);
-
   if (!chat) return null;
-
 
   const toggleSearch = () => {
     setIsSearching(!isSearching);

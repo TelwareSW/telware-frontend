@@ -29,11 +29,11 @@ function renderWithHighlight(
   const after = content.slice(result.highlightIndex + searchTerm.length);
 
   return (
-    <>
+    <span>
       {before}
       <HighlightedText $highlight>{highlighted}</HighlightedText>
       {after}
-    </>
+    </span>
   );
 }
 

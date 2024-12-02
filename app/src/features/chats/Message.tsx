@@ -140,7 +140,7 @@ function Message({
   },
 }: MessageProps) {
   const { searchTerm, searchResults, currentResultIndex } = useAppSelector(
-    (state) => state.search
+    (state) => state.search,
   );
 
   const mergedRef = useRef<HTMLDivElement>(null);
@@ -154,23 +154,7 @@ function Message({
   useEffect(() => {
     lastMessageRef.current =
       index === messagesLength - 1 ? mergedRef.current : null;
-    const isSearchResult = searchResults.find(
-      (result) => result.messageId === id
-    );
-    const isCurrentResult =
-      isSearchResult && searchResults[currentResultIndex]?.messageId === id;
-
-    searchResultRef.current = isCurrentResult ? mergedRef.current : null;
-  }, [
-    searchResults,
-    currentResultIndex,
-    searchTerm,
-    id,
-    index,
-    messagesLength,
-    lastMessageRef,
-    searchResultRef,
-  ]);
+  }, [id, index, messagesLength, lastMessageRef, searchResultRef]);
 
   const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({
     chatId,
