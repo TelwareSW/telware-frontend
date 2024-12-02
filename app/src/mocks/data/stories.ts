@@ -1,44 +1,44 @@
-import { story, storyView } from "types/story";
-
-const MOCK_MY_STORIES: story[] = [
-  {
-    id: "1",
-    content:
-      "https://scontent.fcai11-1.fna.fbcdn.net/v/t1.6435-9/122032103_3472532366305566_6239088129819761020_n.jpg?stp=dst-jpg_s960x960&_nc_cat=104&ccb=1-7&_nc_sid=2285d6&_nc_eui2=AeEXsEzDOwFTqpmb7eVOF_defX6b8GN9_pB9fpvwY33-kK5Gl95eJW0QBmEl_26DnBM80yvcN_GW8-7f9MJZZ1z6&_nc_ohc=bSnTWn4p8x0Q7kNvgHoFcXP&_nc_zt=23&_nc_ht=scontent.fcai11-1.fna&_nc_gid=Ab5Y75GRyvck02dUvRxz55i&oh=00_AYCR6Lf6wZTBAR3XPjJLP8yCvUvhON0c_hM_eUdGYvRwdA&oe=676B5E8E",
-    timestamp: new Date().toISOString(),
-    caption: "CUFE is the hell",
-    views: [
-      {
-        id: "1",
-        userId: "1",
-        name: "Ahmed Hamdy",
-        photo: "https://i.pravatar.cc/70?=0.2",
-        seenTime: new Date().toISOString(),
-      },
-      {
-        id: "2",
-        userId: "12",
-        name: "John Doe",
-        photo: "https://i.pravatar.cc/70?=0.25",
-        seenTime: new Date().toISOString(),
-      },
-      {
-        id: "3",
-        userId: "13",
-        name: "Alice Bob",
-        photo: "https://i.pravatar.cc/70?=0.35",
-        seenTime: new Date().toISOString(),
-      },
-      {
-        id: "4",
-        userId: "14",
-        name: "Bob Alice",
-        photo: "https://i.pravatar.cc/70?=0.45",
-        seenTime: new Date().toISOString(),
-      },
-    ],
-  },
-];
+const MOCK_MY_STORIES = {
+  stories: [
+    {
+      id: "1",
+      content:
+        "https://scontent.fcai11-1.fna.fbcdn.net/v/t1.6435-9/122032103_3472532366305566_6239088129819761020_n.jpg?stp=dst-jpg_s960x960&_nc_cat=104&ccb=1-7&_nc_sid=2285d6&_nc_eui2=AeEXsEzDOwFTqpmb7eVOF_defX6b8GN9_pB9fpvwY33-kK5Gl95eJW0QBmEl_26DnBM80yvcN_GW8-7f9MJZZ1z6&_nc_ohc=bSnTWn4p8x0Q7kNvgHoFcXP&_nc_zt=23&_nc_ht=scontent.fcai11-1.fna&_nc_gid=Ab5Y75GRyvck02dUvRxz55i&oh=00_AYCR6Lf6wZTBAR3XPjJLP8yCvUvhON0c_hM_eUdGYvRwdA&oe=676B5E8E",
+      timestamp: new Date().toISOString(),
+      caption: "CUFE is the hell",
+      views: [
+        {
+          id: "1",
+          userId: "1",
+          name: "Ahmed Hamdy",
+          photo: "https://i.pravatar.cc/70?=0.2",
+          seenTime: new Date().toISOString(),
+        },
+        {
+          id: "2",
+          userId: "12",
+          name: "John Doe",
+          photo: "https://i.pravatar.cc/70?=0.25",
+          seenTime: new Date().toISOString(),
+        },
+        {
+          id: "3",
+          userId: "13",
+          name: "Alice Bob",
+          photo: "https://i.pravatar.cc/70?=0.35",
+          seenTime: new Date().toISOString(),
+        },
+        {
+          id: "4",
+          userId: "14",
+          name: "Bob Alice",
+          photo: "https://i.pravatar.cc/70?=0.45",
+          seenTime: new Date().toISOString(),
+        },
+      ],
+    },
+  ],
+};
 const MOCK_OTHER_USERS_STORIES = [
   {
     userId: "1",
@@ -116,34 +116,5 @@ const MOCK_OTHER_USERS_STORIES = [
     ],
   },
 ];
-const MOCK_VIEWS: storyView[] = [
-  {
-    id: "1",
-    userId: "1",
-    name: "Ahmed Hamdy",
-    photo: "https://i.pravatar.cc/70?=0.2",
-    seenTime: new Date().toISOString(),
-  },
-  {
-    id: "2",
-    userId: "12",
-    name: "John Doe",
-    photo: "https://i.pravatar.cc/70?=0.25",
-    seenTime: new Date().toISOString(),
-  },
-  {
-    id: "3",
-    userId: "13",
-    name: "Alice Bob",
-    photo: "https://i.pravatar.cc/70?=0.35",
-    seenTime: new Date().toISOString(),
-  },
-  {
-    id: "4",
-    userId: "14",
-    name: "Bob Alice",
-    photo: "https://i.pravatar.cc/70?=0.45",
-    seenTime: new Date().toISOString(),
-  },
-];
-export { MOCK_MY_STORIES, MOCK_OTHER_USERS_STORIES, MOCK_VIEWS };
+
+export { MOCK_MY_STORIES, MOCK_OTHER_USERS_STORIES };

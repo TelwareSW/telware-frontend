@@ -45,6 +45,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     if (socket) {
       socket.connect();
 
+      //TODO: remove and make sure it still works
       socket.on("connect", () => {
         const engine = socket.io.engine;
         setIsConnected(true);
