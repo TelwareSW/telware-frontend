@@ -32,10 +32,6 @@ export interface MessageInterface {
   status: MessageStatus;
 
   media?: string;
-
-  //TODO: should use parentMessageId
-  isReply: boolean;
-  replyMessageId: string | null;
 }
 
 export enum StickerTap {

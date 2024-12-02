@@ -11,7 +11,6 @@ export const useMessageSender = () => {
 
   const handleSendMessage = (data: string, file?: string) => {
     if (activeMessage?.id && activeMessage.state === "edit") {
-      
       editMessage(activeMessage?.id!, data, chatId!);
       return;
     }
@@ -30,10 +29,8 @@ export const useMessageSender = () => {
         senderId: userId,
         chatId: chatId!,
 
-        parentMessageId: "",
+        parentMessageId: isReply ? activeMessage.id : "",
         status: MessageStatus.sent,
-        isReply: isReply,
-        replyMessageId: isReply ? activeMessage.id : null,
         media: file,
       };
       sendMessage(message);

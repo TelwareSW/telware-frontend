@@ -136,8 +136,7 @@ function Message({
     content,
     isPinned,
     chatId,
-    isReply,
-    replyMessageId,
+    parentMessageId,
     media,
   },
 }: MessageProps) {
@@ -178,13 +177,13 @@ function Message({
   const { isHovered, handleMouseLeave, handleOpenList } = useHover();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const { handleEditMessage, handleReply, MoveToReplyMessage } =
-    useOptionListAction({ id, content, replyMessageId });
+    useOptionListAction({ id, content, parentMessageId });
   const dispatch = useAppDispatch();
 
   function pinOnClick() {
     if (isPinned) {
       dispatch(unpinMessage({ messageId: id, chatId: chatId }));
-      unpinMessageSocket(id, chatId, userId);
+      unpinMessageSocket(chatId, id, userId);
       return;
     }
     dispatch(pinMessage({ messageId: id, chatId: chatId }));
@@ -193,7 +192,6 @@ function Message({
 
   function forwardOnClick() {
     dispatch(setShowCheckBox({ showCheckBox: !showCheckBox }));
-    // dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
   }
 
   return (
@@ -215,12 +213,12 @@ function Message({
       >
         <Bubble $isMine={senderId === userId}>
           <StyledCol>
-            {isReply && (
+            {parentMessageId && (
               <MessageBoxWrapper
                 onClick={MoveToReplyMessage}
                 test-id={`reply-box-${id}`}
               >
-                <MessageBox messageId={replyMessageId} />
+                <MessageBox messageId={parentMessageId} />
               </MessageBoxWrapper>
             )}
             {media && <FileViewer file={media} />}
