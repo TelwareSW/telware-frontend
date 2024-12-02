@@ -31,9 +31,9 @@ const StyledButtonContainer = styled.div`
 
 function ChatsSideBar({ children }: ChatsSideBarProps) {
   return (
-    <StyledChatsSideBar data-testid="chats-sidebar">
-      <ChatsSidebarHeader data-testid="chats-sidebar-header" />
-      {/* <StoryListContainer /> */}
+    <StyledChatsSideBar>
+      <ChatsSidebarHeader />
+      <StoryListContainer />
       {children}
       <StyledButtonContainer data-testid="button-container">
         <AddStory data-testid="add-story-button" />

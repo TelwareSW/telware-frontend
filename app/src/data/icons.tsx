@@ -40,7 +40,9 @@ import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import PinIcon from "@mui/icons-material/Pin";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
-
+import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined";
+import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
+import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 enum icons {
   BlockIcon,
   SettingsOutlinedIcon,
@@ -86,6 +88,9 @@ enum icons {
   Pin,
   Reply,
   PushPin,
+  GifBox,
+  EmojiBox,
+  StickerBox,
 }
 
 type iconStrings = keyof typeof icons;
@@ -338,6 +343,27 @@ const iconMap: { [K in iconStrings]: React.ReactNode } = {
     <PushPinOutlinedIcon
       sx={{
         fontSize: "0.9rem",
+      }}
+    />
+  ),
+  GifBox: (
+    <GifBoxOutlinedIcon
+      sx={{
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  EmojiBox: (
+    <EmojiEmotionsOutlinedIcon
+      sx={{
+        fontSize: "1.5rem",
+      }}
+    />
+  ),
+  StickerBox: (
+    <StickyNote2OutlinedIcon
+      sx={{
+        fontSize: "1.5rem",
       }}
     />
   ),

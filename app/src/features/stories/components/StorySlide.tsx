@@ -1,6 +1,3 @@
-
-import ReactDOM from "react-dom";
-
 import { useInView } from "../hooks/useInView";
 import { story } from "types/story";
 import StorySlideCounter from "./StorySlideCounter";
@@ -20,7 +17,7 @@ import Popup from "@components/Popup";
 interface StorySlideProps {
   userId?: string;
   name: string;
-  avatar?: string;
+  photo?: string;
   getNextUserStories: () => void;
   stories: story[];
   onClose: () => void;
@@ -79,11 +76,10 @@ const StyledUserInfo = styled.div`
   left: 2.5rem;
 
   z-index: 1;
-
 `;
 
 function StorySlide(props: StorySlideProps) {
-  const { avatar, name, stories, getNextUserStories, onClose } = props;
+  const { photo, name, stories, getNextUserStories, onClose } = props;
   const { ref, inView } = useInView({ threshold: 0.5 });
   const { viewStory } = useViewStory();
   const [index, setIndex] = useState(0);
@@ -200,7 +196,7 @@ function StorySlide(props: StorySlideProps) {
           <StyledUserInfo>
             <UserInfo
               name={name}
-              avatar={avatar || ""}
+              photo={photo || ""}
               isVertical={true}
               elapsedTime={getElapsedTime(stories[index].timestamp)}
             />

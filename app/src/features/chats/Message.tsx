@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import {
   setShowCheckBox,
-  setIsOptionListOpen,
   pinMessage,
   unpinMessage,
 } from "@state/messages/messages";
@@ -126,10 +125,9 @@ function Message({
   index,
   messagesLength,
   data: {
-    id,
+    _id: id,
     senderId,
     content,
-    isOptionListOpen,
     isPinned,
     chatId,
     isReply,
@@ -189,7 +187,7 @@ function Message({
 
   function forwardOnClick() {
     dispatch(setShowCheckBox({ showCheckBox: !showCheckBox }));
-    dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
+    // dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
   }
 
   return (

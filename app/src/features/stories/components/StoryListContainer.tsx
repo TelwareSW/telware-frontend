@@ -27,7 +27,6 @@ const StyledContainer = styled.div<{ $isOpened: boolean }>`
         `}
 
   z-index: 1;
-
 `;
 
 function StoryListContainer() {
@@ -61,9 +60,9 @@ function StoryListContainer() {
             <StoryIcon
               isCollapsed={true}
               name={userStory.name}
-              avatar={userStory.avatar}
+              photo={userStory.photo}
               stories={userStory.stories}
-              data-testid={`story-icon-${userStory.id}`}
+              data-testid={`story-icon-${userStory.userId}`}
             />
           )}
           list={userStories}

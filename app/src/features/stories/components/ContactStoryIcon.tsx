@@ -6,7 +6,7 @@ interface StoryIconProps {
   isMe: boolean;
   stories: story[];
   seenCounter: number;
-  avatar?: string;
+  photo?: string;
   name: string;
 }
 
@@ -58,7 +58,7 @@ const StyledName = styled.p`
 `;
 
 function ContactStoryIcon(props: StoryIconProps) {
-  const { isMe, stories, avatar, name } = props;
+  const { isMe, stories, photo, name } = props;
   const storiesCounter = stories.length;
   const seenCounter = stories.filter((story: story) => story.viewed).length;
 
@@ -69,7 +69,7 @@ function ContactStoryIcon(props: StoryIconProps) {
       $isMe={isMe}
     >
       <StyledImage
-        src={avatar ? `${STATIC_MEDIA_URL}/${avatar}` : "/default-avatar.png"}
+        src={photo ? `${STATIC_MEDIA_URL}/${photo}` : "/default-avatar.png"}
         alt={`${name}'s avatar`}
       />
       <StyledName>{isMe ? "Your Story" : name}</StyledName>

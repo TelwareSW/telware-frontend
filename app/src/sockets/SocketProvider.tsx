@@ -132,8 +132,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         ({ success, message, res }: AcknowledgmentResponse) => {
           if (success) {
             console.log(message);
-            const id = res;
-            handleIncomingMessage(dispatch, { ...sentMessage, id });
+            const _id = res;
+            handleIncomingMessage(dispatch, { ...sentMessage, _id });
           }
         },
       );
