@@ -12,15 +12,19 @@ function getSocket() {
     DefaultEventsMap
   > | null>(null);
 
+  console.log(localStorage.getItem("sessionId"));
+
   useEffect(() => {
     if (!isPending && user && !socketInstance) {
       console.log("Initializing socket with user:", user);
       console.log(user._id);
-      
 
       socketInstance = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`, {
         query: {
-          userId: user._id, // Pass user ID if needed
+          userId: user._id,
+        },
+        auth: {
+          sessionId: localStorage.getItem("sessionId"),
         },
       });
 

@@ -29,7 +29,8 @@ export const useMessageSender = () => {
         senderId: userId,
         chatId: chatId!,
 
-        parentMessageId: isReply ? activeMessage.id : "",
+        parentMessageId: isReply ? activeMessage.id : undefined,
+        isReply,
         status: MessageStatus.sent,
         media: file,
       };

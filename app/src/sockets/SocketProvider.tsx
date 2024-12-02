@@ -13,7 +13,6 @@ import {
 
 import { SocketContext } from "./SocketContext";
 import { getSocket } from "utils/socket.tsx";
-import { useChats } from "@features/chats/hooks/useChats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -41,8 +40,6 @@ function SocketProvider({ children }: SocketProviderProps) {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useDispatch();
   const socket = getSocket();
-
-  const { chats, isPending } = useChats();
 
   useEffect(() => {
     if (socket) {
@@ -121,34 +118,20 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }, [dispatch, socket]);
 
-  useEffect(() => {
-    if (!isPending && chats?.length && socket) {
-      chats.forEach((chat) => {
-        socket.emit("join", { chatId: chat._id });
-      });
-      console.log(
-        "Joined all chats:",
-        chats.map((chat) => chat._id)
-      );
-    }
-  }, [isConnected, isPending, chats, socket]);
-
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
       socket.emit(
         "SEND_MESSAGE",
         { ...sentMessage, isFirstTime: false, chatType: "private" },
         ({ success, message, res }: AcknowledgmentResponse) => {
-          console.log("I'm inside send event!!");
-          console.log(success);
+          console.log("message sent");
+          
           if (!success) {
             console.log(res);
           }
           if (success) {
-            console.log(sentMessage);
             console.log(message);
             const _id = res.messageId;
-            console.log(res);
             handleIncomingMessage(dispatch, { ...sentMessage, _id });
           }
         }

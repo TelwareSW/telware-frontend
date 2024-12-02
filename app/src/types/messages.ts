@@ -28,7 +28,8 @@ export interface MessageInterface {
   senderId: string;
   chatId: string;
 
-  parentMessageId: string;
+  parentMessageId: string | undefined;
+  isReply: boolean;
   status: MessageStatus;
 
   media?: string;
