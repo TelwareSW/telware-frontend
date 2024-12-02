@@ -67,6 +67,8 @@ const GlobalStyles = createGlobalStyle`
 
     --scrollbar-color: rgba(0, 0, 0, .2);
     --color-avatar: linear-gradient(135deg, #d6d46c, #5e924e);
+    --color-avatar-shadow:linear-gradient(135deg,#d6d46c, #5e924e);
+
   }
   
   &.dark-mode {
@@ -133,6 +135,7 @@ const GlobalStyles = createGlobalStyle`
 
     --scrollbar-color: rgba(255, 255, 255, .2);
     --color-avatar: linear-gradient(135deg, #72C6EF, #004E92);
+    --color-avatar-shadow:linear-gradient(135deg, #72C6EF, #004E92);
     
   }
 

@@ -94,7 +94,7 @@ function StoryList(props: StoryListProps) {
       <StyledStoryListContainer>
         <CloseButton onClose={onClose} data-testid="close-story-list" />
         <StyledStoryList data-testid="storylist">
-          {myStories.length > 0 && (
+          {myStories?.length > 0 && (
             <StoryIcon
               data-testid="my-story-icon"
               name="My Story"
@@ -105,7 +105,7 @@ function StoryList(props: StoryListProps) {
               userId="me"
             />
           )}
-          {userStories.map((userStory: userStories) => (
+          {userStories?.map((userStory: userStories) => (
             <StoryIcon
               key={userStory.userId}
               data-testid={`story-icon-${userStory.userId}`}

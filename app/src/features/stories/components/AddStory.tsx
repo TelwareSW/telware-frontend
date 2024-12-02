@@ -65,7 +65,7 @@ function AddStory() {
           $padding={0.5}
           $color="white"
           $bgColor="var(--accent-color)"
-          $opacity={1}
+          $opacity={0.95}
         />
         <StyledImageInput
           type="file"

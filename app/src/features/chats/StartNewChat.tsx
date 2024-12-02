@@ -63,7 +63,7 @@ function StartNewChat() {
           $padding={0.5}
           $color="var(--color-icon-secondary)"
           $bgColor="var(--new-chat-color)"
-          $opacity={1}
+          $opacity={0.95}
           onClick={handleOpenMenu}
         />
       </StyledCircleIconContainer>

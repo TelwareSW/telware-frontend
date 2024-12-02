@@ -29,7 +29,6 @@ const StyledContainer = styled.div<{ $isCollapsed: boolean }>`
   }
 `;
 const StyledImageContainer = styled.div<{
-  $segmentColors: string;
   $isMyStory?: boolean;
 }>`
   height: 48px;
@@ -38,10 +37,7 @@ const StyledImageContainer = styled.div<{
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: ${(props) =>
-    props?.$isMyStory
-      ? "var(--accent-color)"
-      : `conic-gradient(${props.$segmentColors})`};
+  background: var(--color-avatar-shadow);
   padding: 3px;
   display: block;
 `;
@@ -55,27 +51,7 @@ const StyledName = styled.p`
 `;
 
 function StoryIcon(props: StoryIconProps) {
-  const {
-    stories,
-    photo,
-    name,
-    userId,
-    onView,
-    isMyStory,
-    isCollapsed = false,
-  } = props;
-
-  let segmentColors = "";
-  if (!isMyStory) {
-    const segmentDegree = 360 / stories.length;
-    segmentColors = stories
-      .map((story, index) =>
-        story.viewed
-          ? `gray ${index * segmentDegree}deg ${(index + 1) * segmentDegree}deg`
-          : `var(--accent-color) ${index * segmentDegree}deg ${(index + 1) * segmentDegree}deg`
-      )
-      .join(", ");
-  }
+  const { photo, name, userId, onView, isMyStory, isCollapsed = false } = props;
 
   const firstName =
     name?.split(" ")[0]?.slice(0, 4) +
@@ -93,10 +69,7 @@ function StoryIcon(props: StoryIconProps) {
 
   return (
     <StyledContainer $isCollapsed={isCollapsed} onClick={handleIconClicked}>
-      <StyledImageContainer
-        $segmentColors={segmentColors}
-        $isMyStory={isMyStory}
-      >
+      <StyledImageContainer $isMyStory={isMyStory}>
         <Avatar name={name} image={photo} />
       </StyledImageContainer>
       {!isCollapsed && <StyledName>{displayName}</StyledName>}

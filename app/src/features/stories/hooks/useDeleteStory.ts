@@ -17,7 +17,8 @@ function useDeleteStory() {
       queryClient.invalidateQueries({ queryKey: ["myStories"] });
       toast.success("Story successfully deleted");
     },
-    onError: () => {
+    onError: (error) => {
+      console.log(error);
       toast.error("Error deleting story");
     },
   });
