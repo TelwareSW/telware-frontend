@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { MOCK_MY_STORIES, MOCK_OTHER_USERS_STORIES } from "./mockStoriesData";
+import { MOCK_MY_STORIES, MOCK_OTHER_USERS_STORIES } from "../data/stories";
 import { story } from "types/story";
 
 type AddStoryRequestBody = {

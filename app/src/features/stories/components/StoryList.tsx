@@ -111,6 +111,7 @@ function StoryList(props: StoryListProps) {
               data-testid={`story-icon-${userStory.userId}`}
               name={userStory.name}
               photo={userStory.photo}
+              isMyStory={false}
               stories={userStory.stories}
               userId={userStory.userId}
               onView={handleStoryClick}
