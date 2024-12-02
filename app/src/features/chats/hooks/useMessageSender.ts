@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useSocket } from "@hooks/useSocket";
 import { useAppSelector } from "@hooks/useGlobalState";
-import { MessageInterface } from "types/messages";
+import { MessageInterface, MessageStatus } from "types/messages";
 
 export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
@@ -9,7 +9,7 @@ export const useMessageSender = () => {
   const activeMessage = useAppSelector((state) => state.activeMessage);
   const { chatId } = useParams<{ chatId: string }>();
 
-  const handleSendMessage = (data: string, file: string) => {
+  const handleSendMessage = (data: string, file?: string) => {
     if (activeMessage?.id && activeMessage.state === "edit") {
       editMessage(activeMessage?.id!, data, chatId!);
       return;
@@ -19,19 +19,18 @@ export const useMessageSender = () => {
 
     if (data || file) {
       const message: MessageInterface = {
-        id: "",
+        _id: "",
+        timestamp: new Date().toISOString(),
         content: data,
-        senderId: userId,
-        type: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        chatId: chatId!,
-        parentMessageId: "",
-        isDeleted: false,
+        contentType: "normal",
         isPinned: false,
-        deleteType: 2,
-        status: 0,
-        isOptionListOpen: false,
+        isForward: false,
+        isAnnouncement: false,
+        senderId: userId,
+        chatId: chatId!,
+
+        parentMessageId: "",
+        status: MessageStatus.sent,
         isReply: isReply,
         replyMessageId: isReply ? activeMessage.id : null,
         media: file,

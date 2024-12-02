@@ -1,4 +1,3 @@
-import { messages } from "@mocks/data/messages";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MessageInterface } from "types/messages";
 
@@ -10,7 +9,7 @@ interface MessagesState {
 }
 
 const initialState: MessagesState = {
-  messages: messages,
+  messages: [],
   isTyping: false,
   showCheckBox: false,
   selectedMessages: [],
@@ -30,7 +29,7 @@ const messagesSlice = createSlice({
     ) => {
       state.messages = state.messages.filter((message) => {
         const { chatId, id } = action.payload;
-        if (message.chatId == chatId) return message.id !== id;
+        if (message.chatId == chatId) return message._id !== id;
         else return message;
       });
     },
@@ -46,7 +45,7 @@ const messagesSlice = createSlice({
       const { chatId, messageId, content } = action.payload;
 
       const message = state.messages.find(
-        (msg) => msg.id === messageId && msg,
+        (msg) => msg._id === messageId && msg,
         chatId === chatId
       );
 
@@ -61,7 +60,7 @@ const messagesSlice = createSlice({
     ) => {
       const { messageId, chatId } = action.payload;
       const message = state.messages.find(
-        (msg) => msg.id === messageId && msg.chatId == chatId
+        (msg) => msg._id === messageId && msg.chatId == chatId
       );
       if (message) {
         message.isPinned = true;
@@ -74,7 +73,7 @@ const messagesSlice = createSlice({
     ) => {
       const { messageId, chatId } = action.payload;
       const message = state.messages.find(
-        (msg) => msg.id === messageId && msg.chatId == chatId
+        (msg) => msg._id === messageId && msg.chatId == chatId
       );
       if (message) {
         message.isPinned = false;
@@ -101,20 +100,6 @@ const messagesSlice = createSlice({
       state.showCheckBox = showCheckBox;
     },
 
-    setIsOptionListOpen: (
-      state,
-      action: PayloadAction<{ value: boolean; id: string }>
-    ) => {
-      const { id, value } = action.payload;
-      state.messages.forEach((msg) => {
-        if (msg.id === id) {
-          msg.isOptionListOpen = value;
-        } else {
-          msg.isOptionListOpen = false;
-        }
-      });
-    },
-
     SelectMessage: (state, action: PayloadAction<{ id: string }>) => {
       const { id } = action.payload;
       state.selectedMessages.push(id);
@@ -125,6 +110,13 @@ const messagesSlice = createSlice({
       state.selectedMessages = state.selectedMessages.filter(
         (msgId) => msgId !== id
       );
+    },
+
+    mergeMessages: (
+      state,
+      action: PayloadAction<{ messages: MessageInterface[] }>
+    ) => {
+      state.messages = [...action.payload.messages, ...state.messages];
     },
   },
 });
@@ -138,9 +130,9 @@ export const {
   unpinMessage,
   setIsTyping,
   setShowCheckBox,
-  setIsOptionListOpen,
   SelectMessage,
   removeSelectedMessage,
+  mergeMessages,
 } = messagesSlice.actions;
 export default messagesSlice.reducer;
 export type { MessageInterface, MessagesState };

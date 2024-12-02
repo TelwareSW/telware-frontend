@@ -9,7 +9,9 @@ interface story {
 }
 interface userStories {
   userId: string;
+  userId: string;
   name: string;
+  photo: string;
   photo: string;
   stories: story[];
 }
