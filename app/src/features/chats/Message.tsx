@@ -19,12 +19,12 @@ import renderWithHighlight from "@utils/renderWithHighlight";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
-import { useSocket } from "@hooks/useSocket";
 import MessageBox from "./MessageBox";
 import useCheckBox from "@features/forward/hooks/useCheckBox";
 import useHover from "./hooks/useHover";
 import useOptionListAction from "./hooks/useOptionListAction";
 import FileViewer from "./media/FileViewer";
+import { useSocket } from "@hooks/useSocket";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -63,6 +63,13 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   color: ${({ $isMine }) => ($isMine ? "#fff" : "var(--color-text)")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
   z-index: 1;
+
+  -webkit-user-select: text; /* Safari and older Chrome */
+  -moz-user-select: text; /* Firefox */
+  -ms-user-select: text; /* IE10+ */
+  user-select: text;
+  user-select: text !important;
+  cursor: text;
 
   word-break: break-word;
   white-space: pre-wrap;
