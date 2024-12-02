@@ -1,12 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import {
-  setShowCheckBox,
-  pinMessage,
-  unpinMessage,
-} from "@state/messages/messages";
-
 import { MessageInterface } from "types/messages";
 
 import { getIcon } from "@data/icons";
@@ -25,6 +19,11 @@ import useCheckBox from "@features/forward/hooks/useCheckBox";
 import useHover from "./hooks/useHover";
 import useOptionListAction from "./hooks/useOptionListAction";
 import FileViewer from "./media/FileViewer";
+import {
+  pinMessage,
+  setShowCheckBox,
+  unpinMessage,
+} from "@state/messages/chats";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -168,7 +167,10 @@ function Message({
     searchResultRef,
   ]);
 
-  const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({ id });
+  const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({
+    chatId,
+    messageId: id,
+  });
   const { isHovered, handleMouseLeave, handleOpenList } = useHover();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const { handleEditMessage, handleReply, MoveToReplyMessage } =
@@ -186,8 +188,7 @@ function Message({
   }
 
   function forwardOnClick() {
-    dispatch(setShowCheckBox({ showCheckBox: !showCheckBox }));
-    // dispatch(setIsOptionListOpen({ value: !isOptionListOpen, id: id }));
+    dispatch(setShowCheckBox({ chatId: chatId, showCheckBox: !showCheckBox }));
   }
 
   return (

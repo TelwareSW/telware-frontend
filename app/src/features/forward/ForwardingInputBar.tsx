@@ -1,6 +1,8 @@
 import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
+import { getChatByID } from "@features/chats/helpers";
 import { useAppSelector } from "@hooks/useGlobalState";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -35,12 +37,16 @@ interface Props {
 }
 
 function ForwardingInputBar(props: Props) {
-  const { onClose, onForward } = props;
-  const selectedMessages = useAppSelector(
-    (state) => state.messages.selectedMessages
-  );
+  const { chatId } = useParams<{ chatId: string }>();
 
-  return (
+  const { onClose, onForward } = props;
+
+  const chats = useAppSelector((state) => state.chats.chats);
+  const chat = chatId ? getChatByID({ chatID: chatId, chats }) : undefined;
+
+  const selectedMessages = chat?.selectedMessages;
+
+  return selectedMessages ? (
     <Wrapper>
       <IconButton onClick={onClose} test-id="close-icon">
         <Icon>{getIcon("Close")}</Icon>
@@ -50,6 +56,8 @@ function ForwardingInputBar(props: Props) {
         <Icon>{getIcon("Forward")}</Icon>
       </IconButton>
     </Wrapper>
+  ) : (
+    <></>
   );
 }
 

@@ -48,8 +48,6 @@ const StyledP = styled.p`
 
 const menuStyles: StyledListProps = {
   $bottom: -6,
-  $right: 0,
-  $size: 40,
   $height: 0,
 };
 
@@ -67,7 +65,7 @@ const HoverMask = styled.div`
 `;
 
 interface BlockedUserInterface {
-  id: number;
+  id: string;
   name: string;
   username: string;
 }
@@ -77,7 +75,7 @@ function BlockItem({ id, name, username }: BlockedUserInterface) {
 
   const { removeFromBlockList } = useBlock();
 
-  function handleRemove(id: number) {
+  function handleRemove(id: string) {
     removeFromBlockList({ id: id.toString() });
     setIsBlockButtonEnabled(false);
   }

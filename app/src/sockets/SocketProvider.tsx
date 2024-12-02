@@ -2,28 +2,30 @@ import { useState, useEffect, ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
-import {
-  addMessage,
-  editMessage,
-  MessageInterface,
-  pinMessage,
-  setIsTyping,
-  unpinMessage,
-} from "@state/messages/messages";
-
 import { SocketContext } from "./SocketContext";
 import { getSocket } from "utils/socket";
-import { useChats } from "@features/chats/hooks/useChats";
+import {
+  addMessage,
+  setIsTyping,
+  pinMessage,
+  unpinMessage,
+} from "@state/messages/chats";
+import { MessageInterface } from "types/messages";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
-  message: MessageInterface
+  message: MessageInterface,
+  chatId: string
 ) => {
-  dispatch(addMessage(message));
+  dispatch(addMessage({ chatId, message }));
 };
 
-const handleIsTyping = (dispatch: Dispatch, isTyping: boolean) => {
-  dispatch(setIsTyping({ isTyping: isTyping }));
+const handleIsTyping = (
+  dispatch: Dispatch,
+  isTyping: boolean,
+  chatId: string
+) => {
+  dispatch(setIsTyping({ chatId, isTyping }));
 };
 
 type SocketProviderProps = {
@@ -41,8 +43,6 @@ function SocketProvider({ children }: SocketProviderProps) {
   const dispatch = useDispatch();
   const socket = getSocket();
 
-  const { chats, isPending } = useChats();
-
   useEffect(() => {
     socket.connect();
 
@@ -57,7 +57,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     });
 
     socket.on("RECEIVE_MESSAGE", (message: MessageInterface) => {
-      handleIncomingMessage(dispatch, message);
+      handleIncomingMessage(dispatch, message, message.chatId);
     });
 
     socket.on(
@@ -92,7 +92,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       }
     );
 
-    socket.on("EDIT_MESSAGE_SERVER", ( message ) => {
+    socket.on("EDIT_MESSAGE_SERVER", (message) => {
       console.log("hii");
 
       console.log(message.chatId, message.messageId, message.content);
@@ -101,7 +101,11 @@ function SocketProvider({ children }: SocketProviderProps) {
       // dispatch(editMessage({ chatId, messageId, content }));
     });
 
-    socket.on("typing", (isTyping) => handleIsTyping(dispatch, isTyping));
+    //TODO: check this
+    socket.on("typing", (isTyping, message) =>
+      handleIsTyping(dispatch, isTyping, message.chatId)
+    );
+
     socket.emit("typing");
     return () => {
       socket.disconnect();
@@ -113,17 +117,17 @@ function SocketProvider({ children }: SocketProviderProps) {
     };
   }, [dispatch, socket]);
 
-  useEffect(() => {
-    if (!isPending && chats?.length) {
-      chats.forEach((chat) => {
-        socket.emit("join", { chatId: chat._id });
-      });
-      console.log(
-        "Joined all chats:",
-        chats.map((chat) => chat._id)
-      );
-    }
-  }, [isConnected, isPending, chats, socket]);
+  // useEffect(() => {
+  //   if (!isPending && chats?.length) {
+  //     chats.forEach((chat) => {
+  //       socket.emit("join", { chatId: chat._id });
+  //     });
+  //     console.log(
+  //       "Joined all chats:",
+  //       chats.map((chat) => chat._id)
+  //     );
+  //   }
+  // }, [isConnected, isPending, chats, socket]);
 
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected) {
@@ -139,7 +143,14 @@ function SocketProvider({ children }: SocketProviderProps) {
           if (success) {
             console.log(message);
             const _id = res;
-            handleIncomingMessage(dispatch, { ...sentMessage, _id });
+            handleIncomingMessage(
+              dispatch,
+              {
+                ...sentMessage,
+                _id,
+              },
+              sentMessage.chatId
+            );
           }
         }
       );

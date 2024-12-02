@@ -24,7 +24,7 @@ export interface MessageInterface {
   contentType: ContentType;
   isPinned: boolean;
   isForward: boolean;
-  isAnnouncement: boolean;
+  isAnnouncement: boolean;  
   senderId: string;
   chatId: string;
 

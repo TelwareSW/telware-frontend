@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "@state/store";
 import PinnedMessageProgressBar from "./PinnedMessageProgressBar";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { getChatByID } from "@features/chats/helpers";
+import { useParams } from "react-router-dom";
+import { MessageInterface } from "types/messages";
 
 const PinnedMessagesContainer = styled.div`
   display: flex;
@@ -41,9 +43,15 @@ const PinnedMessagePreview = styled.div`
 `;
 
 const PinnedMessages: React.FC = () => {
-  const pinnedMessages = useSelector((state: RootState) =>
-    state.messages.messages.filter((msg) => msg.isPinned),
-  );
+  const { chatId } = useParams<{ chatId: string }>();
+
+  const chats = useAppSelector((state) => state.chats.chats);
+  const chat = chatId && getChatByID({ chatID: chatId, chats });
+
+  let pinnedMessages: MessageInterface[] = [];
+  if (chat)
+    pinnedMessages = chat.messages.filter((message) => message.isPinned);
+
   const [currentPinnedIndex, setCurrentPinnedIndex] = useState(0);
 
   const currentPinnedMessage = useMemo(() => {
@@ -53,10 +61,10 @@ const PinnedMessages: React.FC = () => {
   const handleNextPinnedMessage = () => {
     if (pinnedMessages.length > 0) {
       setCurrentPinnedIndex(
-        (prevIndex) => (prevIndex + 1) % pinnedMessages.length,
+        (prevIndex) => (prevIndex + 1) % pinnedMessages.length
       );
       document
-        .querySelector("[data-message-id='" + currentPinnedMessage?.id + "']")
+        .querySelector("[data-message-id='" + currentPinnedMessage?._id + "']")
         ?.scrollIntoView({
           behavior: "smooth",
           block: "center",

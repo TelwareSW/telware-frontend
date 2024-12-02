@@ -1,4 +1,3 @@
-import { allChats } from "@mocks/data/chats";
 import { ScrollContainer } from "styles/GlobalStyles";
 import styled from "styled-components";
 import ChatPopupItem, { ChatPopupItemProps } from "./chatPopupItem";
@@ -7,6 +6,10 @@ import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
 import { useMessageSender } from "@features/chats/hooks/useMessageSender";
 import { useAppSelector } from "@hooks/useGlobalState";
+import { useParams } from "react-router-dom";
+import { useSelectedMessages } from "@features/chats/hooks/useSelectedMessages";
+import { getChatByID } from "@features/chats/helpers";
+import { useChatMembers } from "@features/chats/hooks/useChatMember";
 
 const OuterContainer = styled.ul`
   position: absolute;
@@ -55,25 +58,31 @@ interface Props {
 }
 
 function ScrollableChats(props: Props) {
+  const { chatId } = useParams<{ chatId: string }>();
   const { onClose } = props;
-  const selectedMessages = useAppSelector(
-    (state) => state.messages.selectedMessages
-  );
-  const messages = useAppSelector((state) => state.messages.messages);
+
+  const { selectedMessages } = useSelectedMessages({ chatId });
+
+  const chats = useAppSelector((state) => state.chats.chats);
+  const messages = chatId
+    ? getChatByID({ chatID: chatId, chats })?.messages
+    : undefined;
+
   const { handleSendMessage } = useMessageSender();
 
   const handleSubmit = () => {
-    const messagesToForward = messages.filter((message) =>
-      selectedMessages.includes(message._id)
+    const messagesToForward = messages?.filter((message) =>
+      selectedMessages?.includes(message._id)
     );
 
-    messagesToForward.map((message) => {
+    messagesToForward?.map((message) => {
       handleSendMessage(message.content);
     });
 
     onClose();
   };
 
+  //TODO: refactor
   return (
     <OuterContainer>
       <HeaderRow>
@@ -83,11 +92,14 @@ function ScrollableChats(props: Props) {
         <Heading as="h4">Forward To...</Heading>
       </HeaderRow>
       <ScrollContainer>
-        {allChats?.map((item) => {
+        {chats?.map((item) => {
+          const membersData = useChatMembers(item.members);
+
           const data: ChatPopupItemProps = {
             id: item._id,
-            name: item.members[0].screenFirstName,
-            username: item.members[0].username,
+            name:
+              membersData[0].screenFirstName + membersData[0].screenFirstName,
+            username: membersData[0].username,
           };
           return (
             <StylingWrapper
