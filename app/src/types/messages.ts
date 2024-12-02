@@ -33,3 +33,9 @@ export enum StickerTap {
   emoji,
   sticker,
 }
+
+export enum StickerTap {
+  gif,
+  emoji,
+  sticker,
+}

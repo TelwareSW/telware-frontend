@@ -10,23 +10,27 @@ interface ChatsSideBarProps {
 }
 
 const StyledChatsSideBar = styled.div`
-  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
   color: var(--color-icon-secondary);
   background-color: var(--color-background);
   overflow-y: auto;
   overflow-x: hidden;
-  position: relative;
 `;
 
 const StyledButtonContainer = styled.div`
   position: sticky;
   bottom: 1rem;
-  width: 100%;
+  width: 3.3rem;
+  left: 100%;
   display: flex;
   justify-content: space-around;
-  align-items: end;
+  align-items: flex-end;
   flex-direction: column-reverse;
   gap: 4rem;
+  background-color: transparent;
+  z-index: 1;
 `;
 
 function ChatsSideBar({ children }: ChatsSideBarProps) {
@@ -34,7 +38,7 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
     <StyledChatsSideBar>
       <ChatsSidebarHeader />
       <StoryListContainer />
-      {children}
+      <div style={{ flex: 1 }}>{children}</div>{" "}
       <StyledButtonContainer data-testid="button-container">
         <AddStory data-testid="add-story-button" />
         <StartNewChat data-testid="start-new-chat-button" />
