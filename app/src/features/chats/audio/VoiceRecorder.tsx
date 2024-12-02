@@ -15,6 +15,7 @@ type VoiceRecorderProps = {
   isRecording: RecordingStates;
   setIsRecording: Dispatch<SetStateAction<RecordingStates>>;
   setError: Dispatch<SetStateAction<string>>;
+  Error: string;
   handleSendMessage: (data: string, file: string) => void;
 };
 
@@ -24,12 +25,12 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   isRecording,
   setIsRecording,
   setError,
+  Error,
 }) => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const { data: voiceNoteURL, mutate: uploadVoiceNote } = useUploadMedia();
 
-  // Initialize media recorder when recording starts
   useEffect(() => {
     if (isRecording === "recording") {
       navigator.mediaDevices
