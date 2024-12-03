@@ -95,7 +95,7 @@ function ChatInput() {
     setIsEmojiSelectorOpen((show) => !show);
   };
   const sendGIF = (gif: string) => {
-    handleSendMessage(undefined, gif, "gif");
+    handleSendMessage("", gif, "GIF");
     setIsEmojiSelectorOpen(false);
   };
 

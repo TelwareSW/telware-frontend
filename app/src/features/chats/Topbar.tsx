@@ -11,6 +11,7 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import { getChatByID } from "./helpers";
 import { useChatMembers } from "./hooks/useChatMember";
+import { getElapsedTime } from "@utils/helpers";
 
 const Container = styled.div`
   position: absolute;
@@ -82,6 +83,25 @@ function Topbar() {
   const chats = useAppSelector((state) => state.chats.chats);
   const [isSearching, setIsSearching] = useState(false);
 
+  const chat =
+    chatId &&
+    getChatByID({
+      chatID: chatId,
+      chats: chats,
+    });
+
+  let membersData = useChatMembers(chat?.members);
+
+  let name;
+  let image;
+  let lastSeen;
+  if (chat) {
+    name = membersData[0]?.screenFirstName || membersData[0]?.username;
+
+    lastSeen = chat?.lastMessage?.timestamp;
+    image = membersData[0]?.photo;
+  }
+
   if (!chat) return null;
 
   const toggleSearch = () => {
@@ -99,7 +119,7 @@ function Topbar() {
             <Content>
               <Name data-testid="chat-name">{name}</Name>
               <LastSeen data-testid="chat-last-seen">
-                last seen {lastSeen}
+                last seen {getElapsedTime(lastSeen)}
               </LastSeen>
             </Content>
           </Info>

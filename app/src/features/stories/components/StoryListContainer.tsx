@@ -37,7 +37,7 @@ function StoryListContainer() {
   const { myStories: myStoriesData } = useMyStroies();
   const myStories = myStoriesData?.data?.stories;
   const [isOpened, setIsOpened] = useState(
-    userStories?.length !== 0 || myStories?.length !== 0
+    userStories?.length || myStories?.length
   );
   const { userInfo } = useAppSelector((state) => state.user);
 
@@ -45,7 +45,7 @@ function StoryListContainer() {
     setIsOpened(true);
   };
   useEffect(() => {
-    setIsOpened(userStories?.length !== 0 || myStories?.length !== 0);
+    setIsOpened(userStories?.length || myStories?.length);
   }, [myStories, userStories]);
   return (
     <StyledContainer $isOpened={isOpened} data-testid="story-list-container">
