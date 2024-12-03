@@ -145,12 +145,12 @@ function ChatInput() {
       <Container data-testid="chat-input-container">
         {!showCheckBox ? (
           <Input data-testid="chat-input">
-            {/* {isEmojiSelectorOpen && (
+            {isEmojiSelectorOpen && (
               <EmojiPickerItem
                 setInputText={setInput}
                 data-testid="emoji-picker"
               />
-            )} */}
+            )}
             <InputContainer>
               {activeMessage.id && <ReplyWrapper setInput={setInput} />}
 
