@@ -14,7 +14,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.sent,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -30,7 +29,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.delivered,
     isReply: false,
-    replyMessageId: null,
     media: "https://example.com/doc.pdf",
   },
   {
@@ -46,7 +44,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.seen,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -62,7 +59,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.sent,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -78,7 +74,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.error,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -94,7 +89,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.seen,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -110,7 +104,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.sent,
     isReply: true,
-    replyMessageId: "msg2",
     media: "",
   },
   {
@@ -126,7 +119,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.delivered,
     isReply: false,
-    replyMessageId: null,
     media: "https://example.com/report.pdf",
   },
   {
@@ -142,7 +134,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.seen,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -158,7 +149,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.error,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -174,7 +164,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.delivered,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -190,7 +179,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.seen,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -206,7 +194,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.sent,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -222,7 +209,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.delivered,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -238,7 +224,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.seen,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -254,7 +239,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.error,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -270,7 +254,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.sent,
     isReply: true,
-    replyMessageId: "msg9",
     media: "",
   },
   {
@@ -286,7 +269,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.delivered,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -302,7 +284,6 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.seen,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
   {
@@ -318,12 +299,11 @@ const messages: MessageInterface[] = [
     parentMessageId: "",
     status: MessageStatus.sent,
     isReply: false,
-    replyMessageId: null,
     media: "",
   },
 ];
 
-const generateMessages = (count: number): MessageInterface[] => {
+const generateMessages = (count: number) => {
   return Array.from({ length: count }, (_, index) => {
     const id = index + 21; // Start after the 20th message
     const contentTypes = ["text", "file", "image", "audio", "video", "link"];

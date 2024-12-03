@@ -2,11 +2,14 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import Avatar from "@features/chats/Avatar";
-import { useChat } from "@features/chats/hooks/useChat";
 import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { useParams } from "react-router-dom";
+import { getChatByID } from "./helpers";
+import { useChatMembers } from "./hooks/useChatMember";
 
 const Container = styled.div`
   position: absolute;
@@ -72,15 +75,33 @@ const IconButton = styled.button`
   justify-content: center;
 `;
 
+//TODO: refactor
 function Topbar() {
-  const { chat } = useChat();
+  const { chatId } = useParams<{ chatId: string }>();
+  const chats = useAppSelector((state) => state.chats.chats);
   const [isSearching, setIsSearching] = useState(false);
 
-  if (!chat) return null;
+  const chat =
+    chatId &&
+    getChatByID({
+      chatID: chatId,
+      chats: chats,
+    });
 
-  const name = chat?.members[0]?.screenFirstName || chat?.members[0]?.username;
-  const lastSeen = chat?.lastMessage?.timestamp;
-  const image = chat?.members[0]?.photo;
+  let membersData = useChatMembers(chat?.members);
+
+  let name;
+  let image;
+  let lastSeen;
+  if (chat) {
+    name = membersData[0]?.screenFirstName || membersData[0]?.username;
+
+    lastSeen = chat?.lastMessage?.timestamp;
+    image =
+      membersData[0]?.photo?.length > 50 ? membersData[0]?.photo : undefined;
+  }
+
+  if (!chat) return null;
 
   const toggleSearch = () => {
     setIsSearching(!isSearching);

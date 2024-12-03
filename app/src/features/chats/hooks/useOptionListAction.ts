@@ -4,11 +4,11 @@ import { setActiveMessage } from "@state/messages/activeMessage";
 function useOptionListAction({
   id,
   content,
-  replyMessageId,
+  parentMessageId,
 }: {
   id: string;
   content: string;
-  replyMessageId: string | null;
+  parentMessageId: string | null;
 }) {
   const dispatch = useAppDispatch();
   function handleEditMessage() {
@@ -21,7 +21,7 @@ function useOptionListAction({
 
   function MoveToReplyMessage() {
     const targetMsg = document.querySelector(
-      "[data-message-id='" + replyMessageId + "']"
+      "[data-message-id='" + parentMessageId + "']"
     );
 
     if (targetMsg) {
