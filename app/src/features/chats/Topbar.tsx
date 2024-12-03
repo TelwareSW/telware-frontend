@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import Avatar from "@features/chats/Avatar";
+import Avatar from "@components/Avatar";
 import { useChat } from "@features/chats/hooks/useChat";
 import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";

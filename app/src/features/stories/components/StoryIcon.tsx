@@ -53,13 +53,7 @@ const StyledName = styled.p`
 function StoryIcon(props: StoryIconProps) {
   const { photo, name, userId, onView, isMyStory, isCollapsed = false } = props;
 
-  const firstName =
-    name?.split(" ")[0]?.slice(0, 4) +
-      (name?.split(" ")[0]?.length > 4 ? "..." : "") || "";
-  const lastName =
-    name?.split(" ")[1]?.slice(0, 4) +
-      (name?.split(" ")[1]?.length > 4 ? "..." : "") || "";
-  const displayName = `${firstName} ${lastName}`.trim();
+  const displayName = name?.slice(0, 8) + (name?.length > 8 ? "..." : "") || "";
 
   const handleIconClicked = () => {
     if (userId && onView) {

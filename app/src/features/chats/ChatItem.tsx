@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import Avatar from "./Avatar";
-import { Chat } from "@mocks/data/Chats";
+import Avatar from "@components/Avatar";
+import { Chat } from "@mocks/data/chats";
 
 const Container = styled.li<{ $active?: boolean }>`
   display: flex;
@@ -60,7 +60,8 @@ function ChatItem({
   chat: { _id, members, type, lastMessage },
 }: ChatItemProps) {
   const name = members[0]?.screenFirstName || members[0]?.username;
-  const image = members[0]?.photo?.length > 50 ? members[0]?.photo : undefined;
+  // const image = members[0]?.photo?.length > 50 ? members[0]?.photo : undefined;
+  const image = members[0]?.photo;
   const navigate = useNavigate();
 
   const timestamp = lastMessage?.timestamp || "No messages";
@@ -79,7 +80,7 @@ function ChatItem({
       onClick={handleOpenChat}
       key={_id}
     >
-      <Avatar data-testid="chat-avatar" image={image} name={name?.charAt(0)} />
+      <Avatar data-testid="chat-avatar" image={image} name={name} />
       <ChatContent>
         <ChatHeader>
           <Name data-testid="chat-name">
