@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
-import { useChat } from "@features/chats/hooks/useChat";
 import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
@@ -83,12 +82,12 @@ function Topbar() {
   const chats = useAppSelector((state) => state.chats.chats);
   const [isSearching, setIsSearching] = useState(false);
 
-  const chat =
-    chatId &&
-    getChatByID({
-      chatID: chatId,
-      chats: chats,
-    });
+  const chat = chatId
+    ? getChatByID({
+        chatID: chatId,
+        chats: chats,
+      })
+    : undefined;
 
   let membersData = useChatMembers(chat?.members);
 
@@ -118,9 +117,11 @@ function Topbar() {
           <Info data-testid="chat-info">
             <Content>
               <Name data-testid="chat-name">{name}</Name>
-              <LastSeen data-testid="chat-last-seen">
-                last seen {getElapsedTime(lastSeen)}
-              </LastSeen>
+              {lastSeen && (
+                <LastSeen data-testid="chat-last-seen">
+                  last seen {getElapsedTime(lastSeen)}
+                </LastSeen>
+              )}
             </Content>
           </Info>
           <PinnedMessages />

@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
-import { Chat } from "@mocks/data/chats";
 import { DetailedChatInterface } from "@state/messages/chats";
 import { useChatMembers } from "./hooks/useChatMember";
 

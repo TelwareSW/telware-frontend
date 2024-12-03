@@ -29,7 +29,6 @@ export interface MessageInterface {
   chatId: string;
 
   parentMessageId: string | null;
-  isReply: boolean;
   status: MessageStatus;
 
   media?: string;
