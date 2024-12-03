@@ -2,8 +2,9 @@ import styled from "styled-components";
 import BlockItem, { BlockedUserProps } from "./BlockItem";
 import { useBlock } from "./hooks/useBlock";
 import { ScrollContainer } from "styles/GlobalStyles";
-import { useChats } from "@features/chats/hooks/useChats";
-import { Chat } from "@mocks/data/chats";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { DetailedChatInterface } from "@state/messages/chats";
+import { useChatMembers } from "@features/chats/hooks/useChatMember";
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
@@ -49,12 +50,14 @@ const StyledP = styled.p`
   justify-self: center;
   align-self: center;
 `;
-
-function filterChats(blockList: BlockedUserProps[], chats: Chat[]) {
+function filterChats(
+  blockList: BlockedUserProps[],
+  chats: DetailedChatInterface[]
+) {
   const blockIds = blockList
     ? new Set(blockList.map((val) => val.id))
     : new Set();
-  const filteredChats = chats?.filter((item) => !blockIds.has(item.id));
+  const filteredChats = chats?.filter((item) => !blockIds.has(item._id));
 
   return filteredChats;
 }
@@ -63,16 +66,16 @@ function AddToBlockMenuList({ setIsMenuOpened }: any) {
   const { addToBlockList } = useBlock();
 
   const { blockList } = useBlock();
-  const { chats } = useChats();
+  const chats = useAppSelector((state) => state.chats.chats);
 
   const filteredChats = filterChats(
     blockList as BlockedUserProps[],
-    chats as Chat[]
+    chats as DetailedChatInterface[]
   );
 
-  function handleClick(item: Chat) {
+  function handleClick(item: DetailedChatInterface) {
     setIsMenuOpened(false);
-    addToBlockList({ id: item.id.toString() });
+    addToBlockList({ id: item._id });
   }
 
   return (
@@ -80,10 +83,15 @@ function AddToBlockMenuList({ setIsMenuOpened }: any) {
       <ScrollContainer>
         {filteredChats.length ? (
           filteredChats.map((item) => {
+            const membersData = useChatMembers(item.members);
+
             const data: BlockedUserProps = {
-              name: item.name,
-              id: item.id,
-              username: item.name.toLowerCase() + 123,
+              id: item._id,
+              name:
+                membersData[0].screenFirstName +
+                " " +
+                membersData[0].screenLastName,
+              username: membersData[0].username,
             };
             return (
               <StylingWrapper

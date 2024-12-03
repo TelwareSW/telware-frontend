@@ -5,20 +5,31 @@ export enum MessageStatus {
   "error",
 }
 
+export type ContentType =
+  | "text"
+  | "image"
+  | "GIF"
+  | "sticker"
+  | "audio"
+  | "video"
+  | "file"
+  | "link";
+
 export interface MessageInterface {
   _id: string;
 
   //TODO: needs to be Date
   timestamp: string;
   content: string;
-  contentType: string;
+  contentType: ContentType;
   isPinned: boolean;
   isForward: boolean;
   isAnnouncement: boolean;
   senderId: string;
   chatId: string;
 
-  parentMessageId: string;
+  parentMessageId: string | null;
+  isReply: boolean;
   status: MessageStatus;
 
   media?: string;

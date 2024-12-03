@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MessageInterface } from "types/messages";
 
 const ProgressBarContainer = styled.div`
   position: relative;
@@ -26,7 +27,7 @@ const ProgressBar = styled.div`
 `;
 
 type PinnedMessageProgressBarProps = {
-  pinnedMessages: { id: string; content: string; isPinned: boolean }[];
+  pinnedMessages: MessageInterface[];
   currentPinnedIndex: number;
 };
 

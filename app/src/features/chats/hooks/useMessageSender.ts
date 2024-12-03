@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useSocket } from "@hooks/useSocket";
 import { useAppSelector } from "@hooks/useGlobalState";
-import { MessageInterface, MessageStatus } from "types/messages";
+import { ContentType, MessageInterface, MessageStatus } from "types/messages";
+import { useSocket } from "@hooks/useSocket";
 
 export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
@@ -12,7 +12,7 @@ export const useMessageSender = () => {
   const handleSendMessage = (
     data: string,
     file?: string,
-    type: "normal" | "gif" | "sticker" = "normal"
+    type: ContentType = "text"
   ) => {
     if (activeMessage?.id && activeMessage.state === "edit") {
       editMessage(activeMessage?.id!, data, chatId!);
@@ -33,11 +33,11 @@ export const useMessageSender = () => {
         senderId: userId,
         chatId: chatId!,
 
-        parentMessageId: "",
+        parentMessageId: isReply ? activeMessage.id : null,
+        isReply,
         status: MessageStatus.sent,
-        isReply: isReply,
-        replyMessageId: isReply ? activeMessage.id : null,
         media: file,
+        replyMessageId: null, // or provide the appropriate value
       };
       sendMessage(message);
     }

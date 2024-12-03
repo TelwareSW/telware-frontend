@@ -3,7 +3,7 @@ import { API_URL } from "@constants";
 import { BlockedUserProps } from "../BlockItem";
 
 async function getBlockList() {
-  const response = await fetch(`${API_URL}/users/block`, {
+  const response = await fetch(`${API_URL}/users/blocked`, {
     method: "GET",
     credentials: "include",
     headers: {

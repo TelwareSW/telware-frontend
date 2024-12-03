@@ -18,14 +18,16 @@ export type Chat = {
   numberOfMembers: number;
 };
 
-export type ChatData = {
+export type ChatDataType = {
   chats: Chat[];
   members: Member[];
   lastMessages: {
     chatId: string;
     lastMessage: {
+      _id: string;
       content: string;
-      timestaamp: string;
+      senderId: string;
+      timestamp: string;
     };
   }[];
 };

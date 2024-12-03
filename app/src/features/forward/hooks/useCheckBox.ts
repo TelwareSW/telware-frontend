@@ -1,21 +1,31 @@
+import { getChatByID } from "@features/chats/helpers";
 import { useAppSelector, useAppDispatch } from "@hooks/useGlobalState";
-import { SelectMessage, removeSelectedMessage } from "@state/messages/messages";
+import { SelectMessage, removeSelectedMessage } from "@state/messages/chats";
 import { useState, useEffect } from "react";
 
-function useCheckBox({ id }: { id: string }) {
+function useCheckBox({
+  chatId,
+  messageId,
+}: {
+  chatId: string;
+  messageId: string;
+}) {
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const showCheckBox = useAppSelector((state) => state.messages.showCheckBox);
+  const chats = useAppSelector((state) => state.chats.chats);
+  const showCheckBox = chatId
+    ? getChatByID({ chats: chats, chatID: chatId })?.showCheckBox
+    : undefined;
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    setIsChecked(isChecked && showCheckBox);
-  }, [showCheckBox]);
+    if (showCheckBox !== undefined) setIsChecked(isChecked && showCheckBox);
+  }, [showCheckBox, messageId, chatId]);
 
   function toggleCheckBox() {
     if (!isChecked) {
-      dispatch(SelectMessage({ id: id }));
+      dispatch(SelectMessage({ chatId, id: messageId }));
     } else {
-      dispatch(removeSelectedMessage({ id: id }));
+      dispatch(removeSelectedMessage({ chatId, id: messageId }));
     }
     setIsChecked(!isChecked);
   }

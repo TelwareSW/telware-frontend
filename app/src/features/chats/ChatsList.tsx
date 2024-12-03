@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ChatItem from "./ChatItem";
 import { useChats } from "./hooks/useChats";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const ChatListContainer = styled.ul`
   display: flex;
@@ -12,7 +13,8 @@ const ChatListContainer = styled.ul`
 `;
 
 const ChatsList = () => {
-  const { chats, isPending } = useChats();
+  const { isPending } = useChats();
+  const chats = useAppSelector((state) => state.chats.chats);
 
   if (isPending) return;
 

@@ -11,6 +11,7 @@ import {
   moveToPreviousResult,
   clearSearch,
 } from "@state/messages/search";
+import { useParams } from "react-router-dom";
 
 const SearchContainer = styled.div`
   display: flex;
@@ -71,10 +72,15 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
   const dispatch = useDispatch();
+  const chatId = useParams<{ chatId: string }>().chatId;
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
     (state: RootState) => state.search,
   );
-  const { messages } = useSelector((state: RootState) => state.messages);
+  const currentChat = useSelector((state: RootState) =>
+    state.chats.chats.find((chat) => chat._id === chatId),
+  );
+  const messages = currentChat?.messages ?? [];
+
   const [isSearchLoading, setIsSearchLoading] = useState(false);
 
   const performSearch = (term: string) => {
@@ -146,8 +152,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
         onChange={handleSearch}
       />
       <ResultCounter data-testid="search-result-counter">
-        {" "}
-        // Added for testing the result counter
         {searchResults.length > 0
           ? `${currentResultIndex + 1} of ${searchResults.length}`
           : searchTerm.length > 0

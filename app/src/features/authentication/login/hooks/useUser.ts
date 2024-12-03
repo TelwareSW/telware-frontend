@@ -6,8 +6,9 @@ export function useUser() {
     queryKey: ["user"],
     queryFn: apiUser,
   });
-  
+
   const user = data?.user;
+  console.log(user);
 
   return { user, isPending };
 }

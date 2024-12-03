@@ -31,6 +31,8 @@ export async function getChatApi(id: string) {
 
   const data = await res.json();
 
+  console.log(data);
+
   if (data.status !== "success") {
     throw new Error(data.message);
   }

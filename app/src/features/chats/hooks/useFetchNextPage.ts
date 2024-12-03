@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { apiFetchNextPage } from "../services/apiFetchNextPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { mergeMessages } from "@state/messages/messages";
+import { mergeMessages } from "@state/messages/chats";
 
 function useFetchNextPage() {
-  const { chatId } = useParams();
+  const { chatId } = useParams<{ chatId: string }>();
   const dispatch = useDispatch();
 
   const {
@@ -28,8 +28,13 @@ function useFetchNextPage() {
   useEffect(() => {
     if (data) {
       const lastFetchedPage = data.pages[data.pages.length - 1];
-      if (lastFetchedPage) {
-        dispatch(mergeMessages({ messages: lastFetchedPage.messages }));
+      if (lastFetchedPage && chatId) {
+        dispatch(
+          mergeMessages({
+            chatId: chatId,
+            newMessages: lastFetchedPage.messages,
+          })
+        );
       }
     }
   }, [data, chatId, dispatch]);

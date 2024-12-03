@@ -1,11 +1,9 @@
+import { useAppSelector } from "@hooks/useGlobalState";
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-
-import { RootState } from "@state/store";
 
 function useScrollToLastMsg() {
   const lastMessageRef = useRef<HTMLDivElement>(null);
-  const messages = useSelector((state: RootState) => state.messages.messages);
+  const messages = useAppSelector((state) => state.chats.chats[0].messages);
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });

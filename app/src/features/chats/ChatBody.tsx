@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 
-import { RootState } from "@state/store";
 import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
 import { useEffect } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
+import { getChatByID } from "./helpers";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -37,7 +38,15 @@ const ScrollContainer = styled.div`
 `;
 
 function ChatBody() {
-  const messages = useSelector((state: RootState) => state.messages.messages);
+  const { chatId } = useParams<{ chatId: string }>();
+  const chats = useAppSelector((state) => state.chats.chats);
+
+  const messages =
+    chatId &&
+    getChatByID({
+      chats: chats,
+      chatID: chatId,
+    })?.messages;
 
   const { fetchNextPage, data } = useFetchNextPage();
 
@@ -59,16 +68,17 @@ function ChatBody() {
       <ScrollContainer>
         <div ref={ref}></div>
 
-        {messages.map((data, index) => {
-          return (
-            <Message
-              key={data._id}
-              index={index}
-              messagesLength={messages.length}
-              data={data}
-            />
-          );
-        })}
+        {messages &&
+          messages.map((data, index) => {
+            return (
+              <Message
+                key={data._id}
+                index={index}
+                messagesLength={messages.length}
+                data={data}
+              />
+            );
+          })}
       </ScrollContainer>
     </>
   );

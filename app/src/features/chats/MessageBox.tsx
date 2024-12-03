@@ -1,8 +1,9 @@
 import { useAppSelector } from "@hooks/useGlobalState";
-import { allChats } from "@mocks/data/chats";
 import { RootState } from "@state/store";
 import styled from "styled-components";
 import { MessageInterface } from "types/messages";
+import { useParams } from "react-router-dom";
+import { getChatByID } from "./helpers";
 
 interface MessageBoxProps {
   messageId?: string | null;
@@ -49,42 +50,37 @@ const StyledMessageBox = styled.div`
   }
 `;
 
-function extractMessageData(
-  messages: MessageInterface[],
-  messageId: string,
-  id: string
-) {
-  const msg = getMessageById(messages, messageId);
-  let name: string | undefined;
-
-  if (id === msg?.senderId) name = "you";
-  else {
-    const chat =
-      msg && allChats.find((chat) => chat._id === msg?.senderId);
-    name = `${chat?.members[0].screenFirstName} ${chat?.members[0].screenLastName}`; 
-  }
-
-  return { msg, name };
-}
-
 function getMessageById(
-  messages: MessageInterface[],
-  messageId: string
+  messageId: string,
+  messages?: MessageInterface[]
 ): MessageInterface | undefined {
-  return messages.find((message) => message._id === messageId);
+  return messages
+    ? messages.find((message) => message._id === messageId)
+    : undefined;
 }
 
 function MessageBox({ messageId }: MessageBoxProps) {
   let id = useAppSelector((state) => state.user.userInfo.id);
-  const messages = useAppSelector((state) => state.messages.messages);
+  const { chats, members } = useAppSelector((state) => state.chats);
+
+  const { chatId } = useParams<{ chatId: string }>();
+
+  const messages = chatId
+    ? getChatByID({ chats: chats, chatID: chatId })?.messages
+    : undefined;
 
   let msg: MessageInterface | undefined;
   let name: string | undefined;
 
+  // TODO: refactor this
   if (messageId) {
-    const data = extractMessageData(messages, messageId, id);
-    msg = data.msg;
-    name = data.name;
+    msg = getMessageById(messageId, messages);
+    console.log(msg);
+    if (id === msg?.senderId) name = "you";
+    else {
+      const sender = members.find((member) => member._id === msg?.senderId);
+      name = `${sender?.screenFirstName} ${sender?.screenLastName}`;
+    }
   }
 
   const activeMessage = useAppSelector(
