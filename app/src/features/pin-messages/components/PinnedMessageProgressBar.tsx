@@ -13,8 +13,6 @@ const ProgressBarContainer = styled.div`
 const ProgressBarSegment = styled.div<{ $active: boolean }>`
   flex-grow: 1;
   height: 100%;
-  background-color: ${(props) =>
-    props.active ? "var(--accent-color)" : "var(--color-background-tertiary)"};
   transition: background-color 0.3s ease-in-out;
 `;
 

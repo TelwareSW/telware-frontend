@@ -141,6 +141,7 @@ function ChatInput() {
     alert(error);
     setError("");
   }
+  
   return (
     <>
       {isFilePreviewOpen && file && (
@@ -201,7 +202,7 @@ function ChatInput() {
               />
             ) : (
               <VoiceRecorder
-                Error={Error}
+                error={error}
                 isRecording={isRecording}
                 setIsRecording={setIsRecording}
                 setError={setError}

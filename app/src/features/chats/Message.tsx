@@ -146,9 +146,7 @@ function Message({
     contentType,
   },
 }: MessageProps) {
-  const { searchTerm, searchResults, currentResultIndex } = useAppSelector(
-    (state) => state.search,
-  );
+  const { searchTerm, searchResults } = useAppSelector((state) => state.search);
 
   const mergedRef = useRef<HTMLDivElement>(null);
   const { lastMessageRef } = useScrollToLastMsg();
@@ -214,10 +212,10 @@ function Message({
                 <MessageBox messageId={parentMessageId} />
               </MessageBoxWrapper>
             )}
-            {(contentType === "gif" || contentType === "sticker") && media && (
+            {(contentType === "GIF" || contentType === "sticker") && media && (
               <Gif src={media} loading="lazy" />
             )}
-            {media && !(contentType === "gif" || contentType === "sticker") && (
+            {media && !(contentType === "GIF" || contentType === "sticker") && (
               <FileViewer file={media} />
             )}
             {renderWithHighlight(content, searchTerm, searchResults, id)}
