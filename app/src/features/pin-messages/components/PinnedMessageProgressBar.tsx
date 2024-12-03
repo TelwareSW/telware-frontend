@@ -10,7 +10,7 @@ const ProgressBarContainer = styled.div`
   margin-left: 0.5rem;
 `;
 
-const ProgressBarSegment = styled.div<{ active: boolean }>`
+const ProgressBarSegment = styled.div<{ $active: boolean }>`
   flex-grow: 1;
   height: 100%;
   background-color: ${(props) =>
@@ -41,7 +41,7 @@ const PinnedMessageProgressBar: React.FC<PinnedMessageProgressBarProps> = ({
         {pinnedMessages.map((_, index) => (
           <ProgressBarSegment
             key={index}
-            active={index === currentPinnedIndex}
+            $active={index === currentPinnedIndex}
           />
         ))}
       </ProgressBar>

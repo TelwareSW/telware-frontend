@@ -40,6 +40,7 @@ function AddStory() {
     }
   };
   const handleClose = () => {
+    fileInputRef.current!.value = "";
     setIsImageEditorOpen(false);
   };
 
@@ -48,9 +49,20 @@ function AddStory() {
     setIsImageEditorOpen(false);
     setIsPreviewOpened(true);
   };
+  const handleImageEditorClose = () => {
+    setStory(null);
+    fileInputRef.current!.value = "";
+    setIsImageEditorOpen(false);
+  };
 
   const handleAddStoryClicked = () => {
     fileInputRef.current?.click();
+  };
+
+  const handleStoryPreviewClose = () => {
+    fileInputRef.current!.value = "";
+    setStory(null);
+    setIsPreviewOpened(false);
   };
 
   return (
@@ -78,10 +90,7 @@ function AddStory() {
       </StyledStoryCreator>
 
       {
-        <Popup
-          isOpen={isImageEditorOpen}
-          onClose={() => setIsImageEditorOpen(false)}
-        >
+        <Popup isOpen={isImageEditorOpen} onClose={handleImageEditorClose}>
           <ImageEditor
             src={story ? URL.createObjectURL(story) : ""}
             isOpen={isImageEditorOpen}
@@ -95,7 +104,7 @@ function AddStory() {
       }
       <StoryPreview
         isOpen={isPreviewOpened && !!story}
-        onClose={() => setIsPreviewOpened(false)}
+        onClose={handleStoryPreviewClose}
         story={story}
       />
     </>

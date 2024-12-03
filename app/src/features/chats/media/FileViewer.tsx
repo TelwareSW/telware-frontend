@@ -27,7 +27,7 @@ function getFileType(fileName: string): string {
   const extension = fileName.split(".").pop()?.toLowerCase();
   if (!extension) return "unknown";
 
-  const imageTypes = ["png", "jpg", "jpeg", "gif", "bmp"];
+  const imageTypes = ["png", "jpg", "jpeg", "gif", "bmp", "webp"];
   const videoTypes = ["mp4"];
   const audioTypes = ["mp3", "wav", "webm"];
   const pdfTypes = ["pdf"];

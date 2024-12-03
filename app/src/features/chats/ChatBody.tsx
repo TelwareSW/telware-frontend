@@ -50,7 +50,7 @@ function ChatBody() {
 
   const { fetchNextPage, data } = useFetchNextPage();
 
-  const { inView, ref } = useInView({});
+  const { inView, ref } = useInView({ threshold: 0.5 });
 
   useEffect(() => {
     console.log(inView);

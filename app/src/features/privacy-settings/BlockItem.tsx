@@ -1,5 +1,5 @@
 import Heading from "@components/Heading";
-import Avatar from "@features/chats/Avatar";
+import Avatar from "@components/Avatar";
 import styled from "styled-components";
 import { StyledList, StyledListProps } from "./AddToBlockMenuList";
 import { getIcon } from "@data/icons";

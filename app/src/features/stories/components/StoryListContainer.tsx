@@ -31,11 +31,13 @@ const StyledContainer = styled.div<{ $isOpened: boolean }>`
 
 function StoryListContainer() {
   const { stories: userStoriesData } = useStroies();
-  const userStories = userStoriesData?.data;
+  const userStories = userStoriesData?.data?.filter(
+    (userStory) => userStory.stories.length > 0
+  );
   const { myStories: myStoriesData } = useMyStroies();
   const myStories = myStoriesData?.data?.stories;
   const [isOpened, setIsOpened] = useState(
-    userStories?.length !== 0 || myStories?.length !== 0
+    userStories?.length || myStories?.length
   );
   const { userInfo } = useAppSelector((state) => state.user);
 
@@ -43,7 +45,7 @@ function StoryListContainer() {
     setIsOpened(true);
   };
   useEffect(() => {
-    setIsOpened(userStories?.length !== 0 || myStories?.length !== 0);
+    setIsOpened(userStories?.length || myStories?.length);
   }, [myStories, userStories]);
   return (
     <StyledContainer $isOpened={isOpened} data-testid="story-list-container">

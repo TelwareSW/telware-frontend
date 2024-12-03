@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import Avatar from "@features/chats/Avatar";
+import Avatar from "@components/Avatar";
+import { useChat } from "@features/chats/hooks/useChat";
 import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
@@ -10,6 +11,7 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import { getChatByID } from "./helpers";
 import { useChatMembers } from "./hooks/useChatMember";
+import { getElapsedTime } from "@utils/helpers";
 
 const Container = styled.div`
   position: absolute;
@@ -97,8 +99,7 @@ function Topbar() {
     name = membersData[0]?.screenFirstName || membersData[0]?.username;
 
     lastSeen = chat?.lastMessage?.timestamp;
-    image =
-      membersData[0]?.photo?.length > 50 ? membersData[0]?.photo : undefined;
+    image = membersData[0]?.photo;
   }
 
   if (!chat) return null;
@@ -118,7 +119,7 @@ function Topbar() {
             <Content>
               <Name data-testid="chat-name">{name}</Name>
               <LastSeen data-testid="chat-last-seen">
-                last seen {lastSeen}
+                last seen {getElapsedTime(lastSeen)}
               </LastSeen>
             </Content>
           </Info>
