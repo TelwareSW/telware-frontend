@@ -6,9 +6,6 @@ import StyledLink from "@components/StyledLink";
 import OauthOptions from "../oauth/OauthOptions";
 
 const Container = styled.div`
-  max-width: 120rem;
-  margin: 0 auto;
-
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -19,6 +16,8 @@ const Container = styled.div`
 const P = styled.p`
   position: absolute;
   bottom: -4rem;
+
+  text-align: center;
 
   margin: 0 auto;
   color: var(--color-text-secondary);
