@@ -12,7 +12,7 @@ export const media = [
           status: "error",
           message: "File is required or invalid",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -24,7 +24,7 @@ export const media = [
           mediaFileName: "927b84545f5258ac.webm",
         },
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 ];

@@ -14,14 +14,13 @@ export function useChats() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    let initialChatState: ChatsState = {
+    const initialChatState: ChatsState = {
       chats: parseChatsToState(chatData),
       members: chatData?.members || [],
     };
 
     dispatch(setAllChats({ chatsData: initialChatState }));
   }, [isPending, chatData]);
-
 
   return { isPending };
 }

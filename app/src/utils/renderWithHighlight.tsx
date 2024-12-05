@@ -5,17 +5,17 @@ const HighlightedText = styled.span<{ $highlight?: boolean }>`
   color: ${(props) => (props.$highlight ? "black" : "inherit")};
 `;
 
-function renderWithHighlight(
+function RenderWithHighlight(
   content: string,
   searchTerm?: string,
-  searchResults?: any,
+  searchResults?: Array<{ messageId: string; highlightIndex: number }>,
   id?: string,
 ) {
   if (!searchTerm) {
     return content;
   }
 
-  const result = searchResults.find((result) => result.messageId === id);
+  const result = searchResults?.find((result) => result.messageId === id);
 
   if (!result) {
     return content;
@@ -37,4 +37,4 @@ function renderWithHighlight(
   );
 }
 
-export default renderWithHighlight;
+export default RenderWithHighlight;

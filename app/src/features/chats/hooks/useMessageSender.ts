@@ -12,7 +12,7 @@ export const useMessageSender = () => {
   const handleSendMessage = (
     data: string,
     file?: string,
-    type: ContentType = "text"
+    type: ContentType = "text",
   ) => {
     if (activeMessage?.id && activeMessage.state === "edit") {
       editMessage(activeMessage?.id!, data, chatId!);

@@ -21,7 +21,7 @@ function useOptionListAction({
 
   function MoveToReplyMessage() {
     const targetMsg = document.querySelector(
-      "[data-message-id='" + parentMessageId + "']"
+      "[data-message-id='" + parentMessageId + "']",
     );
 
     if (targetMsg) {

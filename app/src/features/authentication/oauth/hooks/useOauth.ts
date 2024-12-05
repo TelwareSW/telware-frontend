@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useOauthLogin } from "./useOauthLogin";
 
 export function useOauth() {
-  const { login } = useOauthLogin()
+  const { login } = useOauthLogin();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

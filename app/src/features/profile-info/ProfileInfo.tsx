@@ -1,7 +1,7 @@
 import { useProfileSettings } from "@features/profile-settings/hooks/useProfileSettings";
-import { AlternateEmailTwoTone, Email, Info, Phone } from "@mui/icons-material";
 import styled from "styled-components";
 import ProfileItem from "./components/ProfileItem";
+import { getIcon } from "@data/icons";
 
 const ProfileInfoStyled = styled.div`
   border-bottom: 0.625rem solid var(--color-background-secondary);
@@ -21,7 +21,7 @@ function ProfileInfo() {
         <ProfileItem
           data={profileSettings.phone}
           ribbon="Phone"
-          Icon={Phone}
+          icon="Phone"
           data-testid="phone-profile-item"
         />
       )}
@@ -29,7 +29,7 @@ function ProfileInfo() {
         <ProfileItem
           data={profileSettings.email}
           ribbon="Email"
-          Icon={Email}
+          icon="Email"
           data-testid="email-profile-item"
         />
       )}
@@ -37,7 +37,7 @@ function ProfileInfo() {
         <ProfileItem
           data={profileSettings.username}
           ribbon="Username"
-          Icon={AlternateEmailTwoTone}
+          icon="AlternateEmailTwoTone"
           data-testid="username-profile-item"
         />
       )}
@@ -45,7 +45,7 @@ function ProfileInfo() {
         <ProfileItem
           data={profileSettings.bio}
           ribbon="Bio"
-          Icon={Info}
+          icon="info"
           data-testid="bio-profile-item"
         />
       )}

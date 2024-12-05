@@ -72,7 +72,7 @@ function ScrollableChats(props: Props) {
 
   const handleSubmit = () => {
     const messagesToForward = messages?.filter((message) =>
-      selectedMessages?.includes(message._id)
+      selectedMessages?.includes(message._id),
     );
 
     messagesToForward?.map((message) => {

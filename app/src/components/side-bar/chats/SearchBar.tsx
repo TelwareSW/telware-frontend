@@ -1,5 +1,5 @@
+import { getIcon } from "@data/icons";
 import styled from "styled-components";
-import { SearchOutlined } from "@mui/icons-material";
 
 const StyledSearchBar = styled.div`
   margin-left: 1rem;
@@ -11,13 +11,15 @@ const StyledSearchBar = styled.div`
   }
 `;
 
-const StyledSearchIcon = styled(SearchOutlined)`
-  position: absolute;
-  left: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-text-secondary);
-  font-size: 1.2rem;
+const StyledSearchIcon = styled.div`
+  > svg {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -48,7 +50,9 @@ function SearchBar() {
         placeholder="Search"
         data-testid="general-search"
       />
-      <StyledSearchIcon data-testid="general-serach-icon" />
+      <StyledSearchIcon data-testid="general-serach-icon">
+        {getIcon("Search")}
+      </StyledSearchIcon>
     </StyledSearchBar>
   );
 }

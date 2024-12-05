@@ -10,7 +10,7 @@ type LoginResponseBodySuccess = {
   status: "success";
   message: string;
   data: {
-    user: {};
+    user: object;
     sessionID: string;
   };
 };
@@ -18,7 +18,7 @@ type LoginResponseBodySuccess = {
 type LoginResponseBodyFail = {
   status: "fail" | "error";
   message: string;
-  data: {};
+  data: object;
 };
 
 type LoginResponseBody = LoginResponseBodySuccess | LoginResponseBodyFail;
@@ -28,7 +28,7 @@ export const loginMock = [
     return undefined;
   }),
 
-  http.post<{}, LoginRequestBody, LoginResponseBody>(
+  http.post<object, LoginRequestBody, LoginResponseBody>(
     "/auth/login",
     async ({ request }) => {
       const { email, password } = await request.json();
@@ -44,7 +44,7 @@ export const loginMock = [
             status: "error",
             data: {},
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -64,8 +64,8 @@ export const loginMock = [
           headers: {
             "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
           },
-        }
+        },
       );
-    }
+    },
   ),
 ];

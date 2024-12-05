@@ -21,7 +21,7 @@ describe("InputField", () => {
         register={mockRegister}
         error={undefined}
         type={type}
-      />
+      />,
     );
 
     const input = screen.getByLabelText(label);
@@ -37,7 +37,7 @@ describe("InputField", () => {
         id={id}
         register={mockRegister}
         error={undefined}
-      />
+      />,
     );
 
     expect(mockRegister).toHaveBeenCalledWith(id);
@@ -50,7 +50,7 @@ describe("InputField", () => {
         id={id}
         register={mockRegister}
         error={errorMessage}
-      />
+      />,
     );
 
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
@@ -63,7 +63,7 @@ describe("InputField", () => {
         id={id}
         register={mockRegister}
         error={undefined}
-      />
+      />,
     );
 
     const input = screen.getByLabelText(label);
@@ -79,7 +79,7 @@ describe("InputField", () => {
         register={mockRegister}
         error={undefined}
         placeholder={placeholder}
-      />
+      />,
     );
 
     const input = screen.getByLabelText(label);
