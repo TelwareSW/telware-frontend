@@ -8,7 +8,7 @@ describe("ThemeToggle Component", () => {
 
     const slider = screen.getByTestId("toggle-mode-slider");
     const checkbox = screen.getByTestId(
-      "toggle-mode-checkbox"
+      "toggle-mode-checkbox",
     ) as HTMLInputElement;
 
     expect(checkbox.checked).toBe(true);
@@ -19,7 +19,7 @@ describe("ThemeToggle Component", () => {
     render(renderWithStore(<ThemeToggle />));
 
     const checkbox = screen.getByTestId(
-      "toggle-mode-checkbox"
+      "toggle-mode-checkbox",
     ) as HTMLInputElement;
 
     fireEvent.click(checkbox);

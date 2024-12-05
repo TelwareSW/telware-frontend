@@ -45,7 +45,7 @@ function getSideBarPage(type: number): SideBarView {
 
 interface actionType {
   redirect: sideBarPages;
-  data?: any;
+  data?: { [key: string]: string };
 }
 
 const sideBarSlice = createSlice({
@@ -65,7 +65,7 @@ const sideBarSlice = createSlice({
 
       if (redirect === sideBarPages.SETTINGS_UPDATE) {
         state.props = { data: data };
-        state.title = data.header;
+        state.title = data?.header || newData.title;
       } else if (redirect === sideBarPages.BLOCKED_USERS) {
         state.props = { ...newData.props, data: data };
         state.title = newData.title;

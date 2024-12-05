@@ -19,7 +19,7 @@ export const paginationMock = [
         data: { messages: paginatedMessages, nextPage: page + 1 },
         message: "Messages retrieved successfully",
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 ];

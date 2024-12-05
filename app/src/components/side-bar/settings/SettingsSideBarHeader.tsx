@@ -52,7 +52,7 @@ function SettingsSideBarHeader() {
             $bgColor="var(--color-pattern)"
             onClick={() =>
               dispatch(
-                updateSideBarView({ redirect: sideBarPages.PROFILE_UPDATE })
+                updateSideBarView({ redirect: sideBarPages.PROFILE_UPDATE }),
               )
             }
           />

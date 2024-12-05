@@ -141,7 +141,7 @@ function ChatInput() {
     alert(error);
     setError("");
   }
-  
+
   return (
     <>
       {isFilePreviewOpen && file && (
