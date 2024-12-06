@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 interface CollapsedListProps {
   onOpen: () => void;
-  render: (data: any) => JSX.Element;
-  list: any[];
+  render: (data: unknown) => JSX.Element;
+  list: unknown[];
 }
 
 const StyledCollapsedList = styled.div`

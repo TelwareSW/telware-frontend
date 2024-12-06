@@ -120,8 +120,6 @@ function ChatInput() {
     }
   };
 
-  const { chatId } = useParams<{ chatId: string }>();
-
   const chats = useAppSelector((state) => state.chats.chats);
   const showCheckBox =
     chatId && getChatByID({ chats: chats, chatID: chatId })?.showCheckBox;
