@@ -82,6 +82,8 @@ function ChatInput() {
   const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
   const [isRecording, setIsRecording] = useState<RecordingStates>("idle");
   const [error, setError] = useState<string>("");
+  const { chatId } = useParams<{ chatId: string }>();
+
   useEffect(() => {
     if (activeMessage.state === "edit" && activeMessage?.content)
       setInput(activeMessage?.content);
@@ -95,24 +97,22 @@ function ChatInput() {
     setIsEmojiSelectorOpen((show) => !show);
   };
   const sendGIF = (gif: string) => {
-    handleSendMessage("", gif, "GIF");
+    handleSendMessage("", chatId, gif, "GIF");
     setIsEmojiSelectorOpen(false);
   };
 
   const sendSticker = (sticker: string) => {
-    handleSendMessage("", sticker, "sticker");
+    handleSendMessage("", chatId, sticker, "sticker");
     setIsEmojiSelectorOpen(false);
   };
   const handleSubmit = (e: Event, voiceNoteName = "") => {
     e.preventDefault();
     setIsEmojiSelectorOpen(false);
     if (isRecording !== "idle") return;
-    handleSendMessage(input, voiceNoteName);
+    handleSendMessage(input, chatId, voiceNoteName);
     dispatch(clearActiveMessage());
     setInput("");
   };
-
-  const { chatId } = useParams<{ chatId: string }>();
 
   const chats = useAppSelector((state) => state.chats.chats);
   const showCheckBox =
@@ -153,7 +153,6 @@ function ChatInput() {
           data-testid="file-preview"
         />
       )}
-      // TODO: Fix the emoji picker
       <Container data-testid="chat-input-container">
         {!showCheckBox ? (
           <Input data-testid="chat-input">
