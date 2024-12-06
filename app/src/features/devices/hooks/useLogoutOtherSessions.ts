@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { LogoutOtherSessions } from "../services/LogoutOtherSessions";
+import { LogoutOtherSessions } from "../services/apiLogoutOtherSessions";
 import toast from "react-hot-toast";
 
 function useLogoutOtherSessions() {

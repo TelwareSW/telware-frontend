@@ -6,6 +6,7 @@ interface StorySlideCounterProps {
   totalSlides: number;
   isPaused: boolean;
   onSlideChange: (index: number) => void;
+  isImage: boolean;
 }
 interface SegmentProps {
   $progress: number;
@@ -39,14 +40,15 @@ const Segment = styled.div<SegmentProps>`
 `;
 
 function StorySlideCounter(props: StorySlideCounterProps) {
-  const { currentIndex, totalSlides, onSlideChange, isPaused } = props;
+  const { currentIndex, totalSlides, onSlideChange, isPaused, isImage } = props;
   const [progress, setProgress] = useState(0);
   const [viewedStories, setViewedStories] = useState(
-    Array(totalSlides).fill(false),
+    Array(totalSlides).fill(false)
   );
 
   useEffect(() => {
     if (isPaused) return;
+    if (!isImage) return;
     const interval = setInterval(() => {
       setProgress((prev) => prev + 1);
     }, 50);
@@ -62,7 +64,7 @@ function StorySlideCounter(props: StorySlideCounterProps) {
     }
 
     return () => clearInterval(interval);
-  }, [progress, currentIndex, totalSlides, onSlideChange, isPaused]);
+  }, [progress, currentIndex, totalSlides, onSlideChange, isPaused, isImage]);
 
   return (
     <StyledSliderContainer>

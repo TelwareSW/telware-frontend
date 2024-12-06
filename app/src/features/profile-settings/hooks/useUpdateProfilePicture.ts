@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { UpdateProfilePicture as UpdateProfilePictureAPI } from "../services/UpdateProfilePicture";
+import { UpdateProfilePicture as UpdateProfilePictureAPI } from "../services/apiUpdateProfilePicture";
 
 function useUpdateProfilePicture() {
   const queryClient = useQueryClient();

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { DeleteProfilePicture as DeleteProfilePictureAPI } from "../services/DeleteProfilePicture";
+import { DeleteProfilePicture as DeleteProfilePictureAPI } from "../services/apiDeleteProfilePicture";
 
 function useDeleteProfilePicture() {
   const queryClient = useQueryClient();

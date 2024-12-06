@@ -6,7 +6,7 @@ interface CollapsedListProps {
   list: any[];
 }
 
-const StyledCollapsedContainer = styled.div`
+const StyledCollapsedList = styled.div`
   position: relative;
   cursor: pointer;
   display: flex;
@@ -16,7 +16,7 @@ const StyledCollapsedContainer = styled.div`
   height: 100%;
   width: 100%;
 `;
-const StyledCollapsed = styled.div<{ $index: number }>`
+const CollapsedItem = styled.div<{ $index: number }>`
   position: absolute;
   z-index: 30 - index;
   right: ${(props) => props.$index * 15 + 20}px;
@@ -35,13 +35,13 @@ function CollapsedList(Props: CollapsedListProps) {
   const displayedItems = list?.slice(0, 3);
 
   return (
-    <StyledCollapsedContainer onClick={onOpen}>
+    <StyledCollapsedList onClick={onOpen}>
       {displayedItems?.map((element, index) => (
-        <StyledCollapsed key={index} $index={index}>
+        <CollapsedItem key={index} $index={index}>
           {render(element)}
-        </StyledCollapsed>
+        </CollapsedItem>
       ))}
-    </StyledCollapsedContainer>
+    </StyledCollapsedList>
   );
 }
 

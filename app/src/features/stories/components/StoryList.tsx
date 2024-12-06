@@ -15,7 +15,7 @@ interface StoryListProps {
   };
 }
 
-const StyledStoryListContainer = styled.div`
+const Container = styled.div`
   position: relative;
   width: 100%;
   height: 10rem;
@@ -91,7 +91,7 @@ function StoryList(props: StoryListProps) {
           onClose={() => handleStoryClick("")}
         />
       )}
-      <StyledStoryListContainer>
+      <Container>
         <CloseButton onClose={onClose} data-testid="close-story-list" />
         <StyledStoryList data-testid="storylist">
           {myStories?.length > 0 && (
@@ -118,7 +118,7 @@ function StoryList(props: StoryListProps) {
             />
           ))}
         </StyledStoryList>
-      </StyledStoryListContainer>
+      </Container>
     </>
   );
 }

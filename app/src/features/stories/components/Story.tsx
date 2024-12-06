@@ -1,27 +1,26 @@
 import { STATIC_MEDIA_URL } from "@constants";
+import { useEffect, useRef } from "react";
 import ModalImage from "react-modal-image";
 import styled from "styled-components";
 
 interface StoryProps {
   content: string;
   caption: string;
+  isPaused?: boolean;
+  isImage: boolean;
+  onFinish: () => void;
 }
-const StyledImageContainer = styled.div`
+
+const Container = styled.div`
   position: relative;
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-background);
-    border-radius: var(--border-radius-default);
-    width: 100%;
-    height: 100%;
-    img {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover !important;
-    }
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-default);
+  width: 100%;
+  height: 100vh;
+
   ::before {
     content: "";
     position: absolute;
@@ -38,7 +37,13 @@ const StyledImageContainer = styled.div`
     );
   }
 `;
-const StyledCaption = styled.p<{ $captionLength: number }>`
+const Video = styled.video`
+  object-fit: cover;
+  border-radius: var(--border-radius-default);
+  width: 80%;
+`;
+
+const Caption = styled.p<{ $captionLength: number }>`
   position: absolute;
   bottom: ${({ $captionLength }) =>
     `clamp(5%, ${Math.max(2, 8 - $captionLength * 0.01)}vh, 15%)`};
@@ -48,25 +53,37 @@ const StyledCaption = styled.p<{ $captionLength: number }>`
   color: white;
   padding: 0.5rem;
   text-align: center;
-
+  width: 100%;
   font-size: ${({ $captionLength }) =>
     `clamp(1rem, ${Math.max(2.5 - $captionLength * 0.02, 1)}vw, 2.5rem)`};
 `;
-function Story(props: StoryProps) {
-  const { content, caption } = props;
+
+function Story({ content, caption, isPaused, isImage, onFinish }: StoryProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  useEffect(() => {
+    if (!isPaused) {
+      videoRef.current?.play();
+    } else {
+      videoRef.current?.pause();
+    }
+  }, [isPaused]);
   return (
-    <StyledImageContainer>
-      <ModalImage
-        small={STATIC_MEDIA_URL + content}
-        large={STATIC_MEDIA_URL + content}
-        alt={caption}
-        hideDownload={true}
-        hideZoom={true}
-      />
-      {caption && (
-        <StyledCaption $captionLength={caption.length}>{caption}</StyledCaption>
+    <Container>
+      {isImage ? (
+        <ModalImage
+          small={STATIC_MEDIA_URL + content}
+          large={STATIC_MEDIA_URL + content}
+          alt={caption}
+          hideDownload={true}
+          hideZoom={true}
+        />
+      ) : (
+        <Video controls={false} ref={videoRef} onEnded={onFinish}>
+          <source src={`${STATIC_MEDIA_URL}${content}`} />
+        </Video>
       )}
-    </StyledImageContainer>
+      {caption && <Caption $captionLength={caption.length}>{caption}</Caption>}
+    </Container>
   );
 }
 

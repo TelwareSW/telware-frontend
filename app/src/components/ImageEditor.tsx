@@ -116,7 +116,7 @@ function ImageEditor({
               onSave={(editedImageObject) => handleSave(editedImageObject)}
               onClose={closeImgEditor}
               annotationsCommon={{
-                fill: "#ff0000",
+                fill: "#2221f1",
               }}
               Text={{ text: "I Love TelWare" }}
               Rotate={{ angle: 90, componentType: "slider" }}
