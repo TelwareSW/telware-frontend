@@ -33,7 +33,7 @@ function useFetchNextPage() {
           mergeMessages({
             chatId: chatId,
             newMessages: lastFetchedPage.messages,
-          })
+          }),
         );
       }
     }

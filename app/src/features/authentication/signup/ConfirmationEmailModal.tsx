@@ -132,7 +132,7 @@ function ConfirmationEmailModal({
         onError: (err: Error) => {
           setError(err.message);
         },
-      }
+      },
     );
   }
   function handleResendEmail() {

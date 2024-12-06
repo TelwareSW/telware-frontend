@@ -4,8 +4,8 @@ import { useGetAllSessions } from "./hooks/useGetAllSessions";
 import { useGetCurrentSession } from "./hooks/useGetCurrentSessions";
 import SessionItem from "./components/SessionItem";
 import laptopAnimation from "@data/animations/devices.json";
-import { DoDisturbOnOutlined } from "@mui/icons-material";
 import Icon from "@components/Icon";
+import { getIcon } from "@data/icons";
 import { useLogoutOtherSessions } from "./hooks/useLogoutOtherSessions";
 
 const SideBarContainer = styled.div`
@@ -83,9 +83,7 @@ function Devices() {
           onClick={handleLogoutOthers}
           data-testid="terminate-other-sessions-button"
         >
-          <Icon>
-            <DoDisturbOnOutlined fontSize="large" />
-          </Icon>
+          <Icon>{getIcon("DoDisturb")}</Icon>
           <span>Terminate All Other Sessions</span>
         </TerminateOtherSessionsButton>
       </SettingSection>
