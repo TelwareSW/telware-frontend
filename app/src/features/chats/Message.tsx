@@ -219,7 +219,7 @@ function Message({
             />
           )}
           <Details>
-            {isPinned && getIcon("PushPin")}
+            {isPinned && getIcon("PushPin", { sx: { fontSize: "1rem" } })}
             <TimeStamp $isMine={senderId === userId}>11:09AM</TimeStamp>
           </Details>
         </Bubble>

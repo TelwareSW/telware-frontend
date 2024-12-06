@@ -1,6 +1,5 @@
 import { ScrollContainer } from "styles/GlobalStyles";
 import styled from "styled-components";
-import ChatPopupItem, { ChatPopupItemProps } from "./chatPopupItem";
 import Heading from "@components/Heading";
 import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
@@ -9,7 +8,7 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import { useSelectedMessages } from "@features/chats/hooks/useSelectedMessages";
 import { getChatByID } from "@features/chats/helpers";
-import { useChatMembers } from "@features/chats/hooks/useChatMember";
+import ChatItem from "@features/chats/ChatItem";
 
 const OuterContainer = styled.ul`
   position: absolute;
@@ -49,9 +48,6 @@ const HeaderRow = styled.div`
   height: 4rem;
 `;
 
-const StylingWrapper = styled.div`
-  width: 100%;
-`;
 
 interface Props {
   onClose: () => void;
@@ -70,17 +66,19 @@ function ScrollableChats(props: Props) {
 
   const { handleSendMessage } = useMessageSender();
 
-  const handleSubmit = () => {
+  const handleSubmit = (chatId: string) => {
     const messagesToForward = messages?.filter((message) =>
       selectedMessages?.includes(message._id),
     );
 
     messagesToForward?.map((message) => {
-      handleSendMessage(message.content);
+      handleSendMessage(message.content, chatId);
     });
 
     onClose();
   };
+
+  console.log("chats = ", chats);
 
   //TODO: refactor
   return (
@@ -92,25 +90,13 @@ function ScrollableChats(props: Props) {
         <Heading as="h4">Forward To...</Heading>
       </HeaderRow>
       <ScrollContainer>
-        {chats?.map((item) => {
-          const membersData = useChatMembers(item.members);
-
-          const data: ChatPopupItemProps = {
-            id: item._id,
-            name:
-              membersData[0].screenFirstName + membersData[0].screenFirstName,
-            username: membersData[0].username,
-          };
-          return (
-            <StylingWrapper
-              onClick={() => handleSubmit()}
-              key={data.id}
-              data-testid={`user-${data.id}`}
-            >
-              <ChatPopupItem {...data} />
-            </StylingWrapper>
-          );
-        })}
+        {chats?.map((chat) => (
+          <ChatItem
+            chat={chat}
+            key={chat._id}
+            onClick={() => handleSubmit(chat._id)}
+          />
+        ))}
       </ScrollContainer>
     </OuterContainer>
   );
