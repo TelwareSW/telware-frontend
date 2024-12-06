@@ -7,10 +7,10 @@ export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const activeMessage = useAppSelector((state) => state.activeMessage);
-  const { chatId } = useParams<{ chatId: string }>();
 
   const handleSendMessage = (
     data: string,
+    chatId?: string,
     file?: string,
     type: ContentType = "text"
   ) => {
