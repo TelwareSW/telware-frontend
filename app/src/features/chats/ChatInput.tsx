@@ -153,7 +153,6 @@ function ChatInput() {
           data-testid="file-preview"
         />
       )}
-      // TODO: Fix the emoji picker
       <Container data-testid="chat-input-container">
         {!showCheckBox ? (
           <Input data-testid="chat-input">

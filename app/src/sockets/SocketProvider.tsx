@@ -17,7 +17,7 @@ import {
 const handleIncomingMessage = (
   dispatch: Dispatch,
   message: MessageInterface,
-  chatId: string,
+  chatId: string
 ) => {
   dispatch(addMessage({ chatId, message }));
 };
@@ -25,7 +25,7 @@ const handleIncomingMessage = (
 const handleIsTyping = (
   dispatch: Dispatch,
   isTyping: boolean,
-  chatId: string,
+  chatId: string
 ) => {
   dispatch(setIsTyping({ chatId, isTyping }));
 };
@@ -82,7 +82,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         }) => {
           console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
           dispatch(pinMessage({ messageId, chatId }));
-        },
+        }
       );
 
       socket.on(
@@ -98,19 +98,27 @@ function SocketProvider({ children }: SocketProviderProps) {
         }) => {
           console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
           dispatch(unpinMessage({ messageId, chatId }));
-        },
+        }
       );
 
       socket.on(
         "EDIT_MESSAGE_SERVER",
-        (chatId: string, messageId: string, content: string) => {
-          console.log("EDIT_MESSAGE_SERVER", chatId, messageId, content);
-          dispatch(editMessage({ chatId, messageId, content }));
-        },
+        ({
+          chatId,
+          content,
+          id,
+        }: {
+          chatId: string;
+          content: string;
+          id: string;
+        }) => {
+          console.log("EDIT_MESSAGE_SERVER", chatId, id, content);
+          dispatch(editMessage({ chatId, messageId: id, content }));
+        }
       );
 
       socket.on("typing", (isTyping, message) =>
-        handleIsTyping(dispatch, isTyping, message.chatId),
+        handleIsTyping(dispatch, isTyping, message.chatId)
       );
       socket.emit("typing");
       return () => {
@@ -156,10 +164,10 @@ function SocketProvider({ children }: SocketProviderProps) {
                 ...sentMessage,
                 _id,
               },
-              sentMessage.chatId,
+              sentMessage.chatId
             );
           }
-        },
+        }
       );
     } else {
       console.warn("Cannot send message: not connected to socket server");
@@ -169,7 +177,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const editMessageSocket = (
     messageId: string,
     content: string,
-    chatId: string,
+    chatId: string
   ) => {
     if (isConnected && socket) {
       socket.emit(
@@ -187,12 +195,12 @@ function SocketProvider({ children }: SocketProviderProps) {
                 chatId: response.res.message.chatId,
                 messageId: response.res.message._id,
                 content: response.res.message.content,
-              }),
+              })
             );
           } else {
             console.error("Failed to edit message:", response.error);
           }
-        },
+        }
       );
     }
   };
@@ -200,7 +208,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const pinMessageSocket = (
     chatId: string,
     messageId: string,
-    userId: string,
+    userId: string
   ) => {
     if (isConnected && socket) {
       socket.emit("PIN_MESSAGE_CLIENT", { messageId, chatId, userId });
@@ -212,7 +220,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const unpinMessageSocket = (
     chatId: string,
     messageId: string,
-    userId: string,
+    userId: string
   ) => {
     if (isConnected && socket) {
       socket.emit("UNPIN_MESSAGE_CLIENT", { messageId, chatId, userId });
