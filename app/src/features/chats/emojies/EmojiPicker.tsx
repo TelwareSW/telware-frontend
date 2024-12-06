@@ -1,11 +1,11 @@
 import React from "react";
-import { useAppSelector } from "@hooks/useGlobalState";
-import { Theme } from "@state/theme/theme";
 import EmojiPicker, {
   EmojiClickData,
   Theme as emojitheme,
 } from "emoji-picker-react";
 import styled from "styled-components";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { Theme } from "@state/theme/theme";
 
 const StyledEmojiPickerContainer = styled.div`
   z-index: 4;
@@ -54,7 +54,7 @@ export default function EmojiPickerItem({
 }: EmojiPickerItemProps) {
   const currentTheme = useAppSelector((state) => state.theme.value);
 
-  const handleEmojiClicked = (emojiData: EmojiClickData, event: MouseEvent) => {
+  const handleEmojiClicked = (emojiData: EmojiClickData) => {
     setInputText((text) => text + emojiData.emoji);
   };
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import Avatar from "@features/chats/Avatar";
+import Avatar from "@components/Avatar";
 import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
@@ -10,6 +10,7 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import { getChatByID } from "./helpers";
 import { useChatMembers } from "./hooks/useChatMember";
+import { getElapsedTime } from "@utils/helpers";
 
 const Container = styled.div`
   position: absolute;
@@ -81,14 +82,14 @@ function Topbar() {
   const chats = useAppSelector((state) => state.chats.chats);
   const [isSearching, setIsSearching] = useState(false);
 
-  const chat =
-    chatId &&
-    getChatByID({
-      chatID: chatId,
-      chats: chats,
-    });
+  const chat = chatId
+    ? getChatByID({
+        chatID: chatId,
+        chats: chats,
+      })
+    : undefined;
 
-  let membersData = useChatMembers(chat?.members);
+  const membersData = useChatMembers(chat?.members);
 
   let name;
   let image;
@@ -97,8 +98,7 @@ function Topbar() {
     name = membersData[0]?.screenFirstName || membersData[0]?.username;
 
     lastSeen = chat?.lastMessage?.timestamp;
-    image =
-      membersData[0]?.photo?.length > 50 ? membersData[0]?.photo : undefined;
+    image = membersData[0]?.photo;
   }
 
   if (!chat) return null;
@@ -117,9 +117,11 @@ function Topbar() {
           <Info data-testid="chat-info">
             <Content>
               <Name data-testid="chat-name">{name}</Name>
-              <LastSeen data-testid="chat-last-seen">
-                last seen {lastSeen}
-              </LastSeen>
+              {lastSeen && (
+                <LastSeen data-testid="chat-last-seen">
+                  last seen {getElapsedTime(lastSeen)}
+                </LastSeen>
+              )}
             </Content>
           </Info>
           <PinnedMessages />

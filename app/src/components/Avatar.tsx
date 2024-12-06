@@ -1,3 +1,4 @@
+import { STATIC_MEDIA_URL } from "@constants";
 import styled from "styled-components";
 import { getAvatarName } from "utils/helpers";
 
@@ -9,7 +10,9 @@ const StyledAvatar = styled.div<{ $image?: string }>`
   margin-right: 1rem;
 
   background: ${({ $image }) =>
-    $image ? `url(${$image}) center/cover no-repeat` : "var(--color-avatar)"};
+    $image
+      ? `url(${STATIC_MEDIA_URL + $image}) center/cover no-repeat`
+      : "var(--color-avatar)"};
 
   color: white;
 

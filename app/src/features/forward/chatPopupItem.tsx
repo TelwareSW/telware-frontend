@@ -1,5 +1,5 @@
 import Heading from "@components/Heading";
-import Avatar from "@features/chats/Avatar";
+import Avatar from "@components/Avatar";
 import styled from "styled-components";
 
 const StyledSideBarRow = styled.div`

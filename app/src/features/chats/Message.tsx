@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { MessageInterface } from "types/messages";
@@ -9,7 +8,7 @@ import CheckBox from "@features/forward/checkBox";
 import MessageOptionList from "./MessageOptionList";
 import useScrollToSearchResultsMsg from "@features/search/hooks/useScrollToSearchResultsMsg";
 
-import renderWithHighlight from "@utils/renderWithHighlight";
+import RenderWithHighlight from "@utils/renderWithHighlight";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
@@ -84,7 +83,13 @@ const MessageRow = styled.div<{ $isChecked: boolean }>`
 
   width: 100%;
 `;
-
+const Gif = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: fill;
+  cursor: pointer;
+  border-radius: 0.5rem;
+`;
 const CheckBoxWrapper = styled.div`
   padding-left: 1rem;
   align-self: center;
@@ -121,14 +126,10 @@ const Details = styled.div`
 `;
 
 type MessageProps = {
-  index: number;
-  messagesLength: number;
   data: MessageInterface;
 };
 
 function Message({
-  index,
-  messagesLength,
   data: {
     _id: id,
     senderId,
@@ -137,24 +138,15 @@ function Message({
     chatId,
     parentMessageId,
     media,
+    contentType,
   },
 }: MessageProps) {
-  const { searchTerm, searchResults, currentResultIndex } = useAppSelector(
-    (state) => state.search,
-  );
-
-  const mergedRef = useRef<HTMLDivElement>(null);
+  const { searchTerm, searchResults } = useAppSelector((state) => state.search);
   const { lastMessageRef } = useScrollToLastMsg();
-  const { searchResultRef } = useScrollToSearchResultsMsg();
+  useScrollToSearchResultsMsg();
 
   const { pinMessage: pinMessageSocket, unpinMessage: unpinMessageSocket } =
     useSocket();
-
-  // TODO: make merge ref util
-  useEffect(() => {
-    lastMessageRef.current =
-      index === messagesLength - 1 ? mergedRef.current : null;
-  }, [id, index, messagesLength, lastMessageRef, searchResultRef]);
 
   const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({
     chatId,
@@ -189,7 +181,7 @@ function Message({
       )}
 
       <StyledMessage
-        ref={mergedRef}
+        ref={lastMessageRef}
         key={id}
         $isMine={senderId === userId}
         data-message-id={id}
@@ -207,8 +199,13 @@ function Message({
                 <MessageBox messageId={parentMessageId} />
               </MessageBoxWrapper>
             )}
-            {media && <FileViewer file={media} />}
-            {renderWithHighlight(content, searchTerm, searchResults, id)}
+            {(contentType === "GIF" || contentType === "sticker") && media && (
+              <Gif src={media} loading="lazy" />
+            )}
+            {media && !(contentType === "GIF" || contentType === "sticker") && (
+              <FileViewer file={media} />
+            )}
+            {RenderWithHighlight(content, searchTerm, searchResults, id)}
           </StyledCol>
 
           {isHovered && (

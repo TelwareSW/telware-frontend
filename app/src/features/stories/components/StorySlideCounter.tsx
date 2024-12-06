@@ -26,7 +26,6 @@ const StyledSliderContainer = styled.div`
   height: 2rem;
 
   z-index: 1;
-
 `;
 
 const Segment = styled.div<SegmentProps>`
@@ -43,7 +42,7 @@ function StorySlideCounter(props: StorySlideCounterProps) {
   const { currentIndex, totalSlides, onSlideChange, isPaused } = props;
   const [progress, setProgress] = useState(0);
   const [viewedStories, setViewedStories] = useState(
-    Array(totalSlides).fill(false)
+    Array(totalSlides).fill(false),
   );
 
   useEffect(() => {

@@ -95,7 +95,7 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
             setCurrStatus(
               userData?.privacySettings?.[
                 key as keyof privacySettingsInterface
-              ] || "everyone"
+              ] || "everyone",
             );
           break;
         case StatusType.ACTIVITY:
@@ -103,7 +103,7 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
           setCurrStatus(
             userData?.activitySettings?.[
               key as keyof activitySettingsInterface
-            ] || "everyone"
+            ] || "everyone",
           );
           break;
         case StatusType.PERMISSION:
@@ -111,7 +111,7 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
           setCurrStatus(
             userData?.permissionSettings?.[
               key as keyof permissionsSettingsInterface
-            ] || "everyone"
+            ] || "everyone",
           );
           break;
         default:

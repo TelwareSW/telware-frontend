@@ -57,19 +57,19 @@ function StoryList(props: StoryListProps) {
         currentStoryUserId == "me"
           ? "My Story"
           : userStories.find((user) => user.userId === currentStoryUserId)
-              ?.name || ""
+              ?.name || "",
       );
       setUserAvatar(
         currentStoryUserId == "me"
           ? userInfo.photo || ""
           : userStories.find((user) => user.userId === currentStoryUserId)
-              ?.photo || ""
+              ?.photo || "",
       );
       setStories(
         currentStoryUserId == "me"
           ? myStories
           : userStories.find((user) => user.userId === currentStoryUserId)
-              ?.stories || []
+              ?.stories || [],
       );
     }
   }, [

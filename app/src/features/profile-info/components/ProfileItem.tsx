@@ -1,3 +1,4 @@
+import { getIcon } from "@data/icons";
 import styled from "styled-components";
 
 const ProfileItemStyled = styled.div`
@@ -27,15 +28,13 @@ const ProfileItemRibbon = styled.span`
 interface ProfileItemProps {
   data: string;
   ribbon: string;
-  Icon: React.ElementType;
+  icon: string;
 }
 
-function ProfileItem({ data, ribbon, Icon }: ProfileItemProps) {
+function ProfileItem({ data, ribbon, icon }: ProfileItemProps) {
   return (
     <ProfileItemStyled>
-      <ProfileItemIcon>
-        <Icon />
-      </ProfileItemIcon>
+      <ProfileItemIcon>{getIcon(icon)}</ProfileItemIcon>
       <ProfileItemInfo>
         <ProfileItemData>{data}</ProfileItemData>
         <ProfileItemRibbon>{ribbon}</ProfileItemRibbon>

@@ -17,7 +17,7 @@ const StyledApp = styled.div<{ $isChatOpen: boolean }>`
 
   @media ${DESKTOP_VIEW} {
     display: grid;
-    grid-template-columns: 2fr 5fr;
+    grid-template-columns: minmax(20rem, 2.5fr) 5fr;
 
     & > main {
       display: block;

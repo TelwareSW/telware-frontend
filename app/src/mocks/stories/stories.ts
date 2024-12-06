@@ -10,13 +10,13 @@ type AddStoryRequestBody = {
 type AddStoryResponseBodySuccess = {
   status: "success";
   message: string;
-  data: {};
+  data: object;
 };
 
 type AddStoryResponseBodyFail = {
   status: "fail" | "error";
   message: string;
-  data: {};
+  data: object;
 };
 
 type AddStoryResponseBody =
@@ -29,12 +29,12 @@ type ViewStoryRequestBody = {
 type ViewStoryResponseBodySuccess = {
   status: "success";
   message: string;
-  data: {};
+  data: object | boolean;
 };
 type ViewStoryResponseBodyFail = {
   status: "fail" | "error";
   message: string;
-  data: {};
+  data: object;
 };
 
 type ViewStoryResponseBody =
@@ -46,7 +46,7 @@ export const storiesMock = [
     return undefined;
   }),
 
-  http.post<{}, AddStoryRequestBody, AddStoryResponseBody>(
+  http.post<object, AddStoryRequestBody, AddStoryResponseBody>(
     "/users/stories",
     async ({ request }) => {
       const formData = await request.formData();
@@ -73,7 +73,7 @@ export const storiesMock = [
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         );
       } else {
         return HttpResponse.json(
@@ -84,10 +84,10 @@ export const storiesMock = [
           },
           {
             status: 400,
-          }
+          },
         );
       }
-    }
+    },
   ),
   http.post<{ storyId: string }, ViewStoryRequestBody, ViewStoryResponseBody>(
     "/stories/:storyId/views",
@@ -121,7 +121,7 @@ export const storiesMock = [
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         );
       } else {
         return HttpResponse.json(
@@ -132,16 +132,16 @@ export const storiesMock = [
           },
           {
             status: 404,
-          }
+          },
         );
       }
-    }
+    },
   ),
   http.delete("/users/stories/:storyId", async ({ params }) => {
     const { storyId } = params;
     if (storyId) {
       const index = MOCK_MY_STORIES.stories.findIndex(
-        (story) => story.id === storyId
+        (story) => story.id === storyId,
       );
       if (index !== -1) {
         MOCK_MY_STORIES.stories.splice(index, 1);
@@ -154,7 +154,7 @@ export const storiesMock = [
         },
         {
           status: 200,
-        }
+        },
       );
     } else {
       return HttpResponse.json(
@@ -165,7 +165,7 @@ export const storiesMock = [
         },
         {
           status: 400,
-        }
+        },
       );
     }
   }),
@@ -175,7 +175,7 @@ export const storiesMock = [
       {
         data: MOCK_MY_STORIES,
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 
@@ -186,7 +186,7 @@ export const storiesMock = [
       },
       {
         status: 200,
-      }
+      },
     );
   }),
 ];

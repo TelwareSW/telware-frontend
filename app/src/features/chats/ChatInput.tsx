@@ -9,7 +9,7 @@ import Icon from "@components/Icon";
 import RecordInput from "./SendButton";
 import ForwardingInputBar from "@features/forward/ForwardingInputBar";
 import ScrollableChats from "@features/forward/ScrollableChats";
-import EmojiPickerItem from "./emojies/EmojiPicker";
+import Picker from "./emojies/Picker";
 import { useMessageSender } from "./hooks/useMessageSender";
 import ReplyWrapper from "./ReplyWrapper";
 import { clearActiveMessage } from "@state/messages/activeMessage";
@@ -94,8 +94,19 @@ function ChatInput() {
   const toggleShowEmojies = () => {
     setIsEmojiSelectorOpen((show) => !show);
   };
+  const sendGIF = (gif: string) => {
+    handleSendMessage("", gif, "GIF");
+    setIsEmojiSelectorOpen(false);
+  };
 
+  const sendSticker = (sticker: string) => {
+    handleSendMessage("", sticker, "sticker");
+    setIsEmojiSelectorOpen(false);
+  };
   const handleSubmit = (e: Event, voiceNoteName = "") => {
+    e.preventDefault();
+    setIsEmojiSelectorOpen(false);
+    if (isRecording !== "idle") return;
     handleSendMessage(input, voiceNoteName);
     dispatch(clearActiveMessage());
     setInput("");
@@ -130,6 +141,7 @@ function ChatInput() {
     alert(error);
     setError("");
   }
+
   return (
     <>
       {isFilePreviewOpen && file && (
@@ -146,9 +158,11 @@ function ChatInput() {
         {!showCheckBox ? (
           <Input data-testid="chat-input">
             {isEmojiSelectorOpen && (
-              <EmojiPickerItem
+              <Picker
                 setInputText={setInput}
                 data-testid="emoji-picker"
+                onSendGIF={sendGIF}
+                onSendSticker={sendSticker}
               />
             )}
             <InputContainer>
@@ -188,7 +202,7 @@ function ChatInput() {
               />
             ) : (
               <VoiceRecorder
-                Error={Error}
+                error={error}
                 isRecording={isRecording}
                 setIsRecording={setIsRecording}
                 setError={setError}

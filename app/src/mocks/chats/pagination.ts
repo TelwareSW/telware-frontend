@@ -2,7 +2,7 @@ import { newMessages } from "@mocks/data/messages";
 import { http, HttpResponse } from "msw";
 
 export const paginationMock = [
-  http.get("/chats/messages/:chatId", async ({ params, request }) => {
+  http.get("/chats/messages/:chatId", async ({ request }) => {
     const url = new URL(request.url);
 
     console.log(url.searchParams.get("page"));
@@ -19,7 +19,7 @@ export const paginationMock = [
         data: { messages: paginatedMessages, nextPage: page + 1 },
         message: "Messages retrieved successfully",
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 ];

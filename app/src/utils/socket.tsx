@@ -5,7 +5,7 @@ import { DefaultEventsMap } from "@socket.io/component-emitter";
 
 let socketInstance: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
 
-function getSocket() {
+function useSocket() {
   const { user, isPending } = useUser();
   const [socket, setSocket] = useState<Socket<
     DefaultEventsMap,
@@ -42,4 +42,4 @@ function getSocket() {
   return socket;
 }
 
-export { getSocket };
+export { useSocket };
