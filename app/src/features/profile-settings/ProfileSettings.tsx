@@ -177,8 +177,10 @@ export interface EditProfileForm {
 function ProfileSettings() {
   const { data: initialProfileSettings } = useProfileSettings();
   const { updateProfileSettings, isPending } = useUpdateProfileSettings();
-  const { deleteProfilePicture } = useDeleteProfilePicture();
-  const { updateProfilePicture } = useUpdateProfilePicture();
+  const { deleteProfilePicture, isPending: isDeletingProfilePicture } =
+    useDeleteProfilePicture();
+  const { updateProfilePicture, isPending: isUpdatingProfilePicture } =
+    useUpdateProfilePicture();
 
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [hasImage, setHasImage] = useState(
@@ -234,7 +236,6 @@ function ProfileSettings() {
     setHasImage(false);
     setPhotoChanged(true);
   };
-
   const onSubmit = async (data: EditProfileForm) => {
     try {
       if (photoChanged) {
@@ -246,7 +247,8 @@ function ProfileSettings() {
       }
 
       updateProfileSettings(data);
-      toast.success("updated profile settings successfully");
+      toast.success("Profile settings updated successfully!");
+
       if (!isPending) {
         dispatch(
           updateSideBarView({
@@ -261,6 +263,7 @@ function ProfileSettings() {
       );
     }
   };
+
   const firstName = watch("firstName") || "";
   const lastName = watch("lastName") || "";
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();

@@ -40,7 +40,7 @@ const Container = styled.div`
 const Video = styled.video`
   object-fit: cover;
   border-radius: var(--border-radius-default);
-  width: 80%;
+  width: 100%;
 `;
 
 const Caption = styled.p<{ $captionLength: number }>`
