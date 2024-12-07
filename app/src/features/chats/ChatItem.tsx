@@ -55,10 +55,12 @@ const LastMessage = styled.p`
 
 type ChatItemProps = {
   chat: DetailedChatInterface;
+  onClick?: () => void;
 };
 
 function ChatItem({
   chat: { _id, members, type, lastMessage },
+  onClick,
 }: ChatItemProps) {
   const membersData = useChatMembers(members);
 
@@ -79,7 +81,7 @@ function ChatItem({
     <Container
       data-testid="chat-container"
       $active={chatId === _id}
-      onClick={handleOpenChat}
+      onClick={onClick ? onClick : handleOpenChat}
       key={_id}
     >
       <Avatar data-testid="chat-avatar" image={image} name={name} />

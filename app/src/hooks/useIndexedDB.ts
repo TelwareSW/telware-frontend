@@ -24,7 +24,7 @@ function useIndexedDB(dbName: string, storeName: string) {
       if (!db) return null;
       return await db.get(storeName, key);
     },
-    [db, storeName]
+    [db, storeName],
   );
 
   interface SetItemFunction {
@@ -36,7 +36,7 @@ function useIndexedDB(dbName: string, storeName: string) {
       if (!db) return;
       await db.put(storeName, value, key);
     },
-    [db, storeName]
+    [db, storeName],
   );
 
   return { getItem, setItem };

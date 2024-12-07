@@ -38,7 +38,7 @@ function Popup({ onClose, isOpen, children }: PopupProps) {
         {children}
       </PopupContainer>
     </PopupOverlay>,
-    document.body
+    document.body,
   );
 }
 export default Popup;

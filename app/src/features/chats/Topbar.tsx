@@ -89,7 +89,7 @@ function Topbar() {
       })
     : undefined;
 
-  let membersData = useChatMembers(chat?.members);
+  const membersData = useChatMembers(chat?.members);
 
   let name;
   let image;

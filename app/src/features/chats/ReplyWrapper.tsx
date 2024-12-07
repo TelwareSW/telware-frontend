@@ -36,7 +36,6 @@ export default function ReplyWrapper({ setInput }: Props) {
   }
 
   console.log(activeMessage);
-  
 
   return (
     <Container data-testid="reply-wrapper">

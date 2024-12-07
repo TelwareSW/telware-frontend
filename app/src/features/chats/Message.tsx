@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { MessageInterface } from "types/messages";
@@ -9,7 +8,7 @@ import CheckBox from "@features/forward/checkBox";
 import MessageOptionList from "./MessageOptionList";
 import useScrollToSearchResultsMsg from "@features/search/hooks/useScrollToSearchResultsMsg";
 
-import renderWithHighlight from "@utils/renderWithHighlight";
+import RenderWithHighlight from "@utils/renderWithHighlight";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
@@ -127,14 +126,10 @@ const Details = styled.div`
 `;
 
 type MessageProps = {
-  index: number;
-  messagesLength: number;
   data: MessageInterface;
 };
 
 function Message({
-  index,
-  messagesLength,
   data: {
     _id: id,
     senderId,
@@ -147,19 +142,11 @@ function Message({
   },
 }: MessageProps) {
   const { searchTerm, searchResults } = useAppSelector((state) => state.search);
-
-  const mergedRef = useRef<HTMLDivElement>(null);
   const { lastMessageRef } = useScrollToLastMsg();
-  const { searchResultRef } = useScrollToSearchResultsMsg();
+  useScrollToSearchResultsMsg();
 
   const { pinMessage: pinMessageSocket, unpinMessage: unpinMessageSocket } =
     useSocket();
-
-  // TODO: make merge ref util
-  useEffect(() => {
-    lastMessageRef.current =
-      index === messagesLength - 1 ? mergedRef.current : null;
-  }, [id, index, messagesLength, lastMessageRef, searchResultRef]);
 
   const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({
     chatId,
@@ -194,7 +181,7 @@ function Message({
       )}
 
       <StyledMessage
-        ref={mergedRef}
+        ref={lastMessageRef}
         key={id}
         $isMine={senderId === userId}
         data-message-id={id}
@@ -218,7 +205,7 @@ function Message({
             {media && !(contentType === "GIF" || contentType === "sticker") && (
               <FileViewer file={media} />
             )}
-            {renderWithHighlight(content, searchTerm, searchResults, id)}
+            {RenderWithHighlight(content, searchTerm, searchResults, id)}
           </StyledCol>
 
           {isHovered && (
@@ -232,7 +219,7 @@ function Message({
             />
           )}
           <Details>
-            {isPinned && getIcon("PushPin")}
+            {isPinned && getIcon("PushPin", { sx: { fontSize: "1rem" } })}
             <TimeStamp $isMine={senderId === userId}>11:09AM</TimeStamp>
           </Details>
         </Bubble>

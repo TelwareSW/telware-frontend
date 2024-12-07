@@ -52,7 +52,7 @@ const StyledMessageBox = styled.div`
 
 function getMessageById(
   messageId: string,
-  messages?: MessageInterface[]
+  messages?: MessageInterface[],
 ): MessageInterface | undefined {
   return messages
     ? messages.find((message) => message._id === messageId)
@@ -60,7 +60,7 @@ function getMessageById(
 }
 
 function MessageBox({ messageId }: MessageBoxProps) {
-  let id = useAppSelector((state) => state.user.userInfo.id);
+  const id = useAppSelector((state) => state.user.userInfo.id);
   const { chats, members } = useAppSelector((state) => state.chats);
 
   const { chatId } = useParams<{ chatId: string }>();
@@ -84,7 +84,7 @@ function MessageBox({ messageId }: MessageBoxProps) {
   }
 
   const activeMessage = useAppSelector(
-    (state: RootState) => state.activeMessage
+    (state: RootState) => state.activeMessage,
   );
 
   return (

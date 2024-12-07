@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
 import { SocketContext } from "./SocketContext";
-import { getSocket } from "utils/socket";
+import { useSocket } from "utils/socket";
 
 import { MessageInterface } from "types/messages";
 import {
@@ -37,13 +37,16 @@ type SocketProviderProps = {
 interface AcknowledgmentResponse {
   success: boolean;
   message: string;
-  res: any;
+  res: {
+    messageId: string;
+    message: MessageInterface;
+  };
 }
 
 function SocketProvider({ children }: SocketProviderProps) {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useDispatch();
-  const socket = getSocket();
+  const socket = useSocket();
 
   useEffect(() => {
     if (socket) {
@@ -100,9 +103,17 @@ function SocketProvider({ children }: SocketProviderProps) {
 
       socket.on(
         "EDIT_MESSAGE_SERVER",
-        (chatId: string, messageId: string, content: string) => {
-          console.log("EDIT_MESSAGE_SERVER", chatId, messageId, content);
-          dispatch(editMessage({ chatId, messageId, content }));
+        ({
+          chatId,
+          content,
+          id,
+        }: {
+          chatId: string;
+          content: string;
+          id: string;
+        }) => {
+          console.log("EDIT_MESSAGE_SERVER", chatId, id, content);
+          dispatch(editMessage({ chatId, messageId: id, content }));
         }
       );
 
@@ -172,7 +183,11 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.emit(
         "EDIT_MESSAGE_CLIENT",
         { messageId, content, chatId },
-        (response: any) => {
+        (response: {
+          success: boolean;
+          res: { message: MessageInterface };
+          error?: string;
+        }) => {
           if (response.success) {
             console.log("Message edited successfully:", response.res.message);
             dispatch(

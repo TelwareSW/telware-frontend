@@ -18,9 +18,8 @@ async function apiFetchNextPage({
         "Content-Type": "application/json",
         "X-Session-Token": localStorage.getItem("sessionId") || "",
       },
-    }
+    },
   );
-
 
   const data = await res.json();
 

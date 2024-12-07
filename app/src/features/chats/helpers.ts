@@ -17,7 +17,7 @@ export function parseChatsToState(chatData?: ChatDataType) {
   return chatData.chats.map((chat) => ({
     ...chat,
     lastMessage: chatData.lastMessages.find(
-      (lastMessage) => lastMessage.chatId === chat._id
+      (lastMessage) => lastMessage.chatId === chat._id,
     )?.lastMessage,
     messages: [],
     isTyping: false,

@@ -8,7 +8,6 @@ type requestType = {
   privacy: activeStatesStrings | privacyStatesStrings;
 };
 
-
 export const privacySettingsMock = [
   http.patch<{ path: endPts }, requestType>(
     "/users/privacy/:path",
@@ -16,7 +15,7 @@ export const privacySettingsMock = [
       const body = await request.json();
       if (!body.privacy) return HttpResponse.json({}, { status: 401 });
       return HttpResponse.json({}, { status: 200 });
-    }
+    },
   ),
 
   http.get("/users/block", async () => {
@@ -27,7 +26,7 @@ export const privacySettingsMock = [
 
   http.patch("/users/block/:id", async (req) => {
     const id = req.params.id;
-    let user = allChats.find((item) => item.id.toString() === id);
+    const user = allChats.find((item) => item.id.toString() === id);
     if (user) {
       blockList.push({
         id: user.id,
@@ -47,7 +46,7 @@ export const privacySettingsMock = [
     if (index === -1)
       return HttpResponse.json(
         { status: "user not in block list" },
-        { status: 404 }
+        { status: 404 },
       );
 
     blockList.splice(index, 1);

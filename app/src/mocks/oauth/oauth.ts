@@ -38,7 +38,7 @@ export const OauthMock = [
         headers: {
           "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
         },
-      }
+      },
     );
   }),
 
@@ -57,7 +57,7 @@ export const OauthMock = [
         headers: {
           "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
         },
-      }
+      },
     );
   }),
 ];

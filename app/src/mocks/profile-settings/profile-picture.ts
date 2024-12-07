@@ -12,7 +12,7 @@ export const profilePictureMock = [
         status: "success",
         data: {},
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
   http.patch("/users/picture", async ({ request }) => {
@@ -33,7 +33,7 @@ export const profilePictureMock = [
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
     } else {
       return HttpResponse.json(
@@ -44,7 +44,7 @@ export const profilePictureMock = [
         },
         {
           status: 400,
-        }
+        },
       );
     }
   }),

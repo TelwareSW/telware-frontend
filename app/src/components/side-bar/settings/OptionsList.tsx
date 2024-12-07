@@ -32,7 +32,7 @@ function getKey(
     | permissionSettingsID
     | undefined,
   type: StatusType | undefined,
-  index: number
+  index: number,
 ) {
   let key;
   if (status !== undefined && type !== undefined) {

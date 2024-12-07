@@ -21,7 +21,7 @@ describe("LoginForm", () => {
 
   const renderWithQueryClient = (ui: React.ReactElement) => {
     return render(
-      <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>,
     );
   };
 
@@ -48,7 +48,7 @@ describe("LoginForm", () => {
     await waitFor(() => {
       expect(mockLogin).toHaveBeenCalledWith(
         { email: "test@example.com", password: "password123" },
-        expect.any(Object)
+        expect.any(Object),
       );
     });
   });
@@ -58,7 +58,7 @@ describe("LoginForm", () => {
     mockLogin.mockImplementation(
       (_, { onSettled } = { onSettled: jest.fn() }) => {
         onSettled(null, { message: errorMessage });
-      }
+      },
     );
 
     renderWithQueryClient(<LoginForm />);
@@ -109,7 +109,7 @@ describe("LoginForm", () => {
     renderWithQueryClient(<LoginForm />);
 
     expect(screen.getByRole("button")).toContainElement(
-      screen.getByTestId("spinner")
+      screen.getByTestId("spinner"),
     );
   });
 
@@ -138,10 +138,10 @@ describe("LoginForm", () => {
       expect(loginSuccess).toHaveBeenCalled();
 
       expect((screen.getByLabelText(/email/i) as HTMLInputElement).value).toBe(
-        ""
+        "",
       );
       expect(
-        (screen.getByLabelText(/password/i) as HTMLInputElement).value
+        (screen.getByLabelText(/password/i) as HTMLInputElement).value,
       ).toBe("");
     });
   });

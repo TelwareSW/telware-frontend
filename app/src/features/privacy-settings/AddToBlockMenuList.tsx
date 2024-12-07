@@ -52,7 +52,7 @@ const StyledP = styled.p`
 `;
 function filterChats(
   blockList: BlockedUserProps[],
-  chats: DetailedChatInterface[]
+  chats: DetailedChatInterface[],
 ) {
   const blockIds = blockList
     ? new Set(blockList.map((val) => val.id))
@@ -70,7 +70,7 @@ function AddToBlockMenuList({ setIsMenuOpened }: any) {
 
   const filteredChats = filterChats(
     blockList as BlockedUserProps[],
-    chats as DetailedChatInterface[]
+    chats as DetailedChatInterface[],
   );
 
   function handleClick(item: DetailedChatInterface) {

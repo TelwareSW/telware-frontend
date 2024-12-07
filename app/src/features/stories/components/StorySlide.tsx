@@ -128,7 +128,7 @@ function StorySlide(props: StorySlideProps) {
         onClose();
       }
     },
-    [onClose]
+    [onClose],
   );
   const handleSpaceKey = useCallback(
     (e: KeyboardEvent) => {
@@ -136,7 +136,7 @@ function StorySlide(props: StorySlideProps) {
         handlePause();
       }
     },
-    [handlePause]
+    [handlePause],
   );
   const handleLeftArrow = useCallback(() => {
     if (index > 0) {
@@ -158,7 +158,7 @@ function StorySlide(props: StorySlideProps) {
         handleEcsKey(e);
       }
     },
-    [handleRightArrow, handleLeftArrow, handleSpaceKey, handleEcsKey]
+    [handleRightArrow, handleLeftArrow, handleSpaceKey, handleEcsKey],
   );
 
   const handleDelete = () => {
