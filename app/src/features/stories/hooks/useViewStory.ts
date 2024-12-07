@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { viewStory as viewStoryAPI } from "../services/viewStory";
+import { viewStory as viewStoryAPI } from "../services/apiViewStory";
 
 function useViewStory() {
   const queryClient = useQueryClient();

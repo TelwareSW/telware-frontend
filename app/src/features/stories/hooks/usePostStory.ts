@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { postStory as postStoryAPI } from "../services/postStory";
+import { postStory as postStoryAPI } from "../services/apiPostStory";
 import toast from "react-hot-toast";
 function usePostStory() {
   const queryClient = useQueryClient();

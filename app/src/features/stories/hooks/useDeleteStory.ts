@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DeleteStory as DeleteStoryAPI } from "../services/deleteStory";
+import { DeleteStory as DeleteStoryAPI } from "../services/apiDeleteStory";
 import toast from "react-hot-toast";
 
 function useDeleteStory() {

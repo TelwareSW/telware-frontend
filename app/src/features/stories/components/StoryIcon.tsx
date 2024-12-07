@@ -12,7 +12,7 @@ interface StoryIconProps {
   isMyStory?: boolean;
 }
 
-const StyledContainer = styled.div<{ $isCollapsed: boolean }>`
+const Container = styled.div<{ $isCollapsed: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +28,7 @@ const StyledContainer = styled.div<{ $isCollapsed: boolean }>`
     background-color: rgba(0, 0, 0, 0.1);
   }
 `;
-const StyledImageContainer = styled.div<{
+const Image = styled.div<{
   $isMyStory?: boolean;
 }>`
   height: 48px;
@@ -42,7 +42,7 @@ const StyledImageContainer = styled.div<{
   display: block;
 `;
 
-const StyledName = styled.p`
+const Name = styled.p`
   margin-top: 0.3rem;
   font-size: 0.7rem;
   color: var(--secondary-text-color);
@@ -62,12 +62,12 @@ function StoryIcon(props: StoryIconProps) {
   };
 
   return (
-    <StyledContainer $isCollapsed={isCollapsed} onClick={handleIconClicked}>
-      <StyledImageContainer $isMyStory={isMyStory}>
+    <Container $isCollapsed={isCollapsed} onClick={handleIconClicked}>
+      <Image $isMyStory={isMyStory}>
         <Avatar name={name} image={photo} />
-      </StyledImageContainer>
-      {!isCollapsed && <StyledName>{displayName}</StyledName>}
-    </StyledContainer>
+      </Image>
+      {!isCollapsed && <Name>{displayName}</Name>}
+    </Container>
   );
 }
 

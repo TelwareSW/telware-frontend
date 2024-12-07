@@ -47,7 +47,6 @@ const InputContainer = styled.div`
   flex: 3 auto;
 
   display: flex;
-  /* align-items: center; */
   align-self: center;
   flex-direction: column;
 
@@ -112,6 +111,13 @@ function ChatInput() {
     handleSendMessage(input, chatId, voiceNoteName);
     dispatch(clearActiveMessage());
     setInput("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as unknown as Event);
+    }
   };
 
   const chats = useAppSelector((state) => state.chats.chats);
@@ -182,7 +188,11 @@ function ChatInput() {
                       <Icon>{getIcon("Emojie")}</Icon>
                     </InvisibleButton>
 
-                    <ExpandingTextArea input={input} setInput={setInput} />
+                    <ExpandingTextArea
+                      input={input}
+                      setInput={setInput}
+                      onKeyDown={handleKeyDown}
+                    />
 
                     <MediaUploadComponent
                       file={file}
@@ -201,7 +211,6 @@ function ChatInput() {
               />
             ) : (
               <VoiceRecorder
-                error={error}
                 isRecording={isRecording}
                 setIsRecording={setIsRecording}
                 setError={setError}

@@ -11,7 +11,7 @@ const StyledSearchBar = styled.div`
   }
 `;
 
-const StyledSearchIcon = styled.div`
+const Icon = styled.div`
   > svg {
     position: absolute;
     left: 0.5rem;
@@ -22,7 +22,7 @@ const StyledSearchIcon = styled.div`
   }
 `;
 
-const StyledInput = styled.input`
+const Input = styled.input`
   background-color: var(--color-chat-hover);
   border: 1px solid var(--pattern-color);
   border-radius: var(--border-radius-searchbar);
@@ -45,14 +45,8 @@ const StyledInput = styled.input`
 function SearchBar() {
   return (
     <StyledSearchBar data-testid="general-search-bar">
-      <StyledInput
-        type="text"
-        placeholder="Search"
-        data-testid="general-search"
-      />
-      <StyledSearchIcon data-testid="general-serach-icon">
-        {getIcon("Search")}
-      </StyledSearchIcon>
+      <Input type="text" placeholder="Search" data-testid="general-search" />
+      <Icon data-testid="general-serach-icon">{getIcon("Search")}</Icon>
     </StyledSearchBar>
   );
 }

@@ -32,6 +32,17 @@ const InputWrapper = styled.div`
   flex: 1;
 `;
 
+const StyledBackground = styled.div`
+  border: 1px solid var(--color-text-secondary);
+  background-color: var(--color-background);
+  border-radius: 5px;
+  padding: 0.25rem;
+  width: calc(100% - 5.6rem);
+  height: 2.5rem;
+  & > textarea {
+    width: 100%;
+  }
+`;
 interface FileProps {
   file: File | string;
   handleCloseFilePreview: () => void;
@@ -85,7 +96,9 @@ function FilePreviewItem({
       </FileViewerContainer>
       <FileDetailsBanner file={file} />
       <InputWrapper>
-        <ExpandingTextArea input={caption} setInput={setCaption} />
+        <StyledBackground>
+          <ExpandingTextArea input={caption} setInput={setCaption} />
+        </StyledBackground>
         <Button disabled={isPending} onClick={handleSendFile}>
           {isPending ? "Sending..." : "Send"}
         </Button>
