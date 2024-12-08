@@ -63,7 +63,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         });
       });
 
-      socket.on("RECEIVE_MESSAGE", (message: MessageInterface) => {
+      socket.on("RECEIVE_MESSAGE", (message) => {
         console.log("inside recieve");
         console.log(message);
         handleIncomingMessage(dispatch, message, message.chatId);
@@ -146,14 +146,21 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
+      const messageToSend = {
+        ...sentMessage,
+        isFirstTime: false,
+        chatType: "private",
+        threadMessages: [],
+      };
+      console.log("messageToSend", messageToSend);
       socket.emit(
         "SEND_MESSAGE",
-        { ...sentMessage, isFirstTime: false, chatType: "private" },
+        messageToSend,
         ({ success, message, res }: AcknowledgmentResponse) => {
           console.log("I'm inside send event!!");
           console.log(success);
           if (!success) {
-            console.log(res);
+            console.log("Failed to send", res);
           }
           if (success) {
             console.log(message);

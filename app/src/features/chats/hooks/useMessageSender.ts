@@ -14,7 +14,7 @@ export const useMessageSender = () => {
     type: ContentType = "text"
   ) => {
     if (activeMessage?.id && activeMessage.state === "edit") {
-      editMessage(activeMessage?.id!, data, chatId!);
+      editMessage(activeMessage?.id, data, chatId!);
       return;
     }
 
