@@ -1,5 +1,5 @@
 import { DetailedChatInterface } from "@state/messages/chats";
-import { ChatDataType } from "@mocks/data/chats";
+import { ChatDataType, ChatMember } from "@mocks/data/chats";
 
 export function getChatByID({
   chats,
@@ -11,17 +11,49 @@ export function getChatByID({
   return chats.find((chat) => chat._id === chatID);
 }
 
-export function parseChatsToState(chatData?: ChatDataType) {
+export function parseChatsToState(chatData?: any) {
   if (!chatData) return [];
+  return chatData.chats.map((chat: any): DetailedChatInterface => {
+    const { isMuted, draft, chat: currChat } = chat;
+    const {
+      _id: chatId,
+      isSeen,
+      members,
+      type,
+      isDeleted,
+      numberOfMembers,
+    } = currChat;
 
-  return chatData.chats.map((chat) => ({
-    ...chat,
-    lastMessage: chatData.lastMessages.find(
-      (lastMessage) => lastMessage.chatId === chat._id,
-    )?.lastMessage,
-    messages: [],
-    isTyping: false,
-    showCheckBox: false,
-    selectedMessages: [],
-  }));
+    const filteredMembers = members.map((member: any) => {
+      return {
+        _id: member.user,
+        Role: member.Role,
+      } as ChatMember;
+    });
+
+    const incomingLastMessage = chatData.lastMessages.find(
+      (lastMessage: any) => lastMessage.chatId === chatId
+    )?.lastMessage;
+
+    return {
+      _id: chatId,
+      isSeen: isSeen,
+      isDeleted: isDeleted,
+      members: filteredMembers,
+      type: type,
+      numberOfMembers: numberOfMembers,
+
+      lastMessage: {
+        _id: incomingLastMessage?.id,
+        content: incomingLastMessage?.content,
+        senderId: incomingLastMessage?.senderId,
+        timestamp: incomingLastMessage?.timestamp,
+      },
+
+      messages: [],
+      isTyping: false,
+      showCheckBox: false,
+      selectedMessages: [],
+    } as DetailedChatInterface;
+  });
 }
