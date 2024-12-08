@@ -22,7 +22,7 @@ interface StorySlideProps {
   onClose: () => void;
 }
 
-const StyledContainer = styled.div`
+const Container = styled.div`
   cursor: pointer;
   position: fixed;
   top: 0;
@@ -51,7 +51,7 @@ const StyledSlide = styled.div`
   width: 60%;
 `;
 
-const StyledNavButton = styled.div<{ isLeft?: boolean }>`
+const NavButton = styled.div<{ isLeft?: boolean }>`
   position: absolute;
   top: 50%;
   ${({ isLeft }) => (isLeft ? "left: 0;" : "right: 0;")}
@@ -108,6 +108,7 @@ function StorySlide(props: StorySlideProps) {
       getNextUserStories();
       setIndex(0);
     }
+    setIsPaused(false);
   };
 
   const handlePause = useCallback(() => {
@@ -128,7 +129,7 @@ function StorySlide(props: StorySlideProps) {
         onClose();
       }
     },
-    [onClose],
+    [onClose]
   );
   const handleSpaceKey = useCallback(
     (e: KeyboardEvent) => {
@@ -136,7 +137,7 @@ function StorySlide(props: StorySlideProps) {
         handlePause();
       }
     },
-    [handlePause],
+    [handlePause]
   );
   const handleLeftArrow = useCallback(() => {
     if (index > 0) {
@@ -158,7 +159,7 @@ function StorySlide(props: StorySlideProps) {
         handleEcsKey(e);
       }
     },
-    [handleRightArrow, handleLeftArrow, handleSpaceKey, handleEcsKey],
+    [handleRightArrow, handleLeftArrow, handleSpaceKey, handleEcsKey]
   );
 
   const handleDelete = () => {
@@ -183,23 +184,32 @@ function StorySlide(props: StorySlideProps) {
   if (!stories.length) {
     return null;
   }
+  const isImage =
+    stories[index].content.includes(".jpg") ||
+    stories[index].content.includes(".png") ||
+    stories[index].content.includes(".jpeg") ||
+    stories[index].content.includes(".gif") ||
+    stories[index].content.includes(".webp") ||
+    stories[index].content.includes(".svg") ||
+    stories[index].content.includes(".bmp");
 
   return (
     <Popup isOpen={true} onClose={onClose}>
-      <StyledContainer>
+      <Container>
         <CloseButton onClose={onClose} />
         <StyledSlide ref={ref} className="story">
-          <StyledNavButton isLeft onClick={handleLeftArrow}>
+          <NavButton isLeft onClick={handleLeftArrow}>
             {getIcon("LeftArrow")}
-          </StyledNavButton>
-          <StyledNavButton onClick={handleRightArrow}>
+          </NavButton>
+          <NavButton onClick={handleRightArrow}>
             {getIcon("RightArrow")}
-          </StyledNavButton>
+          </NavButton>
           <StorySlideCounter
             isPaused={isPaused}
             currentIndex={index}
             totalSlides={stories.length}
             onSlideChange={handleSlideChange}
+            isImage={isImage}
           />
           <StorySliderTooltip
             isMine={isMine}
@@ -216,6 +226,9 @@ function StorySlide(props: StorySlideProps) {
             />
           </StyledUserInfo>
           <Story
+            onFinish={handleSlideChange}
+            isPaused={isPaused}
+            isImage={isImage}
             content={stories[index].content}
             caption={stories[index].caption || ""}
           />
@@ -227,7 +240,7 @@ function StorySlide(props: StorySlideProps) {
             </ViewsContainer>
           )}
         </StyledSlide>
-      </StyledContainer>
+      </Container>
     </Popup>
   );
 }

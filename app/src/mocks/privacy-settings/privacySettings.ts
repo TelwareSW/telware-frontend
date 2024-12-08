@@ -1,6 +1,6 @@
 import blockList from "@mocks/data/blocklist";
 import { allChats } from "@mocks/data/chats";
-import { endPts } from "features/privacy-settings/service/changeSettings";
+import { endPts } from "@features/privacy-settings/service/apiChangeSettings";
 import { http, HttpResponse } from "msw";
 import { activeStatesStrings, privacyStatesStrings } from "types/sideBar";
 
@@ -15,7 +15,7 @@ export const privacySettingsMock = [
       const body = await request.json();
       if (!body.privacy) return HttpResponse.json({}, { status: 401 });
       return HttpResponse.json({}, { status: 200 });
-    },
+    }
   ),
 
   http.get("/users/block", async () => {
@@ -46,7 +46,7 @@ export const privacySettingsMock = [
     if (index === -1)
       return HttpResponse.json(
         { status: "user not in block list" },
-        { status: 404 },
+        { status: 404 }
       );
 
     blockList.splice(index, 1);

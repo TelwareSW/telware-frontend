@@ -9,6 +9,10 @@ async function DeleteProfilePicture() {
     },
   });
 
+  if (res.status === 204) {
+    return { status: "success", message: "Story deleted successfully." };
+  }
+
   const data = await res.json();
 
   if (data.status !== "success") {

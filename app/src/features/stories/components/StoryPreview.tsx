@@ -10,6 +10,8 @@ interface StoryPreviewProps {
   onClose: () => void;
   isOpen: boolean;
 }
+
+// Styled Components
 const StyledContainer = styled.div`
   cursor: pointer;
   position: fixed;
@@ -27,40 +29,42 @@ const StyledContainer = styled.div`
   flex-direction: column;
   background-color: #000;
 `;
-const StyledImageContainer = styled.div`
+
+const MediaContainer = styled.div`
   width: 80%;
   height: 80%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-background);
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-default);
+
+  img,
+  video {
+    width: 80vw;
+    height: 80vh;
+    object-fit: cover;
     border-radius: var(--border-radius-default);
-    img {
-      width: 80vw;
-      height: 80vh;
-      object-fit: cover !important;
-    }
   }
 `;
-const StyledCaption = styled.input`
+
+const Caption = styled.input`
   width: 80%;
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: var(--color-background);
-  color: var(--text-color);
+  color: white;
   font-size: 1rem;
 `;
+
 const SendContainer = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
 `;
+
 const SubmitButton = styled.button`
   --button-width: 3.2rem;
   background-color: var(--accent-color);
@@ -77,32 +81,43 @@ const SubmitButton = styled.button`
   box-shadow: 0 0 0.1rem var(--accent-color);
 `;
 
-function StoryPreview(props: StoryPreviewProps) {
-  const { story, onClose, isOpen } = props;
+function StoryPreview({ story, onClose, isOpen }: StoryPreviewProps) {
   const [caption, setCaption] = useState("");
   const { postStory } = usePostStory();
-  const sendStory = () => {
-    if (story) postStory({ story, caption });
-    handleClose();
-  };
 
   const handleClose = () => {
     setCaption("");
     onClose();
   };
+
+  const sendStory = () => {
+    if (story) postStory({ story, caption });
+    handleClose();
+  };
+
   if (!story) return null;
+
+  const isImage = story.type.startsWith("image");
+
   return (
     <Popup isOpen={isOpen} onClose={handleClose}>
       <StyledContainer>
-        <StyledImageContainer>
-          <ModalImage
-            small={URL.createObjectURL(story!)}
-            medium={URL.createObjectURL(story!)}
-            alt="story"
-          />
-        </StyledImageContainer>
+        <MediaContainer>
+          {isImage ? (
+            <ModalImage
+              small={URL.createObjectURL(story)}
+              medium={URL.createObjectURL(story)}
+              alt="Story"
+            />
+          ) : (
+            <video controls>
+              <source src={URL.createObjectURL(story)} type={story.type} />
+              Your browser does not support the video tag.
+            </video>
+          )}
+        </MediaContainer>
         <SendContainer>
-          <StyledCaption
+          <Caption
             type="text"
             id="caption"
             data-testid="caption"
@@ -112,9 +127,11 @@ function StoryPreview(props: StoryPreviewProps) {
             maxLength={100}
           />
           <SubmitButton
-            onClick={sendStory}
+            onClick={(e) => {
+              e.preventDefault();
+              sendStory();
+            }}
             data-testid="send-story"
-            type="submit"
           >
             {getIcon("Send")}
           </SubmitButton>

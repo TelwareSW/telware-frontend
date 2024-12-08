@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Textarea = styled.textarea`
@@ -16,6 +16,7 @@ const Textarea = styled.textarea`
 
   font-size: 1rem;
   line-height: 1.5;
+  padding: 0.25rem;
 
   max-height: 300px;
 `;
@@ -23,9 +24,10 @@ const Textarea = styled.textarea`
 type PropsType = {
   input: string;
   setInput: (value: string) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
 
-function ExpandingTextArea({ input, setInput }: PropsType) {
+function ExpandingTextArea({ input, setInput, onKeyDown }: PropsType) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   function handleInput() {
@@ -34,6 +36,13 @@ function ExpandingTextArea({ input, setInput }: PropsType) {
       ref.current.style.height = `${ref.current.scrollHeight}px`;
     }
   }
+  useEffect(() => {
+    if (ref.current) {
+      if (ref.current.value === "" || input === "") {
+        ref.current.style.height = "32px";
+      }
+    }
+  }, [input]);
 
   return (
     <Textarea
@@ -43,6 +52,7 @@ function ExpandingTextArea({ input, setInput }: PropsType) {
       placeholder="Message"
       rows={1}
       onInput={handleInput}
+      onKeyDown={onKeyDown}
     />
   );
 }
