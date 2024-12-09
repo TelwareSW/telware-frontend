@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { getChatByID } from "./utils/helpers";
 import { useChatMembers } from "./hooks/useChatMember";
 import { getElapsedTime } from "@utils/helpers";
+import { useSocket } from "@hooks/useSocket";
 
 const Container = styled.div`
   position: absolute;
@@ -76,12 +77,17 @@ const IconButton = styled.button`
   justify-content: center;
 `;
 
+const InvisibleButton = styled.button`
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+`;
 //TODO: refactor
 function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const chats = useAppSelector((state) => state.chats.chats);
   const [isSearching, setIsSearching] = useState(false);
-
+  const { startConnection } = useSocket();
   const chat = chatId
     ? getChatByID({
         chatID: chatId,
@@ -131,7 +137,10 @@ function Topbar() {
           </Info>
           <PinnedMessages />
           <Icons>
-            <Icon>{getIcon("Call")}</Icon>
+            <InvisibleButton onClick={startConnection}>
+              <Icon>{getIcon("Call")}</Icon>
+            </InvisibleButton>
+
             <IconButton onClick={toggleSearch} data-testid="search-button">
               {getIcon("Search")}
             </IconButton>
