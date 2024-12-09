@@ -5,6 +5,7 @@ import userReducer from "./user/user";
 import searchReducer from "./messages/search";
 import activeMessageReducer from "./messages/activeMessage";
 import chatsReducer from "./messages/chats";
+import selectedUsersReducer from "./groups/selectedUsers";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     search: searchReducer,
     activeMessage: activeMessageReducer,
     chats: chatsReducer,
+    selectedUsers: selectedUsersReducer,
   },
 });
 

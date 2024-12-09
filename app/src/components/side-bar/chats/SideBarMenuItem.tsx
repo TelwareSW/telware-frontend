@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { getIcon, iconStrings } from "../../../data/icons";
+import { useDispatch } from "react-redux";
+import { updateSideBarView } from "@state/side-bar/sideBar";
+import { sideBarPages } from "types/sideBar";
 
 interface SideBarMenuItemProps {
   title: string;

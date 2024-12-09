@@ -6,6 +6,7 @@ import CircleIcon from "@components/CircleIcon";
 import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+
 const StyledSideBarHeader = styled.div`
   height: 4rem !important;
   position: relative;
@@ -58,7 +59,7 @@ function SettingsSideBarHeader() {
           />
           <CircleIcon
             data-testid="logout-icon"
-            onClick={logout}
+            onClick={() => logout}
             $icon="Logout"
             $padding={0.2}
             $size={1.8}
