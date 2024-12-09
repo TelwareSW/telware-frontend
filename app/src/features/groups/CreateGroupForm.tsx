@@ -66,7 +66,7 @@ function GroupInfoForm() {
 
       <FloatingLabelInput<NewGroupForm>
         id="groupName"
-        label="Group Name"
+        label="Group Name (required)"
         register={register}
         watch={watch}
         data-testid="group-name"

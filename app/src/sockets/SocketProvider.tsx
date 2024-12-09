@@ -1,6 +1,8 @@
 import { useState, useEffect, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { SocketContext } from "./SocketContext";
 import { useSocket } from "utils/socket";
@@ -13,7 +15,6 @@ import {
   unpinMessage,
   editMessage,
 } from "@state/messages/chats";
-import { useNavigate } from "react-router-dom";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -57,12 +58,12 @@ function SocketProvider({ children }: SocketProviderProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = useSocket();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (socket) {
       socket.connect();
 
-      //TODO: remove and make sure it still works
       socket.on("connect", () => {
         const engine = socket.io.engine;
         setIsConnected(true);
@@ -126,9 +127,14 @@ function SocketProvider({ children }: SocketProviderProps) {
         }
       );
 
+      socket.on("JOIN_GROUP_CHANNEL", () => {
+        queryClient.invalidateQueries({ queryKey: ["chats"] });
+      });
+
       socket.on("typing", (isTyping, message) =>
         handleIsTyping(dispatch, isTyping, message.chatId)
       );
+
       socket.emit("typing");
       return () => {
         socket.disconnect();

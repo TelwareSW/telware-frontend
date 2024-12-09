@@ -203,13 +203,13 @@ const devices: SideBarView = {
 };
 
 const addMembers: SideBarView = {
-  title: "AddMembers",
+  title: "Add Members",
   backView: sideBarPages.CHATS,
   page: "ADD_MEMBERS",
 };
 
 const newGroup: SideBarView = {
-  title: "NewGroup",
+  title: "New Group",
   backView: sideBarPages.ADD_MEMBERS,
   page: "NEW_GROUP",
 };

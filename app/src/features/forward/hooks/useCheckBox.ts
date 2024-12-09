@@ -1,4 +1,4 @@
-import { getChatByID } from "@features/chats/helpers";
+import { getChatByID } from "@features/chats/utils/helpers";
 import { useAppSelector, useAppDispatch } from "@hooks/useGlobalState";
 import { SelectMessage, removeSelectedMessage } from "@state/messages/chats";
 import { useState, useEffect } from "react";

@@ -1,5 +1,5 @@
 import { DetailedChatInterface } from "@state/messages/chats";
-import { ChatDataType, ChatMember } from "@mocks/data/chats";
+import { ChatMember } from "@mocks/data/chats";
 
 export function getChatByID({
   chats,
@@ -22,6 +22,7 @@ export function parseChatsToState(chatData?: any) {
       type,
       isDeleted,
       numberOfMembers,
+      name,
     } = currChat;
 
     const filteredMembers = members.map((member: any) => {
@@ -41,6 +42,7 @@ export function parseChatsToState(chatData?: any) {
       isDeleted: isDeleted,
       members: filteredMembers,
       type: type,
+      name,
       numberOfMembers: numberOfMembers,
 
       lastMessage: {

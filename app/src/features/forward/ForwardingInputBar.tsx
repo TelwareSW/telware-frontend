@@ -1,6 +1,6 @@
 import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
-import { getChatByID } from "@features/chats/helpers";
+import { getChatByID } from "@features/chats/utils/helpers";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
