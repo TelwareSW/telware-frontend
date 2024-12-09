@@ -20,7 +20,7 @@ const StyledSideBarHeader = styled.div`
   background-color: var(--color-background);
   border-bottom: 2px solid var(--color-item-hover);
 `;
-const StyledIconsContainer = styled.div`
+const IconsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -42,7 +42,7 @@ function SettingsSideBarHeader() {
         {title}
       </Heading>
       {title === "Settings" && (
-        <StyledIconsContainer>
+        <IconsContainer>
           <CircleIcon
             data-testid="profile-update-icon"
             $icon="Edit"
@@ -52,7 +52,7 @@ function SettingsSideBarHeader() {
             $bgColor="var(--color-pattern)"
             onClick={() =>
               dispatch(
-                updateSideBarView({ redirect: sideBarPages.PROFILE_UPDATE }),
+                updateSideBarView({ redirect: sideBarPages.PROFILE_UPDATE })
               )
             }
           />
@@ -65,7 +65,7 @@ function SettingsSideBarHeader() {
             $color="var(--color-text)"
             $bgColor="var(--color-pattern)"
           />
-        </StyledIconsContainer>
+        </IconsContainer>
       )}
     </StyledSideBarHeader>
   );

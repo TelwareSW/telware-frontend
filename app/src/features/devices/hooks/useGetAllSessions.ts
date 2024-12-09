@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { GetAllSessions } from "../services/GetAllSessions";
+import { GetAllSessions } from "../services/apiGetAllSessions";
 import { Session } from "../types/sessions";
 
 function useGetAllSessions() {

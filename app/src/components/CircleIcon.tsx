@@ -16,7 +16,7 @@ interface CircleIconProps {
   type?: string;
 }
 
-const StyledIcon = styled.div<CircleIconProps>`
+const StyledCircleIcon = styled.div<CircleIconProps>`
   right: ${(props) => props.$right}rem;
   bottom: ${(props) => props.$bottom}rem;
   ${(props) =>
@@ -70,7 +70,7 @@ function CircleIcon({
   type,
 }: CircleIconProps) {
   return (
-    <StyledIcon
+    <StyledCircleIcon
       onClick={onClick}
       {...{
         $icon,
@@ -87,7 +87,7 @@ function CircleIcon({
     >
       {getIcon($icon)}
       {children}
-    </StyledIcon>
+    </StyledCircleIcon>
   );
 }
 

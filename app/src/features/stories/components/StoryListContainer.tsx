@@ -7,7 +7,7 @@ import CollapsedList from "@components/CollapsedList";
 import StoryList from "./StoryList";
 import StoryIcon from "./StoryIcon";
 
-const StyledContainer = styled.div<{ $isOpened: boolean }>`
+const Container = styled.div<{ $isOpened: boolean }>`
   width: 100%;
   ${(props) =>
     !props.$isOpened
@@ -32,12 +32,12 @@ const StyledContainer = styled.div<{ $isOpened: boolean }>`
 function StoryListContainer() {
   const { stories: userStoriesData } = useStroies();
   const userStories = userStoriesData?.data?.filter(
-    (userStory) => userStory.stories.length > 0,
+    (userStory) => userStory.stories.length > 0
   );
   const { myStories: myStoriesData } = useMyStroies();
   const myStories = myStoriesData?.data?.stories;
   const [isOpened, setIsOpened] = useState(
-    userStories?.length || myStories?.length,
+    userStories?.length || myStories?.length
   );
   const { userInfo } = useAppSelector((state) => state.user);
 
@@ -48,7 +48,7 @@ function StoryListContainer() {
     setIsOpened(userStories?.length || myStories?.length);
   }, [myStories, userStories]);
   return (
-    <StyledContainer $isOpened={isOpened} data-testid="story-list-container">
+    <Container $isOpened={isOpened} data-testid="story-list-container">
       {isOpened ? (
         <StoryList
           userStories={userStories}
@@ -73,7 +73,7 @@ function StoryListContainer() {
           list={userStories?.length !== 0 ? userStories : myStories}
         />
       )}
-    </StyledContainer>
+    </Container>
   );
 }
 

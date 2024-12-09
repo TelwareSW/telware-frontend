@@ -1,6 +1,6 @@
 import { RadioInputProps } from "@components/inputs/radio-input/RadioInput";
 import { fireEvent, render, screen } from "@testing-library/react";
-import * as update from "@features/privacy-settings/service/changeSettings";
+import * as update from "@features/privacy-settings/service/apiChangeSettings";
 import SettingsUpdate from "@components/side-bar/settings/SettingsUpdate";
 import renderWithStore from "@tests/test-utils";
 
@@ -63,13 +63,13 @@ describe("RadioInput", () => {
     render(renderWithStore(<SettingsUpdate {...data} />));
 
     expect(
-      (screen.getByLabelText("Option 2") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 2") as HTMLInputElement).checked
     ).toBe(true);
     expect(
-      (screen.getByLabelText("Option 1") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 1") as HTMLInputElement).checked
     ).toBe(false);
     expect(
-      (screen.getByLabelText("Option 3") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 3") as HTMLInputElement).checked
     ).toBe(false);
   });
 
@@ -82,20 +82,20 @@ describe("RadioInput", () => {
     render(renderWithStore(<SettingsUpdate {...data} />));
 
     expect(
-      (screen.getByLabelText("Option 3") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 3") as HTMLInputElement).checked
     ).toBe(false);
 
     const option3RadioButton = screen.getByLabelText("Option 3");
     fireEvent.click(option3RadioButton);
 
     expect(
-      (screen.getByLabelText("Option 2") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 2") as HTMLInputElement).checked
     ).toBe(false);
     expect(
-      (screen.getByLabelText("Option 1") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 1") as HTMLInputElement).checked
     ).toBe(false);
     expect(
-      (screen.getByLabelText("Option 3") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 3") as HTMLInputElement).checked
     ).toBe(true);
   });
 
@@ -108,13 +108,13 @@ describe("RadioInput", () => {
     render(renderWithStore(<SettingsUpdate {...data} />));
 
     expect(
-      (screen.getByLabelText("Option 1") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 1") as HTMLInputElement).checked
     ).toBe(false);
     expect(
-      (screen.getByLabelText("Option 2") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 2") as HTMLInputElement).checked
     ).toBe(false);
     expect(
-      (screen.getByLabelText("Option 3") as HTMLInputElement).checked,
+      (screen.getByLabelText("Option 3") as HTMLInputElement).checked
     ).toBe(false);
   });
 });

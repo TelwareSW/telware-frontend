@@ -9,7 +9,7 @@ import { sideBarPages } from "@data/sideBar";
 import { useMouseLeave } from "@hooks/useMouseLeave";
 import { getIcon } from "@data/icons";
 
-const StyledToolsIcon = styled.div`
+const ToolsIcon = styled.div`
   > svg {
     color: var(--color-icon-secondary);
     border-radius: var(--border-radius-modal);
@@ -49,12 +49,9 @@ function SettingsToolbar() {
   };
   return (
     <>
-      <StyledToolsIcon
-        onClick={handleOpenSettings}
-        data-testid="menu-items-icon"
-      >
+      <ToolsIcon onClick={handleOpenSettings} data-testid="menu-items-icon">
         {getIcon("Menu")}
-      </StyledToolsIcon>
+      </ToolsIcon>
       {isOpened && (
         <StyledList
           $isOpened={isOpened}

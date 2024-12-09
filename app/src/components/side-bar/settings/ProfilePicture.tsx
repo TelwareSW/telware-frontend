@@ -1,20 +1,37 @@
 import { STATIC_MEDIA_URL } from "@constants";
 import { useProfileSettings } from "@features/profile-settings/hooks/useProfileSettings";
+import { getAvatarName } from "@utils/helpers";
 import styled from "styled-components";
 
 const ProfilePictureContainer = styled.div`
   position: relative;
 `;
 
-const StyledImg = styled.img<{ $isCircleStyle?: boolean }>`
+const Image = styled.div<{ $isCircleStyle?: boolean; $image?: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 20rem;
   aspect-ratio: 1/1;
   width: 100%;
-  object-fit: fill;
+  background: ${({ $image }) =>
+    $image
+      ? `url(${STATIC_MEDIA_URL + $image}) center/cover no-repeat`
+      : "var(--color-avatar)"};
+
   border-radius: ${({ $isCircleStyle }) => ($isCircleStyle ? "50%" : "0")};
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-weight: bold;
+  font-size: 8rem;
+  text-transform: uppercase;
 `;
 
 const ProfileInfo = styled.div`
@@ -52,12 +69,16 @@ function ProfilePicture({ isCircleStyle }: { isCircleStyle?: boolean }) {
   const { data: profileSettings } = useProfileSettings();
   return (
     <ProfilePictureContainer>
-      <StyledImg
-        alt="profile"
+      <Image
         $isCircleStyle={isCircleStyle}
+        $image={profileSettings?.photo}
         data-testid="profile-picture"
-        src={STATIC_MEDIA_URL + profileSettings?.photo}
-      />
+      >
+        {!profileSettings?.photo &&
+          getAvatarName(
+            (profileSettings?.firstName + profileSettings?.lastName).toString()
+          )}
+      </Image>
       {!isCircleStyle && (
         <ProfileInfo>
           <ProfileNameH2>
