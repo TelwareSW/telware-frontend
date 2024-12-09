@@ -23,6 +23,7 @@ import {
   unpinMessage,
 } from "@state/messages/chats";
 import { useSocket } from "@hooks/useSocket";
+import SenderName from "./SenderName";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -129,8 +130,8 @@ type MessageProps = {
   data: MessageInterface;
 };
 
-function Message({
-  data: {
+function Message({ data }: MessageProps) {
+  const {
     _id: id,
     senderId,
     content,
@@ -139,8 +140,8 @@ function Message({
     parentMessageId,
     media,
     contentType,
-  },
-}: MessageProps) {
+  } = data;
+
   const { searchTerm, searchResults } = useAppSelector((state) => state.search);
   const { lastMessageRef } = useScrollToLastMsg();
   useScrollToSearchResultsMsg();
@@ -191,6 +192,7 @@ function Message({
       >
         <Bubble $isMine={senderId === userId}>
           <StyledCol>
+            <SenderName $isMine={senderId === userId} senderId={senderId} />
             {parentMessageId && (
               <MessageBoxWrapper
                 onClick={MoveToReplyMessage}

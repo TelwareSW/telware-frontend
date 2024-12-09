@@ -147,7 +147,7 @@ const GlobalStyles = createGlobalStyle`
   --color-background-own-3: #8849B4;
   --color-background-own-4: #A751A8;
   
-  --color-reply-own: #f5f5f52e;
+  --color-peer-1: var(--accent-color);
   
   --color-peer-2: #a695e7;
   --color-peer-bg-2: #a695e71a;

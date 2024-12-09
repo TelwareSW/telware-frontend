@@ -97,7 +97,6 @@ function Topbar() {
 
   if (chat) {
     if (chat?.type === "group" || chat?.type === "channel") {
-      console.log(chat?.name);
       name = chat?.name;
     } else {
       name = membersData[0]?.screenFirstName || membersData[0]?.username;

@@ -160,8 +160,6 @@ function SocketProvider({ children }: SocketProviderProps) {
         "SEND_MESSAGE",
         messageToSend,
         ({ success, message, res }: AcknowledgmentResponse) => {
-          console.log("I'm inside send event!!");
-          console.log(success);
           if (!success) {
             console.log("Failed to send", res);
           }

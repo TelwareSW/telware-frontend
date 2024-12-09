@@ -35,8 +35,6 @@ export default function ReplyWrapper({ setInput }: Props) {
     if (activeMessage.state === "edit") setInput("");
   }
 
-  console.log(activeMessage);
-
   return (
     <Container data-testid="reply-wrapper">
       <Icon>{getIcon(activeMessage.state === "edit" ? "Edit" : "Reply")}</Icon>
