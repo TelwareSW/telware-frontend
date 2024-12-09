@@ -20,7 +20,7 @@ export function useChats() {
     };
 
     dispatch(setAllChats({ chatsData: initialChatState }));
-  }, [isPending, chatData]);
+  }, [isPending, chatData, dispatch]);
 
   return { isPending };
 }

@@ -7,8 +7,9 @@ const {
   VITE_BACKEND_STORGAE: STATIC_MEDIA_URL,
 } = import.meta.env;
 
-const MOBILE_VIEW = "(max-width: 600px)";
-const DESKTOP_VIEW = "(min-width: 600px)";
+const MOBILE_VIEW = "(max-width: 800px)";
+const DESKTOP_VIEW = "(min-width: 800px)";
+const MAX_STORY_SIZE = 5 * 1024 * 1024;
 export {
   ENVIRONMENT,
   RECAPTCHA_SITE_KEY,
@@ -18,4 +19,5 @@ export {
   STATIC_MEDIA_URL,
   MOBILE_VIEW,
   DESKTOP_VIEW,
+  MAX_STORY_SIZE,
 };

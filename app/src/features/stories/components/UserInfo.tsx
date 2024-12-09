@@ -8,7 +8,7 @@ interface UserInfoProps {
   elapsedTime: string;
   isVertical?: boolean;
 }
-const StyledStoryHeader = styled.div`
+const StoryHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -33,7 +33,7 @@ const StyledUserInfo = styled.div<{ $isVertical?: boolean }>`
     color: white !important;
   }
 `;
-const StyledElapsedTime = styled.p`
+const ElapsedTime = styled.p`
   font-size: 0.8rem;
   color: white;
   text-align: left;
@@ -42,13 +42,13 @@ function UserInfo(props: UserInfoProps) {
   const { name, photo, elapsedTime, isVertical } = props;
 
   return (
-    <StyledStoryHeader>
+    <StoryHeader>
       <Avatar name={name} image={photo} />
       <StyledUserInfo $isVertical={isVertical}>
         <Heading as="h5">{name}</Heading>
-        <StyledElapsedTime>{elapsedTime}</StyledElapsedTime>
+        <ElapsedTime>{elapsedTime}</ElapsedTime>
       </StyledUserInfo>
-    </StyledStoryHeader>
+    </StoryHeader>
   );
 }
 

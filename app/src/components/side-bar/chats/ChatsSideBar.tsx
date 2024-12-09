@@ -19,7 +19,7 @@ const StyledChatsSideBar = styled.div`
   overflow-x: hidden;
 `;
 
-const StyledButtonContainer = styled.div`
+const ButtonsContainer = styled.div`
   position: sticky;
   bottom: 1rem;
   width: 3.3rem;
@@ -39,10 +39,10 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
       <ChatsSidebarHeader />
       <StoryListContainer />
       <div style={{ flex: 1 }}>{children}</div>{" "}
-      <StyledButtonContainer data-testid="button-container">
+      <ButtonsContainer data-testid="button-container">
         <AddStory data-testid="add-story-button" />
         <StartNewChat data-testid="start-new-chat-button" />
-      </StyledButtonContainer>
+      </ButtonsContainer>
     </StyledChatsSideBar>
   );
 }

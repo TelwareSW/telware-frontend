@@ -7,13 +7,21 @@ export type Member = {
   photo: string;
   status: string;
   isAdmin: boolean;
+  stories: string[];
+  blockedUsers: string[];
   Role: "member" | "admin" | "creator";
+};
+
+export type ChatMember = {
+  Role: "member" | "admin";
+  _id: string;
 };
 
 export type Chat = {
   _id: string;
   isSeen: boolean;
-  members: string[];
+  isDeleted: boolean;
+  members: ChatMember[];
   type: "private" | "group" | "channel";
   numberOfMembers: number;
 };
@@ -32,71 +40,71 @@ export type ChatDataType = {
   }[];
 };
 
-export const allChats: Chat[] = [
-  {
-    _id: "1",
-    isSeen: false,
-    members: ["1", "2"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "2",
-    isSeen: false,
-    members: ["2", "1"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "3",
-    isSeen: false,
-    members: ["3"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "4",
-    isSeen: false,
-    members: ["4"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "5",
-    isSeen: false,
-    members: ["5"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "6",
-    isSeen: false,
-    members: ["6"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "7",
-    isSeen: false,
-    members: ["7"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "8",
-    isSeen: false,
-    members: ["8"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "9",
-    isSeen: false,
-    members: ["9"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-];
+// export const allChats: Chat[] = [
+//   {
+//     _id: "1",
+//     isSeen: false,
+//     members: ["1", "2"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "2",
+//     isSeen: false,
+//     members: ["2", "1"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "3",
+//     isSeen: false,
+//     members: ["3"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "4",
+//     isSeen: false,
+//     members: ["4"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "5",
+//     isSeen: false,
+//     members: ["5"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "6",
+//     isSeen: false,
+//     members: ["6"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "7",
+//     isSeen: false,
+//     members: ["7"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "8",
+//     isSeen: false,
+//     members: ["8"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+//   {
+//     _id: "9",
+//     isSeen: false,
+//     members: ["9"],
+//     type: "private",
+//     numberOfMembers: 1,
+//   },
+// ];
 
 export const members: Member[] = [
   {
@@ -109,6 +117,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "2",
@@ -120,6 +130,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "3",
@@ -131,6 +143,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "4",
@@ -142,6 +156,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "5",
@@ -153,6 +169,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "6",
@@ -164,6 +182,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "7",
@@ -175,6 +195,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "8",
@@ -186,6 +208,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "9",
@@ -197,6 +221,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "10",
@@ -208,6 +234,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "11",
@@ -219,6 +247,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "12",
@@ -230,6 +260,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "13",
@@ -241,6 +273,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "14",
@@ -252,6 +286,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
   {
     _id: "15",
@@ -263,6 +299,8 @@ export const members: Member[] = [
     status: "active",
     isAdmin: false,
     Role: "member",
+    stories: [],
+    blockedUsers: [],
   },
 ];
 

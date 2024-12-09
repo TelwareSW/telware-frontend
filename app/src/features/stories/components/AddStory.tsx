@@ -5,11 +5,12 @@ import ImageEditor from "@components/ImageEditor";
 import Popup from "@components/Popup";
 import StoryPreview from "./StoryPreview";
 import toast from "react-hot-toast";
+import { MAX_STORY_SIZE } from "@constants";
 
-const StyledStoryCreator = styled.div`
+const StoryCreator = styled.div`
   cursor: pointer;
 `;
-const StyledImageInput = styled.input`
+const ImageInput = styled.input`
   position: absolute;
   bottom: 0;
   right: 2rem;
@@ -30,13 +31,27 @@ function AddStory() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file?.type.includes("tif") || file?.type.includes("tiff")) {
-      toast.error("TIF files are not supported");
-      return;
-    }
     if (file) {
+      const fileType = file.type;
+      if (fileType.includes("tif") || fileType.includes("tiff")) {
+        toast.error("TIF files are not supported");
+        return;
+      }
+
+      if (!fileType.includes("image") && !fileType.includes("video")) {
+        toast.error("Unsupported file type. Please upload an image or video.");
+        return;
+      }
+      if (file.size > MAX_STORY_SIZE) {
+        toast.error("File size too large. Please upload a file less than 5MB.");
+        return;
+      }
       setStory(file);
-      setIsImageEditorOpen(true);
+      if (fileType.includes("image")) {
+        setIsImageEditorOpen(true);
+      } else {
+        setIsPreviewOpened(true);
+      }
     }
   };
   const handleClose = () => {
@@ -67,7 +82,7 @@ function AddStory() {
 
   return (
     <>
-      <StyledStoryCreator onClick={handleAddStoryClicked}>
+      <StoryCreator onClick={handleAddStoryClicked}>
         <CircleIcon
           data-testid="add-story-icon"
           $icon="AddStory"
@@ -79,15 +94,15 @@ function AddStory() {
           $bgColor="var(--accent-color)"
           $opacity={0.95}
         />
-        <StyledImageInput
+        <ImageInput
           type="file"
           ref={fileInputRef}
-          accept="image/*"
+          accept="image/*,video/*"
           onChange={handleImageUpload}
           data-testid="story-upload-input"
           id="story-upload"
         />
-      </StyledStoryCreator>
+      </StoryCreator>
 
       {
         <Popup isOpen={isImageEditorOpen} onClose={handleImageEditorClose}>

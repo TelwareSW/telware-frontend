@@ -59,8 +59,6 @@ function ChatBody() {
     }
   }, [fetchNextPage, inView]);
 
-  console.log(data?.pages);
-
   //TODO: fix the ordering of pages and message within each page
   //TODO: fix new page scroll to the top most message
   return (
@@ -69,15 +67,8 @@ function ChatBody() {
         <div ref={ref}></div>
 
         {messages &&
-          messages.map((data, index) => {
-            return (
-              <Message
-                key={data._id}
-                index={index}
-                messagesLength={messages.length}
-                data={data}
-              />
-            );
+          messages.map((data) => {
+            return <Message key={data._id} data={data} />;
           })}
       </ScrollContainer>
     </>

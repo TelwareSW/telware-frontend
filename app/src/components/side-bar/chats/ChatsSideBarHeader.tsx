@@ -2,7 +2,7 @@ import styled from "styled-components";
 import SideBarToolsButton from "./SideBarToolsButton";
 import SearchBar from "./SearchBar";
 
-const StyledHeader = styled.header`
+const Header = styled.header`
   background: var(--color-background);
   display: flex;
   flex-direction: row;
@@ -15,10 +15,10 @@ const StyledHeader = styled.header`
 
 function ChatsSidebarHeader() {
   return (
-    <StyledHeader data-testid="chatlist-header">
+    <Header data-testid="chatlist-header">
       <SideBarToolsButton />
       <SearchBar />
-    </StyledHeader>
+    </Header>
   );
 }
 

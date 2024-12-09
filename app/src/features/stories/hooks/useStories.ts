@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getStories as getStoriesAPI } from "../services/getStories";
+import { getStories as getStoriesAPI } from "../services/apiGetStories";
 
 function useStroies() {
   const {

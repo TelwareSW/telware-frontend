@@ -20,7 +20,7 @@ const StyledToolTip = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
-const StyledButton = styled.div`
+const Button = styled.div`
   cursor: pointer;
   color: white;
   svg {
@@ -32,13 +32,11 @@ function StorySliderTooltip(props: StorySliderTooltipProps) {
   return (
     <StyledToolTip>
       {isPaused ? (
-        <StyledButton onClick={onPause}>{getIcon("Play")}</StyledButton>
+        <Button onClick={onPause}>{getIcon("Play")}</Button>
       ) : (
-        <StyledButton onClick={onPause}>{getIcon("Pause")}</StyledButton>
+        <Button onClick={onPause}>{getIcon("Pause")}</Button>
       )}
-      {isMine && (
-        <StyledButton onClick={onDelete}>{getIcon("Delete")}</StyledButton>
-      )}
+      {isMine && <Button onClick={onDelete}>{getIcon("Delete")}</Button>}
     </StyledToolTip>
   );
 }

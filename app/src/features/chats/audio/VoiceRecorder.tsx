@@ -15,7 +15,6 @@ type VoiceRecorderProps = {
   isRecording: RecordingStates;
   setIsRecording: Dispatch<SetStateAction<RecordingStates>>;
   setError: Dispatch<SetStateAction<string>>;
-  error: string;
   handleSendMessage: (data: string, file: string) => void;
 };
 
@@ -25,7 +24,6 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   isRecording,
   setIsRecording,
   setError,
-  error,
 }) => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
