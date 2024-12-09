@@ -12,6 +12,8 @@ interface CircleIconProps {
   $opacity?: number;
   onClick?: (e: Event, voiceNoteName?: string) => void;
   children?: React.ReactNode;
+  as?: React.ElementType;
+  type?: string;
 }
 
 const StyledIcon = styled.div<CircleIconProps>`
@@ -43,6 +45,14 @@ const StyledIcon = styled.div<CircleIconProps>`
     height: 100%;
     color: ${(props) => props.$color};
   }
+
+  ${(props) =>
+    props.as === "button" &&
+    css`
+      border: none;
+      outline: none;
+      cursor: pointer;
+    `};
 `;
 
 function CircleIcon({
@@ -56,6 +66,8 @@ function CircleIcon({
   $opacity = 0.9,
   onClick,
   children,
+  as,
+  type,
 }: CircleIconProps) {
   return (
     <StyledIcon
@@ -69,6 +81,8 @@ function CircleIcon({
         $color,
         $bgColor,
         $opacity,
+        as,
+        type,
       }}
     >
       {getIcon($icon)}

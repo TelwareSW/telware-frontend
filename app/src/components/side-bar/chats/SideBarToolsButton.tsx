@@ -69,7 +69,7 @@ function SettingsToolbar() {
                 updateSideBarView({
                   redirect: sideBarPages.CONTACTS,
                   data: undefined,
-                }),
+                })
               )
             }
           />
@@ -82,7 +82,7 @@ function SettingsToolbar() {
                 updateSideBarView({
                   redirect: sideBarPages.SETTINGS,
                   data: undefined,
-                }),
+                })
               )
             }
           />
