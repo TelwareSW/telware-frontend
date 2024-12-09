@@ -17,7 +17,7 @@ import MediaUploadComponent from "./media/MediaUploadComponent";
 import FilePreviewItem from "./media/FilePreviewItem";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { setShowCheckBox } from "@state/messages/chats";
-import { getChatByID } from "./helpers";
+import { getChatByID } from "./utils/helpers";
 import VoiceRecorder, { RecordingStates } from "./audio/VoiceRecorder";
 import RecordingView from "./audio/RecordingView";
 

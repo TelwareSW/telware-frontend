@@ -13,10 +13,12 @@ import { SideBarRowProps } from "./settings/side-bar-row/SideBarRow";
 import ProfileSettings from "@features/profile-settings/ProfileSettings";
 import ProfileInfo from "@features/profile-info/ProfileInfo";
 import ChatList from "@features/chats/ChatsList";
+import AddGroupMembers from "./groups/AddGroupMembers.js";
 
 import { useAppSelector } from "@hooks/useGlobalState";
 import BlockList from "@features/privacy-settings/BlockList";
 import Devices from "@features/devices/Devices";
+import NewGroup from "@features/groups/NewGroup.js";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -89,6 +91,16 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
       </SettingsSideBar>
     ),
     Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
+    AddMembers: () => (
+      <SettingsSideBar rows={[]}>
+        <AddGroupMembers />
+      </SettingsSideBar>
+    ),
+    NewGroup: () => (
+      <SettingsSideBar rows={[]}>
+        <NewGroup />
+      </SettingsSideBar>
+    ),
   };
 
 function Sidebar() {

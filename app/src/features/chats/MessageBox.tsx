@@ -3,7 +3,7 @@ import { RootState } from "@state/store";
 import styled from "styled-components";
 import { MessageInterface } from "types/messages";
 import { useParams } from "react-router-dom";
-import { getChatByID } from "./helpers";
+import { getChatByID } from "./utils/helpers";
 
 interface MessageBoxProps {
   messageId?: string | null;
@@ -52,7 +52,7 @@ const StyledMessageBox = styled.div`
 
 function getMessageById(
   messageId: string,
-  messages?: MessageInterface[],
+  messages?: MessageInterface[]
 ): MessageInterface | undefined {
   return messages
     ? messages.find((message) => message._id === messageId)
@@ -84,7 +84,7 @@ function MessageBox({ messageId }: MessageBoxProps) {
   }
 
   const activeMessage = useAppSelector(
-    (state: RootState) => state.activeMessage,
+    (state: RootState) => state.activeMessage
   );
 
   return (

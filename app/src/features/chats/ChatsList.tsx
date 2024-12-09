@@ -20,7 +20,10 @@ const ChatsList = () => {
 
   return (
     <ChatListContainer>
-      {chats?.map((chat) => <ChatItem chat={chat} key={chat._id} />)}
+      {chats
+        ?.slice()
+        .reverse()
+        .map((chat) => <ChatItem chat={chat} key={chat._id} />)}
     </ChatListContainer>
   );
 };

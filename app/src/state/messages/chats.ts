@@ -1,4 +1,4 @@
-import { getChatByID } from "@features/chats/helpers";
+import { getChatByID } from "@features/chats/utils/helpers";
 import { Chat, Member } from "@mocks/data/chats";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MessageInterface } from "types/messages";
@@ -14,6 +14,7 @@ interface DetailedChatInterface extends Chat {
     senderId: string;
     timestamp: string;
   };
+  name?: string;
 }
 
 interface ChatsState {
@@ -37,7 +38,7 @@ const chatsSlice = createSlice({
 
     addMessage: (
       state,
-      action: PayloadAction<{ chatId: string; message: MessageInterface }>,
+      action: PayloadAction<{ chatId: string; message: MessageInterface }>
     ) => {
       const { chatId, message } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -46,7 +47,7 @@ const chatsSlice = createSlice({
 
     deleteMessage: (
       state,
-      action: PayloadAction<{ messageId: string; chatId: string }>,
+      action: PayloadAction<{ messageId: string; chatId: string }>
     ) => {
       const { messageId, chatId } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -59,7 +60,7 @@ const chatsSlice = createSlice({
         chatId: string;
         messageId: string;
         content: string;
-      }>,
+      }>
     ) => {
       const { chatId, messageId, content } = action.payload;
 
@@ -74,7 +75,7 @@ const chatsSlice = createSlice({
 
     pinMessage: (
       state,
-      action: PayloadAction<{ messageId: string; chatId: string }>,
+      action: PayloadAction<{ messageId: string; chatId: string }>
     ) => {
       const { messageId, chatId } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -87,7 +88,7 @@ const chatsSlice = createSlice({
 
     unpinMessage: (
       state,
-      action: PayloadAction<{ messageId: string; chatId: string }>,
+      action: PayloadAction<{ messageId: string; chatId: string }>
     ) => {
       const { messageId, chatId } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -107,7 +108,7 @@ const chatsSlice = createSlice({
 
     setIsTyping: (
       state,
-      action: PayloadAction<{ chatId: string; isTyping: boolean }>,
+      action: PayloadAction<{ chatId: string; isTyping: boolean }>
     ) => {
       const { isTyping, chatId } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -118,7 +119,7 @@ const chatsSlice = createSlice({
 
     setShowCheckBox: (
       state,
-      action: PayloadAction<{ chatId: string; showCheckBox: boolean }>,
+      action: PayloadAction<{ chatId: string; showCheckBox: boolean }>
     ) => {
       const { chatId, showCheckBox } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -132,7 +133,7 @@ const chatsSlice = createSlice({
 
     SelectMessage: (
       state,
-      action: PayloadAction<{ chatId: string; id: string }>,
+      action: PayloadAction<{ chatId: string; id: string }>
     ) => {
       const { chatId, id } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -142,13 +143,13 @@ const chatsSlice = createSlice({
 
     removeSelectedMessage: (
       state,
-      action: PayloadAction<{ chatId: string; id: string }>,
+      action: PayloadAction<{ chatId: string; id: string }>
     ) => {
       const { chatId, id } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
       if (chat) {
         chat.selectedMessages = chat?.selectedMessages.filter(
-          (msgId) => msgId !== id,
+          (msgId) => msgId !== id
         );
       }
     },
@@ -158,7 +159,7 @@ const chatsSlice = createSlice({
       action: PayloadAction<{
         chatId: string;
         newMessages: MessageInterface[];
-      }>,
+      }>
     ) => {
       const { chatId, newMessages } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
@@ -169,7 +170,7 @@ const chatsSlice = createSlice({
 
     updateLastMessage: (
       state,
-      action: PayloadAction<{ chatId: string; lastMessage: MessageInterface }>,
+      action: PayloadAction<{ chatId: string; lastMessage: MessageInterface }>
     ) => {
       const { chatId, lastMessage } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });

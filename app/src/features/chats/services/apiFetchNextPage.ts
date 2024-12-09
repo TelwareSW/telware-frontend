@@ -7,8 +7,6 @@ async function apiFetchNextPage({
   pageParam?: number;
   chatId: string;
 }) {
-  console.log(chatId);
-  console.log(pageParam);
   const res = await fetch(
     `${API_URL}/chats/messages/${chatId}?page=${pageParam}`,
     {
@@ -26,8 +24,6 @@ async function apiFetchNextPage({
   if (data.status !== "success") {
     throw new Error(data.message);
   }
-
-  console.log(data);
 
   if (data.status !== "success") {
     throw new Error(data.message);

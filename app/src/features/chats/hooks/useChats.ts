@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllChatsApi } from "../services/apiGetChats";
 import { ChatDataType } from "@mocks/data/chats";
 import { ChatsState, setAllChats } from "@state/messages/chats";
-import { parseChatsToState } from "../helpers";
+import { parseChatsToState } from "../utils/helpers";
 import { useAppDispatch } from "@hooks/useGlobalState";
 import { useEffect } from "react";
 
