@@ -1,6 +1,12 @@
 import styled from "styled-components";
+
 import Avatar from "./Avatar";
 import Checkbox from "./Checkbox";
+
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+
+import type { UserType } from "@features/groups/hooks/useAllUsers";
+import { toggleSelectUser } from "@state/groups/selectedUsers";
 
 const UserRow = styled.div`
   display: flex;
@@ -12,6 +18,11 @@ const UserRow = styled.div`
     border-bottom: none;
     padding-bottom: 0;
     margin-bottom: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-background-secondary);
   }
 `;
 
@@ -29,23 +40,36 @@ const Status = styled.span`
   color: var(--color-text-secondary);
 `;
 
-export default function User({ user, selectedUsers, toggleSelectUser }) {
+type UserProps = {
+  user: UserType;
+  view: "display" | "update";
+};
+
+export default function User({ user, view }: UserProps) {
+  const { _id, photo, status, screenFirstName, screenLastName } = user;
+
+  const dispatch = useAppDispatch();
+  const selectedUsers = useAppSelector((state) => state.selectedUsers);
+
+  function handleToggleMember() {
+    if (view === "update") dispatch(toggleSelectUser(user));
+  }
+
   return (
-    <UserRow key={user._id}>
-      <Checkbox
-        checked={selectedUsers.includes(user._id)}
-        onChange={() => toggleSelectUser(user._id)}
-      />
-      <Avatar
-        name={user.username}
-        src={user.photo || "https://via.placeholder.com/40"}
-        alt={user.username}
-      />
+    <UserRow onClick={handleToggleMember} key={_id}>
+      {view === "update" && (
+        <Checkbox
+          checked={selectedUsers.some(
+            (selectedUser) => selectedUser._id === _id
+          )}
+          onChange={handleToggleMember}
+        />
+      )}
+
+      <Avatar name={screenFirstName} image={photo} />
       <UserDetails>
-        <Username>{user.username}</Username>
-        <Status>
-          {user.status === "offline" ? "Last seen recently" : "Online now"}
-        </Status>
+        <Username>{`${screenFirstName} ${screenLastName}`}</Username>
+        <Status>{status}</Status>
       </UserDetails>
     </UserRow>
   );

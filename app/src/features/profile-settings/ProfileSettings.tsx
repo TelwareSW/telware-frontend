@@ -417,3 +417,4 @@ function ProfileSettings() {
 }
 
 export default ProfileSettings;
+export { SubmitButton };

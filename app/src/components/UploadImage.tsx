@@ -62,13 +62,11 @@ const ProfilePictureSection = styled.div`
 `;
 
 interface UploadImgProps {
-  setPhotoChanged: (changed: boolean) => void;
   setSelectedImageFile: (file: File | null) => void;
   selectedImageFile?: File | null;
 }
 
 export default function UploadImage({
-  setPhotoChanged,
   setSelectedImageFile,
   selectedImageFile,
 }: UploadImgProps) {
@@ -76,7 +74,6 @@ export default function UploadImage({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files) {
-      setPhotoChanged(true);
       const file = event.target.files[0];
       setSelectedImageFile(file);
     }

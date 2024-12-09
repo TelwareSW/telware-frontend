@@ -8,7 +8,6 @@ export function useUser() {
   });
 
   const user = data?.user;
-  console.log(user);
 
   return { user, isPending };
 }

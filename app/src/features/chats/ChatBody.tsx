@@ -48,12 +48,11 @@ function ChatBody() {
       chatID: chatId,
     })?.messages;
 
-  const { fetchNextPage, data } = useFetchNextPage();
+  const { fetchNextPage } = useFetchNextPage();
 
   const { inView, ref } = useInView({ threshold: 0.5 });
 
   useEffect(() => {
-    console.log(inView);
     if (inView) {
       fetchNextPage();
     }

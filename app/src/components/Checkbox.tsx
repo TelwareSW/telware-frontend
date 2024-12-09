@@ -10,9 +10,10 @@ const CheckboxWrapper = styled.label`
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    width: 1.3em;
-    height: 1.3rem;
-    margin-right: 0.5rem;
+    width: 1.2em;
+    height: 1.2rem;
+    
+    margin-right: 1.5rem;
 
     border: 2px solid var(--color-text-secondary);
     border-radius: 4px;
@@ -51,10 +52,12 @@ const CheckboxWrapper = styled.label`
   }
 `;
 
-function Checkbox() {
+type CheckboxProps = React.InputHTMLAttributes<HTMLInputElement>;
+
+function Checkbox(props: CheckboxProps) {
   return (
     <CheckboxWrapper>
-      <input type="checkbox" />
+      <input type="checkbox" {...props} />
     </CheckboxWrapper>
   );
 }
