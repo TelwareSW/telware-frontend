@@ -40,16 +40,9 @@ function GroupInfoForm() {
   const { createGroupOrChannel } = useSocket();
 
   const onSubmit = (data: NewGroupForm) => {
-    const newGroupData = {
-      name: data.groupName,
-      // photo: selectedImageFile || null,
-      type: "group",
-      members: members.map((member) => member._id),
-    };
-
-    console.log("New Group Data:", newGroupData);
     dispatch(updateSideBarView({ redirect: sideBarPages.CHATS }));
     dispatch(clearSelectedUsers());
+
     createGroupOrChannel({
       name: data.groupName,
       type: "group",
