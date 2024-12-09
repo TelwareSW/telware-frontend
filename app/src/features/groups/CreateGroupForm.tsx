@@ -13,6 +13,7 @@ import { sideBarPages } from "types/sideBar";
 
 import { useAppSelector } from "@hooks/useGlobalState";
 import { clearSelectedUsers } from "@state/groups/selectedUsers";
+import { useSocket } from "@hooks/useSocket";
 
 const Form = styled.form`
   padding: 1rem;
@@ -36,17 +37,17 @@ function GroupInfoForm() {
   const groupName = watch("groupName");
   const dispatch = useDispatch();
   const members = useAppSelector((state) => state.selectedUsers);
+  const { createGroupOrChannel } = useSocket();
 
   const onSubmit = (data: NewGroupForm) => {
-    const newGroupData = {
-      groupName: data.groupName,
-      photo: selectedImageFile || null,
-      members: members.map((member) => member._id),
-    };
-
-    console.log("New Group Data:", newGroupData);
     dispatch(updateSideBarView({ redirect: sideBarPages.CHATS }));
     dispatch(clearSelectedUsers());
+
+    createGroupOrChannel({
+      name: data.groupName,
+      type: "group",
+      members: members.map((member) => member._id),
+    });
   };
 
   return (
@@ -58,7 +59,7 @@ function GroupInfoForm() {
 
       <FloatingLabelInput<NewGroupForm>
         id="groupName"
-        label="Group Name"
+        label="Group Name (required)"
         register={register}
         watch={watch}
         data-testid="group-name"

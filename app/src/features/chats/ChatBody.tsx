@@ -4,7 +4,7 @@ import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
 import { useEffect } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
-import { getChatByID } from "./helpers";
+import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
 

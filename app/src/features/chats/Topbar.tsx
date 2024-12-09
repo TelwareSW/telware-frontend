@@ -8,7 +8,7 @@ import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
-import { getChatByID } from "./helpers";
+import { getChatByID } from "./utils/helpers";
 import { useChatMembers } from "./hooks/useChatMember";
 import { getElapsedTime } from "@utils/helpers";
 
@@ -94,11 +94,17 @@ function Topbar() {
   let name;
   let image;
   let lastSeen;
-  if (chat) {
-    name = membersData[0]?.screenFirstName || membersData[0]?.username;
 
-    lastSeen = chat?.lastMessage?.timestamp;
-    image = membersData[0]?.photo;
+  if (chat) {
+    if (chat?.type === "group" || chat?.type === "channel") {
+      console.log(chat?.name);
+      name = chat?.name;
+    } else {
+      name = membersData[0]?.screenFirstName || membersData[0]?.username;
+
+      lastSeen = chat?.lastMessage?.timestamp;
+      image = membersData[0]?.photo;
+    }
   }
 
   if (!chat) return null;

@@ -59,7 +59,7 @@ function SettingsSideBarHeader() {
           />
           <CircleIcon
             data-testid="logout-icon"
-            onClick={() => logout}
+            onClick={() => logout()}
             $icon="Logout"
             $padding={0.2}
             $size={1.8}
