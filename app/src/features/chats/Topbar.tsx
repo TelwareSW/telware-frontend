@@ -12,16 +12,14 @@ import { getChatByID } from "./utils/helpers";
 import { useChatMembers } from "./hooks/useChatMember";
 import { getElapsedTime } from "@utils/helpers";
 import { useSocket } from "@hooks/useSocket";
-
-const Container = styled.div`
+import CallLayout from "@features/calls/CallLayout";
+const Container = styled.div<{ hasMargin?: boolean }>`
   position: absolute;
   top: 0;
-
   z-index: 2;
 
   height: 3.5rem;
   width: 100%;
-
   background-color: var(--color-background);
 
   display: flex;
@@ -29,6 +27,8 @@ const Container = styled.div`
   align-items: center;
 
   padding-inline: 1rem;
+
+  margin: ${({ hasMargin }) => (hasMargin ? "1rem 0" : "0")};
 `;
 
 const Info = styled.div`
@@ -87,6 +87,7 @@ function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const chats = useAppSelector((state) => state.chats.chats);
   const [isSearching, setIsSearching] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const { startConnection } = useSocket();
   const chat = chatId
     ? getChatByID({
@@ -117,39 +118,53 @@ function Topbar() {
   const toggleSearch = () => {
     setIsSearching(!isSearching);
   };
-
+  const isCall = true;
   return (
-    <Container>
-      <Avatar data-testid="chat-avatar" image={image} name={name?.charAt(0)} />
-      {isSearching ? (
-        <SearchBar onClose={toggleSearch} />
-      ) : (
-        <>
-          <Info data-testid="chat-info">
-            <Content>
-              <Name data-testid="chat-name">{name}</Name>
-              {lastSeen && (
-                <LastSeen data-testid="chat-last-seen">
-                  last seen {getElapsedTime(lastSeen)}
-                </LastSeen>
-              )}
-            </Content>
-          </Info>
-          <PinnedMessages />
-          <Icons>
-            <InvisibleButton onClick={startConnection}>
-              <Icon>{getIcon("Call")}</Icon>
-            </InvisibleButton>
-
-            <IconButton onClick={toggleSearch} data-testid="search-button">
-              {getIcon("Search")}
-            </IconButton>
-            <Icon>{getIcon("More")}</Icon>
-          </Icons>
-        </>
+    <>
+      {isCall && (
+        <CallLayout
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          name={name}
+          image={image}
+        />
       )}
-      {isSearching && <IconButton>{getIcon("CalendarToday")}</IconButton>}
-    </Container>
+      <Container hasMargin={isCollapsed}>
+        <Avatar
+          data-testid="chat-avatar"
+          image={image}
+          name={name?.charAt(0)}
+        />
+        {isSearching ? (
+          <SearchBar onClose={toggleSearch} />
+        ) : (
+          <>
+            <Info data-testid="chat-info">
+              <Content>
+                <Name data-testid="chat-name">{name}</Name>
+                {lastSeen && (
+                  <LastSeen data-testid="chat-last-seen">
+                    last seen {getElapsedTime(lastSeen)}
+                  </LastSeen>
+                )}
+              </Content>
+            </Info>
+            <PinnedMessages />
+            <Icons>
+              <InvisibleButton onClick={startConnection}>
+                <Icon>{getIcon("Call")}</Icon>
+              </InvisibleButton>
+
+              <IconButton onClick={toggleSearch} data-testid="search-button">
+                {getIcon("Search")}
+              </IconButton>
+              <Icon>{getIcon("More")}</Icon>
+            </Icons>
+          </>
+        )}
+        {isSearching && <IconButton>{getIcon("CalendarToday")}</IconButton>}
+      </Container>
+    </>
   );
 }
 

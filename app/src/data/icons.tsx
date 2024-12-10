@@ -57,6 +57,8 @@ enum icons {
   Info,
   Phone,
   ArrowForward,
+  Mute,
+  EndCall,
 }
 
 type iconStrings = keyof typeof icons;
@@ -390,6 +392,14 @@ const iconImports: Record<iconStrings, IconConfig> = {
     importFn: () => import("@mui/icons-material/ArrowForward"),
     defaultProps: { fontSize: "large" },
   },
+  Mute: {
+    importFn: () => import("@mui/icons-material/Mic"),
+    defaultProps: { fontSize: "large" },
+  },
+  EndCall: {
+    importFn: () => import("@mui/icons-material/CallEnd"),
+    defaultProps: { fontSize: "large" },
+  },
 };
 
 function getIcon(
@@ -398,7 +408,7 @@ function getIcon(
     sx?: SxProps;
     fontSize?: "small" | "medium" | "large";
     style?: React.CSSProperties;
-  }
+  },
 ) {
   if (!iconName) return undefined;
 

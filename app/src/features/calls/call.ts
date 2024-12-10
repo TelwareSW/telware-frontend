@@ -1,3 +1,4 @@
+export let callState = "idle";
 const stunServers = {
   iceServers: [
     { urls: ["stun:stun.l.google.com:19302", "stun:stun.l.google.com:5349"] },
@@ -12,10 +13,11 @@ async function getVoiceInput(): Promise<MediaStream | null> {
     return null;
   }
 }
-let peerConnection: RTCPeerConnection;
+export let peerConnection: RTCPeerConnection;
 let localStream: MediaStream | null;
 let RemoteStream: MediaStream;
 export const connectToPeer = async () => {
+  callState = "connecting";
   peerConnection = new RTCPeerConnection(stunServers);
   if (!localStream) localStream = await getVoiceInput();
   console.log(localStream);
@@ -53,6 +55,7 @@ export const createAnswer = async (offer: string) => {
   return JSON.stringify(answer);
 };
 export const startCall = async (answer: string) => {
+  callState = "ongoing"
   const offer_parsed = JSON.parse(answer);
   await peerConnection.setRemoteDescription(offer_parsed);
   //start call
