@@ -1,9 +1,9 @@
 import { RootState } from "@state/store";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { SEARCH_TABS } from "../data/tabs-components-map";
+import { setSelectedTab } from "@state/messages/global-search";
 
 const TabedSearchContainer = styled(motion.div)`
   width: 100%;
@@ -55,8 +55,10 @@ const TabContent = styled(motion.div)`
 `;
 
 const TabedSearch: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
-  const { searchTerm } = useSelector((state: RootState) => state.globalSearch);
+  const dispatch = useDispatch();
+  const { searchTerm, selectedTab } = useSelector(
+    (state: RootState) => state.globalSearch,
+  );
 
   const isSearching = searchTerm.length > 0;
 
@@ -72,14 +74,14 @@ const TabedSearch: React.FC = () => {
         >
           <LayoutGroup>
             <TabListWrapper>
-              {SEARCH_TABS.map((tab, index) => (
+              {SEARCH_TABS.map((tab) => (
                 <TabButton
                   key={tab.title}
-                  onClick={() => setSelectedTab(index)}
-                  $active={selectedTab === index}
+                  onClick={() => dispatch(setSelectedTab(tab.title))}
+                  $active={selectedTab === tab.title}
                 >
                   {tab.title}
-                  {selectedTab === index && (
+                  {selectedTab === tab.title && (
                     <TabUnderline
                       layoutId="underline"
                       transition={{
@@ -100,7 +102,9 @@ const TabedSearch: React.FC = () => {
                 exit={{ opacity: 0 }}
                 transition={{ type: "tween", duration: 0.2 }}
               >
-                {SEARCH_TABS[selectedTab].component()}
+                {SEARCH_TABS.find(
+                  (tab) => tab.title === selectedTab,
+                )?.component()}
               </TabContent>
             </AnimatePresence>
           </LayoutGroup>

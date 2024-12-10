@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface SearchState {
   searchTerm: string;
+  selectedTab: string;
 }
 
 const initialState: SearchState = {
   searchTerm: "",
+  selectedTab: "Chats",
 };
 
 const globalSearchSlice = createSlice({
@@ -15,8 +17,11 @@ const globalSearchSlice = createSlice({
     setSearchTerm: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
     },
+    setSelectedTab: (state, action: PayloadAction<string>) => {
+      state.selectedTab = action.payload;
+    },
   },
 });
 
-export const { setSearchTerm } = globalSearchSlice.actions;
+export const { setSearchTerm, setSelectedTab } = globalSearchSlice.actions;
 export default globalSearchSlice.reducer;
