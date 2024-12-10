@@ -95,7 +95,9 @@ function Topbar() {
   let image;
   let lastSeen;
   if (chat) {
-    name = membersData[0]?.screenFirstName || membersData[0]?.username;
+    name =
+      membersData[0]?.screenFirstName + " " + membersData[0]?.screenLastName ||
+      membersData[0]?.username;
 
     lastSeen = chat?.lastMessage?.timestamp;
     image = membersData[0]?.photo;

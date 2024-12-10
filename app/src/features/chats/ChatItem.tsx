@@ -64,7 +64,9 @@ function ChatItem({
 }: ChatItemProps) {
   const membersData = useChatMembers(members);
 
-  const name = membersData[0]?.screenFirstName || membersData[0]?.username;
+  const name =
+    membersData[0]?.screenFirstName + " " + membersData[0]?.screenLastName ||
+    membersData[0]?.username;
   const image = membersData[0]?.photo;
   const navigate = useNavigate();
 
