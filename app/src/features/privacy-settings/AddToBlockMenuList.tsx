@@ -3,8 +3,6 @@ import BlockItem, { BlockedUserProps } from "./BlockItem";
 import { useBlock } from "./hooks/useBlock";
 import { ScrollContainer } from "styles/GlobalStyles";
 import { useAppSelector } from "@hooks/useGlobalState";
-import { DetailedChatInterface } from "@state/messages/chats";
-import { useChatMembers } from "@features/chats/hooks/useChatMember";
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
@@ -50,52 +48,28 @@ const StyledP = styled.p`
   justify-self: center;
   align-self: center;
 `;
-function filterChats(
-  blockList: BlockedUserProps[],
-  chats: DetailedChatInterface[],
-) {
-  const blockIds = blockList
-    ? new Set(blockList.map((val) => val.id))
-    : new Set();
-  const filteredChats = chats?.filter((item) => !blockIds.has(item._id));
-
-  return filteredChats;
-}
 
 function AddToBlockMenuList({ setIsMenuOpened }: any) {
   const { addToBlockList } = useBlock();
 
-  const { blockList } = useBlock();
-  const chats = useAppSelector((state) => state.chats.chats);
+  const members = useAppSelector((state) => state.chats.members);
 
-  const filteredChats = filterChats(
-    blockList as BlockedUserProps[],
-    chats as DetailedChatInterface[],
-  );
-
-  function handleClick(item: DetailedChatInterface) {
+  function handleClick(item: BlockedUserProps) {
     setIsMenuOpened(false);
-    addToBlockList({ id: item._id });
+    addToBlockList({ id: item.id });
   }
 
   return (
     <StyledList {...menuStyles}>
       <ScrollContainer>
-        {filteredChats.length ? (
-          filteredChats.map((item) => {
-            const membersData = useChatMembers(item.members);
-
+        {members.length ? (
+          members.map((member) => {
             const data: BlockedUserProps = {
-              id: item._id,
-              name:
-                membersData[0].screenFirstName +
-                " " +
-                membersData[0].screenLastName,
-              username: membersData[0].username,
+              id: member._id,
             };
             return (
               <StylingWrapper
-                onClick={() => handleClick(item)}
+                onClick={() => handleClick(data)}
                 key={data.id}
                 data-testid={`block-user-${data.id}`}
               >

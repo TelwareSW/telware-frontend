@@ -5,6 +5,7 @@ import { StyledList, StyledListProps } from "./AddToBlockMenuList";
 import { getIcon } from "@data/icons";
 import { useState } from "react";
 import { useBlock } from "./hooks/useBlock";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const StyledSideBarRow = styled.div`
   width: 100%;
@@ -66,14 +67,17 @@ const HoverMask = styled.div`
 
 interface BlockedUserInterface {
   id: string;
-  name: string;
-  username: string;
 }
 
-function BlockItem({ id, name, username }: BlockedUserInterface) {
+function BlockItem({ id }: BlockedUserInterface) {
   const [isBlockButtonEnabled, setIsBlockButtonEnabled] = useState(false);
-
   const { removeFromBlockList } = useBlock();
+
+  const members = useAppSelector((state) => state.chats.members);
+  const { screenFirstName, screenLastName, username } =
+    members.find((member) => member._id === id) || {};
+
+  const name = screenFirstName + " " + screenLastName || "";
 
   function handleRemove(id: string) {
     removeFromBlockList({ id: id.toString() });

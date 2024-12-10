@@ -22,6 +22,13 @@ const PlaceHeader = styled.div`
   padding-bottom: 0.5rem;
 `;
 
+export interface BlockListInterface {
+  id: string;
+  username: string;
+  email: string;
+  _id: string;
+}
+
 function BlockList() {
   const { props } = useAppSelector((state) => state.sideBarData);
 
@@ -39,8 +46,8 @@ function BlockList() {
         )}
       </PlaceHeader>
 
-      {blockList?.map((item) => {
-        return <BlockItem {...item} key={item.id} />;
+      {blockList?.map((item: BlockListInterface) => {
+        return <BlockItem id={item.id} key={item.id} />;
       })}
 
       <CircleIcon
