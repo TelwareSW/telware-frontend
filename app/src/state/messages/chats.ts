@@ -15,6 +15,7 @@ interface DetailedChatInterface extends Chat {
     senderId: string;
     timestamp: string;
   };
+  isBlocked?: boolean;
 }
 
 interface ChatsState {
@@ -41,26 +42,22 @@ const chatsSlice = createSlice({
     ) => {
       const { blockList, userId, chatsData } = action.payload;
       const incomminingChats = chatsData.chats;
-      const unBlockedChats = incomminingChats
+      incomminingChats
         .map((chat) => {
           if (chat.type === "private") {
             const members = chat.members;
-            console.log("members", members);
-            console.log(userId);
             const otherUser = members.filter(
               (member) => member._id !== userId
             )[0];
 
-            console.log("otherUser", otherUser);
-            console.log(blockList);
             if (blockList.find((user: any) => user.id === otherUser._id)) {
-              return undefined;
+              chat.isBlocked = true;
             }
           }
           return chat;
         })
         .filter((chat) => chat !== undefined) as DetailedChatInterface[];
-      state.chats = unBlockedChats;
+      state.chats = incomminingChats;
       state.members = action.payload.chatsData.members;
     },
 
@@ -206,6 +203,55 @@ const chatsSlice = createSlice({
         chat.lastMessage = lastMessage;
       }
     },
+
+    setChatIsBlocked: (
+      state,
+      action: PayloadAction<{
+        chatId: string;
+        isBlocked: boolean;
+        userId: string;
+      }>
+    ) => {
+      const { chatId, isBlocked, userId } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+
+      console.log(chat);
+      if (chat) chat.isBlocked = isBlocked;
+
+      const members = chat?.members;
+      const otherUser = members?.filter((member) => member._id !== userId)[0];
+
+      const user = state.members.find(
+        (member) => member._id === otherUser?._id
+      );
+
+      if (user) user.isBlocked = isBlocked;
+    },
+
+    setMemberIsBlocked: (
+      state,
+      action: PayloadAction<{
+        memberId: string;
+        isBlocked: boolean;
+        userId: string;
+      }>
+    ) => {
+      const { memberId, isBlocked, userId } = action.payload;
+      const member = state.members.find((member) => member._id === memberId);
+      if (member) member.isBlocked = isBlocked;
+
+      state.chats.forEach((chat) => {
+        if (chat.type === "private") {
+          const otherUser = chat.members.find(
+            (member) => member._id !== userId
+          );
+
+          if (otherUser?._id === memberId) {
+            chat.isBlocked = isBlocked;
+          }
+        }
+      });
+    },
   },
 });
 
@@ -223,6 +269,8 @@ export const {
   removeSelectedMessage,
   mergeMessages,
   updateLastMessage,
+  setChatIsBlocked,
+  setMemberIsBlocked,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 export type { DetailedChatInterface, ChatsState };

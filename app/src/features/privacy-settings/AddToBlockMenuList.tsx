@@ -2,7 +2,8 @@ import styled from "styled-components";
 import BlockItem, { BlockedUserProps } from "./BlockItem";
 import { useBlock } from "./hooks/useBlock";
 import { ScrollContainer } from "styles/GlobalStyles";
-import { useAppSelector } from "@hooks/useGlobalState";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { setMemberIsBlocked } from "@state/messages/chats";
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
@@ -53,10 +54,16 @@ function AddToBlockMenuList({ setIsMenuOpened }: any) {
   const { addToBlockList } = useBlock();
 
   const members = useAppSelector((state) => state.chats.members);
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+
+  const dispatch = useAppDispatch();
 
   function handleClick(item: BlockedUserProps) {
     setIsMenuOpened(false);
     addToBlockList({ id: item.id });
+    dispatch(
+      setMemberIsBlocked({ memberId: item.id, isBlocked: true, userId })
+    );
   }
 
   return (
