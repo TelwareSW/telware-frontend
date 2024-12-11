@@ -1,8 +1,8 @@
 import styled, { keyframes } from "styled-components";
-import { RecordingStates } from "./VoiceRecorder";
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
 import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
+import { ChatInputContext } from "../ChatBox";
 
 const blinkAnimation = keyframes`
   50% {
@@ -39,18 +39,14 @@ const InvisibleButton = styled.button`
   display: inline-block;
   cursor: pointer;
 `;
-type RecordingViewProps = {
-  isRecording: RecordingStates;
-  setIsRecording: Dispatch<SetStateAction<RecordingStates>>;
-};
-//TODO: add voice note wave form :)
-export default function RecordingView({
-  isRecording,
-  setIsRecording,
-}: RecordingViewProps) {
+
+export default function RecordingView() {
+  const { isRecording, setIsRecording } = useContext(ChatInputContext);
+
   const handleCanelReecord = () => {
     setIsRecording("idle");
   };
+
   return (
     <>
       {isRecording == "recording" && (
