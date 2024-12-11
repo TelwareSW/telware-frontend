@@ -71,8 +71,12 @@ const chatsSlice = createSlice({
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
 
       if (chat?.type === "private" && chat?.isBlocked) return;
+      const { _id, content, senderId, timestamp } = message;
 
-      chat?.messages.push(message);
+      if (chat) {
+        chat.lastMessage = { _id, content, senderId, timestamp };
+        chat.messages.push(message);
+      }
     },
 
     deleteMessage: (

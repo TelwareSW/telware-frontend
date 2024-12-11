@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ChatItem from "./ChatItem";
 import { useChats } from "./hooks/useChats";
-import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const ChatListContainer = styled.ul`
   display: flex;
