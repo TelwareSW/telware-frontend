@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import ChatItem from "./ChatItem";
 import { useChats } from "./hooks/useChats";
-import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const ChatListContainer = styled.ul`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   max-width: 600px;
   margin: auto;
   background-color: var(--color-background);
+  overflow-y: scroll;
 `;
 
 const ChatsList = () => {

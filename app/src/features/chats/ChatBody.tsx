@@ -7,6 +7,7 @@ import { useFetchNextPage } from "./hooks/useFetchNextPage";
 import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
+import MessageProvider from "./contexts/MessageProvider";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -70,8 +71,15 @@ function ChatBody() {
   return (
     <ScrollContainer ref={scrollContainerRef}>
       <div ref={ref}></div>
+
       {messages &&
-        messages.map((data) => <Message key={data._id} data={data} />)}
+        messages.map((data) => {
+          return (
+            <MessageProvider data={data}>
+              <Message key={data._id} />
+            </MessageProvider>
+          );
+        })}
     </ScrollContainer>
   );
 }
