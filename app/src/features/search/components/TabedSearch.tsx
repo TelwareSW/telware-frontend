@@ -55,7 +55,7 @@ const TabUnderline = styled(motion.div)`
 
 const TabContent = styled(motion.div)`
   overflow-y: scroll;
-  height: calc(100% - 48px);
+  height: calc(100% - 96px);
 `;
 
 const TabedSearch: React.FC = () => {
