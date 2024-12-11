@@ -1,9 +1,7 @@
 import { API_URL } from "@constants";
 
-import { BlockedUserProps } from "../BlockItem";
-
 async function getBlockList() {
-  const response = await fetch(`${API_URL}/users/blocked`, {
+  const response = await fetch(`${API_URL}/users/block`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -14,7 +12,7 @@ async function getBlockList() {
   const data = await response.json();
 
   if (!response.ok) throw new Error(data.message);
-  return data.users as BlockedUserProps[];
+  return data.data.users;
 }
 
 export default getBlockList;

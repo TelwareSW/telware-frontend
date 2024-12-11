@@ -2,8 +2,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
-import { DetailedChatInterface } from "@state/messages/chats";
+import {
+  DetailedChatInterface,
+  setName,
+  setPhoto,
+} from "@state/messages/chats";
 import { useChatMembers } from "./hooks/useChatMember";
+import { useAppDispatch } from "@hooks/useGlobalState";
 
 const Container = styled.li<{ $active?: boolean }>`
   display: flex;
@@ -59,12 +64,9 @@ type ChatItemProps = {
 };
 
 function ChatItem({
-  chat: { _id, members, type, lastMessage, name },
+  chat: { _id, type, lastMessage, name, photo, members },
   onClick,
 }: ChatItemProps) {
-  const membersData = useChatMembers(members);
-
-  const image = membersData[0]?.photo;
   const navigate = useNavigate();
 
   const timestamp = lastMessage?.timestamp || "No messages";
@@ -76,14 +78,25 @@ function ChatItem({
     navigate(`/${_id}`);
   };
 
-  function getChatName() {
-    let chatName;
-    if (type === "group" || type === "channel") {
-      chatName = name;
-    } else {
-      chatName = membersData[0]?.screenFirstName || membersData[0]?.username;
-    }
-    return chatName;
+  const dispatch = useAppDispatch();
+
+  if (type === "private") {
+    const memberData = useChatMembers(members)[0];
+    dispatch(
+      setName({
+        chatId: _id,
+        name:
+          memberData?.screenFirstName + " " + memberData?.screenLastName ||
+          memberData?.username,
+      })
+    );
+
+    dispatch(
+      setPhoto({
+        chatId: _id,
+        photo: memberData?.photo,
+      })
+    );
   }
 
   return (
@@ -93,10 +106,10 @@ function ChatItem({
       onClick={onClick ? onClick : handleOpenChat}
       key={_id}
     >
-      <Avatar data-testid="chat-avatar" image={image} name={getChatName()} />
+      <Avatar data-testid="chat-avatar" image={photo} name={name} />
       <ChatContent>
         <ChatHeader>
-          <Name data-testid="chat-name">{getChatName()}</Name>
+          <Name data-testid="chat-name">{name}</Name>
           <Timestamp data-testid="chat-timestamp">
             {new Date(timestamp).toLocaleTimeString("en-US", {
               hour: "2-digit",
