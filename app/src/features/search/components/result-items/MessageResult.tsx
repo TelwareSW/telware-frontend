@@ -59,6 +59,11 @@ const Highlight = styled.span`
   border-radius: 2px;
 `;
 
+const LinkPreview = styled.a`
+  font-size: 0.875rem;
+  color: var(--accent-color);
+`;
+
 interface MessageResultProps {
   title: string;
   message: string;
@@ -66,6 +71,7 @@ interface MessageResultProps {
   searchTerm?: string;
   image?: string;
   media?: string;
+  link?: string;
 }
 
 const MessageResult: React.FC<MessageResultProps> = ({
@@ -75,6 +81,7 @@ const MessageResult: React.FC<MessageResultProps> = ({
   searchTerm,
   image,
   media,
+  link,
 }) => {
   const highlight = (text: string) => {
     if (!searchTerm) return text;
@@ -110,6 +117,11 @@ const MessageResult: React.FC<MessageResultProps> = ({
           {media && <MediaPreview src={media} alt={title} />}
           {highlight(message)}
         </Message>
+        {link && (
+          <LinkPreview href={link} target="_blank" rel="noreferrer">
+            {link}
+          </LinkPreview>
+        )}
       </ContentWrapper>
     </ItemWrapper>
   );

@@ -392,7 +392,7 @@ function getIcon(
     sx?: SxProps;
     fontSize?: "small" | "medium" | "large";
     style?: React.CSSProperties;
-  }
+  },
 ) {
   if (!iconName) return undefined;
 
