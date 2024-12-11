@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ChatItem from "./ChatItem";
 import { useChats } from "./hooks/useChats";
-import { useAppSelector } from "@hooks/useGlobalState";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 
 const ChatListContainer = styled.ul`
   display: flex;
@@ -20,7 +20,12 @@ const ChatsList = () => {
 
   return (
     <ChatListContainer>
-      {chats?.map((chat) => <ChatItem chat={chat} key={chat._id} />)}
+      {chats
+        ?.slice()
+        .reverse()
+        .map((chat) => {
+          return <ChatItem chat={chat} key={chat._id} />;
+        })}
     </ChatListContainer>
   );
 };

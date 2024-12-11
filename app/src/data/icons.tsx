@@ -56,6 +56,7 @@ enum icons {
   Email,
   Info,
   Phone,
+  ArrowForward,
 }
 
 type iconStrings = keyof typeof icons;
@@ -382,6 +383,11 @@ const iconImports: Record<iconStrings, IconConfig> = {
   },
   Phone: {
     importFn: () => import("@mui/icons-material/Phone"),
+    defaultProps: { fontSize: "large" },
+  },
+
+  ArrowForward: {
+    importFn: () => import("@mui/icons-material/ArrowForward"),
     defaultProps: { fontSize: "large" },
   },
 };

@@ -6,11 +6,13 @@ import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
-import { useAppSelector } from "@hooks/useGlobalState";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
-import { getChatByID } from "./helpers";
+import { getChatByID } from "./utils/helpers";
 import { useChatMembers } from "./hooks/useChatMember";
 import { getElapsedTime } from "@utils/helpers";
+import { useBlock } from "@features/privacy-settings/hooks/useBlock";
+import { setChatIsBlocked } from "@state/messages/chats";
 
 const Container = styled.div`
   position: absolute;
@@ -76,29 +78,42 @@ const IconButton = styled.button`
   justify-content: center;
 `;
 
+const StyledButton = styled.button`
+  background: linear-gradient(
+    to left,
+    var(--color-background-own-3),
+    var(--color-background-own-4)
+  );
+
+  border: none;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  color: var(--color-text);
+  margin-right: 1rem;
+
+  color: var(--color-background);
+`;
+
 //TODO: refactor
 function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const chats = useAppSelector((state) => state.chats.chats);
+  const { removeFromBlockList } = useBlock();
+  const dispatch = useAppDispatch();
   const [isSearching, setIsSearching] = useState(false);
-
-  const chat = chatId
-    ? getChatByID({
-        chatID: chatId,
-        chats: chats,
-      })
-    : undefined;
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+  const chat = getChatByID({
+    chatID: chatId!,
+    chats: chats,
+  });
 
   const membersData = useChatMembers(chat?.members);
 
-  let name;
-  let image;
   let lastSeen;
-  if (chat) {
-    name = membersData[0]?.screenFirstName || membersData[0]?.username;
 
+  if (chat) {
     lastSeen = chat?.lastMessage?.timestamp;
-    image = membersData[0]?.photo;
   }
 
   if (!chat) return null;
@@ -107,16 +122,31 @@ function Topbar() {
     setIsSearching(!isSearching);
   };
 
+  async function handleRemoveFromBlock() {
+    await removeFromBlockList({ id: membersData[0]._id });
+    dispatch(
+      setChatIsBlocked({
+        chatId: chatId!,
+        isBlocked: false,
+        userId: userId,
+      })
+    );
+  }
+
   return (
     <Container>
-      <Avatar data-testid="chat-avatar" image={image} name={name?.charAt(0)} />
+      <Avatar
+        data-testid="chat-avatar"
+        image={chat.photo}
+        name={chat.name?.charAt(0)}
+      />
       {isSearching ? (
         <SearchBar onClose={toggleSearch} />
       ) : (
         <>
           <Info data-testid="chat-info">
             <Content>
-              <Name data-testid="chat-name">{name}</Name>
+              <Name data-testid="chat-name">{chat.name}</Name>
               {lastSeen && (
                 <LastSeen data-testid="chat-last-seen">
                   last seen {getElapsedTime(lastSeen)}
@@ -125,6 +155,14 @@ function Topbar() {
             </Content>
           </Info>
           <PinnedMessages />
+          {chat.isBlocked && (
+            <StyledButton
+              onClick={handleRemoveFromBlock}
+              data-testid="unblock-button"
+            >
+              Unblock
+            </StyledButton>
+          )}
           <Icons>
             <Icon>{getIcon("Call")}</Icon>
             <IconButton onClick={toggleSearch} data-testid="search-button">

@@ -7,7 +7,7 @@ import { useMessageSender } from "@features/chats/hooks/useMessageSender";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import { useSelectedMessages } from "@features/chats/hooks/useSelectedMessages";
-import { getChatByID } from "@features/chats/helpers";
+import { getChatByID } from "@features/chats/utils/helpers";
 import ChatItem from "@features/chats/ChatItem";
 
 const OuterContainer = styled.ul`
@@ -48,7 +48,6 @@ const HeaderRow = styled.div`
   height: 4rem;
 `;
 
-
 interface Props {
   onClose: () => void;
 }
@@ -68,7 +67,7 @@ function ScrollableChats(props: Props) {
 
   const handleSubmit = (chatId: string) => {
     const messagesToForward = messages?.filter((message) =>
-      selectedMessages?.includes(message._id),
+      selectedMessages?.includes(message._id)
     );
 
     messagesToForward?.map((message) => {

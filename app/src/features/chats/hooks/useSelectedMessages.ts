@@ -1,5 +1,5 @@
 import { useAppSelector } from "@hooks/useGlobalState";
-import { getChatByID } from "../helpers";
+import { getChatByID } from "../utils/helpers";
 
 function useSelectedMessages({ chatId }: { chatId?: string }) {
   const chats = useAppSelector((state) => state.chats.chats);
