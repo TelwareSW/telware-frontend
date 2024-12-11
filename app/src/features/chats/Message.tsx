@@ -10,6 +10,7 @@ import MessageDetails from "./MessageDetails";
 import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 import useHover from "./hooks/useHover";
 import { useMessageContext } from "./contexts/MessageProvider";
+import React from "react";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -76,7 +77,7 @@ const CheckBoxWrapper = styled.div`
   align-self: center;
 `;
 
-function Message() {
+const Message = React.memo(({ data }: MessageProps) => {
   const { _id: id, chatId, isMine } = useMessageContext();
 
   const { lastMessageRef } = useScrollToLastMsg();
@@ -113,6 +114,6 @@ function Message() {
       </StyledMessage>
     </MessageRow>
   );
-}
+});
 
 export default Message;
