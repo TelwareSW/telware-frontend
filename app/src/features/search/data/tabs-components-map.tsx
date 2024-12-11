@@ -49,6 +49,16 @@ export const SEARCH_TABS = [
           duration="20"
           file="https://ia802306.us.archive.org/20/items/NeverGonnaGiveYouUp/jocofullinterview41.mp3"
         />
+        {Array.from({ length: 10 }).map((_, index) => (
+          <MessageResult
+            key={index}
+            searchTerm="hi"
+            message=" Hello hi there"
+            title="Telware Testing"
+            date={new Date().toString()}
+            image="https://placecats.com/200/200"
+          />
+        ))}
       </div>
     ),
   },
