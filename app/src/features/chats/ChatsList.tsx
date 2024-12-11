@@ -21,7 +21,10 @@ const ChatsList = () => {
 
   return (
     <ChatListContainer>
-      {chats?.map((chat) => {
+      {chats
+        ?.slice()
+        .reverse()
+        .map((chat) => {
         let viewChat = true;
 
         return viewChat ? <ChatItem chat={chat} key={chat._id} /> : null;

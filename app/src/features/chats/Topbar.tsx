@@ -8,7 +8,7 @@ import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
-import { getChatByID } from "./helpers";
+import { getChatByID } from "./utils/helpers";
 import { useChatMembers } from "./hooks/useChatMember";
 import { getElapsedTime } from "@utils/helpers";
 import { useBlock } from "@features/privacy-settings/hooks/useBlock";
@@ -110,16 +110,10 @@ function Topbar() {
 
   const membersData = useChatMembers(chat?.members);
 
-  let name;
-  let image;
   let lastSeen;
-  if (chat) {
-    name =
-      membersData[0]?.screenFirstName + " " + membersData[0]?.screenLastName ||
-      membersData[0]?.username;
 
+  if (chat) {
     lastSeen = chat?.lastMessage?.timestamp;
-    image = membersData[0]?.photo;
   }
 
   if (!chat) return null;
@@ -141,14 +135,18 @@ function Topbar() {
 
   return (
     <Container>
-      <Avatar data-testid="chat-avatar" image={image} name={name?.charAt(0)} />
+      <Avatar
+        data-testid="chat-avatar"
+        image={chat.photo}
+        name={chat.name?.charAt(0)}
+      />
       {isSearching ? (
         <SearchBar onClose={toggleSearch} />
       ) : (
         <>
           <Info data-testid="chat-info">
             <Content>
-              <Name data-testid="chat-name">{name}</Name>
+              <Name data-testid="chat-name">{chat.name}</Name>
               {lastSeen && (
                 <LastSeen data-testid="chat-last-seen">
                   last seen {getElapsedTime(lastSeen)}

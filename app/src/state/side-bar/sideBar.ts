@@ -9,6 +9,8 @@ import {
   profileUpdate,
   sideBarPages,
   blockList,
+  addMembers,
+  newGroup,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -38,6 +40,10 @@ function getSideBarPage(type: number): SideBarView {
       return blockList;
     case sideBarPages.DEVICES:
       return devices;
+    case sideBarPages.ADD_MEMBERS:
+      return addMembers;
+    case sideBarPages.NEW_GROUP:
+      return newGroup;
     default:
       throw new Error("Unknown Type");
   }

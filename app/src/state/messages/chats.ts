@@ -1,4 +1,4 @@
-import { getChatByID } from "@features/chats/helpers";
+import { getChatByID } from "@features/chats/utils/helpers";
 import { BlockListInterface } from "@features/privacy-settings/BlockList";
 import { Chat, Member } from "@mocks/data/chats";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -15,7 +15,9 @@ interface DetailedChatInterface extends Chat {
     senderId: string;
     timestamp: string;
   };
+  name?: string;
   isBlocked?: boolean;
+  photo?: string;
 }
 
 interface ChatsState {

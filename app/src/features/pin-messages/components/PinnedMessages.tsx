@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import styled from "styled-components";
 import PinnedMessageProgressBar from "./PinnedMessageProgressBar";
 import { useAppSelector } from "@hooks/useGlobalState";
-import { getChatByID } from "@features/chats/helpers";
+import { getChatByID } from "@features/chats/utils/helpers";
 import { useParams } from "react-router-dom";
 import { MessageInterface } from "types/messages";
 
@@ -61,7 +61,7 @@ const PinnedMessages: React.FC = () => {
   const handleNextPinnedMessage = () => {
     if (pinnedMessages.length > 0) {
       setCurrentPinnedIndex(
-        (prevIndex) => (prevIndex + 1) % pinnedMessages.length,
+        (prevIndex) => (prevIndex + 1) % pinnedMessages.length
       );
       document
         .querySelector("[data-message-id='" + currentPinnedMessage?._id + "']")

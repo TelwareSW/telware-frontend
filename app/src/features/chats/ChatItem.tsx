@@ -79,6 +79,16 @@ function ChatItem({
     navigate(`/${_id}`);
   };
 
+  function getChatName() {
+    let chatName;
+    if (type === "group" || type === "channel") {
+      chatName = name;
+    } else {
+      chatName = membersData[0]?.screenFirstName || membersData[0]?.username;
+    }
+    return chatName;
+  }
+
   return (
     <Container
       data-testid="chat-container"
@@ -86,12 +96,10 @@ function ChatItem({
       onClick={onClick ? onClick : handleOpenChat}
       key={_id}
     >
-      <Avatar data-testid="chat-avatar" image={image} name={name} />
+      <Avatar data-testid="chat-avatar" image={image} name={getChatName()} />
       <ChatContent>
         <ChatHeader>
-          <Name data-testid="chat-name">
-            {type === "private" ? name : `Group ${membersData[0]?.username}`}
-          </Name>
+          <Name data-testid="chat-name">{getChatName()}</Name>
           <Timestamp data-testid="chat-timestamp">
             {new Date(timestamp).toLocaleTimeString("en-US", {
               hour: "2-digit",

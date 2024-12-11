@@ -5,6 +5,9 @@ import SideBarMenuItem, {
 } from "@components/side-bar/chats/SideBarMenuItem";
 import CircleIcon from "@components/CircleIcon";
 import { useMouseLeave } from "@hooks/useMouseLeave";
+import { useDispatch } from "react-redux";
+import { updateSideBarView } from "@state/side-bar/sideBar";
+import { sideBarPages } from "types/sideBar";
 
 interface StyledListProps {
   $bottom?: number;
@@ -48,9 +51,12 @@ const StyledList = styled.ul<StyledListProps>`
 function StartNewChat() {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const ref = useMouseLeave(() => setIsMenuOpened(false), false);
+  const dispatch = useDispatch();
+
   const handleOpenMenu = () => {
     setIsMenuOpened((prevState) => !prevState);
   };
+
   return (
     <>
       <StyledCircleIconContainer>
@@ -78,6 +84,14 @@ function StartNewChat() {
               data-testid={`new-chat-menu-item-${id}`}
               {...item}
               key={id}
+              onClick={() => {
+                dispatch(
+                  updateSideBarView({
+                    redirect: sideBarPages.ADD_MEMBERS,
+                    data: undefined,
+                  })
+                );
+              }}
             />
           ))}
         </StyledList>

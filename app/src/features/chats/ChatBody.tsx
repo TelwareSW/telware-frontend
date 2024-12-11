@@ -4,7 +4,7 @@ import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
 import { useEffect } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
-import { getChatByID } from "./helpers";
+import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
 
@@ -48,12 +48,11 @@ function ChatBody() {
       chatID: chatId,
     })?.messages;
 
-  const { fetchNextPage, data } = useFetchNextPage();
+  const { fetchNextPage } = useFetchNextPage();
 
   const { inView, ref } = useInView({ threshold: 0.5 });
 
   useEffect(() => {
-    console.log(inView);
     if (inView) {
       fetchNextPage();
     }

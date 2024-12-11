@@ -12,13 +12,8 @@ function useSocket() {
     DefaultEventsMap
   > | null>(null);
 
-  console.log(localStorage.getItem("sessionId"));
-
   useEffect(() => {
     if (!isPending && user && !socketInstance) {
-      console.log("Initializing socket with user:", user);
-      console.log(user._id);
-
       socketInstance = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`, {
         query: {
           userId: user._id,
@@ -30,7 +25,6 @@ function useSocket() {
 
       setSocket(socketInstance);
 
-      // Cleanup on unmount
       return () => {
         console.log("Disconnecting socket");
         socketInstance?.disconnect();
