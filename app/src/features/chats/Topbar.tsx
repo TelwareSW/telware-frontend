@@ -158,7 +158,12 @@ function Topbar() {
           </Info>
           <PinnedMessages />
           {chat.isBlocked && (
-            <StyledButton onClick={handleRemoveFromBlock}>Unblock</StyledButton>
+            <StyledButton
+              onClick={handleRemoveFromBlock}
+              data-testid="unblock-button"
+            >
+              Unblock
+            </StyledButton>
           )}
           <Icons>
             <Icon>{getIcon("Call")}</Icon>
