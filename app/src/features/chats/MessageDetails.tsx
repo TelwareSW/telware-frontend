@@ -25,12 +25,17 @@ const Details = styled.div`
 `;
 
 function MessageDetails() {
-  const { isPinned, isMine } = useMessageContext();
+  const { isPinned, isMine, timestamp } = useMessageContext();
 
   return (
     <Details>
       {isPinned && getIcon("PushPin", { sx: { fontSize: "1rem" } })}
-      <TimeStamp $isMine={isMine}>11:09AM</TimeStamp>
+      <TimeStamp $isMine={isMine}>
+        {new Date(timestamp).toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </TimeStamp>
     </Details>
   );
 }
