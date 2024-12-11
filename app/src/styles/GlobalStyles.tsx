@@ -112,6 +112,7 @@ const GlobalStyles = createGlobalStyle`
     
     --scrollbar-color:rgba(255, 255, 255, .2);
     --color-default-shadow: rgb(16, 16, 16, 0.612);
+    --color-light-shadow: rgb(16, 16, 16, 0.212);
     
     --color-chat-active: #1e4454;
     --color-chat-hover: #25353f;

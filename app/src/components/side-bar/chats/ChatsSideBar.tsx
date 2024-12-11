@@ -3,6 +3,7 @@ import ChatsSidebarHeader from "./ChatsSideBarHeader";
 import StartNewChat from "@features/chats/StartNewChat";
 import AddStory from "@features/stories/components/AddStory";
 import StoryListContainer from "@features/stories/components/StoryListContainer";
+import TabedSearch from "@features/search/components/TabedSearch";
 
 interface ChatsSideBarProps {
   children?: React.ReactNode;
@@ -37,12 +38,15 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
   return (
     <StyledChatsSideBar>
       <ChatsSidebarHeader />
-      <StoryListContainer />
-      <div style={{ flex: 1 }}>{children}</div>{" "}
-      <ButtonsContainer data-testid="button-container">
-        <AddStory data-testid="add-story-button" />
-        <StartNewChat data-testid="start-new-chat-button" />
-      </ButtonsContainer>
+      <div style={{ position: "relative", height: "100%" }}>
+        <StoryListContainer />
+        <div style={{ flex: 1 }}>{children}</div>{" "}
+        <ButtonsContainer data-testid="button-container">
+          <AddStory data-testid="add-story-button" />
+          <StartNewChat data-testid="start-new-chat-button" />
+        </ButtonsContainer>
+        <TabedSearch />
+      </div>
     </StyledChatsSideBar>
   );
 }
