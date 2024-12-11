@@ -24,6 +24,7 @@ import {
 } from "@state/messages/chats";
 import { useSocket } from "@hooks/useSocket";
 import SenderName from "./SenderName";
+import React from "react";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -128,8 +129,7 @@ const Details = styled.div`
 type MessageProps = {
   data: MessageInterface;
 };
-
-function Message({ data }: MessageProps) {
+const Message = React.memo(({ data }: MessageProps) => {
   const {
     _id: id,
     senderId,
@@ -227,6 +227,6 @@ function Message({ data }: MessageProps) {
       </StyledMessage>
     </MessageRow>
   );
-}
+});
 
 export default Message;
