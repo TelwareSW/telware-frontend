@@ -27,9 +27,15 @@ function getElapsedTime(timestamp: string): string {
     return `${seconds}s`;
   }
 }
+
 function getAvatarName(name: string | undefined): string {
   const firstName = name?.split(" ")[0];
   const lastName = name?.split(" ")[1];
   return `${firstName?.charAt(0) || ""} ${lastName?.charAt(0) || ""}`;
 }
-export { getElapsedTime, getAvatarName };
+
+function isValidDate(date: string): boolean {
+  return new Date(date).toString() !== "Invalid Date";
+}
+
+export { getElapsedTime, getAvatarName, isValidDate };
