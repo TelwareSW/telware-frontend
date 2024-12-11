@@ -26,12 +26,12 @@ export const privacySettingsMock = [
 
   http.patch("/users/block/:id", async (req) => {
     const id = req.params.id;
-    const user = allChats.find((item) => item.id.toString() === id);
+    const user = allChats.find(
+      (item: { id: string }) => item.id.toString() === id
+    );
     if (user) {
       blockList.push({
         id: user.id,
-        name: user.name,
-        username: user.name.toLowerCase() + "123",
       });
 
       return HttpResponse.json({}, { status: 200 });

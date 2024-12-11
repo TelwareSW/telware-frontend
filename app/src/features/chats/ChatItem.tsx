@@ -2,7 +2,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
-import { DetailedChatInterface } from "@state/messages/chats";
+import {
+  DetailedChatInterface,
+  setName,
+  setPhoto,
+} from "@state/messages/chats";
+import { useChatMembers } from "./hooks/useChatMember";
+import { useAppDispatch } from "@hooks/useGlobalState";
 
 const Container = styled.li<{ $active?: boolean }>`
   display: flex;
@@ -58,7 +64,7 @@ type ChatItemProps = {
 };
 
 function ChatItem({
-  chat: { _id, lastMessage, name, photo },
+  chat: { _id, type, lastMessage, name, photo, members },
   onClick,
 }: ChatItemProps) {
   const navigate = useNavigate();
@@ -71,6 +77,27 @@ function ChatItem({
   const handleOpenChat = () => {
     navigate(`/${_id}`);
   };
+
+  const dispatch = useAppDispatch();
+
+  if (type === "private") {
+    const memberData = useChatMembers(members)[0];
+    dispatch(
+      setName({
+        chatId: _id,
+        name:
+          memberData?.screenFirstName + " " + memberData?.screenLastName ||
+          memberData?.username,
+      })
+    );
+
+    dispatch(
+      setPhoto({
+        chatId: _id,
+        photo: memberData?.photo,
+      })
+    );
+  }
 
   return (
     <Container

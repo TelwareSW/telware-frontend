@@ -2,8 +2,6 @@ import styled from "styled-components";
 import ChatItem from "./ChatItem";
 import { useChats } from "./hooks/useChats";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
-import { useChatMembers } from "./hooks/useChatMember";
-import { setName, setPhoto } from "@state/messages/chats";
 
 const ChatListContainer = styled.ul`
   display: flex;
@@ -17,28 +15,6 @@ const ChatListContainer = styled.ul`
 const ChatsList = () => {
   const { isPending } = useChats();
   const chats = useAppSelector((state) => state.chats.chats);
-  const dispatch = useAppDispatch();
-
-  chats.forEach((chat) => {
-    if (chat.type === "private") {
-      const memberData = useChatMembers(chat.members)[0];
-      dispatch(
-        setName({
-          chatId: chat._id,
-          name:
-            memberData?.screenFirstName + " " + memberData?.screenLastName ||
-            memberData?.username,
-        })
-      );
-
-      dispatch(
-        setPhoto({
-          chatId: chat._id,
-          photo: memberData?.photo,
-        })
-      );
-    }
-  });
 
   if (isPending) return;
 
