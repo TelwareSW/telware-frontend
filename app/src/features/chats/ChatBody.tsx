@@ -62,7 +62,7 @@ function ChatBody() {
           const newScrollHeight = container.scrollHeight;
           container.scrollTop =
             previousScrollTop + (newScrollHeight - previousScrollHeight);
-        }, 0);
+        });
       });
     }
   }, [fetchNextPage, inView]);
