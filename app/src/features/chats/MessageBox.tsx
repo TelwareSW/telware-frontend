@@ -88,7 +88,7 @@ function MessageBox({ messageId }: MessageBoxProps) {
   const memberIndex = members.findIndex(
     (member) => member._id === msg?.senderId
   );
-   const colorIndex = memberIndex >= 0 ? (memberIndex % 5) + 2 : 2;
+  const colorIndex = memberIndex >= 0 ? (memberIndex % 5) + 2 : 2;
 
   const activeMessage = useAppSelector(
     (state: RootState) => state.activeMessage

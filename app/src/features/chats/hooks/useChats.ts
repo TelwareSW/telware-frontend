@@ -16,7 +16,6 @@ export function useChats() {
 
   const { blockList } = useBlock();
   const userId = useAppSelector((state) => state.user.userInfo.id);
-  console.log(userId);
   useEffect(() => {
     const initialChatState: ChatsState = {
       chats: parseChatsToState(chatData),

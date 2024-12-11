@@ -7,6 +7,7 @@ import { useFetchNextPage } from "./hooks/useFetchNextPage";
 import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
+import MessageProvider from "./contexts/MessageProvider";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -61,16 +62,18 @@ function ChatBody() {
   //TODO: fix the ordering of pages and message within each page
   //TODO: fix new page scroll to the top most message
   return (
-    <>
-      <ScrollContainer>
-        <div ref={ref}></div>
+    <ScrollContainer>
+      <div ref={ref}></div>
 
-        {messages &&
-          messages.map((data) => {
-            return <Message key={data._id} data={data} />;
-          })}
-      </ScrollContainer>
-    </>
+      {messages &&
+        messages.map((data) => {
+          return (
+            <MessageProvider data={data}>
+              <Message key={data._id}/>
+            </MessageProvider>
+          );
+        })}
+    </ScrollContainer>
   );
 }
 
