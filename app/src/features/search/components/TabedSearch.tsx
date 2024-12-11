@@ -18,17 +18,21 @@ const TabedSearchContainer = styled(motion.div)`
 const TabListWrapper = styled.div`
   display: flex;
   position: relative;
-  border-bottom: 1px solid var(--color-border);
-  overflow-x: hidden;
+  overflow-x: scroll;
+  box-shadow: 0 2px 2px var(--color-light-shadow);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const TabButton = styled.button<{ $active?: boolean }>`
-  flex: 1;
   position: relative;
-  padding: 12px 16px;
+  padding: 12px 18px;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: ${(props) => (props.$active ? "bold" : "normal")};
+  font-size: 1rem;
+  font-weight: 500;
   color: ${(props) =>
     props.$active ? "var(--accent-color)" : "var(--color-text-secondary)"};
   background: transparent;
@@ -50,7 +54,6 @@ const TabUnderline = styled(motion.div)`
 `;
 
 const TabContent = styled(motion.div)`
-  padding: 1rem;
   overflow-y: auto;
 `;
 
