@@ -257,6 +257,27 @@ const chatsSlice = createSlice({
         }
       });
     },
+    setName: (
+      state,
+      action: PayloadAction<{ chatId: string; name: string }>
+    ) => {
+      const { chatId, name } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+      if (chat) {
+        chat.name = name;
+      }
+    },
+
+    setPhoto: (
+      state,
+      action: PayloadAction<{ chatId: string; photo: string }>
+    ) => {
+      const { chatId, photo } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+      if (chat) {
+        chat.photo = photo;
+      }
+    },
   },
 });
 
@@ -276,6 +297,8 @@ export const {
   updateLastMessage,
   setChatIsBlocked,
   setMemberIsBlocked,
+  setName,
+  setPhoto,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 export type { DetailedChatInterface, ChatsState };

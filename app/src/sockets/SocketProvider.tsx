@@ -15,7 +15,6 @@ import {
   unpinMessage,
   editMessage,
 } from "@state/messages/chats";
-import { useAppSelector } from "@hooks/useGlobalState";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,

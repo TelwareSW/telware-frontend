@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
 import { DetailedChatInterface } from "@state/messages/chats";
-import { useChatMembers } from "./hooks/useChatMember";
 
 const Container = styled.li<{ $active?: boolean }>`
   display: flex;
@@ -59,15 +58,9 @@ type ChatItemProps = {
 };
 
 function ChatItem({
-  chat: { _id, members, type, lastMessage },
+  chat: { _id, lastMessage, name, photo },
   onClick,
 }: ChatItemProps) {
-  const membersData = useChatMembers(members);
-
-  const name =
-    membersData[0]?.screenFirstName + " " + membersData[0]?.screenLastName ||
-    membersData[0]?.username;
-  const image = membersData[0]?.photo;
   const navigate = useNavigate();
 
   const timestamp = lastMessage?.timestamp || "No messages";
@@ -79,16 +72,6 @@ function ChatItem({
     navigate(`/${_id}`);
   };
 
-  function getChatName() {
-    let chatName;
-    if (type === "group" || type === "channel") {
-      chatName = name;
-    } else {
-      chatName = membersData[0]?.screenFirstName || membersData[0]?.username;
-    }
-    return chatName;
-  }
-
   return (
     <Container
       data-testid="chat-container"
@@ -96,10 +79,10 @@ function ChatItem({
       onClick={onClick ? onClick : handleOpenChat}
       key={_id}
     >
-      <Avatar data-testid="chat-avatar" image={image} name={getChatName()} />
+      <Avatar data-testid="chat-avatar" image={photo} name={name} />
       <ChatContent>
         <ChatHeader>
-          <Name data-testid="chat-name">{getChatName()}</Name>
+          <Name data-testid="chat-name">{name}</Name>
           <Timestamp data-testid="chat-timestamp">
             {new Date(timestamp).toLocaleTimeString("en-US", {
               hour: "2-digit",
