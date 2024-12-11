@@ -13,6 +13,7 @@ import {
   unpinMessage,
   editMessage,
 } from "@state/messages/chats";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -47,6 +48,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useDispatch();
   const socket = useSocket();
+  const userId = useAppSelector((state) => state.user.userInfo.id);
 
   useEffect(() => {
     if (socket) {

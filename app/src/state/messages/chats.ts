@@ -67,6 +67,9 @@ const chatsSlice = createSlice({
     ) => {
       const { chatId, message } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
+
+      if (chat?.type === "private" && chat?.isBlocked) return;
+
       chat?.messages.push(message);
     },
 
