@@ -41,71 +41,71 @@ export type ChatDataType = {
   }[];
 };
 
-// export const allChats: Chat[] = [
-//   {
-//     _id: "1",
-//     isSeen: false,
-//     members: ["1", "2"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "2",
-//     isSeen: false,
-//     members: ["2", "1"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "3",
-//     isSeen: false,
-//     members: ["3"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "4",
-//     isSeen: false,
-//     members: ["4"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "5",
-//     isSeen: false,
-//     members: ["5"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "6",
-//     isSeen: false,
-//     members: ["6"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "7",
-//     isSeen: false,
-//     members: ["7"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "8",
-//     isSeen: false,
-//     members: ["8"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-//   {
-//     _id: "9",
-//     isSeen: false,
-//     members: ["9"],
-//     type: "private",
-//     numberOfMembers: 1,
-//   },
-// ];
+export const allChats: Chat[] = [
+  {
+    _id: "1",
+    isSeen: false,
+    members: ["1", "2"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "2",
+    isSeen: false,
+    members: ["2", "1"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "3",
+    isSeen: false,
+    members: ["3"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "4",
+    isSeen: false,
+    members: ["4"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "5",
+    isSeen: false,
+    members: ["5"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "6",
+    isSeen: false,
+    members: ["6"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "7",
+    isSeen: false,
+    members: ["7"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "8",
+    isSeen: false,
+    members: ["8"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+  {
+    _id: "9",
+    isSeen: false,
+    members: ["9"],
+    type: "private",
+    numberOfMembers: 1,
+  },
+];
 
 export const members: Member[] = [
   {

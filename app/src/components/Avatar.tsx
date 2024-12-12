@@ -23,6 +23,7 @@ const StyledAvatar = styled.div<{ $image?: string; $size?: string }>`
   font-weight: bold;
   font-size: 1rem;
   text-transform: uppercase;
+  z-index: 1;
 `;
 
 type PropsType = {
