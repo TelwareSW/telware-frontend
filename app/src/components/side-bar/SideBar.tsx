@@ -40,7 +40,7 @@ const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   background-color: var(--color-background);
   overflow: hidden;
   position: relative;
-
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
 
