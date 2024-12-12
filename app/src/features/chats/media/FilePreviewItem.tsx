@@ -3,9 +3,11 @@ import FileViewer from "./FileViewer";
 import Modal from "@components/Modal";
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Button from "@components/Button";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import FileDetailsBanner from "./FileDetailsBanner";
 import { useUploadMedia } from "./hooks/useUploadMedia";
+import useChatInput from "../hooks/useChatInput";
+import { useMessageSender } from "../hooks/useMessageSender";
 
 const FileViewerContainer = styled.div`
   z-index: 7;
@@ -43,21 +45,13 @@ const StyledBackground = styled.div`
     width: 100%;
   }
 `;
-interface FileProps {
-  file: File | string;
-  handleCloseFilePreview: () => void;
-  handleSendMessage: (data: string, file: string) => void;
-  setFile: Dispatch<SetStateAction<File | null>>;
-}
 
-function FilePreviewItem({
-  file,
-  handleCloseFilePreview,
-  handleSendMessage,
-  setFile,
-}: FileProps) {
+function FilePreviewItem() {
   const [caption, setCaption] = useState("");
   const { data: uploadedUrl, mutate: uploadFile, isPending } = useUploadMedia();
+
+  const { file, handleCloseFilePreview, setFile } = useChatInput();
+  const { handleSendMessage } = useMessageSender();
 
   const handleSendFile = async () => {
     if (!file) {
