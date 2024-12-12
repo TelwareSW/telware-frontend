@@ -52,7 +52,7 @@ const chatsSlice = createSlice({
               (member) => member._id !== userId
             )[0];
 
-            if (blockList.find((user: any) => user.id === otherUser._id)) {
+            if (blockList?.find((user: any) => user.id === otherUser._id)) {
               chat.isBlocked = true;
             }
           }

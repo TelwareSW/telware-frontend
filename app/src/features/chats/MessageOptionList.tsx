@@ -18,7 +18,7 @@ const StyledList = styled.ul<{ $isMine: boolean }>`
   right: ${(props) => !props.$isMine && -6.5}rem;
   left: ${(props) => props.$isMine && -6.5}rem;
 
-  z-index: 20 !important;
+  z-index: 10;
   overflow: auto;
 
   display: flex;
