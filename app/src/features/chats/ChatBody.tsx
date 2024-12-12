@@ -11,7 +11,7 @@ import MessageProvider from "./contexts/MessageProvider";
 
 const ScrollContainer = styled.div`
   width: 100%;
-  height: 87dvh;
+  height: 90dvh;
   overflow-y: auto;
   position: relative;
 
