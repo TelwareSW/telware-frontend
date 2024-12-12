@@ -23,6 +23,7 @@ import NewGroup from "@features/groups/NewGroup.js";
 interface SideBarProps {
   rows?: SideBarRowProps[];
   data?: RadioInputProps;
+  type?: "channel" | "group";
 }
 
 const fadeIn = keyframes`
@@ -91,14 +92,19 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
       </SettingsSideBar>
     ),
     Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
-    AddMembers: () => (
+    AddMembers: (props) => (
       <SettingsSideBar rows={[]}>
-        <AddGroupMembers />
+        <AddGroupMembers type={props.data?.type!} />
       </SettingsSideBar>
     ),
     NewGroup: () => (
       <SettingsSideBar rows={[]}>
-        <NewGroup />
+        <NewGroup type="group" />
+      </SettingsSideBar>
+    ),
+    NewChannel: () => (
+      <SettingsSideBar rows={[]}>
+        <NewGroup type="channel" />
       </SettingsSideBar>
     ),
   };
@@ -107,6 +113,8 @@ function Sidebar() {
   const { page, props } = useAppSelector((state) => state.sideBarData);
   const [currentPage, setCurrentPage] = useState(page);
   const [isExiting, setIsExiting] = useState(false);
+
+  console.log(currentPage);
 
   useEffect(() => {
     if (currentPage !== page) {

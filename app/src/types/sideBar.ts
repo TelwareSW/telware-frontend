@@ -9,6 +9,7 @@ enum sideBarPages {
   DEVICES,
   ADD_MEMBERS,
   NEW_GROUP,
+  NEW_CHANNEL,
 }
 
 type pagesStrings = keyof typeof sideBarPages;

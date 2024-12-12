@@ -49,12 +49,6 @@ const Bubble = styled.div<{ $isMine: boolean }>`
   color: ${({ $isMine }) => ($isMine ? "#fff" : "var(--color-text)")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
 
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text !important;
-  cursor: text;
-
   word-break: break-word;
   white-space: pre-wrap;
 `;
