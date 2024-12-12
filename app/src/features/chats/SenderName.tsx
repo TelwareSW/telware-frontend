@@ -1,19 +1,19 @@
-import { useAppSelector } from "@hooks/useGlobalState";
-import styled from "styled-components";
-import { useChatMembers } from "./hooks/useChatMember";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
+import { useAppSelector } from "@hooks/useGlobalState";
+import { useChatMembers } from "./hooks/useChatMember";
+
+import { useMessageContext } from "./contexts/MessageProvider";
 
 const Name = styled.div<{ $colorIndex: number }>`
   color: var(--color-peer-${({ $colorIndex }) => $colorIndex});
 `;
 
-type SenderNameProps = {
-  $isMine: boolean;
-  senderId: string;
-};
-
-function SenderName({ $isMine, senderId }: SenderNameProps) {
+function SenderName() {
   const { chatId } = useParams<{ chatId: string }>();
+  const { senderId, isMine } = useMessageContext();
+
   const chat = useAppSelector((state) =>
     state.chats.chats.find((chat) => chat?._id === chatId)
   );
@@ -25,7 +25,7 @@ function SenderName({ $isMine, senderId }: SenderNameProps) {
 
   const colorIndex = (memberIndex % 5) + 2;
 
-  if ($isMine || chat?.type === "private") return null;
+  if (isMine || chat?.type === "private") return null;
 
   return (
     <Name $colorIndex={colorIndex}>

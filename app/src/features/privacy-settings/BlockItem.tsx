@@ -5,6 +5,8 @@ import { StyledList, StyledListProps } from "./AddToBlockMenuList";
 import { getIcon } from "@data/icons";
 import { useState } from "react";
 import { useBlock } from "./hooks/useBlock";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { setMemberIsBlocked } from "@state/messages/chats";
 
 const StyledSideBarRow = styled.div`
   width: 100%;
@@ -66,18 +68,25 @@ const HoverMask = styled.div`
 
 interface BlockedUserInterface {
   id: string;
-  name: string;
-  username: string;
 }
 
-function BlockItem({ id, name, username }: BlockedUserInterface) {
+function BlockItem({ id }: BlockedUserInterface) {
   const [isBlockButtonEnabled, setIsBlockButtonEnabled] = useState(false);
-
   const { removeFromBlockList } = useBlock();
 
-  function handleRemove(id: string) {
+  const members = useAppSelector((state) => state.chats.members);
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+  const { screenFirstName, screenLastName, username } =
+    members.find((member) => member._id === id) || {};
+
+  const name = screenFirstName + " " + screenLastName || "";
+
+  const dispatch = useAppDispatch();
+
+  function handleRemoveFromBlock(id: string) {
     removeFromBlockList({ id: id.toString() });
     setIsBlockButtonEnabled(false);
+    dispatch(setMemberIsBlocked({ memberId: id, isBlocked: false, userId }));
   }
 
   return (
@@ -96,7 +105,7 @@ function BlockItem({ id, name, username }: BlockedUserInterface) {
       {isBlockButtonEnabled && (
         <StyledList
           {...menuStyles}
-          onClick={() => handleRemove(id)}
+          onClick={() => handleRemoveFromBlock(id)}
           data-testid={`remove-from-blocklist-${id}`}
         >
           <HoverMask>

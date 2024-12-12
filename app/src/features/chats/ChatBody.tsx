@@ -2,16 +2,16 @@ import styled from "styled-components";
 
 import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
 import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
+import MessageProvider from "./contexts/MessageProvider";
 
 const ScrollContainer = styled.div`
   width: 100%;
-  /* margin-top: 100px; */
-  height: 87dvh;
+  height: 90dvh;
   overflow-y: auto;
   position: relative;
 
@@ -28,10 +28,7 @@ const ScrollContainer = styled.div`
     border-radius: 5px;
   }
 
-  scroll-behavior: smooth;
-
   z-index: 1;
-
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -50,27 +47,40 @@ function ChatBody() {
 
   const { fetchNextPage } = useFetchNextPage();
 
-  const { inView, ref } = useInView({ threshold: 0.5 });
+  const { inView, ref } = useInView({ threshold: 0.01 });
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (inView) {
-      fetchNextPage();
+      const container = scrollContainerRef.current;
+      if (!container) return;
+
+      const previousScrollHeight = container.scrollHeight;
+      const previousScrollTop = container.scrollTop;
+
+      fetchNextPage().then(() => {
+        requestAnimationFrame(() => {
+          const newScrollHeight = container.scrollHeight;
+          container.scrollTop =
+            previousScrollTop + (newScrollHeight - previousScrollHeight);
+        });
+      });
     }
   }, [fetchNextPage, inView]);
 
-  //TODO: fix the ordering of pages and message within each page
-  //TODO: fix new page scroll to the top most message
   return (
-    <>
-      <ScrollContainer>
-        <div ref={ref}></div>
+    <ScrollContainer ref={scrollContainerRef}>
+      <div ref={ref}></div>
 
-        {messages &&
-          messages.map((data) => {
-            return <Message key={data._id} data={data} />;
-          })}
-      </ScrollContainer>
-    </>
+      {messages &&
+        messages.map((data) => {
+          return (
+            <MessageProvider data={data}>
+              <Message key={data._id} />
+            </MessageProvider>
+          );
+        })}
+    </ScrollContainer>
   );
 }
 

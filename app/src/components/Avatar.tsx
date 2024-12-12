@@ -2,17 +2,15 @@ import { STATIC_MEDIA_URL } from "@constants";
 import styled from "styled-components";
 import { getAvatarName } from "utils/helpers";
 
-const StyledAvatar = styled.div<{ $image?: string }>`
-  width: 2.625rem;
-  height: 2.625rem;
+const StyledAvatar = styled.div<{ $image?: string; $size?: string }>`
+  width: ${({ $size }) => ($size === "small" ? "2.625rem" : "3.125rem")};
+  height: ${({ $size }) => ($size === "small" ? "2.625rem" : "3.125rem")};
 
   border-radius: 50%;
   margin-right: 1rem;
 
   background: ${({ $image }) =>
-    $image
-      ? `url(${STATIC_MEDIA_URL + $image}) center/cover no-repeat`
-      : "var(--color-avatar)"};
+    $image ? `url(${$image}) center/cover no-repeat` : "var(--color-avatar)"};
 
   color: white;
 
@@ -31,11 +29,18 @@ const StyledAvatar = styled.div<{ $image?: string }>`
 type PropsType = {
   image?: string | undefined;
   name: string | undefined;
+  size?: string;
 };
 
-function Avatar({ image, name }: PropsType) {
+function Avatar({ image, name, size }: PropsType) {
+  if (image && !image.startsWith("http")) {
+    image = STATIC_MEDIA_URL + image;
+  }
+
   return (
-    <StyledAvatar $image={image}>{!image && getAvatarName(name)}</StyledAvatar>
+    <StyledAvatar $image={image} $size={size || "small"}>
+      {!image && getAvatarName(name)}
+    </StyledAvatar>
   );
 }
 

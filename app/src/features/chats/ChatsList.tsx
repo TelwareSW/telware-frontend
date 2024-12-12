@@ -7,9 +7,11 @@ const ChatListContainer = styled.ul`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   max-width: 600px;
   margin: auto;
   background-color: var(--color-background);
+  overflow-y: scroll;
 `;
 
 const ChatsList = () => {
@@ -23,7 +25,9 @@ const ChatsList = () => {
       {chats
         ?.slice()
         .reverse()
-        .map((chat) => <ChatItem chat={chat} key={chat._id} />)}
+        .map((chat) => {
+          return <ChatItem chat={chat} key={chat._id} />;
+        })}
     </ChatListContainer>
   );
 };

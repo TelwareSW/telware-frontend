@@ -1,25 +1,20 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getIcon } from "@data/icons";
-import ExpandingTextArea from "@components/ExpandingTextArea";
-import Icon from "@components/Icon";
 
 import RecordInput from "./SendButton";
 import ForwardingInputBar from "@features/forward/ForwardingInputBar";
 import ScrollableChats from "@features/forward/ScrollableChats";
 import Picker from "./emojies/Picker";
-import { useMessageSender } from "./hooks/useMessageSender";
 import ReplyWrapper from "./ReplyWrapper";
-import { clearActiveMessage } from "@state/messages/activeMessage";
-import MediaUploadComponent from "./media/MediaUploadComponent";
-import FilePreviewItem from "./media/FilePreviewItem";
 import { useAppSelector } from "@hooks/useGlobalState";
-import { setShowCheckBox } from "@state/messages/chats";
 import { getChatByID } from "./utils/helpers";
-import VoiceRecorder, { RecordingStates } from "./audio/VoiceRecorder";
+import VoiceRecorder from "./audio/VoiceRecorder";
 import RecordingView from "./audio/RecordingView";
+import ChatInputIcons from "./ChatInputIcons";
+import FilePreviewItem from "./media/FilePreviewItem";
+import useActiveMessage from "./hooks/useActiveMessage";
+import { useContext } from "react";
+import { ChatInputContext } from "./ChatBox";
 
 const Container = styled.div`
   z-index: 1;
@@ -52,15 +47,10 @@ const InputContainer = styled.div`
 
   height: 100%;
 `;
-const InvisibleButton = styled.button`
-  all: unset;
-  display: inline-block;
-  cursor: pointer;
-`;
 
 const InputWrapper = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 1rem;
   position: relative;
   flex: 1;
@@ -75,73 +65,29 @@ const Input = styled.div`
 `;
 
 function ChatInput() {
-  const activeMessage = useAppSelector((state) => state.activeMessage);
-  const [input, setInput] = useState<string>("");
-  const [file, setFile] = useState<File | null>(null);
-  const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
-  const [isRecording, setIsRecording] = useState<RecordingStates>("idle");
-  const [error, setError] = useState<string>("");
   const { chatId } = useParams<{ chatId: string }>();
 
-  useEffect(() => {
-    if (activeMessage.state === "edit" && activeMessage?.content)
-      setInput(activeMessage?.content);
-  }, [activeMessage]);
-
-  const [isEmojiSelectorOpen, setIsEmojiSelectorOpen] = useState(false);
-  const { handleSendMessage } = useMessageSender();
-  const dispatch = useDispatch();
-
-  const toggleShowEmojies = () => {
-    setIsEmojiSelectorOpen((show) => !show);
-  };
-  const sendGIF = (gif: string) => {
-    handleSendMessage("", chatId, gif, "GIF");
-    setIsEmojiSelectorOpen(false);
-  };
-
-  const sendSticker = (sticker: string) => {
-    handleSendMessage("", chatId, sticker, "sticker");
-    setIsEmojiSelectorOpen(false);
-  };
-  const handleSubmit = (e: Event, voiceNoteName = "") => {
-    e.preventDefault();
-    setIsEmojiSelectorOpen(false);
-    if (isRecording !== "idle") return;
-    handleSendMessage(input, chatId, voiceNoteName);
-    dispatch(clearActiveMessage());
-    setInput("");
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit(e as unknown as Event);
-    }
-  };
+  const {
+    input,
+    setInput,
+    file,
+    isFilePreviewOpen,
+    isRecording,
+    error,
+    setError,
+    isEmojiSelectorOpen,
+    handleSubmit,
+    showForwardUsers,
+    handleClose,
+  } = useContext(ChatInputContext);
 
   const chats = useAppSelector((state) => state.chats.chats);
-  const showCheckBox =
-    chatId && getChatByID({ chats: chats, chatID: chatId })?.showCheckBox;
+  const currChat = getChatByID({ chats: chats, chatID: chatId! });
 
-  const [showForwardUsers, setShowForwardUsers] = useState(false);
+  const showCheckBox = currChat?.showCheckBox;
+  const isBlocked = currChat?.isBlocked;
 
-  function handleClose() {
-    if (!chatId) {
-      return;
-    }
-
-    setShowForwardUsers(false);
-    dispatch(setShowCheckBox({ chatId: chatId, showCheckBox: false }));
-  }
-
-  function handleForward() {
-    setShowForwardUsers(true);
-  }
-  function handleCloseFilePreview() {
-    setFile(null);
-    setIsFilePreviewOpen(false);
-  }
+  const { activeMessage } = useActiveMessage({ setInput });
 
   if (error.length) {
     alert(error);
@@ -151,82 +97,42 @@ function ChatInput() {
   return (
     <>
       {isFilePreviewOpen && file && (
-        <FilePreviewItem
-          file={file}
-          handleCloseFilePreview={handleCloseFilePreview}
-          handleSendMessage={handleSendMessage}
-          setFile={setFile}
-          data-testid="file-preview"
-        />
+        <FilePreviewItem data-testid="file-preview" />
       )}
-      <Container data-testid="chat-input-container">
-        {!showCheckBox ? (
-          <Input data-testid="chat-input">
-            {isEmojiSelectorOpen && (
-              <Picker
-                setInputText={setInput}
-                data-testid="emoji-picker"
-                onSendGIF={sendGIF}
-                onSendSticker={sendSticker}
-              />
-            )}
-            <InputContainer>
-              {activeMessage.id && <ReplyWrapper setInput={setInput} />}
 
-              <InputWrapper>
-                {isRecording !== "idle" ? (
-                  <RecordingView
-                    setIsRecording={setIsRecording}
-                    isRecording={isRecording}
-                  />
-                ) : (
-                  <>
-                    <InvisibleButton
-                      onClick={toggleShowEmojies}
-                      data-testid="emoji-button"
-                    >
-                      <Icon>{getIcon("Emojie")}</Icon>
-                    </InvisibleButton>
+      {isBlocked ? null : (
+        <Container data-testid="chat-input-container">
+          {!showCheckBox ? (
+            <Input data-testid="chat-input">
+              {isEmojiSelectorOpen && <Picker data-testid="emoji-picker" />}
+              <InputContainer>
+                {activeMessage.id && <ReplyWrapper />}
 
-                    <ExpandingTextArea
-                      input={input}
-                      setInput={setInput}
-                      onKeyDown={handleKeyDown}
-                    />
+                <InputWrapper>
+                  {isRecording !== "idle" ? (
+                    <RecordingView />
+                  ) : (
+                    <ChatInputIcons />
+                  )}
+                </InputWrapper>
+              </InputContainer>
 
-                    <MediaUploadComponent
-                      file={file}
-                      setFile={setFile}
-                      setIsFilePreviewOpen={setIsFilePreviewOpen}
-                    />
-                  </>
-                )}
-              </InputWrapper>
-            </InputContainer>
-            {input ? (
-              <RecordInput
-                onClick={handleSubmit}
-                type={!input ? "record" : "message"}
-                data-testid="send-button"
-              />
-            ) : (
-              <VoiceRecorder
-                isRecording={isRecording}
-                setIsRecording={setIsRecording}
-                setError={setError}
-                handleSendMessage={handleSendMessage}
-              />
-            )}
-          </Input>
-        ) : (
-          <ForwardingInputBar
-            onClose={handleClose}
-            onForward={handleForward}
-            data-testid="forwarding-input-bar"
-          />
-        )}
-        {showForwardUsers && <ScrollableChats onClose={handleClose} />}
-      </Container>
+              {input ? (
+                <RecordInput
+                  onClick={handleSubmit}
+                  type={!input ? "record" : "message"}
+                  data-testid="send-button"
+                />
+              ) : (
+                <VoiceRecorder />
+              )}
+            </Input>
+          ) : (
+            <ForwardingInputBar data-testid="forwarding-input-bar" />
+          )}
+          {showForwardUsers && <ScrollableChats onClose={handleClose} />}
+        </Container>
+      )}
     </>
   );
 }

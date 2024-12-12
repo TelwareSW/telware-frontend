@@ -4,6 +4,8 @@ import { getChatByID } from "@features/chats/utils/helpers";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useContext } from "react";
+import { ChatInputContext } from "@features/chats/ChatBox";
 
 const Wrapper = styled.div`
   background: var(--color-background);
@@ -31,15 +33,10 @@ const IconButton = styled.div`
   cursor: pointer;
 `;
 
-interface Props {
-  onClose: () => void;
-  onForward: () => void;
-}
-
-function ForwardingInputBar(props: Props) {
+function ForwardingInputBar() {
   const { chatId } = useParams<{ chatId: string }>();
 
-  const { onClose, onForward } = props;
+  const { setShowForwardUsers, handleClose } = useContext(ChatInputContext);
 
   const chats = useAppSelector((state) => state.chats.chats);
   const chat = chatId ? getChatByID({ chatID: chatId, chats }) : undefined;
@@ -48,17 +45,18 @@ function ForwardingInputBar(props: Props) {
 
   return selectedMessages ? (
     <Wrapper>
-      <IconButton onClick={onClose} test-id="close-icon">
+      <IconButton onClick={handleClose} test-id="close-icon">
         <Icon>{getIcon("Close")}</Icon>
       </IconButton>
       <StyledHeader>{selectedMessages.length} messages selected</StyledHeader>
-      <IconButton onClick={onForward} test-id="forward-icon">
+      <IconButton
+        onClick={() => setShowForwardUsers(true)}
+        test-id="forward-icon"
+      >
         <Icon>{getIcon("Forward")}</Icon>
       </IconButton>
     </Wrapper>
-  ) : (
-    <></>
-  );
+  ) : null;
 }
 
 export default ForwardingInputBar;

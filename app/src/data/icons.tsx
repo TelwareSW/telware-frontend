@@ -402,6 +402,8 @@ const iconImports: Record<iconStrings, IconConfig> = {
   },
 };
 
+const iconCache = new Map<string, React.ReactElement>();
+
 function getIcon(
   iconName?: iconStrings,
   customProps?: {
@@ -415,6 +417,11 @@ function getIcon(
   const iconConfig = iconImports[iconName];
   if (!iconConfig) return undefined;
 
+  const cacheKey = `${iconName}-${JSON.stringify(customProps)}`;
+  if (iconCache.has(cacheKey)) {
+    return iconCache.get(cacheKey);
+  }
+
   const LazyIcon = lazy(iconConfig.importFn);
 
   const mergedProps = {
@@ -426,12 +433,16 @@ function getIcon(
     },
   };
 
-  return (
+  const iconElement = (
     <Suspense fallback={<div style={{ width: "24px", height: "24px" }}></div>}>
       <LazyIcon {...mergedProps} />
     </Suspense>
   );
+
+  iconCache.set(cacheKey, iconElement);
+
+  return iconElement;
 }
 
-export { getIcon };
+export { getIcon, icons };
 export type { iconStrings };
