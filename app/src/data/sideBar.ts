@@ -83,7 +83,8 @@ const pagesMap: { [K in pagesStrings]: string } = {
   BLOCKED_USERS: "blockList",
   DEVICES: "Devices",
   ADD_MEMBERS: "AddMembers",
-  NEW_GROUP: "NewGroup"
+  NEW_GROUP: "NewGroup",
+  NEW_CHANNEL: "NewChannel",
 };
 
 const settingsRows = [
@@ -206,12 +207,21 @@ const addMembers: SideBarView = {
   title: "Add Members",
   backView: sideBarPages.CHATS,
   page: "ADD_MEMBERS",
+  props: {
+    type: "group",
+  },
 };
 
 const newGroup: SideBarView = {
   title: "New Group",
   backView: sideBarPages.ADD_MEMBERS,
   page: "NEW_GROUP",
+};
+
+const newChannel: SideBarView = {
+  title: "New Channel",
+  backView: sideBarPages.ADD_MEMBERS,
+  page: "NEW_CHANNEL",
 };
 
 export {
@@ -233,4 +243,5 @@ export {
   blockList,
   addMembers,
   newGroup,
+  newChannel,
 };

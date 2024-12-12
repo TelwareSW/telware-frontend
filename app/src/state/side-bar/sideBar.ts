@@ -11,6 +11,7 @@ import {
   blockList,
   addMembers,
   newGroup,
+  newChannel,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -44,6 +45,8 @@ function getSideBarPage(type: number): SideBarView {
       return addMembers;
     case sideBarPages.NEW_GROUP:
       return newGroup;
+    case sideBarPages.NEW_CHANNEL:
+      return newChannel;
     default:
       throw new Error("Unknown Type");
   }
