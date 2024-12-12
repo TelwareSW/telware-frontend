@@ -55,7 +55,7 @@ export const createAnswer = async (offer: string) => {
   return JSON.stringify(answer);
 };
 export const startCall = async (answer: string) => {
-  callState = "ongoing"
+  callState = "ongoing";
   const offer_parsed = JSON.parse(answer);
   await peerConnection.setRemoteDescription(offer_parsed);
   //start call
