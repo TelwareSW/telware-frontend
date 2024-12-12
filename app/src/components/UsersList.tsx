@@ -9,6 +9,7 @@ import { sideBarPages } from "types/sideBar";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 
 import { useAllUsers } from "@features/groups/hooks/useAllUsers";
+import { useUser } from "@features/authentication/login/hooks/useUser";
 
 const Container = styled.div`
   width: 100%;
@@ -34,11 +35,12 @@ const SearchInput = styled.input`
 `;
 
 function UsersList({ type }: { type: "channel" | "group" }) {
-  const { users, isPending } = useAllUsers();
+  const { users, isPending: isPendenigAllUsers } = useAllUsers();
+  const { user: currentUser, isPending: isPendingCurrentUser } = useUser();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const dispatch = useAppDispatch();
 
-  if (isPending) return null;
+  if (isPendenigAllUsers || isPendingCurrentUser) return null;
 
   function handleClick() {
     const redirect =
@@ -46,10 +48,12 @@ function UsersList({ type }: { type: "channel" | "group" }) {
     dispatch(updateSideBarView({ redirect }));
   }
 
-  const filteredUsers = users?.filter((user) =>
-    `${user.screenFirstName} ${user.screenLastName}`
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
+  const filteredUsers = users?.filter(
+    (user) =>
+      user._id !== currentUser._id &&
+      `${user.screenFirstName} ${user.screenLastName}`
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
   );
 
   return (
