@@ -3,11 +3,11 @@ import FileViewer from "./FileViewer";
 import Modal from "@components/Modal";
 import ExpandingTextArea from "@components/ExpandingTextArea";
 import Button from "@components/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import FileDetailsBanner from "./FileDetailsBanner";
 import { useUploadMedia } from "./hooks/useUploadMedia";
-import useChatInput from "../hooks/useChatInput";
 import { useMessageSender } from "../hooks/useMessageSender";
+import { ChatInputContext } from "../ChatBox";
 
 const FileViewerContainer = styled.div`
   z-index: 7;
@@ -48,9 +48,10 @@ const StyledBackground = styled.div`
 
 function FilePreviewItem() {
   const [caption, setCaption] = useState("");
-  const { data: uploadedUrl, mutate: uploadFile, isPending } = useUploadMedia();
+  const { mutate: uploadFile, isPending } = useUploadMedia();
 
-  const { file, handleCloseFilePreview, setFile } = useChatInput();
+  const { file, handleCloseFilePreview, setFile } =
+    useContext(ChatInputContext);
   const { handleSendMessage } = useMessageSender();
 
   const handleSendFile = async () => {

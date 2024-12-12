@@ -50,7 +50,7 @@ const InputContainer = styled.div`
 
 const InputWrapper = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 1rem;
   position: relative;
   flex: 1;

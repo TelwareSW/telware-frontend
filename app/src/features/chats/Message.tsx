@@ -48,7 +48,6 @@ const Bubble = styled.div<{ $isMine: boolean }>`
 
   color: ${({ $isMine }) => ($isMine ? "#fff" : "var(--color-text)")};
   margin: ${({ $isMine }) => ($isMine ? "0 0 0 10px" : "0 10px 0 0")};
-  z-index: 1;
 
   -webkit-user-select: text;
   -moz-user-select: text;
@@ -77,7 +76,7 @@ const CheckBoxWrapper = styled.div`
   align-self: center;
 `;
 
-const Message = React.memo(({ data }: MessageProps) => {
+const Message = React.memo(() => {
   const { _id: id, chatId, isMine } = useMessageContext();
 
   const { lastMessageRef } = useScrollToLastMsg();
