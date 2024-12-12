@@ -33,12 +33,18 @@ const SearchInput = styled.input`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
 `;
 
-function UsersList() {
+function UsersList({ type }: { type: "channel" | "group" }) {
   const { users, isPending } = useAllUsers();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const dispatch = useAppDispatch();
 
   if (isPending) return null;
+
+  function handleClick() {
+    const redirect =
+      type === "channel" ? sideBarPages.NEW_CHANNEL : sideBarPages.NEW_GROUP;
+    dispatch(updateSideBarView({ redirect }));
+  }
 
   const filteredUsers = users?.filter((user) =>
     `${user.screenFirstName} ${user.screenLastName}`
@@ -70,9 +76,7 @@ function UsersList() {
         $color="white"
         $bgColor="var(--accent-color)"
         $opacity={0.95}
-        onClick={() =>
-          dispatch(updateSideBarView({ redirect: sideBarPages.NEW_GROUP }))
-        }
+        onClick={handleClick}
       />
     </Container>
   );

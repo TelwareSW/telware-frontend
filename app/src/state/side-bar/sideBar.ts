@@ -75,7 +75,11 @@ const sideBarSlice = createSlice({
       if (redirect === sideBarPages.SETTINGS_UPDATE) {
         state.props = { data: data };
         state.title = data?.header || newData.title;
-      } else if (redirect === sideBarPages.BLOCKED_USERS) {
+      } else if (
+        redirect === sideBarPages.BLOCKED_USERS ||
+        redirect === sideBarPages.ADD_MEMBERS ||
+        redirect === sideBarPages.NEW_GROUP
+      ) {
         state.props = { ...newData.props, data: data };
         state.title = newData.title;
       } else {

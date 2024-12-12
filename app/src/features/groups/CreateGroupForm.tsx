@@ -45,7 +45,7 @@ function GroupInfoForm({ type }: { type: "channel" | "group" }) {
 
     createGroupOrChannel({
       name: data.groupName,
-      type: "group",
+      type,
       members: members.map((member) => member._id),
     });
   };

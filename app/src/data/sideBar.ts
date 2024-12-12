@@ -207,9 +207,6 @@ const addMembers: SideBarView = {
   title: "Add Members",
   backView: sideBarPages.CHATS,
   page: "ADD_MEMBERS",
-  props: {
-    type: "group",
-  },
 };
 
 const newGroup: SideBarView = {

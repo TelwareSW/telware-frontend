@@ -92,9 +92,9 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
       </SettingsSideBar>
     ),
     Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
-    AddMembers: () => (
+    AddMembers: (props) => (
       <SettingsSideBar rows={[]}>
-        <AddGroupMembers />
+        <AddGroupMembers type={props.data?.type!} />
       </SettingsSideBar>
     ),
     NewGroup: () => (

@@ -61,15 +61,15 @@ function StartNewChat() {
     if (title === "New Channel") {
       dispatch(
         updateSideBarView({
-          redirect: sideBarPages.NEW_CHANNEL,
-          data: undefined,
+          redirect: sideBarPages.ADD_MEMBERS,
+          data: { type: "channel" },
         })
       );
     } else if (title === "New Group") {
       dispatch(
         updateSideBarView({
-          redirect: sideBarPages.NEW_GROUP,
-          data: undefined,
+          redirect: sideBarPages.ADD_MEMBERS,
+          data: { type: "group" },
         })
       );
     } else {
