@@ -1,3 +1,4 @@
+import NoResultsFound from "../components/NoResultsFound";
 import AudioResult from "../components/result-items/AudioResult";
 import ChannelResult from "../components/result-items/ChannelResult";
 import FileResult from "../components/result-items/FileResult";
@@ -107,16 +108,7 @@ export const SEARCH_TABS = [
   },
   {
     title: "Files",
-    component: () => (
-      <div>
-        <FileResult
-          title="Telware Testing"
-          image="https://www.svgrepo.com/show/144578/pdf.svg"
-          size="20"
-          date={new Date().toString()}
-        />
-      </div>
-    ),
+    component: () => <NoResultsFound />,
   },
   {
     title: "Music",

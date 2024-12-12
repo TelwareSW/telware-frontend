@@ -90,22 +90,31 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
       return;
     }
 
-    const results = messages.reduce((acc, message) => {
-      const lowerCaseTerm = term.toLowerCase();
-      const lowerCaseContent = message.content.toLowerCase();
+    const results = messages.reduce(
+      (
+        acc: Array<{
+          messageId: string;
+          highlightIndex: number;
+        }>,
+        message,
+      ) => {
+        const lowerCaseTerm = term.toLowerCase();
+        const lowerCaseContent = message.content.toLowerCase();
 
-      if (lowerCaseContent.includes(lowerCaseTerm)) {
-        const matchIndices = findAllMatchIndices(message.content, term);
-        matchIndices.forEach((highlightIndex) => {
-          acc.push({
-            messageId: message.id,
-            highlightIndex,
+        if (lowerCaseContent.includes(lowerCaseTerm)) {
+          const matchIndices = findAllMatchIndices(message.content, term);
+          matchIndices.forEach((highlightIndex) => {
+            acc.push({
+              messageId: message._id,
+              highlightIndex,
+            });
           });
-        });
-      }
+        }
 
-      return acc;
-    }, []);
+        return acc;
+      },
+      [],
+    );
 
     dispatch(setSearchTerm(term));
     dispatch(setSearchResults(results));
