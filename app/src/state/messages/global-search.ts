@@ -14,6 +14,10 @@ const globalSearchSlice = createSlice({
   name: "globalSearch",
   initialState,
   reducers: {
+    clearSearch: (state) => {
+      state.searchTerm = "";
+      state.selectedTab = "Chats";
+    },
     setSearchTerm: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
     },
@@ -23,5 +27,6 @@ const globalSearchSlice = createSlice({
   },
 });
 
-export const { setSearchTerm, setSelectedTab } = globalSearchSlice.actions;
+export const { setSearchTerm, setSelectedTab, clearSearch } =
+  globalSearchSlice.actions;
 export default globalSearchSlice.reducer;

@@ -1,8 +1,40 @@
+import NoResultsFound from "../components/NoResultsFound";
 import AudioResult from "../components/result-items/AudioResult";
 import ChannelResult from "../components/result-items/ChannelResult";
 import FileResult from "../components/result-items/FileResult";
 import MessageResult from "../components/result-items/MessageResult";
+import MessagesTab from "../components/tabs/MessagesTab";
 
+export const SEARCH_TABS_MOCK = [
+  {
+    title: "Chats",
+    component: () => <MessagesTab />,
+  },
+  {
+    title: "Channnels",
+    component: () => <NoResultsFound />,
+  },
+  {
+    title: "Media",
+    component: () => <NoResultsFound />,
+  },
+  {
+    title: "Links",
+    component: () => <NoResultsFound />,
+  },
+  {
+    title: "Files",
+    component: () => <NoResultsFound />,
+  },
+  {
+    title: "Music",
+    component: () => <NoResultsFound />,
+  },
+  {
+    title: "Voice",
+    component: () => <NoResultsFound />,
+  },
+];
 export const SEARCH_TABS = [
   {
     title: "Chats",
@@ -107,16 +139,7 @@ export const SEARCH_TABS = [
   },
   {
     title: "Files",
-    component: () => (
-      <div>
-        <FileResult
-          title="Telware Testing"
-          image="https://www.svgrepo.com/show/144578/pdf.svg"
-          size="20"
-          date={new Date().toString()}
-        />
-      </div>
-    ),
+    component: () => <NoResultsFound />,
   },
   {
     title: "Music",
