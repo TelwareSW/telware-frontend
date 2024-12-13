@@ -30,7 +30,7 @@ const StyledP = styled.p`
   font-size: 1rem;
   color: var(--color-text-secondary);
 `;
-const InvisibleButton = styled.button`
+const InvisibleButton = styled.div`
   all: unset;
   position: absolute;
   top: 50%;
@@ -58,8 +58,10 @@ export default function RecordingView() {
       {isRecording == "pause" && (
         <>
           <StyledP>Record</StyledP>
-          <InvisibleButton onClick={handleCanelReecord}>
-            <Icon>{getIcon("Delete")}</Icon>
+          <InvisibleButton>
+            <Icon onClick={handleCanelReecord} data-testid>
+              {getIcon("Delete")}
+            </Icon>
           </InvisibleButton>
         </>
       )}

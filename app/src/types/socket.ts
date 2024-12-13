@@ -16,7 +16,7 @@ export interface SocketContextType {
     name: string;
     members: string[];
   }) => void;
-  startConnection: (offer: RTCSessionDescription) => void;
+  startConnection: (offer?: RTCSessionDescription) => void;
 }
 
 export interface SocketProviderProps {

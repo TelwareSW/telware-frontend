@@ -74,10 +74,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
   const dispatch = useDispatch();
   const chatId = useParams<{ chatId: string }>().chatId;
   const { searchTerm, searchResults, currentResultIndex } = useSelector(
-    (state: RootState) => state.search,
+    (state: RootState) => state.search
   );
   const currentChat = useSelector((state: RootState) =>
-    state.chats.chats.find((chat) => chat._id === chatId),
+    state.chats.chats.find((chat) => chat._id === chatId)
   );
   const messages = currentChat?.messages ?? [];
 
@@ -90,7 +90,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
       return;
     }
 
-    const results = messages.reduce((acc, message) => {
+    const results = messages.reduce<{ messageId: string; highlightIndex: number }[]>((acc, message) => {
       const lowerCaseTerm = term.toLowerCase();
       const lowerCaseContent = message.content.toLowerCase();
 
@@ -98,7 +98,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
         const matchIndices = findAllMatchIndices(message.content, term);
         matchIndices.forEach((highlightIndex) => {
           acc.push({
-            messageId: message.id,
+            messageId: message._id,
             highlightIndex,
           });
         });
@@ -141,7 +141,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
 
   return (
     <SearchContainer>
-      <Icon>
+      <Icon data-testid="search-icon">
         {isSearchLoading ? getIcon("CircularProgress") : getIcon("Search")}
       </Icon>
       <SearchInput

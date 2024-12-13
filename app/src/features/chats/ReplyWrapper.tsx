@@ -34,11 +34,15 @@ export default function ReplyWrapper() {
     if (activeMessage.state === "edit") setInput("");
   }
 
+  const isEdit = activeMessage.state === "edit";
+
   return (
     <Container data-testid="reply-wrapper">
-      <Icon>{getIcon(activeMessage.state === "edit" ? "Edit" : "Reply")}</Icon>
+      <Icon data-testid={isEdit ? "edit-icon" : "reply-icon"}>
+        {getIcon(isEdit ? "Edit" : "Reply")}
+      </Icon>
       <MessageBox />
-      <Icon onClick={handleHideWrapper} test-id="close-icon">
+      <Icon onClick={handleHideWrapper} data-testid="close-icon">
         {getIcon("Close")}
       </Icon>
     </Container>

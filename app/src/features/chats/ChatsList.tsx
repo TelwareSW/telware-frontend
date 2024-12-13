@@ -9,9 +9,9 @@ const ChatListContainer = styled.ul`
   width: 100%;
   height: 100%;
   max-width: 600px;
-  margin: auto;
   background-color: var(--color-background);
   overflow-y: scroll;
+  padding-bottom: 2rem;
 `;
 
 const ChatsList = () => {
