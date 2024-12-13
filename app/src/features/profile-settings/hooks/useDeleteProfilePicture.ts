@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { DeleteProfilePicture as DeleteProfilePictureAPI } from "../services/DeleteProfilePicture";
+import { DeleteProfilePicture as DeleteProfilePictureAPI } from "../services/apiDeleteProfilePicture";
+import toast from "react-hot-toast";
 
 function useDeleteProfilePicture() {
   const queryClient = useQueryClient();
@@ -14,6 +15,9 @@ function useDeleteProfilePicture() {
     mutationFn: DeleteProfilePictureAPI,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profilePicture"] });
+    },
+    onError: () => {
+      toast.error("Something went wrong. Please try again.");
     },
   });
 

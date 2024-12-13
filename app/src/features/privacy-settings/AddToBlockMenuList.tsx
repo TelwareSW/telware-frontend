@@ -2,15 +2,17 @@ import styled from "styled-components";
 import BlockItem, { BlockedUserProps } from "./BlockItem";
 import { useBlock } from "./hooks/useBlock";
 import { ScrollContainer } from "styles/GlobalStyles";
-import { useChats } from "@features/chats/hooks/useChats";
-import { Chat } from "@mocks/data/chats";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { setMemberIsBlocked } from "@state/messages/chats";
 
 const StyledList = styled.ul<StyledListProps>`
   position: absolute;
-  width: ${(props) => props.$size}%;
-  right: ${(props) => (props.$right ?? 3) + 2}rem;
+  width: 70%;
+  right: 20%;
   bottom: ${(props) => (props.$bottom ?? 3) + 3}rem;
-  height: ${(props) => (props.$height ?? 3) + 3}rem;
+  height: fit-content;
+  max-height: ${(props) => (props.$height ?? 3) + 3}rem;
+  min-height: 3rem;
   z-index: 1;
   overflow: auto;
 
@@ -29,15 +31,11 @@ const StyledList = styled.ul<StyledListProps>`
 
 interface StyledListProps {
   $bottom?: number;
-  $right?: number;
-  $size?: number;
   $height?: number;
 }
 
 const menuStyles: StyledListProps = {
   $bottom: 5,
-  $right: 4,
-  $size: 70,
   $height: 30,
 };
 
@@ -45,50 +43,50 @@ const StylingWrapper = styled.div`
   width: 100%;
 `;
 
-function filterChats(blockList: BlockedUserProps[], chats: Chat[]) {
-  const blockIds = blockList
-    ? new Set(blockList.map((val) => val.id))
-    : new Set();
-  const filteredChats = chats?.filter((item) => !blockIds.has(item.id));
-
-  return filteredChats;
-}
+const StyledP = styled.p`
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  justify-self: center;
+  align-self: center;
+`;
 
 function AddToBlockMenuList({ setIsMenuOpened }: any) {
   const { addToBlockList } = useBlock();
 
-  const { blockList } = useBlock();
-  const { chats } = useChats();
+  const members = useAppSelector((state) => state.chats.members);
+  const userId = useAppSelector((state) => state.user.userInfo.id);
 
-  const filteredChats = filterChats(
-    blockList as BlockedUserProps[],
-    chats as Chat[]
-  );
+  const dispatch = useAppDispatch();
 
-  function handleClick(item: Chat) {
+  function handleClick(item: BlockedUserProps) {
     setIsMenuOpened(false);
-    addToBlockList({ id: item.id.toString() });
+    addToBlockList({ id: item.id });
+    dispatch(
+      setMemberIsBlocked({ memberId: item.id, isBlocked: true, userId })
+    );
   }
 
   return (
     <StyledList {...menuStyles}>
       <ScrollContainer>
-        {filteredChats?.map((item) => {
-          const data: BlockedUserProps = {
-            name: item.name,
-            id: item.id,
-            username: item.name.toLowerCase() + 123,
-          };
-          return (
-            <StylingWrapper
-              onClick={() => handleClick(item)}
-              key={data.id}
-              data-testid={`block-user-${data.id}`}
-            >
-              <BlockItem {...data} />
-            </StylingWrapper>
-          );
-        })}
+        {members.length ? (
+          members.map((member) => {
+            const data: BlockedUserProps = {
+              id: member._id,
+            };
+            return (
+              <StylingWrapper
+                onClick={() => handleClick(data)}
+                key={data.id}
+                data-testid={`block-user-${data.id}`}
+              >
+                <BlockItem {...data} />
+              </StylingWrapper>
+            );
+          })
+        ) : (
+          <StyledP>No Unblocked users found</StyledP>
+        )}
       </ScrollContainer>
     </StyledList>
   );

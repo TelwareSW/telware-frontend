@@ -34,7 +34,7 @@ export const forgetPassword = [
             message: "Cannot send the email, please retry",
             status: "error",
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -43,9 +43,9 @@ export const forgetPassword = [
           message: "Check your email.",
           status: "success",
         },
-        { status: 201 }
+        { status: 201 },
       );
-    }
+    },
   ),
 ];
 
@@ -62,7 +62,7 @@ export const resetPassword = [
             message: "Incorrect code , please retry",
             status: "error",
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -71,8 +71,8 @@ export const resetPassword = [
           message: "Successful! Redirecting...",
           status: "success",
         },
-        { status: 201 }
+        { status: 201 },
       );
-    }
+    },
   ),
 ];

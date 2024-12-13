@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import * as update from "@features/privacy-settings/service/changeSettings";
+import * as update from "@features/privacy-settings/service/apiChangeSettings";
 import renderWithStore from "@tests/test-utils";
 import SideBar from "./SideBar";
 import { privacySettingsRows, settingsRows } from "@data/sideBar";
@@ -88,10 +88,10 @@ describe("Sidebar", () => {
     expect(screen.getByText("Who can see my stories?")).toBeInTheDocument();
     expect(screen.getByText("Who can see my last seen?")).toBeInTheDocument();
     expect(
-      screen.getByText("Who can see my profile photo?"),
+      screen.getByText("Who can see my profile photo?")
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Who can add me to group chats?"),
+      screen.getByText("Who can add me to group chats?")
     ).toBeInTheDocument();
     expect(screen.getByText("Who can add me to channels?")).toBeInTheDocument();
   });

@@ -20,7 +20,7 @@ describe("ProtectedRoute", () => {
     render(
       <ProtectedRoute>
         <MockChildComponent />
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
     const protectedContent = screen.getByText(/protected content/i);
@@ -33,7 +33,7 @@ describe("ProtectedRoute", () => {
     render(
       <ProtectedRoute>
         <MockChildComponent />
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
     const protectedContent = screen.queryByText(/protected content/i);

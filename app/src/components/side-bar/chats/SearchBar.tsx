@@ -1,24 +1,30 @@
+import { getIcon } from "@data/icons";
+import { setSearchTerm } from "@state/messages/global-search";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { SearchOutlined } from "@mui/icons-material";
 
 const StyledSearchBar = styled.div`
   margin-left: 1rem;
   position: relative;
+  width: 100%;
+
   &:focus-within > svg {
     color: var(--color-search-border);
   }
 `;
 
-const StyledSearchIcon = styled(SearchOutlined)`
-  position: absolute;
-  left: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-text-secondary);
-  font-size: 1.2rem;
+const Icon = styled.div`
+  > svg {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+  }
 `;
 
-const StyledInput = styled.input`
+const Input = styled.input`
   background-color: var(--color-chat-hover);
   border: 1px solid var(--pattern-color);
   border-radius: var(--border-radius-searchbar);
@@ -39,10 +45,21 @@ const StyledInput = styled.input`
 `;
 
 function SearchBar() {
+  const dispatch = useDispatch();
+
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchTerm(e.target.value));
+  };
+
   return (
     <StyledSearchBar data-testid="general-search-bar">
-      <StyledInput type="text" placeholder="Search" data-set="general-search" />
-      <StyledSearchIcon data-testid="general-serach-icon" />
+      <Input
+        type="text"
+        placeholder="Search"
+        data-testid="general-search"
+        onChange={onSearch}
+      />
+      <Icon data-testid="general-serach-icon">{getIcon("Search")}</Icon>
     </StyledSearchBar>
   );
 }

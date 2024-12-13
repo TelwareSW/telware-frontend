@@ -11,6 +11,8 @@ import { profilePictureMock } from "./profile-settings/profile-picture";
 import { storiesMock } from "./stories/stories";
 import { chats } from "./chats/chats";
 import { devicesMock } from "./devices/devices";
+import { paginationMock } from "./chats/pagination";
+import { media } from "./chats/media";
 
 export default [
   ...loginMock,
@@ -27,4 +29,6 @@ export default [
   ...profilePictureMock,
   ...storiesMock,
   ...devicesMock,
+  ...paginationMock,
+  ...media,
 ];

@@ -12,7 +12,6 @@ const StyledSettingsSideBar = styled.div`
   height: 100vh;
   background-color: var(--color-background);
   overflow-y: auto;
-  position: relative;
 `;
 
 function SettingsSideBar({ rows, children }: SettingsSideBarProps) {

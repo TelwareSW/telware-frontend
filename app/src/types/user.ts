@@ -11,6 +11,7 @@ interface privacySettingsInterface {
   storiesSeenPrivacy: privacyStates;
   lastSeenPrivacy: privacyStates;
   profilePhotoPrivacy: privacyStates;
+  blockPrivacy: string;
 }
 
 interface activitySettingsInterface {
@@ -29,6 +30,7 @@ interface userInfoInterface {
   photo?: string;
   status: string;
   bio: string;
+  id: string;
 }
 
 interface updatePrivacyInterface {

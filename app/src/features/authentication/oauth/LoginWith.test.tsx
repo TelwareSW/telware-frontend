@@ -19,7 +19,7 @@ describe("LoginWith Component", () => {
 
   test("calls onClick when the icon is clicked", () => {
     const iconElement = screen.getByAltText(
-      new RegExp(altText, "i")
+      new RegExp(altText, "i"),
     ).parentElement;
 
     fireEvent.click(iconElement!);

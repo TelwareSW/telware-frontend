@@ -32,7 +32,7 @@ module.exports = {
     "jest.setup.ts",
     "index.tsx",
   ],
-  setupFiles: ["./jest.polyfills.ts"],
+  setupFiles: ["dotenv/config", "./jest.polyfills.ts"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironmentOptions: {
     customExportConditions: [""],

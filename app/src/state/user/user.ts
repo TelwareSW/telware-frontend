@@ -4,6 +4,7 @@ import {
   activeStates,
   permissionStates,
 } from "../../types/sideBar";
+
 import {
   userInfoInterface,
   privacySettingsInterface,
@@ -11,8 +12,8 @@ import {
   updatePrivacyInterface,
   updateInfoInterface,
   updateActivityInterface,
-  permissionsSettingsInterface,
   updatePermissionInterface,
+  permissionsSettingsInterface,
 } from "../../types/user";
 
 interface userState {
@@ -25,6 +26,7 @@ interface userState {
 const initialState: userState = {
   // TODO: set at login
   userInfo: {
+    id: "",
     username: "",
     screenName: "",
     email: "",
@@ -32,10 +34,12 @@ const initialState: userState = {
     status: "",
     bio: "",
   },
+
   privacySettings: {
     storiesSeenPrivacy: privacyStates.EVERYONE,
     lastSeenPrivacy: privacyStates.EVERYONE,
     profilePhotoPrivacy: privacyStates.EVERYONE,
+    blockPrivacy: "",
   },
   activitySettings: {
     readReceiptsPrivacy: activeStates.ENABLED,
@@ -50,30 +54,36 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setUserInfo: (
+      state: userState,
+      action: PayloadAction<userInfoInterface>,
+    ) => {
+      state.userInfo = action.payload;
+    },
     updateUserPrivacy: (
       state: userState,
-      action: PayloadAction<updatePrivacyInterface>
+      action: PayloadAction<updatePrivacyInterface>,
     ) => {
       const { key, value } = action.payload;
       state.privacySettings[key] = privacyStates[value];
     },
     updateUserInfo: (
       state: userState,
-      action: PayloadAction<updateInfoInterface>
+      action: PayloadAction<updateInfoInterface>,
     ) => {
       const { key, value } = action.payload;
       state.userInfo[key] = value;
     },
     updateUserActivity: (
       state: userState,
-      action: PayloadAction<updateActivityInterface>
+      action: PayloadAction<updateActivityInterface>,
     ) => {
       const { key, value } = action.payload;
       state.activitySettings[key] = activeStates[value];
     },
     updateUserPermission: (
       state: userState,
-      action: PayloadAction<updatePermissionInterface>
+      action: PayloadAction<updatePermissionInterface>,
     ) => {
       const { key, value } = action.payload;
       state.permissionSettings[key] = permissionStates[value];
@@ -82,6 +92,7 @@ const userSlice = createSlice({
 });
 
 export const {
+  setUserInfo,
   updateUserPrivacy,
   updateUserInfo,
   updateUserActivity,

@@ -32,7 +32,7 @@ interface CodeInputFieldProps {
 function CodeInputField({ code, setCode, ...rest }: CodeInputFieldProps) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     const newCode = [...code];
     newCode[index] = e.target.value.slice(0, 1);

@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { GetAllSessions } from "../services/GetAllSessions";
 import { Session } from "../types/sessions";
-import { GetCurrentSession } from "../services/GetCurrentSession";
+import { GetCurrentSession } from "../services/apiGetCurrentSession";
 
 function useGetCurrentSession() {
   const queryClient = useQueryClient();

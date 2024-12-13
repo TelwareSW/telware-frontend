@@ -15,7 +15,7 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 1;
 `;
 
 const ModalContainer = styled.div`
@@ -132,7 +132,7 @@ function ConfirmationEmailModal({
         onError: (err: Error) => {
           setError(err.message);
         },
-      }
+      },
     );
   }
   function handleResendEmail() {

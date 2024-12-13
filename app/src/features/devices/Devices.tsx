@@ -4,8 +4,8 @@ import { useGetAllSessions } from "./hooks/useGetAllSessions";
 import { useGetCurrentSession } from "./hooks/useGetCurrentSessions";
 import SessionItem from "./components/SessionItem";
 import laptopAnimation from "@data/animations/devices.json";
-import { DoDisturbOnOutlined } from "@mui/icons-material";
 import Icon from "@components/Icon";
+import { getIcon } from "@data/icons";
 import { useLogoutOtherSessions } from "./hooks/useLogoutOtherSessions";
 
 const SideBarContainer = styled.div`
@@ -48,7 +48,7 @@ const HeaderAnimatinoContainer = styled.div`
   }
 `;
 
-const TerminateOtherSessionsButton = styled.button`
+const TerminateOtherSessionsButton = styled.div`
   color: var(--color-error);
   background-color: var(--color-background);
   font-size: 1rem;
@@ -77,17 +77,22 @@ function Devices() {
         </HeaderAnimatinoContainer>
       </SettingSection>
       <SettingSection>
-        <SectionTitle>THIS DEVICE</SectionTitle>
+        <SectionTitle data-testid="this-device-title">THIS DEVICE</SectionTitle>
         <SessionItem session={activeSession} />
-        <TerminateOtherSessionsButton onClick={handleLogoutOthers}>
-          <Icon>
-            <DoDisturbOnOutlined fontSize="large" />
+        <TerminateOtherSessionsButton>
+          <Icon
+            onClick={handleLogoutOthers}
+            data-testid="terminate-other-sessions-button"
+          >
+            {getIcon("DoDisturb")}
           </Icon>
           <span>Terminate All Other Sessions</span>
         </TerminateOtherSessionsButton>
       </SettingSection>
       <SettingSection>
-        <SectionTitle>Active sessions</SectionTitle>
+        <SectionTitle data-testid="active-sessions-title">
+          Active sessions
+        </SectionTitle>
         {allDevices?.map((session) => (
           <SessionItem key={session.lastSeenTime} session={session} />
         ))}

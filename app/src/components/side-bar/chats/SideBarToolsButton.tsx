@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MenuOutlined } from "@mui/icons-material";
 import ThemeToggle from "./theme-toggle/ThemeToggle";
 import { useAppDispatch } from "@hooks/useGlobalState";
 import { toggleTheme } from "@state/theme/theme";
@@ -8,14 +7,17 @@ import SideBarMenuItem from "./SideBarMenuItem";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "@data/sideBar";
 import { useMouseLeave } from "@hooks/useMouseLeave";
+import { getIcon } from "@data/icons";
 
-const StyledToolsIcon = styled(MenuOutlined)`
-  color: var(--color-icon-secondary);
-  border-radius: var(--border-radius-modal);
-  padding: 0.3rem;
-  &:hover {
-    cursor: pointer;
-    background-color: var(--color-background-compact-menu-hover);
+const ToolsIcon = styled.div`
+  > svg {
+    color: var(--color-icon-secondary);
+    border-radius: var(--border-radius-modal);
+    padding: 0.3rem;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-background-compact-menu-hover);
+    }
   }
 `;
 
@@ -34,6 +36,8 @@ const StyledList = styled.ul<{ $isOpened?: boolean }>`
   box-shadow: 0 0.25rem 0.5rem 0.125rem var(--color-default-shadow);
   border-radius: var(--border-radius-default);
   visibility: ${({ $isOpened }) => ($isOpened ? "visible" : "hidden")};
+
+  z-index: 2;
 `;
 
 function SettingsToolbar() {
@@ -45,11 +49,9 @@ function SettingsToolbar() {
   };
   return (
     <>
-      <StyledToolsIcon
-        onClick={handleOpenSettings}
-        fontSize="large"
-        data-testid="menu-items-icon"
-      />
+      <ToolsIcon onClick={handleOpenSettings} data-testid="menu-items-icon">
+        {getIcon("Menu")}
+      </ToolsIcon>
       {isOpened && (
         <StyledList
           $isOpened={isOpened}

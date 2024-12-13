@@ -18,7 +18,7 @@ export function useMouseLeave(handler: () => void, listenCapturing = true) {
       currentRef.addEventListener(
         "mouseleave",
         handleMouseLeave,
-        listenCapturing
+        listenCapturing,
       );
     }
 
@@ -27,7 +27,7 @@ export function useMouseLeave(handler: () => void, listenCapturing = true) {
         currentRef.removeEventListener(
           "mouseleave",
           handleMouseLeave,
-          listenCapturing
+          listenCapturing,
         );
       }
     };

@@ -1,7 +1,11 @@
 import styled from "styled-components";
-import CircleIcon from "../../CircleIcon";
 import ChatsSidebarHeader from "./ChatsSideBarHeader";
-import StartNewChat from "./StartNewChat";
+import StartNewChat from "@features/chats/StartNewChat";
+import AddStory from "@features/stories/components/AddStory";
+import StoryListContainer from "@features/stories/components/StoryListContainer";
+import TabedSearch from "@features/search/components/TabedSearch";
+import { useSelector } from "react-redux";
+import { RootState } from "@state/store";
 
 interface ChatsSideBarProps {
   children?: React.ReactNode;
@@ -9,29 +13,41 @@ interface ChatsSideBarProps {
 }
 
 const StyledChatsSideBar = styled.div`
-  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
   color: var(--color-icon-secondary);
-
   background-color: var(--color-background);
-  overflow-y: auto;
-  position: relative;
+  overflow: hidden;
 `;
+
+const ButtonsContainer = styled.div`
+  position: sticky;
+  bottom: 1rem;
+  width: 3.3rem;
+  left: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  flex-direction: column-reverse;
+  gap: 4rem;
+  background-color: transparent;
+  z-index: 1;
+`;
+
 function ChatsSideBar({ children }: ChatsSideBarProps) {
   return (
     <StyledChatsSideBar>
       <ChatsSidebarHeader />
-      {children}
-      <CircleIcon
-        data-testid="add-story-icon"
-        $icon="AddStory"
-        $right={1}
-        $bottom={1}
-        $size={3.3}
-        $padding={0.5}
-        $color="white"
-        $bgColor="var(--accent-color)"
-      />
-      <StartNewChat />
+      <div style={{ position: "relative", height: "100%" }}>
+        <StoryListContainer />
+        <div style={{ flex: 1, height: "calc(100% - 48px)" }}>{children}</div>
+        <ButtonsContainer data-testid="button-container">
+          <AddStory data-testid="add-story-button" />
+          <StartNewChat data-testid="start-new-chat-button" />
+        </ButtonsContainer>
+        <TabedSearch />
+      </div>
     </StyledChatsSideBar>
   );
 }

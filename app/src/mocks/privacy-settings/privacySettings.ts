@@ -1,13 +1,12 @@
 import blockList from "@mocks/data/blocklist";
 import { allChats } from "@mocks/data/chats";
-import { endPts } from "features/privacy-settings/service/changeSettings";
+import { endPts } from "@features/privacy-settings/service/apiChangeSettings";
 import { http, HttpResponse } from "msw";
 import { activeStatesStrings, privacyStatesStrings } from "types/sideBar";
 
 type requestType = {
   privacy: activeStatesStrings | privacyStatesStrings;
 };
-
 
 export const privacySettingsMock = [
   http.patch<{ path: endPts }, requestType>(
@@ -27,12 +26,10 @@ export const privacySettingsMock = [
 
   http.patch("/users/block/:id", async (req) => {
     const id = req.params.id;
-    let user = allChats.find((item) => item.id.toString() === id);
+    const user = allChats.find((item) => item._id.toString() === id);
     if (user) {
       blockList.push({
-        id: user.id,
-        name: user.name,
-        username: user.name.toLowerCase() + "123",
+        id: user._id,
       });
 
       return HttpResponse.json({}, { status: 200 });

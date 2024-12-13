@@ -1,15 +1,11 @@
 import { BlockedUserProps } from "@features/privacy-settings/BlockItem";
 
-let blockList: BlockedUserProps[] = [
+const blockList: BlockedUserProps[] = [
   {
-    id: 1,
-    name: "Alice",
-    username: "alice123",
+    id: "1",
   },
   {
-    id: 2,
-    name: "Bob",
-    username: "bob123",
+    id: "2",
   },
 ];
 

@@ -37,6 +37,7 @@ interface RadioInputProps {
   state?: string;
   data: RadioInputInterface;
   updateFnType: StatusType;
+  type?: 'channel' | 'group';
 }
 
 const StyledForm = styled.div`
@@ -103,7 +104,7 @@ function RadioInput({ state, data, updateFnType }: RadioInputProps) {
     dispatch(updateFn(payload));
   }
 
-  let selectedValue = watch(data.id);
+  const selectedValue = watch(data.id);
 
   useEffect(() => {
     const payload = { key: data.id, value: selectedValue };

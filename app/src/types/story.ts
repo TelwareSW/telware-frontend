@@ -1,13 +1,17 @@
-import { otherUserInfoInterface } from "./user";
-
 interface story {
   id: string;
-  user: otherUserInfoInterface;
+  userId?: string;
   content: string;
   timestamp: string;
   caption?: string;
-  views?: otherUserInfoInterface[];
+  views?: string[];
   viewed?: boolean;
 }
+interface userStories {
+  userId: string;
+  name: string;
+  photo: string;
+  stories: story[];
+}
 
-export type { story };
+export type { story, userStories };

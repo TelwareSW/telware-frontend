@@ -1,6 +1,6 @@
 import { RadioInputProps } from "@components/inputs/radio-input/RadioInput";
 import { fireEvent, render, screen } from "@testing-library/react";
-import * as update from "@features/privacy-settings/service/changeSettings";
+import * as update from "@features/privacy-settings/service/apiChangeSettings";
 import SettingsUpdate from "@components/side-bar/settings/SettingsUpdate";
 import renderWithStore from "@tests/test-utils";
 

@@ -1,14 +1,3 @@
-export enum MessageTypes {
-  "announcement",
-  "forward",
-  "normal",
-}
-export enum DeleteType {
-  "all",
-  "only-me",
-  "none",
-}
-
 export enum MessageStatus {
   "sent",
   "delivered",
@@ -16,16 +5,51 @@ export enum MessageStatus {
   "error",
 }
 
+export type ContentType =
+  | "text"
+  | "image"
+  | "GIF"
+  | "sticker"
+  | "audio"
+  | "video"
+  | "file"
+  | "link";
+
 export interface MessageInterface {
-  id: string;
+  _id: string;
+
+  //TODO: needs to be Date
+  timestamp: string;
   content: string;
+  contentType: ContentType;
+  isPinned: boolean;
+  isForward: boolean;
+  isAnnouncement: boolean;
   senderId: string;
-  type: MessageTypes;
-  createdAt: Date;
-  updatedAt: Date;
   chatId: string;
-  parentMessageId: string;
-  isDeleted: boolean;
-  deleteType: DeleteType;
+
+  parentMessageId: string | null;
   status: MessageStatus;
+
+  media?: string;
+
+  //TODO: should use parentMessageId
+  isReply: boolean;
+  replyMessageId: string | null;
+}
+
+export enum StickerTap {
+  gif,
+  emoji,
+  sticker,
+}
+export interface Gif {
+  id: string;
+  title: string;
+  url: string;
+}
+export interface Sticker {
+  id: string;
+  title: string;
+  url: string;
 }

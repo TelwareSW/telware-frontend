@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import { Check } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FloatingLabelInput from "@components/inputs/float-label-input/FloatingLabelInput";
@@ -24,13 +23,12 @@ import { useDeleteProfilePicture } from "./hooks/useDeleteProfilePicture";
 
 const SideBarContainer = styled.div`
   overflow-y: auto;
-
   & > form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
-    min-height: 100dvh;
+    height: 90vh;
     background-color: var(--color-background-secondary);
   }
 `;
@@ -83,7 +81,7 @@ const DeleteProfilePictureContainer = styled.div`
   position: absolute;
   bottom: 1rem;
   right: calc(50% - 4rem);
-  z-index: 5000;
+  z-index: 20;
   background-color: red;
   border: 0.1rem solid var(--color-border);
   border-radius: 50%;
@@ -179,10 +177,15 @@ export interface EditProfileForm {
 function ProfileSettings() {
   const { data: initialProfileSettings } = useProfileSettings();
   const { updateProfileSettings, isPending } = useUpdateProfileSettings();
-  const { deleteProfilePicture } = useDeleteProfilePicture();
-  const { updateProfilePicture } = useUpdateProfilePicture();
+  const { deleteProfilePicture, isPending: isDeletingProfilePicture } =
+    useDeleteProfilePicture();
+  const { updateProfilePicture, isPending: isUpdatingProfilePicture } =
+    useUpdateProfilePicture();
 
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [hasImage, setHasImage] = useState(
+    Boolean(initialProfileSettings?.photo)
+  );
   const [photoChanged, setPhotoChanged] = useState(false);
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -223,15 +226,16 @@ function ProfileSettings() {
       setPhotoChanged(true);
       const file = event.target.files[0];
       setSelectedImageFile(file);
+      setHasImage(true);
     }
   };
 
   const handleDeleteImage = () => {
     setSelectedImageFile(null);
     setIsDeleting(false);
+    setHasImage(false);
     setPhotoChanged(true);
   };
-
   const onSubmit = async (data: EditProfileForm) => {
     try {
       if (photoChanged) {
@@ -243,7 +247,8 @@ function ProfileSettings() {
       }
 
       updateProfileSettings(data);
-      toast.success("updated profile settings successfully");
+      toast.success("Profile settings updated successfully!");
+
       if (!isPending) {
         dispatch(
           updateSideBarView({
@@ -258,6 +263,7 @@ function ProfileSettings() {
       );
     }
   };
+
   const firstName = watch("firstName") || "";
   const lastName = watch("lastName") || "";
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
@@ -270,13 +276,14 @@ function ProfileSettings() {
 
         <SettingSection>
           <ProfilePictureSection>
-            {selectedImageFile && (
+            {hasImage && (
               <>
                 <DeleteProfilePictureContainer
                   onClick={() => setIsDeleting(true)}
                 >
                   {getIcon("Delete")}
                 </DeleteProfilePictureContainer>
+
                 <Modal
                   isOpen={isDeleting}
                   title="Delete photo"
@@ -402,7 +409,7 @@ function ProfileSettings() {
           $revealed={isDirty || photoChanged}
           data-testid="submit-button"
         >
-          <Check />
+          {getIcon("Check")}
         </SubmitButton>
       </form>
     </SideBarContainer>
@@ -410,3 +417,4 @@ function ProfileSettings() {
 }
 
 export default ProfileSettings;
+export { SubmitButton };

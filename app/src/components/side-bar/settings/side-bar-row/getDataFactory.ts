@@ -17,7 +17,7 @@ function ExtractData(
     | privacySettingsID
     | activitySettingsID
     | permissionSettingsID
-    | undefined
+    | undefined,
 ): DataInterface {
   switch (type) {
     case StatusType.PRIVACY:
@@ -37,7 +37,7 @@ interface DataInterface {
 
 function getPrivacyData(
   privacyStatus: privacySettingsID | undefined,
-  currStatus: string | undefined
+  currStatus: string | undefined,
 ): DataInterface {
   return {
     getData: () => {
@@ -78,7 +78,7 @@ function getPrivacyData(
 
 function getActivityData(
   activityStatus: activitySettingsID | undefined,
-  currStatus: string | undefined
+  currStatus: string | undefined,
 ): DataInterface {
   return {
     getData: () => {
@@ -119,7 +119,7 @@ function getActivityData(
 
 function getPermissionData(
   permissionStatus: permissionSettingsID | undefined,
-  currStatus: string | undefined
+  currStatus: string | undefined,
 ): DataInterface {
   return {
     getData: () => {

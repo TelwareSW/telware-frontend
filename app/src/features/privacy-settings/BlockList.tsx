@@ -22,6 +22,13 @@ const PlaceHeader = styled.div`
   padding-bottom: 0.5rem;
 `;
 
+export interface BlockListInterface {
+  id: string;
+  username: string;
+  email: string;
+  _id: string;
+}
+
 function BlockList() {
   const { props } = useAppSelector((state) => state.sideBarData);
 
@@ -31,6 +38,18 @@ function BlockList() {
 
   return (
     <StyledOptionsList>
+      {isMenuOpened && <AddToBlockMenuList setIsMenuOpened={setIsMenuOpened} />}
+
+      <PlaceHeader>
+        {props && "subtitle" in props && typeof props.subtitle === "string" && (
+          <Heading as="h6">{props?.subtitle}</Heading>
+        )}
+      </PlaceHeader>
+
+      {blockList?.map((item: BlockListInterface) => {
+        return <BlockItem id={item.id} key={item.id} />;
+      })}
+
       <CircleIcon
         $icon="Add"
         $right={1}
@@ -41,18 +60,6 @@ function BlockList() {
         onClick={() => setIsMenuOpened(!isMenuOpened)}
         data-testid="block-user-menu-icon"
       />
-
-      {isMenuOpened && <AddToBlockMenuList setIsMenuOpened={setIsMenuOpened} />}
-
-      <PlaceHeader>
-        {props && "subtitle" in props && typeof props.subtitle === "string" && (
-          <Heading as="h6">{props?.subtitle}</Heading>
-        )}
-      </PlaceHeader>
-
-      {blockList?.map((item) => {
-        return <BlockItem {...item} key={item.id} />;
-      })}
     </StyledOptionsList>
   );
 }

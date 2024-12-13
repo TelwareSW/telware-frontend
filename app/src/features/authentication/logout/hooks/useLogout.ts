@@ -10,6 +10,7 @@ export function useLogout() {
     mutationFn: logoutApi,
     onSuccess: () => {
       queryClient.removeQueries();
+      localStorage.removeItem("sessionId");
       navigate("/login", { replace: true });
       queryClient.invalidateQueries({ queryKey: ["isAuth"] });
     },

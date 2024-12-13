@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { checkAuth } from "../services/checkAuth";
+import { checkAuth } from "../services/apiCheckAuth";
 
 export function useAuthStatus() {
   const { data: isAuth, isPending } = useQuery({

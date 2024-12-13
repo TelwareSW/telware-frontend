@@ -36,7 +36,7 @@ export const signupMock = [
             status: "error",
             data: {},
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -46,8 +46,8 @@ export const signupMock = [
           status: "success",
           data: {},
         },
-        { status: 201 }
+        { status: 201 },
       );
-    }
+    },
   ),
 ];

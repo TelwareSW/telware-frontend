@@ -85,7 +85,7 @@ describe("SideBarRow", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       updateSideBarView({
         redirect: 1,
-      })
+      }),
     );
   });
 
@@ -130,7 +130,7 @@ describe("SideBarRow", () => {
           state: expect.any(String),
           data: expect.any(Object),
         }),
-      })
+      }),
     );
   });
 });

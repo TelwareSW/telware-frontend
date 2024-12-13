@@ -1,10 +1,16 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+
+import { setUserInfo } from "@state/user/user";
+
+import { useUser } from "@features/authentication/login/hooks/useUser";
 
 const StyledMain = styled.main`
   position: relative;
   overflow: hidden;
   background: var(--color-chat-wallpaper-1);
-
+  padding-top: 1rem;
   &::before {
     content: "";
     position: absolute;
@@ -34,6 +40,14 @@ const StyledMain = styled.main`
 `;
 
 function Main({ children }: { children?: React.ReactNode }) {
+  const { user, isPending } = useUser();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user && !isPending) {
+      dispatch(setUserInfo(user));
+    }
+  }, [dispatch, user]);
   return <StyledMain data-testid="main">{children}</StyledMain>;
 }
 

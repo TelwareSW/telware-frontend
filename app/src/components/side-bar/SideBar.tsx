@@ -13,14 +13,17 @@ import { SideBarRowProps } from "./settings/side-bar-row/SideBarRow";
 import ProfileSettings from "@features/profile-settings/ProfileSettings";
 import ProfileInfo from "@features/profile-info/ProfileInfo";
 import ChatList from "@features/chats/ChatsList";
+import AddGroupMembers from "./groups/AddGroupMembers.js";
 
 import { useAppSelector } from "@hooks/useGlobalState";
 import BlockList from "@features/privacy-settings/BlockList";
 import Devices from "@features/devices/Devices";
+import NewGroup from "@features/groups/NewGroup.js";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
   data?: RadioInputProps;
+  type?: "channel" | "group";
 }
 
 const fadeIn = keyframes`
@@ -38,7 +41,7 @@ const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   background-color: var(--color-background);
   overflow: hidden;
   position: relative;
-
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
 
@@ -89,12 +92,29 @@ const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
       </SettingsSideBar>
     ),
     Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
+    AddMembers: (props) => (
+      <SettingsSideBar rows={[]}>
+        <AddGroupMembers type={props.data?.type!} />
+      </SettingsSideBar>
+    ),
+    NewGroup: () => (
+      <SettingsSideBar rows={[]}>
+        <NewGroup type="group" />
+      </SettingsSideBar>
+    ),
+    NewChannel: () => (
+      <SettingsSideBar rows={[]}>
+        <NewGroup type="channel" />
+      </SettingsSideBar>
+    ),
   };
 
 function Sidebar() {
   const { page, props } = useAppSelector((state) => state.sideBarData);
   const [currentPage, setCurrentPage] = useState(page);
   const [isExiting, setIsExiting] = useState(false);
+
+  console.log(currentPage);
 
   useEffect(() => {
     if (currentPage !== page) {

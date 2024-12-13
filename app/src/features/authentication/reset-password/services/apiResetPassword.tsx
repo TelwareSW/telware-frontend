@@ -17,6 +17,7 @@ export async function resetPassword({
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
 
     body: JSON.stringify(requestObj),

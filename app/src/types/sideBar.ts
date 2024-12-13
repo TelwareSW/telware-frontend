@@ -7,6 +7,9 @@ enum sideBarPages {
   PROFILE_UPDATE,
   BLOCKED_USERS,
   DEVICES,
+  ADD_MEMBERS,
+  NEW_GROUP,
+  NEW_CHANNEL,
 }
 
 type pagesStrings = keyof typeof sideBarPages;
@@ -15,6 +18,7 @@ enum privacySettingsID {
   STORIES_SEEN_PRIVACY,
   LAST_SEEN_PRIVACY,
   PROFILE_PHOTO_PRIVACY,
+  BLOCK_PRIVACY,
 }
 
 enum activitySettingsID {

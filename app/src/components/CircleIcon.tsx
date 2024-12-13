@@ -9,10 +9,14 @@ interface CircleIconProps {
   $padding?: number;
   $color?: string;
   $bgColor?: string;
-  onClick?: () => void;
+  $opacity?: number;
+  onClick?: (e: Event, voiceNoteName?: string) => void;
+  children?: React.ReactNode;
+  as?: React.ElementType;
+  type?: string;
 }
 
-const StyledIcon = styled.div<CircleIconProps>`
+const StyledCircleIcon = styled.div<CircleIconProps>`
   right: ${(props) => props.$right}rem;
   bottom: ${(props) => props.$bottom}rem;
   ${(props) =>
@@ -25,10 +29,12 @@ const StyledIcon = styled.div<CircleIconProps>`
   padding: ${(props) => props.$padding}rem;
   background-color: ${(props) => props.$bgColor};
   border-radius: var(--border-radius-circle);
-  opacity: 0.9;
+  opacity: ${(props) => props.$opacity};
   box-shadow: var(--box-shadow);
-  opacity: 0.9;
-  box-shadow: var(--box-shadow);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     opacity: 1;
@@ -38,10 +44,15 @@ const StyledIcon = styled.div<CircleIconProps>`
     width: 100%;
     height: 100%;
     color: ${(props) => props.$color};
-    width: 100%;
-    height: 100%;
-    color: ${(props) => props.$color};
   }
+
+  ${(props) =>
+    props.as === "button" &&
+    css`
+      border: none;
+      outline: none;
+      cursor: pointer;
+    `};
 `;
 
 function CircleIcon({
@@ -52,15 +63,31 @@ function CircleIcon({
   $padding = 0,
   $color = "var(--color-search-border)",
   $bgColor = "transparent",
+  $opacity = 0.9,
   onClick,
+  children,
+  as,
+  type,
 }: CircleIconProps) {
   return (
-    <StyledIcon
+    <StyledCircleIcon
       onClick={onClick}
-      {...{ $icon, $bottom, $right, $size, $padding, $color, $bgColor }}
+      {...{
+        $icon,
+        $bottom,
+        $right,
+        $size,
+        $padding,
+        $color,
+        $bgColor,
+        $opacity,
+        as,
+        type,
+      }}
     >
       {getIcon($icon)}
-    </StyledIcon>
+      {children}
+    </StyledCircleIcon>
   );
 }
 

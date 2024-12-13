@@ -1,10 +1,12 @@
 import Heading from "@components/Heading";
-import Avatar from "@features/chats/Avatar";
+import Avatar from "@components/Avatar";
 import styled from "styled-components";
 import { StyledList, StyledListProps } from "./AddToBlockMenuList";
 import { getIcon } from "@data/icons";
 import { useState } from "react";
 import { useBlock } from "./hooks/useBlock";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { setMemberIsBlocked } from "@state/messages/chats";
 
 const StyledSideBarRow = styled.div`
   width: 100%;
@@ -48,8 +50,6 @@ const StyledP = styled.p`
 
 const menuStyles: StyledListProps = {
   $bottom: -6,
-  $right: 0,
-  $size: 40,
   $height: 0,
 };
 
@@ -67,19 +67,26 @@ const HoverMask = styled.div`
 `;
 
 interface BlockedUserInterface {
-  id: number;
-  name: string;
-  username: string;
+  id: string;
 }
 
-function BlockItem({ id, name, username }: BlockedUserInterface) {
+function BlockItem({ id }: BlockedUserInterface) {
   const [isBlockButtonEnabled, setIsBlockButtonEnabled] = useState(false);
-
   const { removeFromBlockList } = useBlock();
 
-  function handleRemove(id: number) {
+  const members = useAppSelector((state) => state.chats.members);
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+  const { screenFirstName, screenLastName, username } =
+    members.find((member) => member._id === id) || {};
+
+  const name = screenFirstName + " " + screenLastName || "";
+
+  const dispatch = useAppDispatch();
+
+  function handleRemoveFromBlock(id: string) {
     removeFromBlockList({ id: id.toString() });
     setIsBlockButtonEnabled(false);
+    dispatch(setMemberIsBlocked({ memberId: id, isBlocked: false, userId }));
   }
 
   return (
@@ -98,7 +105,7 @@ function BlockItem({ id, name, username }: BlockedUserInterface) {
       {isBlockButtonEnabled && (
         <StyledList
           {...menuStyles}
-          onClick={() => handleRemove(id)}
+          onClick={() => handleRemoveFromBlock(id)}
           data-testid={`remove-from-blocklist-${id}`}
         >
           <HoverMask>

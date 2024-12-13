@@ -8,7 +8,7 @@ interface SideBarMenuItemProps {
   onClick?: () => void;
 }
 
-const StyledLi = styled.li`
+const StyledMenuItem = styled.li`
   display: flex;
   justify-content: start;
   align-items: center;
@@ -31,11 +31,11 @@ function SideBarMenuItem({
   iconMapValue,
 }: SideBarMenuItemProps) {
   return (
-    <StyledLi onClick={onClick}>
+    <StyledMenuItem onClick={onClick}>
       {getIcon(iconMapValue)}
       {title}
       {children}
-    </StyledLi>
+    </StyledMenuItem>
   );
 }
 export type { SideBarMenuItemProps };

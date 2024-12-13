@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { MOCK_USER, TOKEN } from "@mocks/mockData";
+import { MOCK_USER1, TOKEN } from "@mocks/data/users";
 
 type RequestBody = {
   code: string;
@@ -29,7 +29,7 @@ export const OauthMock = [
         message: "Successful login",
         status: "success",
         data: {
-          user: MOCK_USER,
+          user: MOCK_USER1,
           sessionID: TOKEN,
         },
       },
@@ -38,7 +38,7 @@ export const OauthMock = [
         headers: {
           "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
         },
-      }
+      },
     );
   }),
 
@@ -48,7 +48,7 @@ export const OauthMock = [
         message: "Successful login",
         status: "success",
         data: {
-          user: MOCK_USER,
+          user: MOCK_USER1,
           sessionID: TOKEN,
         },
       },
@@ -57,7 +57,7 @@ export const OauthMock = [
         headers: {
           "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
         },
-      }
+      },
     );
   }),
 ];

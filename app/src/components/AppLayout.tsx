@@ -1,11 +1,8 @@
 import { Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
-
-import { media } from "data/deviceSize";
-
 import Main from "./Main";
 import SideBar from "./side-bar/SideBar";
-import { MOBILE_VIEW } from "@constants";
+import { DESKTOP_VIEW, MOBILE_VIEW } from "@constants";
 
 const StyledApp = styled.div<{ $isChatOpen: boolean }>`
   @media ${MOBILE_VIEW} {
@@ -18,9 +15,9 @@ const StyledApp = styled.div<{ $isChatOpen: boolean }>`
     }
   }
 
-  @media ${media.desktop} {
+  @media ${DESKTOP_VIEW} {
     display: grid;
-    grid-template-columns: 2fr 5fr;
+    grid-template-columns: minmax(20rem, 2.5fr) 5fr;
 
     & > main {
       display: block;

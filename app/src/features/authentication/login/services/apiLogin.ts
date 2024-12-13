@@ -7,13 +7,13 @@ export async function login(user: User) {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-credentials": "true",
+      "X-Session-Token": localStorage.getItem("sessionId") || "",
     },
     body: JSON.stringify(user),
     credentials: "include",
   });
 
   const data = await res.json();
-
   if (data.status !== "success") {
     throw new Error(data.message);
   }

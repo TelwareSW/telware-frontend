@@ -18,6 +18,11 @@ const privacySettingsMap: Record<
   privacySettingsID,
   { id: keyof privacySettingsInterface; name: string; subtitle: string }
 > = {
+  [privacySettingsID.BLOCK_PRIVACY]: {
+    id: "blockPrivacy",
+    subtitle: "",
+    name: "Block List",
+  },
   [privacySettingsID.STORIES_SEEN_PRIVACY]: {
     id: "storiesSeenPrivacy",
     subtitle: "Who can see my stories?",
@@ -77,6 +82,9 @@ const pagesMap: { [K in pagesStrings]: string } = {
   PROFILE_UPDATE: "ProfileUpdate",
   BLOCKED_USERS: "blockList",
   DEVICES: "Devices",
+  ADD_MEMBERS: "AddMembers",
+  NEW_GROUP: "NewGroup",
+  NEW_CHANNEL: "NewChannel",
 };
 
 const settingsRows = [
@@ -105,6 +113,8 @@ const privacySettingsRows = [
     icon: "BlockIcon",
     title: "Blocked Users",
     redirect: sideBarPages.BLOCKED_USERS,
+    type: StatusType.PRIVACY,
+    status: privacySettingsID.BLOCK_PRIVACY,
   },
   {
     title: "Who can see my stories?",
@@ -193,6 +203,24 @@ const devices: SideBarView = {
   page: "DEVICES",
 };
 
+const addMembers: SideBarView = {
+  title: "Add Members",
+  backView: sideBarPages.CHATS,
+  page: "ADD_MEMBERS",
+};
+
+const newGroup: SideBarView = {
+  title: "New Group",
+  backView: sideBarPages.ADD_MEMBERS,
+  page: "NEW_GROUP",
+};
+
+const newChannel: SideBarView = {
+  title: "New Channel",
+  backView: sideBarPages.ADD_MEMBERS,
+  page: "NEW_CHANNEL",
+};
+
 export {
   chats,
   contacts,
@@ -210,4 +238,7 @@ export {
   devices,
   pagesMap,
   blockList,
+  addMembers,
+  newGroup,
+  newChannel,
 };

@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { GetProfileSettings as GetProfileSettingsAPI } from "../services/GetProfileSettings";
+import { GetProfileSettings as GetProfileSettingsAPI } from "../services/apiGetProfileSettings";
 
 function useProfileSettings() {
   const queryClient = useQueryClient();
