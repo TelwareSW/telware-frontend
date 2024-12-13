@@ -1,6 +1,7 @@
 import { getIcon } from "@data/icons";
 import { setSearchTerm } from "@state/messages/global-search";
-import { useDispatch } from "react-redux";
+import { RootState } from "@state/store";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 const StyledSearchBar = styled.div`
@@ -46,6 +47,7 @@ const Input = styled.input`
 
 function SearchBar() {
   const dispatch = useDispatch();
+  const { searchTerm } = useSelector((state: RootState) => state.globalSearch);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchTerm(e.target.value));
@@ -58,6 +60,7 @@ function SearchBar() {
         placeholder="Search"
         data-testid="general-search"
         onChange={onSearch}
+        value={searchTerm}
       />
       <Icon data-testid="general-serach-icon">{getIcon("Search")}</Icon>
     </StyledSearchBar>
