@@ -287,11 +287,12 @@ function SocketProvider({ children }: SocketProviderProps) {
         });
       });
 
-      socket.on("RECEIVE_MESSAGE", (message) => {
-        console.log("inside recieve");
-        console.log(message);
-        handleIncomingMessage(dispatch, message, message.chatId);
-      });
+      // TODO Fix: This makes message got received 3 times
+      // socket.on("RECEIVE_MESSAGE", (message) => {
+      //   console.log("inside recieve");
+      //   console.log(message);
+      //   handleIncomingMessage(dispatch, message, message.chatId);
+      // });
       socket.on("RECIEVE_OFFER", async (offer) => {
         console.log(offer);
         const answer = await createAnswer(offer);
