@@ -97,19 +97,19 @@ function Picker() {
           $active={activeTab === StickerTap.emoji}
           onClick={() => setActiveTab(StickerTap.emoji)}
         >
-          {getIcon("EmojiBox")}
+          {getIcon("EmojiBox", { fontSize: "small" })}
         </Tab>
         <Tab
           $active={activeTab === StickerTap.gif}
           onClick={() => setActiveTab(StickerTap.gif)}
         >
-          {getIcon("GifBox")}
+          {getIcon("GifBox", { fontSize: "small" })}
         </Tab>
         <Tab
           $active={activeTab === StickerTap.sticker}
           onClick={() => setActiveTab(StickerTap.sticker)}
         >
-          {getIcon("StickerBox")}
+          {getIcon("StickerBox", { fontSize: "small" })}
         </Tab>
       </TabBar>
       <EmojiWrapper>

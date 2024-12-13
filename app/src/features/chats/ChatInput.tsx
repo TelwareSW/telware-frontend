@@ -36,7 +36,6 @@ const InputContainer = styled.div`
 
   padding: 0.3125rem 0.6rem;
   border-radius: 1rem;
-
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
   flex: 3 auto;
@@ -44,7 +43,7 @@ const InputContainer = styled.div`
   display: flex;
   align-self: center;
   flex-direction: column;
-
+  align-content: center;
   height: 100%;
 `;
 

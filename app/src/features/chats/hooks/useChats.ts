@@ -19,7 +19,8 @@ export function useChats() {
   useEffect(() => {
     const initialChatState: ChatsState = {
       chats: parseChatsToState(chatData),
-      members: chatData?.members || [],
+      members:
+        chatData?.members.filter((member) => member._id !== userId) || [],
     };
 
     dispatch(setAllChats({ chatsData: initialChatState, blockList, userId }));

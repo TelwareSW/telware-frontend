@@ -25,12 +25,14 @@ export function parseChatsToState(chatData?: any) {
       name,
     } = currChat;
 
-    const filteredMembers = members.map((member: any) => {
-      return {
-        _id: member.user,
-        Role: member.Role,
-      } as ChatMember;
-    });
+    const filteredMembers = members
+      .map((member: any) => {
+        return {
+          _id: member.user,
+          Role: member.Role,
+        } as ChatMember;
+      })
+
 
     const incomingLastMessage = chatData.lastMessages.find(
       (lastMessage: any) => lastMessage.chatId === chatId

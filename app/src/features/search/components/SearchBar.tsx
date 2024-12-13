@@ -150,7 +150,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
 
   return (
     <SearchContainer>
-      <Icon>
+      <Icon data-testid="search-icon">
         {isSearchLoading ? getIcon("CircularProgress") : getIcon("Search")}
       </Icon>
       <SearchInput

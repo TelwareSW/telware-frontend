@@ -33,17 +33,17 @@ const Count = styled.span`
   position: relative;
 `;
 
-export default function NewGroup() {
+export default function NewGroup({ type }: { type: "channel" | "group" }) {
   const members = useAppSelector((state) => state.selectedUsers);
   const membersCount = members.length;
 
   return (
     <Container>
-      <CreateGroupForm />
+      <CreateGroupForm type={type} />
 
       {membersCount > 0 && (
         <StyledUsersList>
-          <Count>{`${membersCount} member${membersCount > 1 ? "s" : ""}`}</Count>
+          <Count>{`${membersCount} ${type === "channel" ? "subscriber" : "member"}${membersCount > 1 ? "s" : ""}`}</Count>
           {members?.map((user) => (
             <User view="display" key={user._id} user={user} />
           ))}

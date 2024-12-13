@@ -48,7 +48,7 @@ const HeaderAnimatinoContainer = styled.div`
   }
 `;
 
-const TerminateOtherSessionsButton = styled.button`
+const TerminateOtherSessionsButton = styled.div`
   color: var(--color-error);
   background-color: var(--color-background);
   font-size: 1rem;
@@ -79,11 +79,13 @@ function Devices() {
       <SettingSection>
         <SectionTitle data-testid="this-device-title">THIS DEVICE</SectionTitle>
         <SessionItem session={activeSession} />
-        <TerminateOtherSessionsButton
-          onClick={handleLogoutOthers}
-          data-testid="terminate-other-sessions-button"
-        >
-          <Icon>{getIcon("DoDisturb")}</Icon>
+        <TerminateOtherSessionsButton>
+          <Icon
+            onClick={handleLogoutOthers}
+            data-testid="terminate-other-sessions-button"
+          >
+            {getIcon("DoDisturb")}
+          </Icon>
           <span>Terminate All Other Sessions</span>
         </TerminateOtherSessionsButton>
       </SettingSection>

@@ -45,15 +45,16 @@ function ForwardingInputBar() {
 
   return selectedMessages ? (
     <Wrapper>
-      <IconButton onClick={handleClose} test-id="close-icon">
-        <Icon>{getIcon("Close")}</Icon>
+      <IconButton>
+        <Icon onClick={handleClose} test-id="close-icon">
+          {getIcon("Close")}
+        </Icon>
       </IconButton>
       <StyledHeader>{selectedMessages.length} messages selected</StyledHeader>
-      <IconButton
-        onClick={() => setShowForwardUsers(true)}
-        test-id="forward-icon"
-      >
-        <Icon>{getIcon("Forward")}</Icon>
+      <IconButton>
+        <Icon onClick={() => setShowForwardUsers(true)} test-id="forward-icon">
+          {getIcon("Forward")}
+        </Icon>
       </IconButton>
     </Wrapper>
   ) : null;

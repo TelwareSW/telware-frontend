@@ -83,7 +83,8 @@ const pagesMap: { [K in pagesStrings]: string } = {
   BLOCKED_USERS: "blockList",
   DEVICES: "Devices",
   ADD_MEMBERS: "AddMembers",
-  NEW_GROUP: "NewGroup"
+  NEW_GROUP: "NewGroup",
+  NEW_CHANNEL: "NewChannel",
 };
 
 const settingsRows = [
@@ -214,6 +215,12 @@ const newGroup: SideBarView = {
   page: "NEW_GROUP",
 };
 
+const newChannel: SideBarView = {
+  title: "New Channel",
+  backView: sideBarPages.ADD_MEMBERS,
+  page: "NEW_CHANNEL",
+};
+
 export {
   chats,
   contacts,
@@ -233,4 +240,5 @@ export {
   blockList,
   addMembers,
   newGroup,
+  newChannel,
 };

@@ -57,6 +57,26 @@ function StartNewChat() {
     setIsMenuOpened((prevState) => !prevState);
   };
 
+  function handleMenuItemClick(title: string) {
+    if (title === "New Channel") {
+      dispatch(
+        updateSideBarView({
+          redirect: sideBarPages.ADD_MEMBERS,
+          data: { type: "channel" },
+        })
+      );
+    } else if (title === "New Group") {
+      dispatch(
+        updateSideBarView({
+          redirect: sideBarPages.ADD_MEMBERS,
+          data: { type: "group" },
+        })
+      );
+    } else {
+      //TODO: implemn
+    }
+  }
+
   return (
     <>
       <StyledCircleIconContainer>
@@ -84,14 +104,7 @@ function StartNewChat() {
               data-testid={`new-chat-menu-item-${id}`}
               {...item}
               key={id}
-              onClick={() => {
-                dispatch(
-                  updateSideBarView({
-                    redirect: sideBarPages.ADD_MEMBERS,
-                    data: undefined,
-                  })
-                );
-              }}
+              onClick={() => handleMenuItemClick(item?.title)}
             />
           ))}
         </StyledList>

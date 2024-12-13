@@ -11,6 +11,7 @@ import {
   blockList,
   addMembers,
   newGroup,
+  newChannel,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -44,6 +45,8 @@ function getSideBarPage(type: number): SideBarView {
       return addMembers;
     case sideBarPages.NEW_GROUP:
       return newGroup;
+    case sideBarPages.NEW_CHANNEL:
+      return newChannel;
     default:
       throw new Error("Unknown Type");
   }
@@ -72,7 +75,11 @@ const sideBarSlice = createSlice({
       if (redirect === sideBarPages.SETTINGS_UPDATE) {
         state.props = { data: data };
         state.title = data?.header || newData.title;
-      } else if (redirect === sideBarPages.BLOCKED_USERS) {
+      } else if (
+        redirect === sideBarPages.BLOCKED_USERS ||
+        redirect === sideBarPages.ADD_MEMBERS ||
+        redirect === sideBarPages.NEW_GROUP
+      ) {
         state.props = { ...newData.props, data: data };
         state.title = newData.title;
       } else {
