@@ -5,13 +5,15 @@ import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
-import { useAppSelector } from "@hooks/useGlobalState";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
 import { getChatByID } from "./utils/helpers";
 import { useChatMembers } from "./hooks/useChatMember";
 import { getElapsedTime } from "@utils/helpers";
 import { useSocket } from "@hooks/useSocket";
 import CallLayout from "@features/calls/CallLayout";
+import { useBlock } from "@features/privacy-settings/hooks/useBlock";
+import { setChatIsBlocked } from "@state/messages/chats";
 const Container = styled.div<{ hasMargin?: boolean }>`
   position: absolute;
   top: 0;
@@ -81,9 +83,28 @@ const InvisibleButton = styled.button`
   display: inline-block;
   cursor: pointer;
 `;
+
+const StyledButton = styled.button`
+  background: linear-gradient(
+    to left,
+    var(--color-background-own-3),
+    var(--color-background-own-4)
+  );
+
+  border: none;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  color: var(--color-text);
+  margin-right: 1rem;
+
+  color: var(--color-background);
+`;
+
 //TODO: refactor
 function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
+  const userId = useAppSelector((state) => state.user.userInfo.id);
   const chats = useAppSelector((state) => state.chats.chats);
   const [isSearching, setIsSearching] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -96,20 +117,14 @@ function Topbar() {
     : undefined;
 
   const membersData = useChatMembers(chat?.members);
+  const { removeFromBlockList } = useBlock();
 
-  let name;
   let image;
   let lastSeen;
 
   if (chat) {
-    if (chat?.type === "group" || chat?.type === "channel") {
-      name = chat?.name;
-    } else {
-      name = membersData[0]?.screenFirstName || membersData[0]?.username;
-
-      lastSeen = chat?.lastMessage?.timestamp;
-      image = membersData[0]?.photo;
-    }
+    lastSeen = chat?.lastMessage?.timestamp;
+    image = membersData[0]?.photo;
   }
 
   if (!chat) return null;
@@ -117,6 +132,20 @@ function Topbar() {
   const toggleSearch = () => {
     setIsSearching(!isSearching);
   };
+
+  const dispatch = useAppDispatch();
+
+  async function handleRemoveFromBlock() {
+    await removeFromBlockList({ id: membersData[0]._id });
+    dispatch(
+      setChatIsBlocked({
+        chatId: chatId!,
+        isBlocked: false,
+        userId: userId,
+      })
+    );
+  }
+
   const isCall = true;
   return (
     <>
@@ -124,7 +153,7 @@ function Topbar() {
         <CallLayout
           isCollapsed={isCollapsed}
           setIsCollapsed={setIsCollapsed}
-          name={name}
+          name={chat.name}
           image={image}
         />
       )}
@@ -132,7 +161,7 @@ function Topbar() {
         <Avatar
           data-testid="chat-avatar"
           image={image}
-          name={name?.charAt(0)}
+          name={chat.name?.charAt(0)}
         />
         {isSearching ? (
           <SearchBar onClose={toggleSearch} />
@@ -140,7 +169,7 @@ function Topbar() {
           <>
             <Info data-testid="chat-info">
               <Content>
-                <Name data-testid="chat-name">{name}</Name>
+                <Name data-testid="chat-name">{chat.name}</Name>
                 {lastSeen && (
                   <LastSeen data-testid="chat-last-seen">
                     last seen {getElapsedTime(lastSeen)}
@@ -149,8 +178,16 @@ function Topbar() {
               </Content>
             </Info>
             <PinnedMessages />
+            {chat.isBlocked && (
+              <StyledButton
+                onClick={handleRemoveFromBlock}
+                data-testid="unblock-button"
+              >
+                Unblock
+              </StyledButton>
+            )}
             <Icons>
-              <InvisibleButton onClick={startConnection}>
+              <InvisibleButton onClick={() => startConnection()}>
                 <Icon>{getIcon("Call")}</Icon>
               </InvisibleButton>
 
