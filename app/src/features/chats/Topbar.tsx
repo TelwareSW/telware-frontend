@@ -78,7 +78,7 @@ const IconButton = styled.button`
   justify-content: center;
 `;
 
-const InvisibleButton = styled.button`
+const InvisibleButton = styled.div`
   all: unset;
   display: inline-block;
   cursor: pointer;
@@ -187,14 +187,16 @@ function Topbar() {
               </StyledButton>
             )}
             <Icons>
-              <InvisibleButton onClick={() => startConnection()}>
-                <Icon>{getIcon("Call")}</Icon>
+              <InvisibleButton>
+                <Icon onClick={() => startConnection()} data-testid="call-icon">
+                  {getIcon("Call")}
+                </Icon>
               </InvisibleButton>
 
               <IconButton onClick={toggleSearch} data-testid="search-button">
                 {getIcon("Search")}
               </IconButton>
-              <Icon>{getIcon("More")}</Icon>
+              <Icon data-testid="more-icon">{getIcon("More")}</Icon>
             </Icons>
           </>
         )}

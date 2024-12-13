@@ -6,7 +6,7 @@ import Icon from "@components/Icon";
 import { useContext } from "react";
 import { ChatInputContext } from "./ChatBox";
 
-const InvisibleButton = styled.button`
+const InvisibleButton = styled.div`
   all: unset;
   display: inline-block;
   cursor: pointer;
@@ -36,11 +36,10 @@ function ChatInputIcons() {
 
   return (
     <>
-      <InvisibleButton
-        onClick={() => toggleShowEmojies()}
-        data-testid="emoji-button"
-      >
-        <Icon>{getIcon("Emojie")}</Icon>
+      <InvisibleButton>
+        <Icon data-testid="Emojie-button" onClick={() => toggleShowEmojies()}>
+          {getIcon("Emojie")}
+        </Icon>
       </InvisibleButton>
 
       <ExpandingTextArea
