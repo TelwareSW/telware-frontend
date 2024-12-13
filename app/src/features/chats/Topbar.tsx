@@ -14,7 +14,8 @@ import { useSocket } from "@hooks/useSocket";
 import CallLayout from "@features/calls/CallLayout";
 import { useBlock } from "@features/privacy-settings/hooks/useBlock";
 import { setChatIsBlocked } from "@state/messages/chats";
-const Container = styled.div<{ hasMargin?: boolean }>`
+
+const Container = styled.div<{ $hasMargin?: boolean }>`
   position: absolute;
   top: 0;
   z-index: 2;
@@ -29,7 +30,7 @@ const Container = styled.div<{ hasMargin?: boolean }>`
 
   padding-inline: 1rem;
 
-  margin: ${({ hasMargin }) => (hasMargin ? "1rem 0" : "0")};
+  margin: ${({ $hasMargin }) => ($hasMargin ? "1rem 0" : "0")};
 `;
 
 const Info = styled.div`
@@ -127,8 +128,6 @@ function Topbar() {
     image = membersData[0]?.photo;
   }
 
-  if (!chat) return null;
-
   const toggleSearch = () => {
     setIsSearching(!isSearching);
   };
@@ -146,7 +145,10 @@ function Topbar() {
     );
   }
 
-  const isCall = true;
+  const isCall = false;
+
+  if (!chat) return null;
+
   return (
     <>
       {isCall && (
@@ -157,7 +159,7 @@ function Topbar() {
           image={image}
         />
       )}
-      <Container hasMargin={isCollapsed}>
+      <Container $hasMargin={isCollapsed}>
         <Avatar
           data-testid="chat-avatar"
           image={image}
