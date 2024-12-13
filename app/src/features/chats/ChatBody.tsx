@@ -75,7 +75,7 @@ function ChatBody() {
       {messages &&
         messages.map((data) => {
           return (
-            <MessageProvider data={data}>
+            <MessageProvider key={data._id} data={data}>
               <Message key={data._id} />
             </MessageProvider>
           );
