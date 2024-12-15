@@ -10,6 +10,7 @@ import { updateSideBarView } from "@state/side-bar/sideBar";
 
 import { useAllUsers } from "@features/groups/hooks/useAllUsers";
 import { useUser } from "@features/authentication/login/hooks/useUser";
+import { useSidebarType } from "./side-bar/SideBarContext";
 
 const Container = styled.div`
   width: 100%;
@@ -39,13 +40,13 @@ function UsersList({ type }: { type: "channel" | "group" }) {
   const { user: currentUser, isPending: isPendingCurrentUser } = useUser();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const dispatch = useAppDispatch();
-
+  const sideBarType = useSidebarType();
   if (isPendenigAllUsers || isPendingCurrentUser) return null;
 
   function handleClick() {
     const redirect =
       type === "channel" ? sideBarPages.NEW_CHANNEL : sideBarPages.NEW_GROUP;
-    dispatch(updateSideBarView({ redirect }));
+    dispatch(updateSideBarView({ redirect, data: { type: sideBarType } }));
   }
 
   const filteredUsers = users?.filter(

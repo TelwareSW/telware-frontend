@@ -9,6 +9,7 @@ import {
   StatusType,
 } from "types/sideBar";
 import { statusMap } from "@data/sideBar";
+import { useSidebarType } from "../SideBarContext";
 
 const StyledOptionsList = styled.div`
   display: flex;
@@ -32,7 +33,7 @@ function getKey(
     | permissionSettingsID
     | undefined,
   type: StatusType | undefined,
-  index: number,
+  index: number
 ) {
   let key;
   if (status !== undefined && type !== undefined) {
@@ -48,8 +49,13 @@ function getKey(
 }
 
 function OptionsList({ rows }: { rows: SideBarRowProps[] }) {
-  const { title } = useAppSelector((state) => state.sideBarData);
+  const type = useSidebarType();
 
+  const { title } = useAppSelector((state) =>
+    type === "left"
+      ? state.sideBarData.leftSideBar
+      : state.sideBarData.rightSideBar
+  );
   return (
     <>
       {rows.length > 0 && (

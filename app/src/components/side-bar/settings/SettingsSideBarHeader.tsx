@@ -6,6 +6,7 @@ import CircleIcon from "@components/CircleIcon";
 import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+import { useSidebarType } from "../SideBarContext";
 
 const StyledSideBarHeader = styled.div`
   height: 4rem !important;
@@ -32,7 +33,13 @@ const IconsContainer = styled.div`
 `;
 
 function SettingsSideBarHeader() {
-  const { title } = useAppSelector((state) => state.sideBarData);
+  const type = useSidebarType();
+
+  const { title } = useAppSelector((state) =>
+    type === "left"
+      ? state.sideBarData.leftSideBar
+      : state.sideBarData.rightSideBar
+  );
   const { logout } = useLogout();
   const dispatch = useAppDispatch();
 
@@ -53,7 +60,10 @@ function SettingsSideBarHeader() {
             $bgColor="var(--color-pattern)"
             onClick={() =>
               dispatch(
-                updateSideBarView({ redirect: sideBarPages.PROFILE_UPDATE })
+                updateSideBarView({
+                  redirect: sideBarPages.PROFILE_UPDATE,
+                  data: { type },
+                })
               )
             }
           />

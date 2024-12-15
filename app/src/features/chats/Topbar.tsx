@@ -6,7 +6,7 @@ import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { getChatByID } from "./utils/helpers";
 import { useChatMembers } from "./hooks/useChatMember";
 import { getElapsedTime } from "@utils/helpers";
@@ -29,6 +29,7 @@ const Container = styled.div<{ $hasMargin?: boolean }>`
   align-items: center;
 
   padding-inline: 1rem;
+  cursor: pointer;
 
   margin: ${({ $hasMargin }) => ($hasMargin ? "1rem 0" : "0")};
 `;
@@ -102,6 +103,11 @@ const StyledButton = styled.button`
   color: var(--color-background);
 `;
 
+interface OutletContextProps {
+  setShowRightSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  showRightSideBar: boolean;
+}
+
 //TODO: refactor
 function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
@@ -119,6 +125,9 @@ function Topbar() {
 
   const membersData = useChatMembers(chat?.members);
   const { removeFromBlockList } = useBlock();
+
+  const { showRightSideBar, setShowRightSideBar } =
+    useOutletContext<OutletContextProps>();
 
   let image;
   let lastSeen;
@@ -159,7 +168,10 @@ function Topbar() {
           image={image}
         />
       )}
-      <Container $hasMargin={isCollapsed}>
+      <Container
+        $hasMargin={isCollapsed}
+        onClick={() => setShowRightSideBar(!showRightSideBar)}
+      >
         <Avatar
           data-testid="chat-avatar"
           image={image}

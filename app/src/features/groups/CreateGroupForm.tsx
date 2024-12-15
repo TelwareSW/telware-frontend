@@ -14,6 +14,7 @@ import { sideBarPages } from "types/sideBar";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { clearSelectedUsers } from "@state/groups/selectedUsers";
 import { useSocket } from "@hooks/useSocket";
+import { useSidebarType } from "@components/side-bar/SideBarContext";
 
 const Form = styled.form`
   padding: 1rem;
@@ -34,13 +35,20 @@ function GroupInfoForm({ type }: { type: "channel" | "group" }) {
     },
   });
 
+  const sideBarType = useSidebarType();
+
   const groupName = watch("groupName");
   const dispatch = useDispatch();
   const members = useAppSelector((state) => state.selectedUsers);
   const { createGroupOrChannel } = useSocket();
 
   const onSubmit = (data: NewGroupForm) => {
-    dispatch(updateSideBarView({ redirect: sideBarPages.CHATS }));
+    dispatch(
+      updateSideBarView({
+        redirect: sideBarPages.CHATS,
+        data: { type: sideBarType },
+      })
+    );
     dispatch(clearSelectedUsers());
 
     createGroupOrChannel({

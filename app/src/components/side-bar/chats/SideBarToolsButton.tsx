@@ -8,6 +8,7 @@ import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "@data/sideBar";
 import { useMouseLeave } from "@hooks/useMouseLeave";
 import { getIcon } from "@data/icons";
+import { useSidebarType } from "../SideBarContext";
 
 const ToolsIcon = styled.div`
   > svg {
@@ -47,6 +48,9 @@ function SettingsToolbar() {
   const handleOpenSettings = () => {
     setIsOpened((prevState) => !prevState);
   };
+
+  const type = useSidebarType();
+
   return (
     <>
       <ToolsIcon onClick={handleOpenSettings} data-testid="menu-items-icon">
@@ -65,7 +69,7 @@ function SettingsToolbar() {
               dispatch(
                 updateSideBarView({
                   redirect: sideBarPages.CONTACTS,
-                  data: undefined,
+                  data: { type },
                 })
               )
             }
@@ -78,7 +82,7 @@ function SettingsToolbar() {
               dispatch(
                 updateSideBarView({
                   redirect: sideBarPages.SETTINGS,
-                  data: undefined,
+                  data: { type },
                 })
               )
             }
