@@ -21,7 +21,16 @@ interface SideBarView {
   backView?: sideBarPages;
   props?: object;
 }
-const initialState: SideBarView = chats;
+
+interface SideBarState {
+  leftSideBar: SideBarView;
+  rightSideBar: SideBarView;
+}
+
+const initialState: SideBarState = {
+  leftSideBar: chats,
+  rightSideBar: settings,
+};
 
 function getSideBarPage(type: number): SideBarView {
   switch (type) {
@@ -54,7 +63,7 @@ function getSideBarPage(type: number): SideBarView {
 
 interface actionType {
   redirect: sideBarPages;
-  data?: { [key: string]: string };
+  data: { type: "left" | "right"; [key: string]: string };
 }
 
 const sideBarSlice = createSlice({
@@ -64,27 +73,20 @@ const sideBarSlice = createSlice({
     updateSideBarView: (state, action: PayloadAction<actionType>) => {
       const { redirect, data } = action.payload;
 
-      // redirect can take value 0, so don't try "if(redirect)"
-      if (redirect === undefined) return;
-
-      // state assigned one by one to avoid state de-serialization
+      const whichSide = data.type;
       const newData = getSideBarPage(redirect);
-      state.backView = newData.backView;
-      state.page = newData.page;
 
-      if (redirect === sideBarPages.SETTINGS_UPDATE) {
-        state.props = { data: data };
-        state.title = data?.header || newData.title;
-      } else if (
-        redirect === sideBarPages.BLOCKED_USERS ||
-        redirect === sideBarPages.ADD_MEMBERS ||
-        redirect === sideBarPages.NEW_GROUP
-      ) {
-        state.props = { ...newData.props, data: data };
-        state.title = newData.title;
+      const updatedSideBar = {
+        page: newData.page,
+        title: newData.title,
+        backView: newData.backView,
+        props: { ...newData.props },
+      };
+
+      if (whichSide === "left") {
+        state.leftSideBar = updatedSideBar;
       } else {
-        state.title = newData.title;
-        state.props = { ...newData.props };
+        state.rightSideBar = updatedSideBar;
       }
     },
   },

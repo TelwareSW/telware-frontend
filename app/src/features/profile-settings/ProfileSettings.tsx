@@ -20,6 +20,7 @@ import { sideBarPages } from "types/sideBar";
 import { useAppDispatch } from "@hooks/useGlobalState";
 import { useUpdateProfilePicture } from "./hooks/useUpdateProfilePicture";
 import { useDeleteProfilePicture } from "./hooks/useDeleteProfilePicture";
+import { useSidebarType } from "@components/side-bar/SideBarContext";
 
 const SideBarContainer = styled.div`
   overflow-y: auto;
@@ -177,10 +178,9 @@ export interface EditProfileForm {
 function ProfileSettings() {
   const { data: initialProfileSettings } = useProfileSettings();
   const { updateProfileSettings, isPending } = useUpdateProfileSettings();
-  const { deleteProfilePicture, isPending: isDeletingProfilePicture } =
-    useDeleteProfilePicture();
-  const { updateProfilePicture, isPending: isUpdatingProfilePicture } =
-    useUpdateProfilePicture();
+  const { deleteProfilePicture } = useDeleteProfilePicture();
+  const { updateProfilePicture } = useUpdateProfilePicture();
+  const sideBarType = useSidebarType();
 
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [hasImage, setHasImage] = useState(
@@ -253,7 +253,7 @@ function ProfileSettings() {
         dispatch(
           updateSideBarView({
             redirect: sideBarPages.SETTINGS,
-            data: undefined,
+            data: { type: sideBarType },
           })
         );
       }

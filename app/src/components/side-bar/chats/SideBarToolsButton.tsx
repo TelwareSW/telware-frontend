@@ -8,6 +8,7 @@ import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "@data/sideBar";
 import { useMouseLeave } from "@hooks/useMouseLeave";
 import { getIcon } from "@data/icons";
+import { useSidebarType } from "../SideBarContext";
 import { RootState } from "@state/store";
 import { clearSearch } from "@state/messages/global-search";
 import { useSelector } from "react-redux";
@@ -58,6 +59,9 @@ function SettingsToolbar() {
     dispatch(clearSearch());
   };
 
+
+  const type = useSidebarType();
+
   return (
     <>
       <ToolsIcon
@@ -83,8 +87,8 @@ function SettingsToolbar() {
               dispatch(
                 updateSideBarView({
                   redirect: sideBarPages.CONTACTS,
-                  data: undefined,
-                }),
+                  data: { type },
+                })
               )
             }
           />
@@ -96,8 +100,8 @@ function SettingsToolbar() {
               dispatch(
                 updateSideBarView({
                   redirect: sideBarPages.SETTINGS,
-                  data: undefined,
-                }),
+                  data: { type },
+                })
               )
             }
           />

@@ -19,6 +19,7 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import BlockList from "@features/privacy-settings/BlockList";
 import Devices from "@features/devices/Devices";
 import NewGroup from "@features/groups/NewGroup.js";
+import { SidebarContext } from "./SideBarContext.js";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -65,56 +66,62 @@ const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   }
 `;
 
-const sideBarMap: { [key: string]: (props: SideBarProps) => React.ReactNode } =
-  {
-    Chats: () => (
-      <ChatsSideBar>
-        <ChatList />
-      </ChatsSideBar>
-    ),
-    Contacts: () => <ContactsSideBar />,
-    Settings: (props) => (
-      <SettingsSideBar rows={props.rows || []}>
-        <ProfilePicture />
-        <ProfileInfo />
-      </SettingsSideBar>
-    ),
-    Privacy: (props) => <SettingsSideBar rows={props.rows || []} />,
-    SettingsUpdate: (props) => (
-      <SettingsSideBar rows={[]}>
-        {props.data && <SettingsUpdate {...props.data} />}
-      </SettingsSideBar>
-    ),
-    ProfileUpdate: () => <ProfileSettings />,
-    blockList: () => (
-      <SettingsSideBar rows={[]}>
-        <BlockList />
-      </SettingsSideBar>
-    ),
-    Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
-    AddMembers: (props) => (
-      <SettingsSideBar rows={[]}>
-        <AddGroupMembers type={props.data?.type!} />
-      </SettingsSideBar>
-    ),
-    NewGroup: () => (
-      <SettingsSideBar rows={[]}>
-        <NewGroup type="group" />
-      </SettingsSideBar>
-    ),
-    NewChannel: () => (
-      <SettingsSideBar rows={[]}>
-        <NewGroup type="channel" />
-      </SettingsSideBar>
-    ),
-  };
+const sideBarMap: {
+  [key: string]: (
+    props: SideBarProps,
+    type: "left" | "right"
+  ) => React.ReactNode;
+} = {
+  Chats: () => (
+    <ChatsSideBar>
+      <ChatList />
+    </ChatsSideBar>
+  ),
+  Contacts: () => <ContactsSideBar />,
+  Settings: (props) => (
+    <SettingsSideBar rows={props.rows || []}>
+      <ProfilePicture />
+      <ProfileInfo />
+    </SettingsSideBar>
+  ),
+  Privacy: (props) => <SettingsSideBar rows={props.rows || []} />,
+  SettingsUpdate: (props) => (
+    <SettingsSideBar rows={[]}>
+      {props.data && <SettingsUpdate {...props.data} />}
+    </SettingsSideBar>
+  ),
+  ProfileUpdate: () => <ProfileSettings />,
+  blockList: () => (
+    <SettingsSideBar rows={[]}>
+      <BlockList />
+    </SettingsSideBar>
+  ),
+  Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
+  AddMembers: (props) => (
+    <SettingsSideBar rows={[]}>
+      <AddGroupMembers type={props.data?.type!} />
+    </SettingsSideBar>
+  ),
+  NewGroup: () => (
+    <SettingsSideBar rows={[]}>
+      <NewGroup type="group" />
+    </SettingsSideBar>
+  ),
+  NewChannel: () => (
+    <SettingsSideBar rows={[]}>
+      <NewGroup type="channel" />
+    </SettingsSideBar>
+  ),
+};
 
-function Sidebar() {
-  const { page, props } = useAppSelector((state) => state.sideBarData);
+function Sidebar({ type }: { type: "left" | "right" }) {
+  const { page, props } = useAppSelector((state) =>
+    type === "left"
+      ? state.sideBarData.leftSideBar
+      : state.sideBarData.rightSideBar
+  );
   const [currentPage, setCurrentPage] = useState(page);
   const [isExiting, setIsExiting] = useState(false);
-
-  console.log(currentPage);
 
   useEffect(() => {
     if (currentPage !== page) {
@@ -133,9 +140,11 @@ function Sidebar() {
   const pageString = pagesMap[currentPage] || "Settings";
 
   return (
-    <StyledSidebar $isExiting={isExiting} data-testid="side-bar">
-      {sideBarMap[pageString](props || {})}
-    </StyledSidebar>
+    <SidebarContext.Provider value={type}>
+      <StyledSidebar $isExiting={isExiting} data-testid={`${type}-side-bar`}>
+        {sideBarMap[pageString](props!, type)}
+      </StyledSidebar>
+    </SidebarContext.Provider>
   );
 }
 
