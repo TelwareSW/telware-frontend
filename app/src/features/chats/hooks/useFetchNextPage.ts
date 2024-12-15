@@ -19,10 +19,10 @@ function useFetchNextPage() {
     isFetchingPreviousPage,
   } = useInfiniteQuery({
     queryKey: [`chat-${chatId}-pages`],
-    queryFn: ({ pageParam = 1 }) =>
+    queryFn: ({ pageParam }) =>
       apiFetchNextPage({ chatId: chatId!, pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextPage,
-    initialPageParam: 1,
+    initialPageParam: 0,
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function useFetchNextPage() {
           mergeMessages({
             chatId: chatId,
             newMessages: lastFetchedPage.messages,
-          }),
+          })
         );
       }
     }
