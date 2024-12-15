@@ -1,7 +1,6 @@
 import { useProfileSettings } from "@features/profile-settings/hooks/useProfileSettings";
 import styled from "styled-components";
 import ProfileItem from "./components/ProfileItem";
-import { getIcon } from "@data/icons";
 
 const ProfileInfoStyled = styled.div`
   border-bottom: 0.625rem solid var(--color-background-secondary);
@@ -45,7 +44,7 @@ function ProfileInfo() {
         <ProfileItem
           data={profileSettings.bio}
           ribbon="Bio"
-          icon="info"
+          icon="Info"
           data-testid="bio-profile-item"
         />
       )}

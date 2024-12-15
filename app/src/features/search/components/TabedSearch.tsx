@@ -2,7 +2,7 @@ import { RootState } from "@state/store";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { SEARCH_TABS } from "../data/tabs-components-map";
+import { SEARCH_TABS_MOCK } from "../data/tabs-components-map";
 import { setSelectedTab } from "@state/messages/global-search";
 
 const TabedSearchContainer = styled(motion.div)`
@@ -78,7 +78,7 @@ const TabedSearch: React.FC = () => {
         >
           <LayoutGroup>
             <TabListWrapper>
-              {SEARCH_TABS.map((tab) => (
+              {SEARCH_TABS_MOCK.map((tab) => (
                 <TabButton
                   key={tab.title}
                   onClick={() => dispatch(setSelectedTab(tab.title))}
@@ -106,7 +106,7 @@ const TabedSearch: React.FC = () => {
                 exit={{ opacity: 0 }}
                 transition={{ type: "tween", duration: 0.2 }}
               >
-                {SEARCH_TABS.find(
+                {SEARCH_TABS_MOCK.find(
                   (tab) => tab.title === selectedTab,
                 )?.component()}
               </TabContent>
