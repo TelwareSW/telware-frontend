@@ -59,6 +59,7 @@ enum icons {
   ArrowForward,
   Mute,
   EndCall,
+  AddMembers,
 }
 
 type iconStrings = keyof typeof icons;
@@ -400,6 +401,10 @@ const iconImports: Record<iconStrings, IconConfig> = {
     importFn: () => import("@mui/icons-material/CallEnd"),
     defaultProps: { fontSize: "large" },
   },
+  AddMembers: {
+    importFn: () => import("@mui/icons-material/PersonAddAlt1"),
+    defaultProps: { fontSize: "large" },
+  },
 };
 
 const iconCache = new Map<string, React.ReactElement>();
@@ -410,7 +415,7 @@ function getIcon(
     sx?: SxProps;
     fontSize?: "small" | "medium" | "large";
     style?: React.CSSProperties;
-  },
+  }
 ) {
   if (!iconName) return undefined;
 

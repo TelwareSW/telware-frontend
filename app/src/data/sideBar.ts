@@ -85,6 +85,8 @@ const pagesMap: { [K in pagesStrings]: string } = {
   ADD_MEMBERS: "AddMembers",
   NEW_GROUP: "NewGroup",
   NEW_CHANNEL: "NewChannel",
+  GROUP_INFO: "GroupInfo",
+  EDIT_GROUP_INFO: "EditGroupInfo",
 };
 
 const settingsRows = [
@@ -221,6 +223,18 @@ const newChannel: SideBarView = {
   page: "NEW_CHANNEL",
 };
 
+const groupInfo: SideBarView = {
+  title: "Group Info",
+  backView: undefined,
+  page: "GROUP_INFO",
+};
+
+const editGroupInfo: SideBarView = {
+  title: "Edit",
+  backView: sideBarPages.GROUP_INFO,
+  page: "EDIT_GROUP_INFO",
+};
+
 export {
   chats,
   contacts,
@@ -241,4 +255,6 @@ export {
   addMembers,
   newGroup,
   newChannel,
+  groupInfo,
+  editGroupInfo,
 };

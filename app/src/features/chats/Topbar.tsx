@@ -103,7 +103,7 @@ const StyledButton = styled.button`
   color: var(--color-background);
 `;
 
-interface OutletContextProps {
+export interface OutletContextProps {
   setShowRightSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   showRightSideBar: boolean;
 }

@@ -12,6 +12,8 @@ import {
   addMembers,
   newGroup,
   newChannel,
+  groupInfo,
+  editGroupInfo,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -29,7 +31,7 @@ interface SideBarState {
 
 const initialState: SideBarState = {
   leftSideBar: chats,
-  rightSideBar: settings,
+  rightSideBar: groupInfo,
 };
 
 function getSideBarPage(type: number): SideBarView {
@@ -56,6 +58,10 @@ function getSideBarPage(type: number): SideBarView {
       return newGroup;
     case sideBarPages.NEW_CHANNEL:
       return newChannel;
+    case sideBarPages.GROUP_INFO:
+      return groupInfo;
+    case sideBarPages.EDIT_GROUP_INFO:
+      return editGroupInfo;
     default:
       throw new Error("Unknown Type");
   }
