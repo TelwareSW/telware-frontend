@@ -14,9 +14,9 @@ import {
   pinMessage,
   unpinMessage,
   editMessage,
+  deleteMessage as deleteMessageAction,
 } from "@state/messages/chats";
 import { connectToPeer, createAnswer, startCall } from "@features/calls/call";
-import { deleteMessage as deleteMessageAction } from "@state/messages/chats";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
