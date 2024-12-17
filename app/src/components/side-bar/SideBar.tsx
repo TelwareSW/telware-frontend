@@ -20,6 +20,8 @@ import BlockList from "@features/privacy-settings/BlockList";
 import Devices from "@features/devices/Devices";
 import NewGroup from "@features/groups/NewGroup.js";
 import { SidebarContext } from "./SideBarContext.js";
+import GroupInfo from "@features/groups/GroupInfo.js";
+import EditGroupInfo from "@features/groups/EditGroupInfo.js";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -42,11 +44,12 @@ const StyledSidebar = styled.aside<{ $isExiting: boolean }>`
   background-color: var(--color-background);
   overflow: hidden;
   position: relative;
-  padding-top: 1rem;
+
   display: flex;
   flex-direction: column;
 
   border-right: 1px solid var(--color-border);
+  z-index: 100;
 
   animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s;
   animation: ${({ $isExiting }) => ($isExiting ? fadeOut : fadeIn)} 0.1s
@@ -110,6 +113,16 @@ const sideBarMap: {
   NewChannel: () => (
     <SettingsSideBar rows={[]}>
       <NewGroup type="channel" />
+    </SettingsSideBar>
+  ),
+  GroupInfo: () => (
+    <SettingsSideBar rows={[]}>
+      <GroupInfo />
+    </SettingsSideBar>
+  ),
+  EditGroupInfo: () => (
+    <SettingsSideBar rows={[]}>
+      <EditGroupInfo />
     </SettingsSideBar>
   ),
 };

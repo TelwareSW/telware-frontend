@@ -5,8 +5,8 @@ import Checkbox from "./Checkbox";
 
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 
-import type { UserType } from "@features/groups/hooks/useAllUsers";
 import { toggleSelectUser } from "@state/groups/selectedUsers";
+import { UserType } from "@features/groups/hooks/useAllUsers";
 
 const UserRow = styled.div`
   display: flex;
@@ -29,15 +29,44 @@ const UserRow = styled.div`
 const UserDetails = styled.div`
   display: flex;
   flex-direction: column;
+
+  width: 100%;
+  overflow: hidden;
+`;
+
+const Details = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  overflow: hidden;
 `;
 
 const Username = styled.span`
   color: var(--color-text);
+
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 `;
 
 const Status = styled.span`
   font-size: small;
   color: var(--color-text-secondary);
+`;
+
+const Role = styled.span`
+  color: var(--color-text-secondary);
+  font-size: small;
+
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 type UserProps = {
@@ -46,7 +75,7 @@ type UserProps = {
 };
 
 export default function User({ user, view }: UserProps) {
-  const { _id, photo, status, screenFirstName, screenLastName } = user;
+  const { _id, photo, status, screenFirstName, screenLastName, role } = user;
 
   const dispatch = useAppDispatch();
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
@@ -68,7 +97,10 @@ export default function User({ user, view }: UserProps) {
 
       <Avatar name={screenFirstName} image={photo} />
       <UserDetails>
-        <Username>{`${screenFirstName} ${screenLastName}`}</Username>
+        <Details>
+          <Username>{`${screenFirstName} ${screenLastName}`}</Username>
+          {role === "admin" && <Role>{role}</Role>}
+        </Details>
         <Status>{status}</Status>
       </UserDetails>
     </UserRow>

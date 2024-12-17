@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { getAvatarName } from "utils/helpers";
 
 const StyledAvatar = styled.div<{ $image?: string; $size?: string }>`
-  width: ${({ $size }) => ($size === "small" ? "2.625rem" : "3.125rem")};
-  height: ${({ $size }) => ($size === "small" ? "2.625rem" : "3.125rem")};
+  width: ${({ $size }) =>
+    $size === "small" ? "2.625rem" : $size === "large" ? "7.5rem" : "3.125rem"};
+  height: ${({ $size }) =>
+    $size === "small" ? "2.625rem" : $size === "large" ? "7.5rem" : "3.125rem"};
 
   border-radius: 50%;
-  margin-right: 1rem;
+  margin-right: ${({ $size }) => ($size === "large" ? "0" : "1rem")};
 
   background: ${({ $image }) =>
     $image ? `url(${$image}) center/cover no-repeat` : "var(--color-avatar)"};
@@ -21,7 +23,7 @@ const StyledAvatar = styled.div<{ $image?: string; $size?: string }>`
   flex-shrink: 0;
 
   font-weight: bold;
-  font-size: 1rem;
+  font-size: ${({ $size }) => ($size === "large" ? "1.5rem" : "1rem")};
   text-transform: uppercase;
   z-index: 1;
 `;
