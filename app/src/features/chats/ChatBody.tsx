@@ -45,13 +45,13 @@ function ChatBody() {
       chatID: chatId,
     })?.messages;
 
-  const { fetchNextPage } = useFetchNextPage();
+  const { fetchNextPage, hasNextPage } = useFetchNextPage();
 
   const { inView, ref } = useInView({ threshold: 0.01 });
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       const container = scrollContainerRef.current;
       if (!container) return;
 

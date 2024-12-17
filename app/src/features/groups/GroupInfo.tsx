@@ -3,6 +3,9 @@ import { useGroupInfo } from "./hooks/useGroupInfo";
 import UsersList from "@components/UsersList";
 import Avatar from "@components/Avatar";
 import CircleIcon from "@components/CircleIcon";
+import { sideBarPages } from "types/sideBar";
+import { useDispatch } from "react-redux";
+import { updateSideBarView } from "@state/side-bar/sideBar";
 
 const Container = styled.div`
   display: flex;
@@ -47,6 +50,7 @@ const StyledUsersList = styled.div`
 
 function GroupInfo() {
   const { group, groupMembers, isPending } = useGroupInfo();
+  const dispatch = useDispatch();
   if (isPending) return;
 
   return (
@@ -73,7 +77,14 @@ function GroupInfo() {
         $padding={0.8}
         $color="white"
         $bgColor="var(--accent-color)"
-        onClick={() => {}}
+        onClick={() =>
+          dispatch(
+            updateSideBarView({
+              redirect: sideBarPages.ADD_MEMBERS,
+              data: { type: "right" },
+            })
+          )
+        }
       />
     </Container>
   );

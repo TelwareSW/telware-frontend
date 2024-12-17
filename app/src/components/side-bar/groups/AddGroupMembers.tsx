@@ -7,7 +7,7 @@ import UsersList from "@components/UsersList";
 import { sideBarPages } from "types/sideBar";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 
-import { useAppDispatch } from "@hooks/useGlobalState";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import { useAllUsers } from "@features/groups/hooks/useAllUsers";
 import { useUser } from "@features/authentication/login/hooks/useUser";
 import { useSidebarType } from "../SideBarContext";
@@ -37,16 +37,20 @@ const StyledUsersList = styled.div`
   background-color: var(--color-background);
 `;
 
-export default function AddGroupMembers({
-  type,
-}: {
-  type: "group" | "channel";
-}) {
+export default function AddGroupMembers() {
+  const sideBarType = useSidebarType();
+  const { props } = useAppSelector((state) => state.sideBarData.leftSideBar);
+
+  const type =
+    props && "view" in props && typeof props.view === "string"
+      ? props.view
+      : "";
+
+  console.log(type);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { users, isPending: isPendenigAllUsers } = useAllUsers();
   const { user: currentUser, isPending: isPendingCurrentUser } = useUser();
   const dispatch = useAppDispatch();
-  const sideBarType = useSidebarType();
 
   const filteredUsers = users?.filter(
     (user) =>
@@ -61,7 +65,9 @@ export default function AddGroupMembers({
   function handleClick() {
     const redirect =
       type === "channel" ? sideBarPages.NEW_CHANNEL : sideBarPages.NEW_GROUP;
-    dispatch(updateSideBarView({ redirect, data: { type: sideBarType } }));
+    dispatch(
+      updateSideBarView({ redirect, data: { type: sideBarType, view: type } })
+    );
   }
 
   return (

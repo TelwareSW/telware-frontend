@@ -14,6 +14,7 @@ import {
   newChannel,
   groupInfo,
   editGroupInfo,
+  groupType,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -62,6 +63,8 @@ function getSideBarPage(type: number): SideBarView {
       return groupInfo;
     case sideBarPages.EDIT_GROUP_INFO:
       return editGroupInfo;
+    case sideBarPages.GROUP_TYPE:
+      return groupType;
     default:
       throw new Error("Unknown Type");
   }
@@ -86,7 +89,7 @@ const sideBarSlice = createSlice({
         page: newData.page,
         title: newData.title,
         backView: newData.backView,
-        props: { ...newData.props },
+        props: { ...newData.props, view: data.view },
       };
 
       if (whichSide === "left") {

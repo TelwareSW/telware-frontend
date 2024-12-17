@@ -33,7 +33,13 @@ const Count = styled.span`
   position: relative;
 `;
 
-export default function NewGroup({ type }: { type: "channel" | "group" }) {
+export default function NewGroup() {
+  const { props } = useAppSelector((state) => state.sideBarData.leftSideBar);
+  const type =
+    props && "view" in props && typeof props.view === "string"
+      ? props.view
+      : "";
+
   const members = useAppSelector((state) => state.selectedUsers);
   const membersCount = members.length;
 

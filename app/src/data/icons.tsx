@@ -60,6 +60,9 @@ enum icons {
   Mute,
   EndCall,
   AddMembers,
+  Lock,
+  Admin,
+  Members,
 }
 
 type iconStrings = keyof typeof icons;
@@ -404,6 +407,15 @@ const iconImports: Record<iconStrings, IconConfig> = {
   AddMembers: {
     importFn: () => import("@mui/icons-material/PersonAddAlt1"),
     defaultProps: { fontSize: "large" },
+  },
+  Lock: {
+    importFn: () => import("@mui/icons-material/LockOutlined"),
+  },
+  Admin: {
+    importFn: () => import("@mui/icons-material/AdminPanelSettingsOutlined"),
+  },
+  Members: {
+    importFn: () => import("@mui/icons-material/PeopleOutlineOutlined"),
   },
 };
 
