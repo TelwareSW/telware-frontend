@@ -13,7 +13,7 @@ export function getChatByID({
 
 export function parseChatsToState(chatData?: any) {
   if (!chatData) return [];
-  return chatData.chats.map((chat: any): DetailedChatInterface => {
+  return chatData?.chats?.map((chat: any): DetailedChatInterface => {
     const { isMuted, draft, chat: currChat } = chat;
     const {
       _id: chatId,
@@ -25,17 +25,15 @@ export function parseChatsToState(chatData?: any) {
       name,
     } = currChat;
 
-    const filteredMembers = members
-      .map((member: any) => {
-        return {
-          _id: member.user,
-          Role: member.Role,
-        } as ChatMember;
-      })
+    const filteredMembers = members?.map((member: any) => {
+      return {
+        _id: member.user,
+        Role: member.Role,
+      } as ChatMember;
+    });
 
-
-    const incomingLastMessage = chatData.lastMessages.find(
-      (lastMessage: any) => lastMessage.chatId === chatId
+    const incomingLastMessage = chatData?.lastMessages?.find(
+      (lastMessage: any) => lastMessage?.chatId === chatId
     )?.lastMessage;
 
     return {
