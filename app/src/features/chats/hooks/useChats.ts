@@ -20,7 +20,7 @@ export function useChats() {
     const initialChatState: ChatsState = {
       chats: parseChatsToState(chatData),
       members:
-        chatData?.members.filter((member) => member._id !== userId) || [],
+        chatData?.members?.filter((member) => member._id !== userId) || [],
     };
 
     dispatch(setAllChats({ chatsData: initialChatState, blockList, userId }));

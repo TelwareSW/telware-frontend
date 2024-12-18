@@ -43,9 +43,9 @@ const chatsSlice = createSlice({
       }>
     ) => {
       const { blockList, userId, chatsData } = action.payload;
-      const incomminingChats = chatsData.chats;
+      const incomminingChats = chatsData?.chats;
       incomminingChats
-        .map((chat) => {
+        ?.map((chat) => {
           if (chat.type === "private") {
             const members = chat.members;
             const otherUser = members.filter(
@@ -58,7 +58,7 @@ const chatsSlice = createSlice({
           }
           return chat;
         })
-        .filter((chat) => chat !== undefined) as DetailedChatInterface[];
+        ?.filter((chat) => chat !== undefined) as DetailedChatInterface[];
       state.chats = incomminingChats;
       state.members = action.payload.chatsData.members;
     },
