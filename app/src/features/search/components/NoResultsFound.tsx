@@ -29,14 +29,22 @@ const NoResultsSubText = styled.p`
   color: var(--color-text-secondary);
 `;
 
-const NoResultsFound: React.FC = () => {
+interface NoResultsFoundProps {
+  message?: string;
+  subMessage?: string;
+}
+
+const NoResultsFound: React.FC<NoResultsFoundProps> = ({
+  message = "No results found",
+  subMessage = "Try searching for something else",
+}) => {
   return (
     <NoResultsContainer>
       <NoResultsIcon>
-        <Lottie animationData={noResultsAnimation} />
+        <Lottie animationData={noResultsAnimation} key="no-results-image" />
       </NoResultsIcon>
-      <NoResultsText>No results found</NoResultsText>
-      <NoResultsSubText>Try searching for something else</NoResultsSubText>
+      <NoResultsText>{message}</NoResultsText>
+      <NoResultsSubText>{subMessage}</NoResultsSubText>
     </NoResultsContainer>
   );
 };

@@ -3,39 +3,62 @@ import AudioResult from "../components/result-items/AudioResult";
 import ChannelResult from "../components/result-items/ChannelResult";
 import FileResult from "../components/result-items/FileResult";
 import MessageResult from "../components/result-items/MessageResult";
-import MessagesTab from "../components/tabs/MessagesTab";
+import SearchTab from "../components/SearchTab";
+import { SearchTabType } from "../types/search";
 
-export const SEARCH_TABS_MOCK = [
+export const SEARCH_TABS: SearchTabType[] = [
   {
     title: "Chats",
-    component: () => <MessagesTab />,
+    component: () => <SearchTab />,
+    filter: ["text"],
+    searchSpace: ["groups", "channels"],
+    isGlobalSearch: true,
   },
   {
     title: "Channnels",
-    component: () => <NoResultsFound />,
+    component: () => <SearchTab />,
+    filter: ["text"],
+    searchSpace: ["channels", "groups"],
+    isGlobalSearch: true,
   },
   {
     title: "Media",
-    component: () => <NoResultsFound />,
+    component: () => <SearchTab />,
+    filter: ["text", "image", "video", "GIF", "sticker"],
+    searchSpace: ["groups", "channels"],
+    isGlobalSearch: false,
   },
   {
     title: "Links",
-    component: () => <NoResultsFound />,
+    component: () => <SearchTab />,
+    filter: ["link"],
+    searchSpace: ["groups", "channels"],
+    isGlobalSearch: false,
   },
   {
     title: "Files",
-    component: () => <NoResultsFound />,
+    component: () => <SearchTab />,
+    filter: ["file"],
+    searchSpace: ["groups", "channels"],
+    isGlobalSearch: false,
   },
   {
     title: "Music",
-    component: () => <NoResultsFound />,
+    component: () => <SearchTab />,
+    filter: ["audio"],
+    searchSpace: ["groups", "channels"],
+    isGlobalSearch: false,
   },
   {
     title: "Voice",
-    component: () => <NoResultsFound />,
+    component: () => <SearchTab />,
+    filter: ["audio"],
+    searchSpace: ["groups", "channels"],
+    isGlobalSearch: false,
   },
 ];
-export const SEARCH_TABS = [
+
+export const SEARCH_TABS_MOCK = [
   {
     title: "Chats",
     component: () => (
