@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
+import { useNavigate } from "react-router-dom";
 
 const ItemWrapper = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ interface ChannelResultProps {
   image?: string;
   username?: string;
   subscribers?: number;
+  chatId?: string;
 }
 
 const ChannelResult: React.FC<ChannelResultProps> = ({
@@ -52,9 +54,15 @@ const ChannelResult: React.FC<ChannelResultProps> = ({
   image,
   username,
   subscribers,
+  chatId,
 }) => {
+  const navigate = useNavigate();
+  const handleItemClick = () => {
+    if (chatId) navigate(`/${chatId}`);
+  };
+
   return (
-    <ItemWrapper>
+    <ItemWrapper onClick={handleItemClick}>
       <ImageWrapper>
         <Avatar name={title} image={image} />
       </ImageWrapper>

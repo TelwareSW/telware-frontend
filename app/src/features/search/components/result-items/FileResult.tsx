@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
 import { isValidDate } from "@utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const ItemWrapper = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ interface FileResultProps {
   image?: string;
   size?: string;
   date?: string;
+  chatId?: string;
 }
 
 const FileResult: React.FC<FileResultProps> = ({
@@ -49,9 +51,15 @@ const FileResult: React.FC<FileResultProps> = ({
   image,
   size,
   date,
+  chatId,
 }) => {
+  const navigate = useNavigate();
+  const handleItemClick = () => {
+    if (chatId) navigate(`/${chatId}`);
+  };
+
   return (
-    <ItemWrapper>
+    <ItemWrapper onClick={handleItemClick}>
       <ImageWrapper>
         <Avatar name={title} image={image} />
       </ImageWrapper>
