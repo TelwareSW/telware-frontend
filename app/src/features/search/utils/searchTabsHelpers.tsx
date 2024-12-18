@@ -73,6 +73,7 @@ export const renderMessageResults = (
         title: getTitle(message),
         image: getImage(message),
         date: message?.timestamp,
+        chatId: message?.chatId?.id,
       };
 
       switch (message?.contentType) {

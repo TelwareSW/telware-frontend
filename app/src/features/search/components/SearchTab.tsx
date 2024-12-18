@@ -13,8 +13,10 @@ import ChannelResult from "./result-items/ChannelResult";
 import {
   SearchResultChannel,
   SearchResultGroup,
+  SearchResultMessage,
   SearchResultUser,
 } from "../types/search";
+import { useSearchPrivate } from "../hooks/useSearchPrivate";
 
 const SearchTab: React.FC = () => {
   const { searchTerm, selectedTab } = useSelector(
@@ -34,8 +36,13 @@ const SearchTab: React.FC = () => {
   );
 
   const { data, isLoading, error } = useSearch(searchRequest);
+  const {
+    searchResults: privateSearchResults,
+    isLoading: isPrivateLoading,
+    error: privateError,
+  } = useSearchPrivate(searchRequest);
 
-  if (isLoading)
+  if (isLoading || isPrivateLoading)
     return (
       <NoResultsFound
         message="Loading..."
@@ -43,7 +50,7 @@ const SearchTab: React.FC = () => {
       />
     );
 
-  if (error)
+  if (error || privateError)
     return (
       <NoResultsFound
         message="An error occurred"
@@ -55,6 +62,11 @@ const SearchTab: React.FC = () => {
 
   return (
     <div style={{ height: "100%" }}>
+      {renderMessageResults(
+        privateSearchResults as SearchResultMessage[],
+        ["text", "image", "video", "GIF", "sticker", "link", "file", "audio"],
+        searchTerm,
+      )}
       {renderMessageResults(data!.searchResult, ["text"], searchTerm)}
       {renderMessageResults(
         data!.searchResult,

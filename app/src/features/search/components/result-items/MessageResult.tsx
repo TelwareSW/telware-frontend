@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
 import { isValidDate } from "@utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const ItemWrapper = styled.div`
   display: flex;
@@ -69,6 +70,7 @@ interface MessageResultProps {
   image?: string;
   media?: string;
   link?: string;
+  chatId?: string;
 }
 
 const MessageResult: React.FC<MessageResultProps> = ({
@@ -79,7 +81,10 @@ const MessageResult: React.FC<MessageResultProps> = ({
   image,
   media,
   link,
+  chatId,
 }) => {
+  const navigate = useNavigate();
+
   const highlight = (text: string) => {
     if (!searchTerm) return text;
     const split = text.split(new RegExp(`(${searchTerm})`, "gi"));
@@ -92,8 +97,12 @@ const MessageResult: React.FC<MessageResultProps> = ({
     );
   };
 
+  const handleItemClick = () => {
+    if (chatId) navigate(`/${chatId}`);
+  };
+
   return (
-    <ItemWrapper>
+    <ItemWrapper onClick={handleItemClick}>
       <ImageWrapper>
         <Avatar name={title} image={image} />
       </ImageWrapper>
