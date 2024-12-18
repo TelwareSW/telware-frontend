@@ -1,7 +1,8 @@
 import { useAppSelector } from "@hooks/useGlobalState";
 import { ContentType, MessageInterface, MessageStatus } from "types/messages";
 import { useSocket } from "@hooks/useSocket";
-import { useEncryptDecrypt } from "./useDecrypt";
+import { useEncryptDecrypt } from "./useEncryptDecrypt";
+import { getChatByID } from "../utils/helpers";
 
 export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
@@ -9,6 +10,7 @@ export const useMessageSender = () => {
   const activeMessage = useAppSelector((state) => state.activeMessage);
 
   const { encrypt } = useEncryptDecrypt();
+  const chats = useAppSelector((state) => state.chats.chats);
 
   const handleSendMessage = async (
     data: string,
@@ -16,8 +18,13 @@ export const useMessageSender = () => {
     file?: string,
     type: ContentType = "text"
   ) => {
-    const encrypedMessage = await encrypt({ message: data });
+    const chat = getChatByID({ chats, chatID: chatId as string });
 
+    const encrypedMessage = await encrypt({
+      message: data,
+      key: chat?.encryptionKey!,
+      iv: chat?.initializationVector!,
+    });
 
     if (activeMessage?.id && activeMessage.state === "edit") {
       editMessage(activeMessage?.id, data, chatId!);

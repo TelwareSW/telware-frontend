@@ -17,6 +17,9 @@ import {
   deleteMessage as deleteMessageAction,
 } from "@state/messages/chats";
 import { connectToPeer, createAnswer, startCall } from "@features/calls/call";
+import { useEncryptDecrypt } from "@features/chats/hooks/useEncryptDecrypt";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { getChatByID } from "@features/chats/utils/helpers";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -62,120 +65,145 @@ function SocketProvider({ children }: SocketProviderProps) {
   const socket = useSocket();
   const queryClient = useQueryClient();
 
+  const { decrypt } = useEncryptDecrypt();
+  const chats = useAppSelector((state) => state.chats.chats);
+
   useEffect(() => {
-    if (socket) {
-      socket.connect();
+    if (!socket) return;
 
-      socket.on("connect", () => {
-        const engine = socket.io.engine;
-        setIsConnected(true);
-        console.log("connected");
+    socket.connect();
 
-        engine.on("close", (reason) => {
-          console.log(reason);
-        });
+    const onConnect = () => {
+      setIsConnected(true);
+      console.log("Socket connected");
+
+      socket.io.engine.on("close", (reason) => {
+        console.log("Socket connection closed:", reason);
       });
+    };
 
-      socket.on("RECEIVE_MESSAGE", (message) => {
-        console.log("RECEIVED_MESSAGE");
+    const onReceiveMessage = (message: MessageInterface) => {
+      const chat = getChatByID({ chats, chatID: message.chatId });
+
+      console.log("Received message:", message);
+      if (!chat) {
+        console.warn("No chat context available for decryption");
+        return;
+      }
+
+      if (chat.type === "private") {
+        decrypt({
+          message: message.content,
+          key: chat.encryptionKey!,
+          iv: chat.initializationVector!,
+        })
+          .then((content) => {
+            console.log("Decrypted content:", content);
+            handleIncomingMessage(
+              dispatch,
+              { ...message, content: content as string },
+              message.chatId
+            );
+          })
+          .catch((error) => {
+            console.error("Decryption failed:", error);
+          });
+      } else {
         handleIncomingMessage(dispatch, message, message.chatId);
-      });
+      }
+    };
 
-      socket.on(
-        "PIN_MESSAGE_SERVER",
-        ({
-          chatId,
-          messageId,
-          userId,
-        }: {
-          chatId: string;
-          messageId: string;
-          userId: string;
-        }) => {
-          console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
-          dispatch(pinMessage({ messageId, chatId }));
-        }
-      );
+    socket.on("connect", onConnect);
+    socket.on("RECEIVE_MESSAGE", onReceiveMessage);
+    socket.on("PIN_MESSAGE_SERVER", ({ chatId, messageId, userId }) => {
+      console.log("PIN_MESSAGE_SERVER", chatId, messageId, userId);
+      dispatch(pinMessage({ messageId, chatId }));
+    });
+    socket.on("UNPIN_MESSAGE_SERVER", ({ chatId, messageId, userId }) => {
+      console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
+      dispatch(unpinMessage({ messageId, chatId }));
+    });
+    socket.on("EDIT_MESSAGE_SERVER", ({ chatId, content, id }) => {
+      console.log("EDIT_MESSAGE_SERVER", chatId, id, content);
+      dispatch(editMessage({ chatId, messageId: id, content }));
+    });
+    socket.on("JOIN_GROUP_CHANNEL", () => {
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
+    socket.on("typing", (isTyping, message) =>
+      handleIsTyping(dispatch, isTyping, message.chatId)
+    );
 
-      socket.on(
-        "UNPIN_MESSAGE_SERVER",
-        ({
-          chatId,
-          messageId,
-          userId,
-        }: {
-          chatId: string;
-          messageId: string;
-          userId: string;
-        }) => {
-          console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
-          dispatch(unpinMessage({ messageId, chatId }));
-        }
-      );
+    socket.on("RECIEVE_OFFER", async (offer) => {
+      console.log(offer);
+      const answer = await createAnswer(offer);
+      sendAnswer(answer);
+    });
+    socket.on("RECEIVE_ANSWER", async (answer: string) => {
+      console.log(answer);
+      await startCall(answer);
+    });
 
-      socket.on(
-        "EDIT_MESSAGE_SERVER",
-        ({
-          chatId,
-          content,
-          id,
-        }: {
-          chatId: string;
-          content: string;
-          id: string;
-        }) => {
-          console.log("EDIT_MESSAGE_SERVER", chatId, id, content);
-          dispatch(editMessage({ chatId, messageId: id, content }));
-        }
-      );
+    socket.emit("typing");
 
-      socket.on("JOIN_GROUP_CHANNEL", () => {
-        queryClient.invalidateQueries({ queryKey: ["chats"] });
-      });
+    return () => {
+      console.log("Cleaning up socket listeners");
 
-      socket.on("typing", (isTyping, message) =>
-        handleIsTyping(dispatch, isTyping, message.chatId)
-      );
+      socket.disconnect();
 
-      socket.emit("typing");
-      return () => {
-        socket.disconnect();
-
-        socket.off("connect");
-        socket.off("disconnect");
-        socket.off("receive_message");
-        socket.off("typing");
-      };
-    }
-  }, [dispatch, queryClient, socket]);
+      socket.off("connect", onConnect);
+      socket.off("RECEIVE_MESSAGE", onReceiveMessage);
+      socket.off("PIN_MESSAGE_SERVER");
+      socket.off("UNPIN_MESSAGE_SERVER");
+      socket.off("EDIT_MESSAGE_SERVER");
+      socket.off("JOIN_GROUP_CHANNEL");
+      socket.off("typing");
+      socket.io.engine.off("close");
+    };
+  }, [socket, chats, decrypt, dispatch, queryClient]);
 
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
+      const chat = getChatByID({ chats, chatID: sentMessage.chatId });
+
       const messageToSend = {
         ...sentMessage,
         isFirstTime: false,
-        chatType: "private",
+        chatType: chat?.type,
         threadMessages: [],
       };
       console.log("messageToSend", messageToSend);
       socket.emit(
         "SEND_MESSAGE",
         messageToSend,
-        ({ success, message, res }: AcknowledgmentResponse) => {
+        ({ success, res }: AcknowledgmentResponse) => {
           if (!success) {
             console.log("Failed to send", res);
           }
           if (success) {
-            console.log(message);
             const _id = res.messageId;
-            handleIncomingMessage(
-              dispatch,
-              {
-                ...sentMessage,
-                _id,
-              },
-              sentMessage.chatId
-            );
+
+            if (!chat) return;
+
+            if (chat?.type === "private") {
+              decrypt({
+                message: sentMessage.content,
+                key: chat?.encryptionKey!,
+                iv: chat?.initializationVector!,
+              }).then((content) => {
+                handleIncomingMessage(
+                  dispatch,
+                  { ...sentMessage, content: content as string, _id },
+                  sentMessage.chatId
+                );
+              });
+            } else {
+              handleIncomingMessage(
+                dispatch,
+                { ...sentMessage, _id },
+                sentMessage.chatId
+              );
+            }
           }
         }
       );
@@ -239,7 +267,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   };
   const startConnection = async () => {
-    console.log("kkk");
     const offer = await connectToPeer();
     if (isConnected && socket) {
       console.log(offer);
@@ -273,118 +300,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     },
     [isConnected, socket]
   );
-  useEffect(() => {
-    if (socket) {
-      socket.connect();
-
-      //TODO: remove and make sure it still works
-      socket.on("connect", () => {
-        const engine = socket.io.engine;
-        setIsConnected(true);
-        console.log("connected");
-
-        engine.on("close", (reason) => {
-          console.log(reason);
-        });
-      });
-
-      // TODO Fix: This makes message got received 3 times
-      // socket.on("RECEIVE_MESSAGE", (message) => {
-      //   console.log("inside recieve");
-      //   console.log(message);
-      //   handleIncomingMessage(dispatch, message, message.chatId);
-      // });
-      socket.on("RECIEVE_OFFER", async (offer) => {
-        console.log(offer);
-        const answer = await createAnswer(offer);
-        sendAnswer(answer);
-      });
-      socket.on("RECEIVE_ANSWER", async (answer: string) => {
-        console.log(answer);
-        await startCall(answer);
-      });
-      socket.on(
-        "PIN_MESSAGE_SERVER",
-        ({
-          chatId,
-          messageId,
-          userId,
-        }: {
-          chatId: string;
-          messageId: string;
-          userId: string;
-        }) => {
-          console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
-          dispatch(pinMessage({ messageId, chatId }));
-        }
-      );
-
-      socket.on(
-        "UNPIN_MESSAGE_SERVER",
-        ({
-          chatId,
-          messageId,
-          userId,
-        }: {
-          chatId: string;
-          messageId: string;
-          userId: string;
-        }) => {
-          console.log("UNPIN_MESSAGE_SERVER", chatId, messageId, userId);
-          dispatch(unpinMessage({ messageId, chatId }));
-        }
-      );
-
-      socket.on(
-        "EDIT_MESSAGE_SERVER",
-        ({
-          chatId,
-          content,
-          id,
-        }: {
-          chatId: string;
-          content: string;
-          id: string;
-        }) => {
-          console.log("EDIT_MESSAGE_SERVER", chatId, id, content);
-          dispatch(editMessage({ chatId, messageId: id, content }));
-        }
-      );
-
-      socket.on(
-        "DELETE_MESSAGE_SERVER",
-        ({ chatId, id }: { chatId: string; id: string }) => {
-          dispatch(deleteMessageAction({ messageId: id, chatId }));
-        }
-      );
-
-      socket.on("typing", (isTyping, message) =>
-        handleIsTyping(dispatch, isTyping, message.chatId)
-      );
-      socket.emit("typing");
-      return () => {
-        socket.disconnect();
-
-        socket.off("connect");
-        socket.off("disconnect");
-        socket.off("receive_message");
-        socket.off("typing");
-        socket.off("RECIEVE_OFFER");
-      };
-    }
-  }, [dispatch, sendAnswer, socket]);
-
-  // useEffect(() => {
-  //   if (!isPending && chats?.length) {
-  //     chats.forEach((chat) => {
-  //       socket.emit("join", { chatId: chat._id });
-  //     });
-  //     console.log(
-  //       "Joined all chats:",
-  //       chats.map((chat) => chat._id)
-  //     );
-  //   }
-  // }, [isConnected, isPending, chats, socket]);
 
   function createGroupOrChannel({
     type,
