@@ -1,11 +1,12 @@
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
-import { useAllUsers } from "./useAllUsers";
+import { useAllUsers, UserType } from "./useAllUsers";
 import { useState, useEffect } from "react";
 
 function useGroupInfo() {
   const { chatId } = useParams<{ chatId: string }>();
-  const [groupMembers, setGroupMembers] = useState<any[]>([]);
+  const [groupMembers, setGroupMembers] = useState<UserType[]>([]);
+  const [admins, setAdmins] = useState<UserType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const group = useAppSelector((state) =>
@@ -28,12 +29,14 @@ function useGroupInfo() {
         })
         .filter((member) => member !== null);
 
+      const groupAdmins = members.filter((member) => member.role === "admin");
       setGroupMembers(members);
+      setAdmins(groupAdmins);
       setIsLoading(false);
     }
   }, [group, users, isPending]);
 
-  return { groupMembers, group, isPending: isLoading };
+  return { groupMembers, group, isPending: isLoading, admins };
 }
 
 export { useGroupInfo };

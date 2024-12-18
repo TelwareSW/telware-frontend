@@ -13,7 +13,6 @@ import { SideBarRowProps } from "./settings/side-bar-row/SideBarRow";
 import ProfileSettings from "@features/profile-settings/ProfileSettings";
 import ProfileInfo from "@features/profile-info/ProfileInfo";
 import ChatList from "@features/chats/ChatsList";
-import AddGroupMembers from "./groups/AddGroupMembers.js";
 
 import { useAppSelector } from "@hooks/useGlobalState";
 import BlockList from "@features/privacy-settings/BlockList";
@@ -23,6 +22,10 @@ import { SidebarContext } from "./SideBarContext.js";
 import GroupInfo from "@features/groups/GroupInfo.js";
 import EditGroupInfo from "@features/groups/EditGroupInfo.js";
 import GroupType from "@features/groups/GroupType.js";
+import AddNewGroupMembers from "./groups/AddNewGroupMembers.js";
+import AddMoreMembers from "./groups/AddMoreMembers.js";
+import Admins from "@features/groups/Admins.js";
+import AddAdmins from "./groups/AddAdmins.js";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -103,7 +106,7 @@ const sideBarMap: {
   Devices: () => <SettingsSideBar rows={[]} children={<Devices />} />,
   AddMembers: () => (
     <SettingsSideBar rows={[]}>
-      <AddGroupMembers />
+      <AddNewGroupMembers />
     </SettingsSideBar>
   ),
   NewGroup: () => (
@@ -129,6 +132,21 @@ const sideBarMap: {
   GroupType: () => (
     <SettingsSideBar rows={[]}>
       <GroupType />
+    </SettingsSideBar>
+  ),
+  AddMoreMembers: () => (
+    <SettingsSideBar rows={[]}>
+      <AddMoreMembers />
+    </SettingsSideBar>
+  ),
+  Admins: () => (
+    <SettingsSideBar rows={[]}>
+      <Admins />
+    </SettingsSideBar>
+  ),
+  AddAdmins: () => (
+    <SettingsSideBar rows={[]}>
+      <AddAdmins />
     </SettingsSideBar>
   ),
 };

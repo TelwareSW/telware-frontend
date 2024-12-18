@@ -15,6 +15,9 @@ import {
   groupInfo,
   editGroupInfo,
   groupType,
+  addMoreMembers,
+  admins,
+  addAdmins,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -22,7 +25,7 @@ interface SideBarView {
   page: pagesStrings;
   title: string;
   backView?: sideBarPages;
-  props?: object;
+  props?: { [key: string]: any };
 }
 
 interface SideBarState {
@@ -65,6 +68,12 @@ function getSideBarPage(type: number): SideBarView {
       return editGroupInfo;
     case sideBarPages.GROUP_TYPE:
       return groupType;
+    case sideBarPages.ADD_MORE_MEMBERS:
+      return addMoreMembers;
+    case sideBarPages.ADMINS:
+      return admins;
+    case sideBarPages.ADD_ADMINS:
+      return addAdmins;
     default:
       throw new Error("Unknown Type");
   }
@@ -72,7 +81,7 @@ function getSideBarPage(type: number): SideBarView {
 
 interface actionType {
   redirect: sideBarPages;
-  data: { type: "left" | "right"; [key: string]: string };
+  data: { type: "left" | "right"; [key: string]: any };
 }
 
 const sideBarSlice = createSlice({
@@ -89,8 +98,15 @@ const sideBarSlice = createSlice({
         page: newData.page,
         title: newData.title,
         backView: newData.backView,
-        props: { ...newData.props, view: data.view },
+        props: { ...newData.props },
       };
+
+      if (redirect === sideBarPages.ADD_MEMBERS) {
+        updatedSideBar.props = {
+          ...updatedSideBar.props,
+          view: data.view,
+        };
+      }
 
       if (whichSide === "left") {
         state.leftSideBar = updatedSideBar;

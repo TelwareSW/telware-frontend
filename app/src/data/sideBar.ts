@@ -88,6 +88,9 @@ const pagesMap: { [K in pagesStrings]: string } = {
   GROUP_INFO: "GroupInfo",
   EDIT_GROUP_INFO: "EditGroupInfo",
   GROUP_TYPE: "GroupType",
+  ADD_MORE_MEMBERS: "AddMoreMembers",
+  ADMINS: "Admins",
+  ADD_ADMINS: "AddAdmins",
 };
 
 const settingsRows = [
@@ -216,14 +219,14 @@ const newGroup: SideBarView = {
   title: "New Group",
   backView: sideBarPages.ADD_MEMBERS,
   page: "NEW_GROUP",
-  // props: { view: "group" },
+  props: { view: "group" },
 };
 
 const newChannel: SideBarView = {
   title: "New Channel",
   backView: sideBarPages.ADD_MEMBERS,
   page: "NEW_CHANNEL",
-  // props: { view: "channel" },
+  props: { view: "channel" },
 };
 
 const groupInfo: SideBarView = {
@@ -241,6 +244,24 @@ const groupType: SideBarView = {
   title: "Group Type",
   backView: sideBarPages.EDIT_GROUP_INFO,
   page: "GROUP_TYPE",
+};
+
+const addMoreMembers: SideBarView = {
+  title: "Add Members",
+  backView: sideBarPages.GROUP_INFO,
+  page: "ADD_MORE_MEMBERS",
+};
+
+const admins: SideBarView = {
+  title: "Adminstrators",
+  backView: sideBarPages.EDIT_GROUP_INFO,
+  page: "ADMINS",
+};
+
+const addAdmins: SideBarView = {
+  title: "Add Admins",
+  backView: sideBarPages.ADMINS,
+  page: "ADD_ADMINS",
 };
 
 export {
@@ -266,4 +287,7 @@ export {
   groupInfo,
   editGroupInfo,
   groupType,
+  addMoreMembers,
+  admins,
+  addAdmins,
 };

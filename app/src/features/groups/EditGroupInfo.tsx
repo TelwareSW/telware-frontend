@@ -3,6 +3,7 @@ import SettingsRow from "./SettingsRow";
 import { useDispatch } from "react-redux";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+import { useGroupInfo } from "./hooks/useGroupInfo";
 
 const Container = styled.div`
   background-color: var(--color-background);
@@ -13,6 +14,9 @@ const Container = styled.div`
 
 function EditGroupInfo() {
   const dispatch = useDispatch();
+  const { admins, groupMembers, isPending } = useGroupInfo();
+
+  if (isPending) return;
 
   function handleGroupTypeClick() {
     dispatch(
@@ -22,6 +26,16 @@ function EditGroupInfo() {
       })
     );
   }
+
+  function handleDisplayAdmins() {
+    dispatch(
+      updateSideBarView({
+        redirect: sideBarPages.ADMINS,
+        data: { type: "right" },
+      })
+    );
+  }
+
   return (
     <Container>
       <SettingsRow
@@ -33,13 +47,13 @@ function EditGroupInfo() {
       <SettingsRow
         icon="Admin"
         title="Adminstators"
-        subtitle="1"
-        onClick={() => {}}
+        subtitle={admins.length}
+        onClick={handleDisplayAdmins}
       />
       <SettingsRow
         icon="Members"
         title="Members"
-        subtitle="1"
+        subtitle={groupMembers.length}
         onClick={() => {}}
       />
       <SettingsRow
