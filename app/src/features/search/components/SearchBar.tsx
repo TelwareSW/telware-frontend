@@ -79,47 +79,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
   const currentChat = useSelector((state: RootState) =>
     state.chats.chats.find((chat) => chat._id === chatId),
   );
-  const messages = currentChat?.messages ?? [];
 
   const [isSearchLoading, setIsSearchLoading] = useState(false);
-
-  const performSearch = (term: string) => {
-    if (!term) {
-      dispatch(setSearchResults([]));
-      setIsSearchLoading(false);
-      return;
-    }
-
-    const results = messages.reduce(
-      (
-        acc: Array<{
-          messageId: string;
-          highlightIndex: number;
-        }>,
-        message,
-      ) => {
-        const lowerCaseTerm = term.toLowerCase();
-        const lowerCaseContent = message.content.toLowerCase();
-
-        if (lowerCaseContent.includes(lowerCaseTerm)) {
-          const matchIndices = findAllMatchIndices(message.content, term);
-          matchIndices.forEach((highlightIndex) => {
-            acc.push({
-              messageId: message._id,
-              highlightIndex,
-            });
-          });
-        }
-
-        return acc;
-      },
-      [],
-    );
-
-    dispatch(setSearchTerm(term));
-    dispatch(setSearchResults(results));
-    setIsSearchLoading(false);
-  };
 
   const findAllMatchIndices = (text: string, term: string) => {
     const indices = [];
@@ -132,11 +93,51 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
   };
 
   useEffect(() => {
+    const messages = currentChat?.messages ?? [];
+
+    const performSearch = (term: string) => {
+      if (!term) {
+        dispatch(setSearchResults([]));
+        setIsSearchLoading(false);
+        return;
+      }
+
+      const results = messages.reduce(
+        (
+          acc: Array<{
+            messageId: string;
+            highlightIndex: number;
+          }>,
+          message,
+        ) => {
+          const lowerCaseTerm = term.toLowerCase();
+          const lowerCaseContent = message.content.toLowerCase();
+
+          if (lowerCaseContent.includes(lowerCaseTerm)) {
+            const matchIndices = findAllMatchIndices(message.content, term);
+            matchIndices.forEach((highlightIndex) => {
+              acc.push({
+                messageId: message._id,
+                highlightIndex,
+              });
+            });
+          }
+
+          return acc;
+        },
+        [],
+      );
+
+      dispatch(setSearchTerm(term));
+      dispatch(setSearchResults(results));
+      setIsSearchLoading(false);
+    };
+
     const timer = setTimeout(() => {
       performSearch(searchTerm);
     }, 100);
     return () => clearTimeout(timer);
-  }, [searchTerm]);
+  }, [searchTerm, dispatch, currentChat?.messages]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchTerm(e.target.value));

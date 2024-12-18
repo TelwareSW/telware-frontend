@@ -415,7 +415,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     chatId: string;
     users: string[];
   }) {
-    console.log(users);
     if (isConnected && socket) {
       socket.emit(
         "ADD_MEMBERS_CLIENT",

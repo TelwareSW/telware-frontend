@@ -53,7 +53,7 @@ const FileResult: React.FC<FileResultProps> = ({
   return (
     <ItemWrapper>
       <ImageWrapper>
-        <Avatar name={title} image={image} size="large" />
+        <Avatar name={title} image={image} />
       </ImageWrapper>
       <ContentWrapper>
         <ItemHeader>

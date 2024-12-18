@@ -56,7 +56,7 @@ const ChannelResult: React.FC<ChannelResultProps> = ({
   return (
     <ItemWrapper>
       <ImageWrapper>
-        <Avatar name={title} image={image} size="large" />
+        <Avatar name={title} image={image} />
       </ImageWrapper>
       <ContentWrapper>
         <ItemHeader>

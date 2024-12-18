@@ -40,8 +40,6 @@ const DateSpan = styled.span`
 const Message = styled.p`
   font-size: 0.875rem;
   color: var(--color-text-secondary);
-  display: flex;
-  align-items: center;
 `;
 
 const MediaPreview = styled.img`
@@ -55,7 +53,6 @@ const MediaPreview = styled.img`
 const Highlight = styled.span`
   background: #cae3f7;
   color: #000000;
-  padding: 0 0.125rem;
   border-radius: 2px;
 `;
 
@@ -98,7 +95,7 @@ const MessageResult: React.FC<MessageResultProps> = ({
   return (
     <ItemWrapper>
       <ImageWrapper>
-        <Avatar name={title} image={image} size="large" />
+        <Avatar name={title} image={image} />
       </ImageWrapper>
       <ContentWrapper>
         <ItemHeader>
