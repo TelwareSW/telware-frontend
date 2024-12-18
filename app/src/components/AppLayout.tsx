@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Main from "./Main";
 import SideBar from "./side-bar/SideBar";
 import { DESKTOP_VIEW, MOBILE_VIEW } from "@constants";
-import { useState } from "react";
+import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
 
 const StyledApp = styled.div<{
   $isChatOpen: boolean;
@@ -38,22 +38,20 @@ const StyledApp = styled.div<{
 
 function AppLayout() {
   const { chatId } = useParams();
-
   const isChatOpen = !!chatId;
-
-  const [showRightSideBar, setShowRightSideBar] = useState<boolean>(false);
+  const { isRightSideBarOpen } = useRightSideBarContext();
 
   return (
     <StyledApp
       $isChatOpen={isChatOpen}
       data-testid="app-layout"
-      $isRightSideBarOpen={showRightSideBar}
+      $isRightSideBarOpen={isRightSideBarOpen}
     >
       <SideBar type="left" />
       <Main>
-        <Outlet context={{ setShowRightSideBar, showRightSideBar }} />
+        <Outlet />
       </Main>
-      {showRightSideBar && <SideBar type="right" />}
+      {isRightSideBarOpen && <SideBar type="right" />}
     </StyledApp>
   );
 }

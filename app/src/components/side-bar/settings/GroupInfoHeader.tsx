@@ -10,6 +10,7 @@ import { useSidebarType } from "../SideBarContext";
 import { sideBarPages } from "types/sideBar";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import BackArrow from "@components/BackArrow";
+import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
 
 const StyledSideBarHeader = styled.div`
   display: flex;
@@ -29,6 +30,7 @@ const Container = styled.div`
 
 function GroupInfoHeader() {
   const type = useSidebarType();
+  const { setIsRightSideBarOpen } = useRightSideBarContext();
 
   const { title } = useAppSelector((state) =>
     type === "left"
@@ -52,7 +54,9 @@ function GroupInfoHeader() {
     <StyledSideBarHeader data-testid="settings-side-bar-header">
       <Container>
         {title === "Group Info" ? (
-          <Icon>{getIcon("Close")}</Icon>
+          <Icon onClick={() => setIsRightSideBarOpen(false)}>
+            {getIcon("Close")}
+          </Icon>
         ) : (
           <BackArrow />
         )}

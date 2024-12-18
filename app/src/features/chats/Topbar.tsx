@@ -1,19 +1,24 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+
 import Avatar from "@components/Avatar";
-import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
-import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
-import { useOutletContext, useParams } from "react-router-dom";
-import { getChatByID } from "./utils/helpers";
-import { useChatMembers } from "./hooks/useChatMember";
-import { getElapsedTime } from "@utils/helpers";
-import { useSocket } from "@hooks/useSocket";
 import CallLayout from "@features/calls/CallLayout";
-import { useBlock } from "@features/privacy-settings/hooks/useBlock";
+
+import { getIcon } from "@data/icons";
 import { setChatIsBlocked } from "@state/messages/chats";
+
+import { useSocket } from "@hooks/useSocket";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { useChatMembers } from "./hooks/useChatMember";
+import { useBlock } from "@features/privacy-settings/hooks/useBlock";
+import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
+
+import { getElapsedTime } from "@utils/helpers";
+import { getChatByID } from "./utils/helpers";
 
 const Container = styled.div<{ $hasMargin?: boolean }>`
   position: absolute;
@@ -126,8 +131,12 @@ function Topbar() {
   const membersData = useChatMembers(chat?.members);
   const { removeFromBlockList } = useBlock();
 
-  const { showRightSideBar, setShowRightSideBar } =
-    useOutletContext<OutletContextProps>();
+  const { setIsRightSideBarOpen } = useRightSideBarContext();
+
+  function handleOpenRightSideBar() {
+    if (chat?.type === "channel" || chat?.type === "group")
+      setIsRightSideBarOpen((prev) => !prev);
+  }
 
   let image;
   let lastSeen;
@@ -168,20 +177,18 @@ function Topbar() {
           image={image}
         />
       )}
-      <Container
-        $hasMargin={isCollapsed}
-        onClick={() => setShowRightSideBar(!showRightSideBar)}
-      >
+      <Container $hasMargin={isCollapsed}>
         <Avatar
           data-testid="chat-avatar"
           image={image}
           name={chat.name?.charAt(0)}
+          onClick={handleOpenRightSideBar}
         />
         {isSearching ? (
           <SearchBar onClose={toggleSearch} />
         ) : (
           <>
-            <Info data-testid="chat-info">
+            <Info data-testid="chat-info" onClick={handleOpenRightSideBar}>
               <Content>
                 <Name data-testid="chat-name">{chat.name}</Name>
                 {lastSeen && (

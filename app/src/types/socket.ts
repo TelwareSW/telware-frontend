@@ -16,6 +16,20 @@ export interface SocketContextType {
     name: string;
     members: string[];
   }) => void;
+  addGroupMembers: ({
+    chatId,
+    users,
+  }: {
+    chatId: string;
+    users: string[];
+  }) => void;
+  addAdmins: ({
+    chatId,
+    members,
+  }: {
+    chatId: string;
+    members: string[];
+  }) => void;
   startConnection: (offer?: RTCSessionDescription) => void;
   deleteMessage: ({
     messageId,

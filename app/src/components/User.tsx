@@ -16,7 +16,6 @@ const UserRow = styled.div`
 
   &:last-child {
     border-bottom: none;
-    padding-bottom: 0;
     margin-bottom: 0;
   }
 
