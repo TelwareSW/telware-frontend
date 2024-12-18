@@ -23,16 +23,16 @@ export function parseChatsToState(chatData?: any) {
       isDeleted,
       numberOfMembers,
       name,
+      encryptionKey,
+      initializationVector,
     } = currChat;
 
-    const filteredMembers = members
-      .map((member: any) => {
-        return {
-          _id: member.user,
-          Role: member.Role,
-        } as ChatMember;
-      })
-
+    const filteredMembers = members.map((member: any) => {
+      return {
+        _id: member.user,
+        Role: member.Role,
+      } as ChatMember;
+    });
 
     const incomingLastMessage = chatData.lastMessages.find(
       (lastMessage: any) => lastMessage.chatId === chatId
@@ -58,6 +58,90 @@ export function parseChatsToState(chatData?: any) {
       isTyping: false,
       showCheckBox: false,
       selectedMessages: [],
+
+      encryptionKey,
+      initializationVector,
     } as DetailedChatInterface;
   });
 }
+
+const hexToArrayBuffer = (hex: string) => {
+  const match = hex.match(/.{1,2}/g);
+  return new Uint8Array(match ? match.map((byte) => parseInt(byte, 16)) : [])
+    .buffer;
+};
+
+const arrayBufferToHex = (buffer: ArrayBuffer) => {
+  return Array.from(new Uint8Array(buffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+};
+
+export const encryptMessage = async ({
+  message,
+  keyHex,
+  ivHex,
+}: {
+  message: string;
+  keyHex: string;
+  ivHex: string;
+}) => {
+  try {
+    const keyBuffer = hexToArrayBuffer(keyHex);
+    const ivBuffer = hexToArrayBuffer(ivHex);
+
+    const cryptoKey = await window.crypto.subtle.importKey(
+      "raw",
+      keyBuffer,
+      { name: "AES-CBC", length: 256 },
+      false,
+      ["encrypt"]
+    );
+
+    const messageBuffer = new TextEncoder().encode(message);
+
+    const encryptedBuffer = await window.crypto.subtle.encrypt(
+      { name: "AES-CBC", iv: ivBuffer },
+      cryptoKey,
+      messageBuffer
+    );
+
+    return arrayBufferToHex(encryptedBuffer);
+  } catch (err: any) {
+    return Error(`Decryption error: ${err.message}`);
+  }
+};
+
+export const decryptMessage = async ({
+  encryptedMessageHex,
+  keyHex,
+  ivHex,
+}: {
+  encryptedMessageHex: string;
+  keyHex: string;
+  ivHex: string;
+}) => {
+  try {
+    const keyBuffer = hexToArrayBuffer(keyHex);
+    const ivBuffer = hexToArrayBuffer(ivHex);
+    const encryptedBuffer = hexToArrayBuffer(encryptedMessageHex);
+
+    const cryptoKey = await window.crypto.subtle.importKey(
+      "raw",
+      keyBuffer,
+      { name: "AES-CBC", length: 256 },
+      false,
+      ["decrypt"]
+    );
+
+    const decryptedBuffer = await window.crypto.subtle.decrypt(
+      { name: "AES-CBC", iv: ivBuffer },
+      cryptoKey,
+      encryptedBuffer
+    );
+
+    return new TextDecoder().decode(decryptedBuffer);
+  } catch (err: any) {
+    return Error(`Decryption error: ${err.message}`);
+  }
+};

@@ -62,7 +62,7 @@ function MessageContent() {
       )}
       {isGifOrSticker && <Gif src={media} loading="lazy" />}
       {isFile && <FileViewer file={media} />}
-      {RenderWithHighlight(content, searchTerm, searchResults, id)}
+      {RenderWithHighlight({ content, searchTerm, searchResults, id })}
     </Container>
   );
 }

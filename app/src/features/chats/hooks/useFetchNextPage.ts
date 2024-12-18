@@ -2,12 +2,13 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { apiFetchNextPage } from "../services/apiFetchNextPage";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { mergeMessages } from "@state/messages/chats";
+import { MessageInterface } from "types/messages";
+import { useAppDispatch } from "@hooks/useGlobalState";
 
 function useFetchNextPage() {
   const { chatId } = useParams<{ chatId: string }>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     data,
@@ -32,7 +33,7 @@ function useFetchNextPage() {
         dispatch(
           mergeMessages({
             chatId: chatId,
-            newMessages: lastFetchedPage.messages,
+            newMessages: lastFetchedPage.messages as MessageInterface[],
           })
         );
       }

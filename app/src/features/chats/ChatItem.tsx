@@ -10,6 +10,7 @@ import {
 import { useChatMembers } from "./hooks/useChatMember";
 import { useAppDispatch } from "@hooks/useGlobalState";
 import React from "react";
+import RenderWithHighlight from "@utils/renderWithHighlight";
 
 const Container = styled.li<{ $active?: boolean }>`
   display: flex;
@@ -66,13 +67,16 @@ type ChatItemProps = {
 
 const ChatItem = React.memo(
   ({
-    chat: { _id, type, lastMessage, name, photo, members },
+    chat: { _id, type, lastMessage, name, photo, members, numberOfMembers },
     onClick,
   }: ChatItemProps) => {
     const navigate = useNavigate();
 
     const timestamp = lastMessage?.timestamp || "No messages";
-    const lastMessageContent = lastMessage?.content || "No messages";
+    const lastMessageContent =
+      numberOfMembers === 2
+        ? RenderWithHighlight({ content: lastMessage?.content!, chatId: _id })
+        : lastMessage?.content;
 
     const { chatId } = useParams<{ chatId: string }>();
 
