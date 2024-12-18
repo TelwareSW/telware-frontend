@@ -85,7 +85,9 @@ const chatsSlice = createSlice({
     ) => {
       const { messageId, chatId } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
-      chat?.messages.filter((msg) => msg._id !== messageId);
+      if (chat) {
+        chat.messages = chat?.messages.filter((msg) => msg._id !== messageId);
+      }
     },
 
     editMessage: (

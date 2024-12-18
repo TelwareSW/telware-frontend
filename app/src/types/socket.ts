@@ -31,6 +31,13 @@ export interface SocketContextType {
     members: string[];
   }) => void;
   startConnection: (offer?: RTCSessionDescription) => void;
+  deleteMessage: ({
+    messageId,
+    chatId,
+  }: {
+    messageId: string;
+    chatId: string;
+  }) => void;
 }
 
 export interface SocketProviderProps {

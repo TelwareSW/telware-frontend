@@ -14,6 +14,7 @@ import {
   pinMessage,
   unpinMessage,
   editMessage,
+  deleteMessage as deleteMessageAction,
 } from "@state/messages/chats";
 import { connectToPeer, createAnswer, startCall } from "@features/calls/call";
 import toast from "react-hot-toast";
@@ -354,9 +355,17 @@ function SocketProvider({ children }: SocketProviderProps) {
         }
       );
 
+      socket.on(
+        "DELETE_MESSAGE_SERVER",
+        ({ chatId, id }: { chatId: string; id: string }) => {
+          dispatch(deleteMessageAction({ messageId: id, chatId }));
+        }
+      );
+
       socket.on("typing", (isTyping, message) =>
         handleIsTyping(dispatch, isTyping, message.chatId)
       );
+
       socket.emit("typing");
       return () => {
         socket.disconnect();
@@ -451,6 +460,30 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }
 
+  function deleteMessage({
+    messageId,
+    chatId,
+  }: {
+    messageId: string;
+    chatId: string;
+  }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "DELETE_MESSAGE_CLIENT",
+        { messageId, chatId },
+        ({ success }: { success: boolean }) => {
+          if (success) {
+            dispatch(deleteMessageAction({ messageId, chatId }));
+          } else {
+            console.log("Failed to delete message");
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot delete message: not connected to socket server");
+    }
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -461,6 +494,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         editMessage: editMessageSocket,
         startConnection,
         createGroupOrChannel,
+        deleteMessage,
         addGroupMembers,
         addAdmins,
       }}

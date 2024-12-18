@@ -9,6 +9,7 @@ import {
 } from "@state/messages/chats";
 import { useSocket } from "@hooks/useSocket";
 import useCheckBox from "@features/forward/hooks/useCheckBox";
+import { useDeleteMessage } from "./hooks/useDeleteMessage";
 
 const StyledList = styled.ul<{ $isMine: boolean }>`
   position: absolute;
@@ -68,6 +69,8 @@ function MessageOptionList() {
     chatId,
   } = useMessageContext();
 
+  const { handleDeleteMessage } = useDeleteMessage();
+
   const { handleEditMessage, handleReply } = useOptionListAction({
     id,
     content,
@@ -96,6 +99,10 @@ function MessageOptionList() {
     dispatch(setShowCheckBox({ chatId: chatId, showCheckBox: !showCheckBox }));
   }
 
+  function handleDelete() {
+    handleDeleteMessage(id, chatId);
+  }
+
   return (
     <StyledList $isMine={isMine} data-testid="message-option-list">
       <HoverMask onClick={handleForward} data-testid="forward-option">
@@ -112,6 +119,11 @@ function MessageOptionList() {
       <HoverMask onClick={handlePin} data-testid="pin-option">
         <StyledP>{isPinned ? "Unpin" : "Pin"}</StyledP>
       </HoverMask>
+      {isMine && (
+        <HoverMask onClick={handleDelete} data-testid="delete-option">
+          <StyledP>Delete</StyledP>
+        </HoverMask>
+      )}
     </StyledList>
   );
 }
