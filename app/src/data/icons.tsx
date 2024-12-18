@@ -57,6 +57,9 @@ enum icons {
   Info,
   Phone,
   ArrowForward,
+  Home,
+  Group,
+  Sun,
 }
 
 type iconStrings = keyof typeof icons;
@@ -73,6 +76,14 @@ type IconConfig = {
 };
 
 const iconImports: Record<iconStrings, IconConfig> = {
+  Group: {
+    importFn: () => import("@mui/icons-material/GroupsOutlined"),
+    defaultProps: { sx: { color: `var(--color-icon-secondary)` } },
+  },
+  Home: {
+    importFn: () => import("@mui/icons-material/HomeOutlined"),
+    defaultProps: { sx: { color: `var(--color-icon-secondary)` } },
+  },
   BlockIcon: {
     importFn: () => import("@mui/icons-material/Block"),
     defaultProps: { sx: { color: `var(--color-icon-secondary)` } },
@@ -389,6 +400,15 @@ const iconImports: Record<iconStrings, IconConfig> = {
   ArrowForward: {
     importFn: () => import("@mui/icons-material/ArrowForward"),
     defaultProps: { fontSize: "large" },
+  },
+  Sun: {
+    importFn: () => import("@mui/icons-material/LightModeOutlined"),
+    defaultProps: {
+      sx: {
+        color: `white`,
+        fontSize: "1.5rem",
+      },
+    },
   },
 };
 

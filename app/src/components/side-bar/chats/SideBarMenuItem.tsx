@@ -34,7 +34,7 @@ function SideBarMenuItem({
   iconMapValue,
 }: SideBarMenuItemProps) {
   return (
-    <StyledMenuItem onClick={onClick}>
+    <StyledMenuItem onClick={onClick} data-testid={`side-bar-menu-${title}`}>
       {getIcon(iconMapValue)}
       {title}
       {children}

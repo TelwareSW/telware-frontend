@@ -4,7 +4,7 @@ interface requestType {
   id: string;
 }
 
-async function removeFromBlock(data: requestType) {
+async function apiRemoveFromBlock(data: requestType) {
   const res = await fetch(`${API_URL}/users/block/${data.id}`, {
     method: "DELETE",
     credentials: "include",
@@ -19,4 +19,4 @@ async function removeFromBlock(data: requestType) {
   }
 }
 
-export { removeFromBlock };
+export { apiRemoveFromBlock };

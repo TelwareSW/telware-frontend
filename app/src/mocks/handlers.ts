@@ -13,6 +13,7 @@ import { chats } from "./chats/chats";
 import { devicesMock } from "./devices/devices";
 import { paginationMock } from "./chats/pagination";
 import { media } from "./chats/media";
+import { adminMock } from "./admin/admin";
 
 export default [
   ...loginMock,
@@ -31,4 +32,5 @@ export default [
   ...devicesMock,
   ...paginationMock,
   ...media,
+  ...adminMock,
 ];

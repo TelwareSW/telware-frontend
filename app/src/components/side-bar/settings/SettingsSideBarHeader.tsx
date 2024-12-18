@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import Heading from "@components/Heading";
 import BackArrow from "@components/BackArrow";
 import CircleIcon from "@components/CircleIcon";
-import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+import Logout from "@components/Logout";
 
 const StyledSideBarHeader = styled.div`
   height: 4rem !important;
@@ -33,7 +33,6 @@ const IconsContainer = styled.div`
 
 function SettingsSideBarHeader() {
   const { title } = useAppSelector((state) => state.sideBarData);
-  const { logout } = useLogout();
   const dispatch = useAppDispatch();
 
   return (
@@ -57,15 +56,7 @@ function SettingsSideBarHeader() {
               )
             }
           />
-          <CircleIcon
-            data-testid="logout-icon"
-            onClick={() => logout()}
-            $icon="Logout"
-            $padding={0.2}
-            $size={1.8}
-            $color="var(--color-text)"
-            $bgColor="var(--color-pattern)"
-          />
+          <Logout />
         </IconsContainer>
       )}
     </StyledSideBarHeader>

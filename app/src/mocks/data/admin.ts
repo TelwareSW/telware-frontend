@@ -1,0 +1,127 @@
+const MOCK_USERS: User[] = [
+  {
+    id: "1",
+    userName: "Eddie Brock",
+    photo: "https://i.pravatar.cc/70?=0.05",
+    status: "activated",
+  },
+  {
+    id: "2",
+    userName: "Gwen Stacy",
+    photo: "https://i.pravatar.cc/70?=0.06",
+    status: "activated",
+  },
+  {
+    id: "3",
+    userName: "Mary Jane",
+    photo: "https://i.pravatar.cc/70?=0.07",
+    status: "activated",
+  },
+  {
+    id: "4",
+    userName: "Peter Parker",
+    photo: "https://i.pravatar.cc/70?=0.08",
+    status: "banned",
+  },
+  {
+    id: "5",
+    userName: "Clark Kent",
+    photo: "https://i.pravatar.cc/70?=0.09",
+    status: "deactivated",
+  },
+  {
+    id: "6",
+    userName: "Bruce Wayne",
+    photo: "https://i.pravatar.cc/70?=0.11",
+    status: "activated",
+  },
+  {
+    id: "7",
+    userName: "Diana Prince",
+    photo: "https://i.pravatar.cc/70?=0.12",
+    status: "deactivated",
+  },
+  {
+    id: "8",
+    userName: "Tony Stark",
+    photo: "https://i.pravatar.cc/70?=0.13",
+    status: "deactivated",
+  },
+  {
+    id: "9",
+    userName: "Steve Rogers",
+    photo: "https://i.pravatar.cc/70?=0.14",
+    status: "banned",
+  },
+  {
+    id: "10",
+    userName: "Natasha Romanoff",
+    photo: "https://i.pravatar.cc/70?=0.15",
+    status: "activated",
+  },
+  {
+    id: "11",
+    userName: "Wade Wilson",
+    photo: "https://i.pravatar.cc/70?=0.36",
+    status: "activated",
+  },
+];
+const MOCK_GROUPS = [
+  {
+    id: "1",
+    name: "Avengers",
+    photo: "https://i.pravatar.cc/70?=0.16",
+    membersCount: 10,
+    filtered: false,
+  },
+  {
+    id: "2",
+    name: "Justice League",
+    photo: "https://i.pravatar.cc/70?=0.17",
+    membersCount: 12,
+    filtered: false,
+  },
+  {
+    id: "3",
+    name: "Guardians of the Galaxy",
+    photo: "https://i.pravatar.cc/70?=0.18",
+    membersCount: 5,
+    filtered: false,
+  },
+  {
+    id: "4",
+    name: "Power Rangers",
+    photo: "https://i.pravatar.cc/70?=0.19",
+    membersCount: 7,
+    filtered: false,
+  },
+  {
+    id: "5",
+    name: "Teen Titans",
+    photo: "https://i.pravatar.cc/70?=0.20",
+    membersCount: 6,
+    filtered: true,
+  },
+  {
+    id: "6",
+    name: "Ninga Turtles",
+    photo: "https://i.pravatar.cc/70?=0.21",
+    membersCount: 4,
+    filtered: false,
+  },
+  {
+    id: "7",
+    name: "Transformers",
+    photo: "https://i.pravatar.cc/70?=0.22",
+    membersCount: 10,
+    filtered: false,
+  },
+  {
+    id: "8",
+    name: "SWE team",
+    photo: "https://i.pravatar.cc/70?=0.23",
+    membersCount: 16,
+    filtered: true,
+  },
+];
+export { MOCK_USERS, MOCK_GROUPS };

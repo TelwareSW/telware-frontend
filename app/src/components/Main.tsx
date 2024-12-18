@@ -47,7 +47,7 @@ function Main({ children }: { children?: React.ReactNode }) {
     if (user && !isPending) {
       dispatch(setUserInfo(user));
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, isPending]);
   return <StyledMain data-testid="main">{children}</StyledMain>;
 }
 

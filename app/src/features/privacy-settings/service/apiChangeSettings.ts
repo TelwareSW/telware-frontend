@@ -10,7 +10,7 @@ enum endPts {
   addToChannelPrivacy = "invite-permissions",
 }
 
-async function changeSettings(data: {
+async function apiChangeSettings(data: {
   key: keyof typeof endPts;
   value: privacyStatesStrings | activeStatesStrings;
 }) {
@@ -34,5 +34,5 @@ async function changeSettings(data: {
   }
 }
 
-export { changeSettings };
+export { apiChangeSettings };
 export { endPts };

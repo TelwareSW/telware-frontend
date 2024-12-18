@@ -68,6 +68,18 @@ const GlobalStyles = createGlobalStyle`
     --scrollbar-color: rgba(0, 0, 0, .2);
     --color-avatar: linear-gradient(135deg, #d6d46c, #5e924e);
     --color-avatar-shadow:linear-gradient(135deg,#d6d46c, #5e924e);
+    --admin-sidebar-bg: #56a2c9;
+    --admin-sidebar-bg-hover: #447f9c;
+
+    --admin-main-bg: #fff;
+    --admin-main-bg-hover: #f5f5f5;
+
+    --admin-header-bg:  #f5f5f5;
+    --admin-header-bg-hover: #e5e5e5;
+
+
+    --admin-nav-menu-item-hover-text: #56a2c9;
+  --admin-nav-menu-item-hover: rgba(213, 213, 216, 0.666);
 
   }
   
@@ -136,7 +148,19 @@ const GlobalStyles = createGlobalStyle`
     --scrollbar-color: rgba(255, 255, 255, .2);
     --color-avatar: linear-gradient(135deg, #72C6EF, #004E92);
     --color-avatar-shadow:linear-gradient(135deg, #72C6EF, #004E92);
-    
+
+    --admin-sidebar-bg: #192b35;
+    --admin-sidebar-bg-hover: #25353f;
+
+    --admin-main-bg: #24343e;
+    --admin-main-bg-hover: #25353f;
+
+    --admin-header-bg:  #25353f;
+    --admin-header-bg-hover: #203030;
+
+    --admin-nav-menu-item-hover-text: #24343e79;
+  --admin-nav-menu-item-hover: rgba(213, 213, 216, 0.466);
+
   }
 
   --story-views-background: #181a1b;
@@ -182,6 +206,8 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-messages-small: 0.375rem;
   --border-radius-forum-avatar: 25%;
   --border-radius-circle: 50%;
+  --border-radius-one-sided: 50px 0 0 50px;
+
   
   --color-borders-input: rgb(218, 220, 224);
 

@@ -81,7 +81,6 @@ function StartNewChat() {
         >
           {items.map((item: SideBarMenuItemProps, id: number) => (
             <SideBarMenuItem
-              data-testid={`new-chat-menu-item-${id}`}
               {...item}
               key={id}
               onClick={() => {

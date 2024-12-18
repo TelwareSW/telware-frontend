@@ -8,7 +8,7 @@ function useMyStroies() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["myStories"],
+    queryKey: ["my-stories"],
     queryFn: getMyStoriesAPI,
   });
   return { myStories, error, isLoading };
