@@ -64,14 +64,14 @@ function StartNewChat() {
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.ADD_MEMBERS,
-          data: { type: sideBarType },
+          data: { type: sideBarType, view: "channel" },
         })
       );
     } else if (title === "New Group") {
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.ADD_MEMBERS,
-          data: { type: sideBarType },
+          data: { type: sideBarType, view: "group" },
         })
       );
     } else {

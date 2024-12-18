@@ -17,6 +17,7 @@ import AppLayout from "@components/AppLayout";
 
 import ChatBox from "@features/chats/ChatBox";
 import SocketProvider from "sockets/SocketProvider";
+import RightSideBarProvider from "@features/groups/contexts/RightSideBarProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,7 +48,9 @@ function App() {
             element={
               <ProtectedRoute>
                 <SocketProvider>
-                  <AppLayout />
+                  <RightSideBarProvider>
+                    <AppLayout />
+                  </RightSideBarProvider>
                 </SocketProvider>
               </ProtectedRoute>
             }

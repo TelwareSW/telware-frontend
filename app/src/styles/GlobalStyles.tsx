@@ -188,7 +188,7 @@ const GlobalStyles = createGlobalStyle`
 
   
   --color-error: #e53935;
-  --color-error-shade: #c62828;
+  --color-error-shade: #c628282f;
   --color-success: rgb(0, 199, 62);
   font-size: 16px;
 }

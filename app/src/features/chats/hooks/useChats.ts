@@ -55,7 +55,7 @@ export function useChats() {
     const initialChatState: ChatsState = {
       chats: parseChatsToState(chatData),
       members:
-        chatData?.members.filter((member) => member._id !== userId) || [],
+        chatData?.members?.filter((member) => member._id !== userId) || [],
     };
 
     processMessages(initialChatState.chats).then(() => {

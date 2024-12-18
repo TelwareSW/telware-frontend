@@ -2,7 +2,10 @@ import styled from "styled-components";
 import { useGroupInfo } from "./hooks/useGroupInfo";
 import UsersList from "@components/UsersList";
 import Avatar from "@components/Avatar";
-import CircleIcon from "@components/CircleIcon";
+import { sideBarPages } from "types/sideBar";
+import { useDispatch } from "react-redux";
+import { updateSideBarView } from "@state/side-bar/sideBar";
+import AddMembersButton from "./AddMembersButton";
 
 const Container = styled.div`
   display: flex;
@@ -47,7 +50,17 @@ const StyledUsersList = styled.div`
 
 function GroupInfo() {
   const { group, groupMembers, isPending } = useGroupInfo();
+  const dispatch = useDispatch();
   if (isPending) return;
+
+  function handleAddMembers() {
+    dispatch(
+      updateSideBarView({
+        redirect: sideBarPages.ADD_MORE_MEMBERS,
+        data: { type: "right", view: "existing group" },
+      })
+    );
+  }
 
   return (
     <Container>
@@ -62,19 +75,7 @@ function GroupInfo() {
         <UsersList view="display" users={groupMembers!} />
       </StyledUsersList>
 
-      <CircleIcon
-        type="submit"
-        as="button"
-        data-testid="add-members-button"
-        $icon="AddMembers"
-        $right={1}
-        $bottom={2}
-        $size={3.3}
-        $padding={0.8}
-        $color="white"
-        $bgColor="var(--accent-color)"
-        onClick={() => {}}
-      />
+      <AddMembersButton onClick={handleAddMembers} />
     </Container>
   );
 }

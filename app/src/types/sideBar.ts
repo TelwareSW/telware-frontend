@@ -12,6 +12,10 @@ enum sideBarPages {
   NEW_CHANNEL,
   GROUP_INFO,
   EDIT_GROUP_INFO,
+  GROUP_TYPE,
+  ADD_MORE_MEMBERS,
+  ADMINS,
+  ADD_ADMINS,
 }
 
 type pagesStrings = keyof typeof sideBarPages;

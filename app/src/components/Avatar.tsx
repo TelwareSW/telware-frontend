@@ -32,15 +32,16 @@ type PropsType = {
   image?: string | undefined;
   name: string | undefined;
   size?: string;
+  onClick?: () => void;
 };
 
-function Avatar({ image, name, size }: PropsType) {
+function Avatar({ image, name, size, onClick }: PropsType) {
   if (image && !image.startsWith("http")) {
     image = STATIC_MEDIA_URL + image;
   }
 
   return (
-    <StyledAvatar $image={image} $size={size || "small"}>
+    <StyledAvatar onClick={onClick} $image={image} $size={size || "small"}>
       {!image && getAvatarName(name)}
     </StyledAvatar>
   );

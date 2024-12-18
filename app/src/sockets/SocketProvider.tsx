@@ -20,6 +20,7 @@ import { connectToPeer, createAnswer, startCall } from "@features/calls/call";
 import { useEncryptDecrypt } from "@features/chats/hooks/useEncryptDecrypt";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { getChatByID } from "@features/chats/utils/helpers";
+import toast from "react-hot-toast";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -53,9 +54,10 @@ interface AcknowledgmentResponse {
 interface AckCreateGroup {
   success: boolean;
   message: string;
-  data: {
+  data?: {
     _id: string;
   };
+  error?: string;
 }
 
 function SocketProvider({ children }: SocketProviderProps) {
@@ -311,18 +313,15 @@ function SocketProvider({ children }: SocketProviderProps) {
     members: string[];
   }) {
     if (isConnected && socket) {
-      console.log(type, members, name);
       socket.emit(
         "CREATE_GROUP_CHANNEL",
         { type, name, members },
-        ({ success, data }: AckCreateGroup) => {
-          console.log("CREATE_GROUP_CHANNEL_CALLBACK");
+        ({ success, data, error }: AckCreateGroup) => {
           if (success) {
-            console.log(data._id);
-            navigate(`/${data._id}`);
-          }
-          if (!success) {
-            console.log("failed creating group");
+            console.log("Group/Channel ID:", data?._id);
+            navigate(`/${data?._id}`);
+          } else {
+            toast.error(error || `Failed to create ${type}`);
           }
         }
       );
@@ -330,6 +329,58 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.warn(
         "Cannot create group or channel: not connected to socket server"
       );
+    }
+  }
+
+  function addGroupMembers({
+    chatId,
+    users,
+  }: {
+    chatId: string;
+    users: string[];
+  }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "ADD_MEMBERS_CLIENT",
+        { chatId, users },
+        ({ success, message, error }: AckCreateGroup) => {
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(message);
+            console.log(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot add members: not connected to socket server");
+    }
+  }
+
+  function addAdmins({
+    chatId,
+    members,
+  }: {
+    chatId: string;
+    members: string[];
+  }) {
+    console.log(chatId, members);
+    if (isConnected && socket) {
+      socket.emit(
+        "ADD_ADMINS_CLIENT",
+        { chatId, members },
+        ({ success, message }: AckCreateGroup) => {
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(`Group size limit exceeded. ${message}`);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot add admins: not connected to socket server");
     }
   }
 
@@ -368,6 +419,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         startConnection,
         createGroupOrChannel,
         deleteMessage,
+        addGroupMembers,
+        addAdmins,
       }}
     >
       {children}
