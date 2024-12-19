@@ -129,17 +129,20 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.log("EDIT_MESSAGE_SERVER", chatId, id, content);
       dispatch(editMessage({ chatId, messageId: id, content }));
     });
+    
     socket.on("JOIN_GROUP_CHANNEL", () => {
+      console.log("YOU'RE ADDED TO GROUP");
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
+    socket.on("ADD_ADMINS_SERVER", () => {
+      console.log("NEW ADMINS ARE ADDED");
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
     socket.on("ADD_MEMBERS_SERVER", () => {
-      console.log("added");
+      console.log("NEW MEMBERS ARE ADDED");
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
-    socket.on("ADD_MEMBERS_SERVER", () => {
-      console.log("added");
-      queryClient.invalidateQueries({ queryKey: ["chats"] });
-    });
+
     socket.on("typing", (isTyping, message) =>
       handleIsTyping(dispatch, isTyping, message.chatId)
     );

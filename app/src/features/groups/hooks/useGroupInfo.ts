@@ -15,9 +15,6 @@ function useGroupInfo() {
 
   const { users, isPending } = useAllUsers();
 
-  console.log(groupMembers);
-  console.log(users);
-
   useEffect(() => {
     if (!isPending && group && users?.length) {
       const members = group.members
