@@ -81,6 +81,7 @@ export const renderMessageResults = (
           return (
             <MessageResult
               key={`search-message-${message?.id}`}
+              data-testid={`search-message-${message?.id}`}
               {...commonProps}
             />
           );
@@ -91,6 +92,7 @@ export const renderMessageResults = (
           return (
             <MessageResult
               key={`search-message-${message?.id}`}
+              data-testid={`search-message-${message?.id}`}
               {...commonProps}
               media={message?.media}
             />
@@ -99,6 +101,7 @@ export const renderMessageResults = (
           return (
             <MessageResult
               key={`search-message-${message?.id}`}
+              data-testid={`search-message-${message?.id}`}
               {...commonProps}
               link={message?.content}
             />
@@ -107,6 +110,7 @@ export const renderMessageResults = (
           return (
             <FileResult
               key={`search-message-${message?.id}`}
+              data-testid={`search-message-${message?.id}`}
               {...commonProps}
             />
           );
@@ -114,6 +118,7 @@ export const renderMessageResults = (
           return (
             <AudioResult
               key={`search-message-${message?.id}`}
+              data-testid={`search-message-${message?.id}`}
               {...commonProps}
               file={message?.media}
             />
@@ -132,7 +137,9 @@ export const renderGlobalResults = <T,>(
   if (!results || results.length === 0) return null;
   return (
     <>
-      <SearchSectionHeader>{sectionTitle}</SearchSectionHeader>
+      <SearchSectionHeader data-testid={`search-section-${sectionTitle}`}>
+        {sectionTitle}
+      </SearchSectionHeader>
       {results.map(renderItem)}
     </>
   );

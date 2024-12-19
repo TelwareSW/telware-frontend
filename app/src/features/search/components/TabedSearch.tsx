@@ -75,29 +75,27 @@ const TabedSearch: React.FC = () => {
           exit={{ opacity: 0, x: "-100%" }}
           transition={{ type: "spring", duration: 0.2 }}
           key="tap-search"
+          data-testid="active-tabed-search-container"
         >
           <LayoutGroup>
-            <TabListWrapper>
+            <TabListWrapper data-testid="tab-list-wrapper">
               {SEARCH_TABS.map((tab) => (
                 <TabButton
                   key={tab.title}
                   onClick={() => dispatch(setSelectedTab(tab.title))}
                   $active={selectedTab === tab.title}
+                  data-testid={`tab-button-${tab.title}`}
                 >
                   {tab.title}
                   {selectedTab === tab.title && (
                     <TabUnderline
                       layoutId="underline"
-                      transition={{
-                        type: "spring",
-                        duration: 0.3,
-                      }}
+                      transition={{ type: "spring", duration: 0.3 }}
                     />
                   )}
                 </TabButton>
               ))}
             </TabListWrapper>
-
             <AnimatePresence mode="wait">
               <TabContent
                 key={selectedTab}
@@ -105,6 +103,7 @@ const TabedSearch: React.FC = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ type: "tween", duration: 0.2 }}
+                data-testid="tab-content"
               >
                 {SEARCH_TABS.find(
                   (tab) => tab.title === selectedTab,
