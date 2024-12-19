@@ -18,6 +18,9 @@ interface DetailedChatInterface extends Chat {
   name?: string;
   isBlocked?: boolean;
   photo?: string;
+
+  encryptionKey?: string;
+  initializationVector?: string;
 }
 
 interface ChatsState {
