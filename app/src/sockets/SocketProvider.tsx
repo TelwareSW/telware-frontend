@@ -146,6 +146,13 @@ function SocketProvider({ children }: SocketProviderProps) {
       await startCall(answer);
     });
 
+    socket.on(
+      "DELETE_MESSAGE_SERVER",
+      ({ chatId, id }: { chatId: string; id: string }) => {
+        dispatch(deleteMessageAction({ messageId: id, chatId }));
+      }
+    );
+
     socket.emit("typing");
 
     return () => {
