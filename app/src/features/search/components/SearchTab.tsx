@@ -82,6 +82,7 @@ const SearchTab: React.FC = () => {
         "Groups",
         (group) => (
           <ChannelResult
+            data-testid={`search-group-${group?.id}`}
             key={`group-${group?.id}`}
             title={group?.name}
             image={group?.photo}
@@ -96,6 +97,7 @@ const SearchTab: React.FC = () => {
         "Channels",
         (channel) => (
           <ChannelResult
+            data-testid={`search-channel-${channel?.id}`}
             key={`channel-${channel?.id}`}
             title={channel?.name}
             image={channel?.photo}
@@ -110,6 +112,7 @@ const SearchTab: React.FC = () => {
         "Users",
         (user) => (
           <ChannelResult
+            data-testid={`search-user-${user?.id}`}
             key={`user-${user?.id}`}
             title={`${user?.screenFirstName} ${user?.screenLastName}`}
             image={user?.photo}

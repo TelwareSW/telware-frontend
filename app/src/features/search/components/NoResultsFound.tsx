@@ -39,11 +39,11 @@ const NoResultsFound: React.FC<NoResultsFoundProps> = ({
   subMessage = "Try searching for something else",
 }) => {
   return (
-    <NoResultsContainer>
+    <NoResultsContainer data-testid="no-results-container">
       <NoResultsIcon>
         <Lottie animationData={noResultsAnimation} key="no-results-image" />
       </NoResultsIcon>
-      <NoResultsText>{message}</NoResultsText>
+      <NoResultsText data-testid="no-results-text">{message}</NoResultsText>
       <NoResultsSubText>{subMessage}</NoResultsSubText>
     </NoResultsContainer>
   );
