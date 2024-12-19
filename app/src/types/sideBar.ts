@@ -16,6 +16,7 @@ enum sideBarPages {
   ADD_MORE_MEMBERS,
   ADMINS,
   ADD_ADMINS,
+  MEMBERS,
 }
 
 type pagesStrings = keyof typeof sideBarPages;
