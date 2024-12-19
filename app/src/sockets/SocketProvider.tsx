@@ -349,7 +349,7 @@ function SocketProvider({ children }: SocketProviderProps) {
             queryClient.invalidateQueries({ queryKey: ["chats"] });
           } else {
             toast.error(message);
-            console.log(error);
+            console.error(error);
           }
         }
       );
@@ -370,12 +370,13 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.emit(
         "ADD_ADMINS_CLIENT",
         { chatId, members },
-        ({ success, message }: AckCreateGroup) => {
+        ({ success, message, error }: AckCreateGroup) => {
           if (success) {
             toast.success(message);
             queryClient.invalidateQueries({ queryKey: ["chats"] });
           } else {
             toast.error(`Group size limit exceeded. ${message}`);
+            console.error(error);
           }
         }
       );
