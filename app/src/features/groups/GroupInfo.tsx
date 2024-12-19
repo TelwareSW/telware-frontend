@@ -63,19 +63,24 @@ function GroupInfo() {
   }
 
   return (
-    <Container>
-      <GroupDetails>
+    <Container data-testid="group-info-container">
+      <GroupDetails data-testid="groups-details-container">
         <Avatar name={group?.name} image={group?.photo} size="large" />
         <Info>
-          <GroupName>{group?.name}</GroupName>
-          <MembersCount>{groupMembers.length} members</MembersCount>
+          <GroupName data-testid="group-name">{group?.name}</GroupName>
+          <MembersCount data-testid="group-members-count">
+            {groupMembers.length} members
+          </MembersCount>
         </Info>
       </GroupDetails>
-      <StyledUsersList>
+      <StyledUsersList data-testid="members-list">
         <UsersList view="display" users={groupMembers!} />
       </StyledUsersList>
 
-      <AddMembersButton onClick={handleAddMembers} />
+      <AddMembersButton
+        data-testid="add-members-button"
+        onClick={handleAddMembers}
+      />
     </Container>
   );
 }

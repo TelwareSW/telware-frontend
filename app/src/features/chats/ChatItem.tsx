@@ -66,7 +66,7 @@ type ChatItemProps = {
 
 const ChatItem = React.memo(
   ({
-    chat: { _id, type, lastMessage, name, photo, members, numberOfMembers },
+    chat: { _id, type, lastMessage, name, photo, members },
     onClick,
   }: ChatItemProps) => {
     const navigate = useNavigate();

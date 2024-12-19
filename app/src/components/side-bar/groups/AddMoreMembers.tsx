@@ -25,7 +25,6 @@ function AddMoreMembers() {
   const { groupMembers, isPending: isPendingGroupMembers } = useGroupInfo();
   const { users, isPending: isPendenigAllUsers } = useAllUsers();
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
-  console.log(selectedUsers);
   const { addGroupMembers } = useSocket();
 
   const dispatch = useDispatch();

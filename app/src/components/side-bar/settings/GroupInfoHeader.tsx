@@ -49,23 +49,27 @@ function GroupInfoHeader() {
     );
   }
 
-  //TODO: handle onClose
   return (
-    <StyledSideBarHeader data-testid="settings-side-bar-header">
+    <StyledSideBarHeader data-testid="group-info-header">
       <Container>
         {title === "Group Info" ? (
-          <Icon onClick={() => setIsRightSideBarOpen(false)}>
+          <Icon
+            data-testid="close-button"
+            onClick={() => setIsRightSideBarOpen(false)}
+          >
             {getIcon("Close")}
           </Icon>
         ) : (
-          <BackArrow />
+          <BackArrow data-testid="back-arrow" />
         )}
-        <Heading data-testid="settings-title" as={"h4"}>
+        <Heading data-testid="group-settings-title" as={"h4"}>
           {title}
         </Heading>
       </Container>
       {title === "Group Info" && (
-        <Icon onClick={handleEdit}>{getIcon("Edit")}</Icon>
+        <Icon data-testid="edit-button" onClick={handleEdit}>
+          {getIcon("Edit")}
+        </Icon>
       )}
     </StyledSideBarHeader>
   );

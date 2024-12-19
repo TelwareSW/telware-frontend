@@ -23,11 +23,8 @@ function AddNewGroupMembers() {
       ? state.sideBarData.leftSideBar
       : state.sideBarData.rightSideBar
   );
-  console.log(props);
 
   const type = props?.view;
-
-  console.log(type);
 
   const { users, isPending: isPendenigAllUsers } = useAllUsers();
   const { user: currentUser, isPending: isPendingCurrentUser } = useUser();

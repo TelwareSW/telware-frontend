@@ -25,7 +25,6 @@ function AddAdmins() {
   const { groupMembers, isPending } = useGroupInfo();
 
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
-  console.log(selectedUsers);
 
   const dispatch = useDispatch();
   const { addAdmins } = useSocket();

@@ -73,7 +73,7 @@ type UserProps = {
   view: "display" | "update";
 };
 
-export default function User({ user, view }: UserProps) {
+function User({ user, view }: UserProps) {
   const { _id, photo, status, screenFirstName, screenLastName, role } = user;
 
   const dispatch = useAppDispatch();
@@ -84,24 +84,33 @@ export default function User({ user, view }: UserProps) {
   }
 
   return (
-    <UserRow onClick={handleToggleMember} key={_id}>
+    <UserRow
+      data-testid={`user-row-${_id}`}
+      onClick={handleToggleMember}
+      key={_id}
+    >
       {view === "update" && (
         <Checkbox
+          data-testid="user-selection-checkbox"
+          onChange={handleToggleMember}
           checked={selectedUsers.some(
             (selectedUser) => selectedUser._id === _id
           )}
-          onChange={handleToggleMember}
         />
       )}
 
-      <Avatar name={screenFirstName} image={photo} />
+      <Avatar data-testid={`avatar-user-${_id}`} name={screenFirstName} image={photo} />
       <UserDetails>
         <Details>
-          <Username>{`${screenFirstName} ${screenLastName}`}</Username>
-          {role === "admin" && <Role>{role}</Role>}
+          <Username data-testid="user-screen-name">
+            {`${screenFirstName} ${screenLastName}`}
+          </Username>
+          {role === "admin" && <Role data-testid="user-role">{role}</Role>}
         </Details>
-        <Status>{status}</Status>
+        <Status data-testid="user-status">{status}</Status>
       </UserDetails>
     </UserRow>
   );
 }
+
+export default User;

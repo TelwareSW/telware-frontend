@@ -32,12 +32,14 @@ export const useMessageSender = () => {
     }
 
     const isReply = activeMessage.state === "reply";
+    const isEncryptedContent =
+      chat?.type! === "private" && typeof encrypedMessage === "string";
 
     if (encrypedMessage || file) {
       const message: MessageInterface = {
         _id: "",
         timestamp: new Date().toISOString(),
-        content: typeof encrypedMessage === "string" ? encrypedMessage : "",
+        content: isEncryptedContent ? encrypedMessage : data,
         contentType: type,
         isPinned: false,
         isForward: false,
@@ -49,9 +51,9 @@ export const useMessageSender = () => {
         isReply,
         status: MessageStatus.sent,
         media: file,
-        replyMessageId: null, // or provide the appropriate value
+        threadMessages: [],
       };
-      sendMessage(message);
+      sendMessage({ ...message, chatType: chat?.type! });
     }
   };
 
