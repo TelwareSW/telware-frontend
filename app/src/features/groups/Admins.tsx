@@ -33,7 +33,10 @@ function Admins() {
     <>
       <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <UsersList view="display" users={filteredAdmins} />
-      <AddMembersButton onClick={handleClick} />
+      <AddMembersButton
+        data-testid="add-members-button"
+        onClick={handleClick}
+      />
     </>
   );
 }

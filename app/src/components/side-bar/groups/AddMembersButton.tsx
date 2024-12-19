@@ -3,7 +3,7 @@ import CircleIcon from "@components/CircleIcon";
 function AddMembersButton({ onClick }: { onClick: () => void }) {
   return (
     <CircleIcon
-      data-testid="confirm-add-members-button"
+      testid="add-members-button"
       $icon="ArrowForward"
       $right={1}
       $bottom={2}

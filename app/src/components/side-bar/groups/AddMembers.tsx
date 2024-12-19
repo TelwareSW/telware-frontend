@@ -30,8 +30,12 @@ function AddMembers({ users }: { users: UserType[] }) {
         setSearchQuery={setSearchQuery}
         placeholder="Add people..."
       />
-      <StyledUsersList>
-        <UsersList users={filteredUsers!} view="update" />
+      <StyledUsersList data-testid="users-container">
+        <UsersList
+          data-testid="users-list"
+          users={filteredUsers!}
+          view="update"
+        />
       </StyledUsersList>
     </>
   );

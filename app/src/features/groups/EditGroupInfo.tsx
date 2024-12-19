@@ -37,26 +37,30 @@ function EditGroupInfo() {
   }
 
   return (
-    <Container>
+    <Container data-testid="group-settings-container">
       <SettingsRow
+        testid="group-type"
         icon="Lock"
         title="Group Type"
         subtitle="private"
         onClick={handleGroupTypeClick}
       />
       <SettingsRow
+        testid="admins"
         icon="Admin"
         title="Adminstators"
         subtitle={admins.length}
         onClick={handleDisplayAdmins}
       />
       <SettingsRow
+        testid="members"
         icon="Members"
         title="Members"
         subtitle={groupMembers.length}
         onClick={() => {}}
       />
       <SettingsRow
+        testid="leave-group-button"
         icon="Delete"
         title="Delete and Leave Group"
         subtitle=""

@@ -3,7 +3,7 @@ import { MessageInterface } from "./messages";
 
 export interface SocketContextType {
   isConnected: boolean;
-  sendMessage: (message: MessageInterface) => void;
+  sendMessage: (message: MessageInterface & { chatType: string }) => void;
   pinMessage: (chatId: string, messageId: string, userId: string) => void;
   unpinMessage: (chatId: string, messageId: string, userId: string) => void;
   editMessage: (messageId: string, content: string, chatId: string) => void;

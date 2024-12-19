@@ -5,7 +5,6 @@ function AddMembersButton({ onClick }: { onClick: () => void }) {
     <CircleIcon
       type="submit"
       as="button"
-      data-testid="add-members-button"
       $icon="AddMembers"
       $right={1}
       $bottom={2}
@@ -14,6 +13,7 @@ function AddMembersButton({ onClick }: { onClick: () => void }) {
       $color="white"
       $bgColor="var(--accent-color)"
       onClick={onClick}
+      testid='add-members-button'
     />
   );
 }

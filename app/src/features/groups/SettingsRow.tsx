@@ -46,16 +46,23 @@ type SettingsRowProps = {
   icon: iconStrings;
   title: string;
   subtitle: string | number;
+  testid?: string;
   onClick: () => void;
 };
 
-function SettingsRow({ icon, title, subtitle, onClick }: SettingsRowProps) {
+function SettingsRow({
+  icon,
+  title,
+  subtitle,
+  onClick,
+  testid,
+}: SettingsRowProps) {
   return (
-    <Row onClick={onClick} $type={icon}>
+    <Row data-testid={testid} onClick={onClick} $type={icon}>
       {getIcon(icon)}
       <Content>
-        <Title>{title}</Title>
-        <Subtitle>{subtitle}</Subtitle>
+        <Title data-testid={`setting-${title}`}>{title}</Title>
+        <Subtitle data-testid="subtitle">{subtitle}</Subtitle>
       </Content>
     </Row>
   );

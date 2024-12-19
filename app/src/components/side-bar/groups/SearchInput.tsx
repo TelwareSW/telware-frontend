@@ -24,6 +24,7 @@ function SearchInput({
 }: SearchInputProps) {
   return (
     <StyledSearchInput
+      data-testid="search-input-users"
       type="text"
       placeholder={placeholder || "Search..."}
       value={searchQuery}

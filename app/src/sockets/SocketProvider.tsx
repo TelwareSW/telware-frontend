@@ -18,9 +18,8 @@ import {
 } from "@state/messages/chats";
 import { connectToPeer, createAnswer, startCall } from "@features/calls/call";
 import { useEncryptDecrypt } from "@features/chats/hooks/useEncryptDecrypt";
-import { useAppSelector } from "@hooks/useGlobalState";
-import { getChatByID } from "@features/chats/utils/helpers";
 import toast from "react-hot-toast";
+import { useChat } from "@features/chats/hooks/useChat";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -45,6 +44,7 @@ type SocketProviderProps = {
 interface AcknowledgmentResponse {
   success: boolean;
   message: string;
+  error?: string;
   res: {
     messageId: string;
     message: MessageInterface;
@@ -68,10 +68,13 @@ function SocketProvider({ children }: SocketProviderProps) {
   const queryClient = useQueryClient();
 
   const { decrypt } = useEncryptDecrypt();
-  const chats = useAppSelector((state) => state.chats.chats);
+  const { chat } = useChat();
+  // const chats = useAppSelector((state) => state.chats.chats);
 
   useEffect(() => {
     if (!socket) return;
+
+    console.log(socket);
 
     socket.connect();
 
@@ -85,7 +88,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     };
 
     const onReceiveMessage = (message: MessageInterface) => {
-      const chat = getChatByID({ chats, chatID: message.chatId });
+      // const chat = getChatByID({ chats, chatID: message.chatId });
 
       console.log("Received message:", message);
       if (!chat) {
@@ -129,7 +132,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.log("EDIT_MESSAGE_SERVER", chatId, id, content);
       dispatch(editMessage({ chatId, messageId: id, content }));
     });
-    
+
     socket.on("JOIN_GROUP_CHANNEL", () => {
       console.log("YOU'RE ADDED TO GROUP");
       queryClient.invalidateQueries({ queryKey: ["chats"] });
@@ -173,25 +176,21 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.off("typing");
       socket.io.engine.off("close");
     };
-  }, [socket, chats, decrypt, dispatch, queryClient]);
+  }, [socket, chat, decrypt, dispatch, queryClient]);
 
+  //TODO: remove isFirstTime
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
-      const chat = getChatByID({ chats, chatID: sentMessage.chatId });
+      // const chat = getChatByID({ chats, chatID: sentMessage.chatId });
 
-      const messageToSend = {
-        ...sentMessage,
-        isFirstTime: false,
-        chatType: chat?.type,
-        threadMessages: [],
-      };
-      console.log("messageToSend", messageToSend);
+      console.log("messageToSend", sentMessage);
       socket.emit(
         "SEND_MESSAGE",
-        messageToSend,
-        ({ success, res }: AcknowledgmentResponse) => {
+        sentMessage,
+        ({ success, res, error, message }: AcknowledgmentResponse) => {
           if (!success) {
-            console.log("Failed to send", res);
+            console.log(message);
+            console.log("Failed to send", error);
           }
           if (success) {
             const _id = res.messageId;

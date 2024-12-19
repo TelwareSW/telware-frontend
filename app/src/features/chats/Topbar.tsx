@@ -177,7 +177,7 @@ function Topbar() {
           image={image}
         />
       )}
-      <Container $hasMargin={isCollapsed}>
+      <Container data-testid="chat-topbar" $hasMargin={isCollapsed}>
         <Avatar
           data-testid="chat-avatar"
           image={image}
