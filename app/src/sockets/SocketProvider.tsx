@@ -132,6 +132,14 @@ function SocketProvider({ children }: SocketProviderProps) {
     socket.on("JOIN_GROUP_CHANNEL", () => {
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
+    socket.on("ADD_MEMBERS_SERVER", () => {
+      console.log("added");
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
+    socket.on("ADD_MEMBERS_SERVER", () => {
+      console.log("added");
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
     socket.on("typing", (isTyping, message) =>
       handleIsTyping(dispatch, isTyping, message.chatId)
     );
