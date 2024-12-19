@@ -1,16 +1,18 @@
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import AddMembers from "./AddMembers";
+import AddMembersButton from "./AddMembersButton";
 
-import { useGroupInfo } from "@features/groups/hooks/useGroupInfo";
+import { updateSideBarView } from "@state/side-bar/sideBar";
 
 import { sideBarPages } from "types/sideBar";
-import { updateSideBarView } from "@state/side-bar/sideBar";
-import AddMembersButton from "./AddMembersButton";
+
+import { useGroupInfo } from "@features/groups/hooks/useGroupInfo";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useSocket } from "@hooks/useSocket";
-import { useParams } from "react-router-dom";
+import { clearSelectedUsers } from "@state/groups/selectedUsers";
 
 const Container = styled.div`
   width: 100%;
@@ -35,6 +37,7 @@ function AddAdmins() {
     });
     const redirect = sideBarPages.ADMINS;
     dispatch(updateSideBarView({ redirect, data: { type: "right" } }));
+    dispatch(clearSelectedUsers());
   }
 
   if (isPending) return;
@@ -44,7 +47,7 @@ function AddAdmins() {
   return (
     <Container>
       <AddMembers users={normalMembers!} />
-      {selectedUsers.length && <AddMembersButton onClick={handleClick} />}
+      {!!selectedUsers.length && <AddMembersButton onClick={handleClick} />}
     </Container>
   );
 }
