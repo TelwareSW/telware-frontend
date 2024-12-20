@@ -7,7 +7,7 @@ function useUsers() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["all-users"],
     queryFn: apiGetUsers,
   });
   return { users, error, isLoading };

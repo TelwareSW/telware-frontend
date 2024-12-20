@@ -3,6 +3,8 @@ import AdminHeaderMenu from "./AdminHeaderMenu";
 import AdminNavMenu from "./AdminNavMenu";
 import { DESKTOP_VIEW, MOBILE_VIEW } from "@constants";
 import Heading from "@components/Heading";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { useProfileSettings } from "@features/profile-settings/hooks/useProfileSettings";
 
 const Header = styled.header`
   display: flex;
@@ -30,10 +32,11 @@ const H4 = styled(Heading)`
 `;
 
 function AdminHeader() {
+  const { data: user } = useProfileSettings();
   return (
     <Header>
       <AdminNavMenu />
-      <H4 as="h4">Hi, Amir Anwar</H4>
+      <H4 as="h4">Hi, {user.firstName + " " + user.lastName} 👋️</H4>
       <AdminHeaderMenu />
     </Header>
   );

@@ -14,7 +14,7 @@ function useDeactivateUser() {
   } = useMutation({
     mutationFn: (userId: string) => apiDeactivateUser(userId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["all-users"] });
       toast.success("User deactivated successfully");
     },
     onError: () => {

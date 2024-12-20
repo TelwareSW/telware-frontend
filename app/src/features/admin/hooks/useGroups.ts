@@ -7,7 +7,7 @@ function useGroups() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["groups"],
+    queryKey: ["all-groups"],
     queryFn: apiGetGroups,
   });
   return { groups, error, isLoading };

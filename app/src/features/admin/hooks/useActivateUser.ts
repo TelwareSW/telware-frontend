@@ -14,7 +14,7 @@ function useActivateUser() {
   } = useMutation({
     mutationFn: (userId: string) => apiActivateUser(userId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["all-users"] });
       toast.success("User activated successfully");
     },
     onError: () => {

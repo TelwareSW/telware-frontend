@@ -17,7 +17,6 @@ import AppLayout from "@components/AppLayout";
 
 import ChatBox from "@features/chats/ChatBox";
 import SocketProvider from "sockets/SocketProvider";
-import AdminAppLayout from "@features/admin/components/AdminAppLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,10 +54,6 @@ function App() {
           >
             <Route path=":chatId" element={<ChatBox />} />
           </Route>
-          <Route path="dashboard" element={<AdminAppLayout />} />
-          <Route path="users" element={<AdminAppLayout />} />
-          <Route path="settings" element={<AdminAppLayout />} />
-          <Route path="groups" element={<AdminAppLayout />} />
           <Route path="login" element={<Login />} />
           <Route
             path="password-reset/:token"

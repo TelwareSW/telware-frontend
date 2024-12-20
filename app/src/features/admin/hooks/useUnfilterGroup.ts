@@ -14,7 +14,7 @@ function useUnfilterGroup() {
   } = useMutation({
     mutationFn: (groupId: string) => apiUnfilterGroup(groupId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["groups"] });
+      queryClient.invalidateQueries({ queryKey: ["all-groups"] });
       toast.success("Group Unfiltered successfully");
     },
     onError: () => {

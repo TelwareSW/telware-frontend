@@ -1,60 +1,91 @@
 import { API_URL } from "@constants";
 
 async function apiGetUsers() {
-  const res = await fetch(`${API_URL}/admin/groups`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Session-Token": localStorage.getItem("sessionId") || "",
-    },
-  });
+  try {
+    const res = await fetch(`${API_URL}/users`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
+    });
 
-  if (res.status !== 200) {
-    throw new Error(res.statusText);
+    if (res.status !== 200) {
+      throw new Error(res.statusText);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch users", error);
+    throw error;
   }
 }
 async function apiDeactivateUser(userId: string) {
-  const res = await fetch(`${API_URL}/admin/deactivate/${userId}`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Session-Token": localStorage.getItem("sessionId") || "",
-    },
-  });
+  try {
+    const res = await fetch(`${API_URL}/users/deactivate/${userId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
+    });
+    if (res.status !== 200) {
+      throw new Error(res.statusText);
+    }
 
-  if (res.status !== 200) {
-    throw new Error(res.statusText);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to deactivate user", error);
+    throw error;
   }
 }
 async function apiBanUser(userId: string) {
-  const res = await fetch(`${API_URL}/admin/ban/${userId}`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Session-Token": localStorage.getItem("sessionId") || "",
-    },
-  });
+  try {
+    const res = await fetch(`${API_URL}/users/ban/${userId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
+    });
 
-  if (res.status !== 200) {
-    throw new Error(res.statusText);
+    if (res.status !== 200) {
+      throw new Error(res.statusText);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to ban user", error);
+    throw error;
   }
 }
 
 async function apiActivateUser(userId: string) {
-  const res = await fetch(`${API_URL}/admin/activate/${userId}`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Session-Token": localStorage.getItem("sessionId") || "",
-    },
-  });
+  try {
+    const res = await fetch(`${API_URL}/users/activate/${userId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Session-Token": localStorage.getItem("sessionId") || "",
+      },
+    });
 
-  if (res.status !== 200) {
-    throw new Error(res.statusText);
+    if (res.status !== 200) {
+      throw new Error(res.statusText);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to activate user", error);
+    throw error;
   }
 }
 
