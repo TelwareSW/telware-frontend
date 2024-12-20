@@ -26,15 +26,7 @@ function AddNewGroupMembers() {
   const type = props?.view;
   const users = useAppSelector((state) => state.chats.members);
 
-  // const { users, isPending: isPendenigAllUsers } = useAllUsers();
-  // const { user: currentUser, isPending: isPendingCurrentUser } = useUser();
   const dispatch = useAppDispatch();
-
-  // if (isPendenigAllUsers || isPendingCurrentUser) return null;
-
-  // const filteredUsers = users?.filter((user) => user._id !== currentUser._id);
-
-  console.log(users);
 
   function handleClick() {
     const redirect =
