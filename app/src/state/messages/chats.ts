@@ -202,8 +202,13 @@ const chatsSlice = createSlice({
     ) => {
       const { chatId, newMessages } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
+
+      const filteredMessages = newMessages.filter(
+        (msg) => !chat?.messages.find((m) => m._id === msg._id)
+      );
+
       if (chat) {
-        chat.messages = [...newMessages, ...chat.messages];
+        chat.messages = [...filteredMessages, ...chat.messages];
       }
     },
 
