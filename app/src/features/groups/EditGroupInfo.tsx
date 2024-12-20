@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import SettingsRow from "./SettingsRow";
 import { useDispatch } from "react-redux";
-import { updateSideBarView } from "@state/side-bar/sideBar";
+import { updateSideBarView, resetRightSideBar } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
 import { useGroupInfo } from "./hooks/useGroupInfo";
+import { useSocket } from "@hooks/useSocket";
+import { useRightSideBarContext } from "./contexts/RightSideBarProvider";
 
 const Container = styled.div`
   background-color: var(--color-background);
@@ -14,7 +16,9 @@ const Container = styled.div`
 
 function EditGroupInfo() {
   const dispatch = useDispatch();
-  const { admins, groupMembers, isPending } = useGroupInfo();
+  const { admins, groupMembers, chatId, isPending } = useGroupInfo();
+  const { leaveGroup } = useSocket();
+  const { setIsRightSideBarOpen } = useRightSideBarContext();
 
   if (isPending) return;
 
@@ -35,6 +39,7 @@ function EditGroupInfo() {
       })
     );
   }
+
   function handleDisplayMembers() {
     dispatch(
       updateSideBarView({
@@ -42,6 +47,12 @@ function EditGroupInfo() {
         data: { type: "right" },
       })
     );
+  }
+
+  function handleLeaveGroup() {
+    leaveGroup({ chatId: chatId! });
+    setIsRightSideBarOpen(false);
+    dispatch(resetRightSideBar());
   }
 
   return (
@@ -72,7 +83,7 @@ function EditGroupInfo() {
         icon="Delete"
         title="Delete and Leave Group"
         subtitle=""
-        onClick={() => {}}
+        onClick={handleLeaveGroup}
       />
     </Container>
   );

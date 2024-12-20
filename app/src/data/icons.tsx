@@ -63,6 +63,7 @@ enum icons {
   Lock,
   Admin,
   Members,
+  RemoveMember,
 }
 
 type iconStrings = keyof typeof icons;
@@ -416,6 +417,10 @@ const iconImports: Record<iconStrings, IconConfig> = {
   },
   Members: {
     importFn: () => import("@mui/icons-material/PeopleOutlineOutlined"),
+  },
+  RemoveMember: {
+    importFn: () => import("@mui/icons-material/RemoveCircleOutline"),
+    defaultProps: { fontSize: "small" },
   },
 };
 
