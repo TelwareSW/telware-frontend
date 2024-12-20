@@ -7,6 +7,7 @@ import globalSearchReducer from "./messages/global-search";
 import activeMessageReducer from "./messages/activeMessage";
 import chatsReducer from "./messages/chats";
 import selectedUsersReducer from "./groups/selectedUsers";
+import channelThreadsReducer from "./messages/channels";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     chats: chatsReducer,
     globalSearch: globalSearchReducer,
     selectedUsers: selectedUsersReducer,
+    channelsThreads: channelThreadsReducer,
   },
 });
 

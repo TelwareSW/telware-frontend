@@ -19,6 +19,8 @@ import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarPr
 
 import { getElapsedTime } from "@utils/helpers";
 import { getChatByID } from "./utils/helpers";
+import Button from "@components/Button";
+import { resetActiveThread } from "@state/messages/channels";
 
 const Container = styled.div<{ $hasMargin?: boolean }>`
   position: absolute;
@@ -118,6 +120,7 @@ function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const chats = useAppSelector((state) => state.chats.chats);
+  const { activeThread } = useAppSelector((state) => state.channelsThreads);
   const [isSearching, setIsSearching] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { startConnection } = useSocket();
@@ -159,9 +162,13 @@ function Topbar() {
         chatId: chatId!,
         isBlocked: false,
         userId: userId,
-      })
+      }),
     );
   }
+
+  const closeThread = () => {
+    dispatch(resetActiveThread());
+  };
 
   const isCall = false;
 
@@ -178,19 +185,30 @@ function Topbar() {
         />
       )}
       <Container data-testid="chat-topbar" $hasMargin={isCollapsed}>
-        <Avatar
-          data-testid="chat-avatar"
-          image={image}
-          name={chat.name?.charAt(0)}
-          onClick={handleOpenRightSideBar}
-        />
+        {!activeThread && (
+          <Avatar
+            data-testid="chat-avatar"
+            image={image}
+            name={chat.name?.charAt(0)}
+            onClick={handleOpenRightSideBar}
+          />
+        )}
+        {activeThread && (
+          <div onClick={closeThread} data-testid="back-button">
+            {getIcon("LeftArrow", {
+              sx: { fontSize: "3rem", color: "var(--accent-color)" },
+            })}
+          </div>
+        )}
         {isSearching ? (
           <SearchBar onClose={toggleSearch} />
         ) : (
           <>
             <Info data-testid="chat-info" onClick={handleOpenRightSideBar}>
               <Content>
-                <Name data-testid="chat-name">{chat.name}</Name>
+                <Name data-testid="chat-name">
+                  {activeThread ? "Comments" : chat.name}
+                </Name>
                 {lastSeen && (
                   <LastSeen data-testid="chat-last-seen">
                     last seen {getElapsedTime(lastSeen)}
