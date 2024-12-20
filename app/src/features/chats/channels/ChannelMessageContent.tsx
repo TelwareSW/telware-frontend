@@ -35,7 +35,6 @@ function MessageContent() {
     parentMessageId,
     media,
     contentType,
-    chatType,
   } = useMessageContext();
 
   const { searchTerm, searchResults } = useAppSelector((state) => state.search);
@@ -52,7 +51,7 @@ function MessageContent() {
 
   return (
     <Container>
-      {chatType !== "channel" && <SenderName />}
+      <SenderName />
       {parentMessageId && (
         <MessageBoxWrapper
           onClick={MoveToReplyMessage}

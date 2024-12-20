@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
 import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
 import MessageProvider from "./contexts/MessageProvider";
-import { MessageInterface } from "types/messages";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -37,7 +36,7 @@ const ScrollContainer = styled.div`
 
 function ChatBody() {
   const { chatId } = useParams<{ chatId: string }>();
-  const chats = useAppSelector((state) => state.chats.chats);
+  const { chats, members } = useAppSelector((state) => state.chats);
   const chat = getChatByID({ chats: chats, chatID: chatId! });
 
   const { fetchNextPage, hasNextPage } = useFetchNextPage();
@@ -69,7 +68,13 @@ function ChatBody() {
 
       {chat?.messages.map((data) => {
         return (
-          <MessageProvider key={data._id} data={data}>
+          <MessageProvider
+            key={data._id}
+            data={data}
+            chatType={chat?.type}
+            sender={members.find((member) => member._id === data.senderId)}
+            numberOfMembers={chat?.numberOfMembers}
+          >
             <Message key={data._id} />
           </MessageProvider>
         );

@@ -71,7 +71,7 @@ const CheckBoxWrapper = styled.div`
 `;
 
 const Message = React.memo(() => {
-  const { _id: id, chatId, isMine } = useMessageContext();
+  const { _id: id, chatId, isMine, chatType } = useMessageContext();
 
   const { lastMessageRef } = useScrollToLastMsg();
   useScrollToSearchResultsMsg();
@@ -93,13 +93,13 @@ const Message = React.memo(() => {
       <StyledMessage
         ref={lastMessageRef}
         key={id}
-        $isMine={isMine}
+        $isMine={chatType === "channel" ? false : isMine}
         data-message-id={id}
         data-testid={`message-${id}`}
         onMouseLeave={handleMouseLeave}
         onContextMenu={handleOpenList}
       >
-        <Bubble $isMine={isMine}>
+        <Bubble $isMine={chatType === "channel" ? false : isMine}>
           <MessageContent />
           {isHovered && <MessageOptionList />}
           <MessageDetails />
