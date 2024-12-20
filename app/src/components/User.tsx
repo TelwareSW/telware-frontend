@@ -1,14 +1,20 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import Avatar from "./Avatar";
 import Checkbox from "./Checkbox";
-
-import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import OptionList from "./OptionList";
 
 import { toggleSelectUser } from "@state/groups/selectedUsers";
 import { UserType } from "@features/groups/hooks/useAllUsers";
+import { useSocket } from "@hooks/useSocket";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import { useGroupInfo } from "@features/groups/hooks/useGroupInfo";
+import { getIcon } from "@data/icons";
 
 const UserRow = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
 
@@ -75,16 +81,37 @@ type UserProps = {
 
 function User({ user, view }: UserProps) {
   const { _id, photo, status, screenFirstName, screenLastName, role } = user;
+  const { chatId } = useParams<{ chatId: string }>();
+  const { isPending, isCurrUserAdmin } = useGroupInfo();
 
   const dispatch = useAppDispatch();
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
+  const { removeMembers } = useSocket();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  if (isPending) return;
+
+  function handleContextMenu(e: React.MouseEvent) {
+    e.preventDefault();
+    setIsModalVisible(true);
+  }
 
   function handleToggleMember() {
     if (view === "update") dispatch(toggleSelectUser(user));
   }
 
+  function handleRemoveUser() {
+    removeMembers({ chatId: chatId!, members: [_id] });
+  }
+
+  function handleCloseModal() {
+    setIsModalVisible(false);
+  }
+
   return (
     <UserRow
+      onContextMenu={handleContextMenu}
+      onMouseLeave={handleCloseModal}
       data-testid={`user-row-${_id}`}
       onClick={handleToggleMember}
       key={_id}
@@ -99,7 +126,11 @@ function User({ user, view }: UserProps) {
         />
       )}
 
-      <Avatar data-testid={`avatar-user-${_id}`} name={screenFirstName} image={photo} />
+      <Avatar
+        data-testid={`avatar-user-${_id}`}
+        name={screenFirstName}
+        image={photo}
+      />
       <UserDetails>
         <Details>
           <Username data-testid="user-screen-name">
@@ -109,6 +140,13 @@ function User({ user, view }: UserProps) {
         </Details>
         <Status data-testid="user-status">{status}</Status>
       </UserDetails>
+
+      {isModalVisible && isCurrUserAdmin && role !== "admin" && (
+        <OptionList onClick={handleRemoveUser}>
+          {getIcon("RemoveMember")}
+          <p>Remove this user</p>
+        </OptionList>
+      )}
     </UserRow>
   );
 }

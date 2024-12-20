@@ -18,6 +18,7 @@ import {
   addMoreMembers,
   admins,
   addAdmins,
+  members,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -74,6 +75,8 @@ function getSideBarPage(type: number): SideBarView {
       return admins;
     case sideBarPages.ADD_ADMINS:
       return addAdmins;
+    case sideBarPages.MEMBERS:
+      return members;
     default:
       throw new Error("Unknown Type");
   }
@@ -88,6 +91,9 @@ const sideBarSlice = createSlice({
   name: "sideBarData",
   initialState,
   reducers: {
+    resetRightSideBar: (state) => {
+      state.rightSideBar = groupInfo;
+    },
     updateSideBarView: (state, action: PayloadAction<actionType>) => {
       const { redirect, data } = action.payload;
 
@@ -117,6 +123,6 @@ const sideBarSlice = createSlice({
   },
 });
 
-export const { updateSideBarView } = sideBarSlice.actions;
+export const { updateSideBarView, resetRightSideBar } = sideBarSlice.actions;
 export default sideBarSlice.reducer;
 export type { SideBarView, actionType };

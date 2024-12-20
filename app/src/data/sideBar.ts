@@ -91,6 +91,7 @@ const pagesMap: { [K in pagesStrings]: string } = {
   ADD_MORE_MEMBERS: "AddMoreMembers",
   ADMINS: "Admins",
   ADD_ADMINS: "AddAdmins",
+  MEMBERS: "Members",
 };
 
 const settingsRows = [
@@ -264,6 +265,12 @@ const addAdmins: SideBarView = {
   page: "ADD_ADMINS",
 };
 
+const members: SideBarView = {
+  title: "Members",
+  backView: sideBarPages.EDIT_GROUP_INFO,
+  page: "MEMBERS",
+};
+
 export {
   chats,
   contacts,
@@ -290,4 +297,5 @@ export {
   addMoreMembers,
   admins,
   addAdmins,
+  members,
 };
