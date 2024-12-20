@@ -73,8 +73,6 @@ function SocketProvider({ children }: SocketProviderProps) {
   useEffect(() => {
     if (!socket) return;
 
-    console.log(socket);
-
     socket.connect();
 
     const onConnect = () => {
@@ -171,6 +169,11 @@ function SocketProvider({ children }: SocketProviderProps) {
         queryClient.invalidateQueries({ queryKey: ["chats"] });
       }
     );
+
+    socket.on("REMOVE_MEMBERS_SERVER", () => {
+      console.log("REMOVE_MEMBERS_SERVER");
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
 
     socket.emit("typing");
 
@@ -445,7 +448,34 @@ function SocketProvider({ children }: SocketProviderProps) {
         }
       );
     } else {
-      console.warn("Cannot add admins: not connected to socket server");
+      console.warn("Cannot leave group: not connected to socket server");
+    }
+  }
+
+  function removeMembers({
+    chatId,
+    members,
+  }: {
+    chatId: string;
+    members: string[];
+  }) {
+    console.log(chatId, members);
+    if (isConnected && socket) {
+      socket.emit(
+        "REMOVE_MEMBERS_CLIENT",
+        { chatId, members },
+        ({ success, message, error }: AckCreateGroup) => {
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot remove members: not connected to socket server");
     }
   }
 
@@ -463,6 +493,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         addGroupMembers,
         addAdmins,
         leaveGroup,
+        removeMembers,
       }}
     >
       {children}
