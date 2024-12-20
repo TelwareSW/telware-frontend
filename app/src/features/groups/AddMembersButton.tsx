@@ -1,6 +1,11 @@
 import CircleIcon from "@components/CircleIcon";
+import { useGroupInfo } from "./hooks/useGroupInfo";
 
 function AddMembersButton({ onClick }: { onClick: () => void }) {
+  const { isCurrUserAdmin, isPending } = useGroupInfo();
+
+  if (isPending || !isCurrUserAdmin) return;
+
   return (
     <CircleIcon
       type="submit"
@@ -13,7 +18,7 @@ function AddMembersButton({ onClick }: { onClick: () => void }) {
       $color="white"
       $bgColor="var(--accent-color)"
       onClick={onClick}
-      testid='add-members-button'
+      testid="add-members-button"
     />
   );
 }

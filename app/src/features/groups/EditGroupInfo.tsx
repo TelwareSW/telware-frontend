@@ -35,6 +35,14 @@ function EditGroupInfo() {
       })
     );
   }
+  function handleDisplayMembers() {
+    dispatch(
+      updateSideBarView({
+        redirect: sideBarPages.MEMBERS,
+        data: { type: "right" },
+      })
+    );
+  }
 
   return (
     <Container data-testid="group-settings-container">
@@ -57,7 +65,7 @@ function EditGroupInfo() {
         icon="Members"
         title="Members"
         subtitle={groupMembers.length}
-        onClick={() => {}}
+        onClick={handleDisplayMembers}
       />
       <SettingsRow
         testid="leave-group-button"
