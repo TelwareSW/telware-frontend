@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
 import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
 import MessageProvider from "./contexts/MessageProvider";
-import { MessageInterface } from "types/messages";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -37,7 +36,8 @@ const ScrollContainer = styled.div`
 
 function ChatBody() {
   const { chatId } = useParams<{ chatId: string }>();
-  const chats = useAppSelector((state) => state.chats.chats);
+  const { chats, members } = useAppSelector((state) => state.chats);
+  const { activeThread } = useAppSelector((state) => state.channelsThreads);
   const chat = getChatByID({ chats: chats, chatID: chatId! });
 
   const { fetchNextPage, hasNextPage } = useFetchNextPage();
@@ -63,17 +63,44 @@ function ChatBody() {
     }
   }, [fetchNextPage, inView, chatId]);
 
+  const messages = chat?.messages?.filter((msg) => !msg.parentMessageId);
+  const threadMessages = activeThread
+    ? chat?.messages.filter((msg) => msg.parentMessageId === activeThread)
+    : [];
+
   return (
     <ScrollContainer ref={scrollContainerRef}>
       <div ref={ref}></div>
 
-      {chat?.messages.map((data) => {
-        return (
-          <MessageProvider key={data._id} data={data}>
-            <Message key={data._id} />
-          </MessageProvider>
-        );
-      })}
+      {!activeThread &&
+        messages?.map((data) => {
+          return (
+            <MessageProvider
+              key={data._id}
+              data={data}
+              chatType={chat?.type as "private" | "group" | "channel"}
+              sender={members.find((member) => member._id === data.senderId)}
+              numberOfMembers={chat?.numberOfMembers}
+            >
+              <Message key={data._id} />
+            </MessageProvider>
+          );
+        })}
+
+      {activeThread &&
+        threadMessages?.map((data) => {
+          return (
+            <MessageProvider
+              key={data._id}
+              data={data}
+              chatType="channel"
+              sender={members.find((member) => member._id === data.senderId)}
+              numberOfMembers={chat?.numberOfMembers}
+            >
+              <Message key={data._id} />
+            </MessageProvider>
+          );
+        })}
     </ScrollContainer>
   );
 }

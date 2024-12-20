@@ -64,6 +64,7 @@ enum icons {
   Admin,
   Members,
   RemoveMember,
+  Eye,
 }
 
 type iconStrings = keyof typeof icons;
@@ -422,6 +423,10 @@ const iconImports: Record<iconStrings, IconConfig> = {
     importFn: () => import("@mui/icons-material/RemoveCircleOutline"),
     defaultProps: { fontSize: "small" },
   },
+  Eye: {
+    importFn: () => import("@mui/icons-material/Visibility"),
+    defaultProps: { fontSize: "small" },
+  },
 };
 
 const iconCache = new Map<string, React.ReactElement>();
@@ -432,7 +437,7 @@ function getIcon(
     sx?: SxProps;
     fontSize?: "small" | "medium" | "large";
     style?: React.CSSProperties;
-  }
+  },
 ) {
   if (!iconName) return undefined;
 
