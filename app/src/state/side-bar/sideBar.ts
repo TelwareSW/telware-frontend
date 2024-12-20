@@ -19,6 +19,7 @@ import {
   admins,
   addAdmins,
   members,
+  permissions,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -77,6 +78,8 @@ function getSideBarPage(type: number): SideBarView {
       return addAdmins;
     case sideBarPages.MEMBERS:
       return members;
+    case sideBarPages.PERMISSIONS:
+      return permissions;
     default:
       throw new Error("Unknown Type");
   }

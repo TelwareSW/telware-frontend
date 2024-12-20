@@ -27,6 +27,7 @@ import AddMoreMembers from "./groups/AddMoreMembers.js";
 import Admins from "@features/groups/Admins.js";
 import AddAdmins from "./groups/AddAdmins.js";
 import Members from "@features/groups/Members.js";
+import Permissions from "@features/groups/Permissions.js";
 
 interface SideBarProps {
   rows?: SideBarRowProps[];
@@ -153,6 +154,11 @@ const sideBarMap: {
   Members: () => (
     <SettingsSideBar rows={[]}>
       <Members />
+    </SettingsSideBar>
+  ),
+  Permissions: () => (
+    <SettingsSideBar rows={[]}>
+      <Permissions />
     </SettingsSideBar>
   ),
 };

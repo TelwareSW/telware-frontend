@@ -92,6 +92,7 @@ const pagesMap: { [K in pagesStrings]: string } = {
   ADMINS: "Admins",
   ADD_ADMINS: "AddAdmins",
   MEMBERS: "Members",
+  PERMISSIONS: "Permissions",
 };
 
 const settingsRows = [
@@ -271,6 +272,12 @@ const members: SideBarView = {
   page: "MEMBERS",
 };
 
+const permissions: SideBarView = {
+  title: "Permissions",
+  backView: sideBarPages.EDIT_GROUP_INFO,
+  page: "PERMISSIONS",
+};
+
 export {
   chats,
   contacts,
@@ -298,4 +305,5 @@ export {
   admins,
   addAdmins,
   members,
+  permissions,
 };
