@@ -46,7 +46,7 @@ const StyledBackground = styled.div`
   }
 `;
 
-function FilePreviewItem() {
+function FilePreviewItem({ chatId }: { chatId: string | undefined }) {
   const [caption, setCaption] = useState("");
   const { mutate: uploadFile, isPending } = useUploadMedia();
 
@@ -64,14 +64,14 @@ function FilePreviewItem() {
       uploadFile(file, {
         onSuccess: (url) => {
           console.log("File uploaded successfully:", url);
-          handleSendMessage(caption, url);
+          handleSendMessage(caption, chatId, url);
           setCaption("");
           setFile(null);
         },
         onError: (error) => {
           console.error("Error uploading file:", error);
           alert("Failed to upload the file. Please try again.");
-        },
+        }
       });
     } catch (error) {
       console.error("Unexpected error while sending file:", error);
