@@ -11,6 +11,7 @@ import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 import useHover from "./hooks/useHover";
 import { useMessageContext } from "./contexts/MessageProvider";
 import React from "react";
+import CommentBox from "./CommentBox";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -103,6 +104,7 @@ const Message = React.memo(() => {
           <MessageContent />
           {isHovered && <MessageOptionList />}
           <MessageDetails />
+          {chatType === "channel" && <CommentBox />}
         </Bubble>
       </StyledMessage>
     </MessageRow>
