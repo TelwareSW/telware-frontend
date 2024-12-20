@@ -126,6 +126,7 @@ const GlobalStyles = createGlobalStyle`
     
     --scrollbar-color:rgba(255, 255, 255, .2);
     --color-default-shadow: rgb(16, 16, 16, 0.612);
+    --color-light-shadow: rgb(16, 16, 16, 0.212);
     
     --color-chat-active: #1e4454;
     --color-chat-hover: #25353f;
@@ -177,7 +178,7 @@ const GlobalStyles = createGlobalStyle`
   --color-background-own-3: #8849B4;
   --color-background-own-4: #A751A8;
   
-  --color-reply-own: #f5f5f52e;
+  --color-peer-1: var(--accent-color);
   
   --color-peer-2: #a695e7;
   --color-peer-bg-2: #a695e71a;
@@ -221,7 +222,7 @@ const GlobalStyles = createGlobalStyle`
 
   
   --color-error: #e53935;
-  --color-error-shade: #c62828;
+  --color-error-shade: #c628282f;
   --color-success: rgb(0, 199, 62);
   font-size: 16px;
 }

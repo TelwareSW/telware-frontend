@@ -6,6 +6,7 @@ import { useBlock } from "./hooks/useBlock";
 import CircleIcon from "@components/CircleIcon";
 import { useState } from "react";
 import AddToBlockMenuList from "./AddToBlockMenuList";
+import { useSidebarType } from "@components/side-bar/SideBarContext";
 
 const StyledOptionsList = styled.div`
   display: flex;
@@ -22,9 +23,21 @@ const PlaceHeader = styled.div`
   padding-bottom: 0.5rem;
 `;
 
-function BlockList() {
-  const { props } = useAppSelector((state) => state.sideBarData);
+export interface BlockListInterface {
+  id: string;
+  username: string;
+  email: string;
+  _id: string;
+}
 
+function BlockList() {
+  const type = useSidebarType();
+
+  const { props } = useAppSelector((state) =>
+    type === "left"
+      ? state.sideBarData.leftSideBar
+      : state.sideBarData.rightSideBar
+  );
   const { blockList } = useBlock();
 
   const [isMenuOpened, setIsMenuOpened] = useState(false);
@@ -39,8 +52,8 @@ function BlockList() {
         )}
       </PlaceHeader>
 
-      {blockList?.map((item) => {
-        return <BlockItem {...item} key={item.id} />;
+      {blockList?.map((item: BlockListInterface) => {
+        return <BlockItem id={item.id} key={item.id} />;
       })}
 
       <CircleIcon

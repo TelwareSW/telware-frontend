@@ -14,6 +14,7 @@ interface CircleIconProps {
   children?: React.ReactNode;
   as?: React.ElementType;
   type?: string;
+  testid?: string;
 }
 
 const StyledCircleIcon = styled.div<CircleIconProps>`
@@ -68,9 +69,11 @@ function CircleIcon({
   children,
   as,
   type,
+  testid,
 }: CircleIconProps) {
   return (
     <StyledCircleIcon
+      data-testid={testid}
       onClick={onClick}
       {...{
         $icon,

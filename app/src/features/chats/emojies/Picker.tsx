@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { Theme } from "@state/theme/theme";
 import EmojiPicker, {
@@ -11,6 +11,7 @@ import { StickerTap } from "types/messages";
 import GridPicker from "./GridPicker";
 import { useStickers } from "../hooks/useStickers";
 import { useGifs } from "../hooks/useGIFS";
+import { ChatInputContext } from "../ChatBox";
 const Container = styled.div`
   z-index: 4;
   position: absolute;
@@ -71,27 +72,22 @@ const EmojiWrapper = styled.div`
   }
 `;
 
-interface PickerProps {
-  setInputText: React.Dispatch<React.SetStateAction<string>>;
-  onSendGIF: (gifUrl: string) => void;
-  onSendSticker: (stickerUrl: string) => void;
-}
-
-function Picker(props: PickerProps) {
-  const { setInputText, onSendGIF, onSendSticker } = props;
+function Picker() {
   const currentTheme = useAppSelector((state) => state.theme.value);
   const [activeTab, setActiveTab] = useState<StickerTap>(StickerTap.gif);
 
+  const { setInput, sendGIF, sendSticker } = useContext(ChatInputContext);
+
   const handleEmojiClicked = (emojiData: EmojiClickData) => {
-    setInputText((text) => text + emojiData.emoji);
+    setInput((text: string) => text + emojiData.emoji);
   };
 
   const handleGIFSelect = (gifUrl: string) => {
-    onSendGIF(gifUrl);
+    sendGIF(gifUrl);
   };
 
   const handleStickerSelect = (stickerUrl: string) => {
-    onSendSticker(stickerUrl);
+    sendSticker(stickerUrl);
   };
 
   return (
@@ -101,19 +97,19 @@ function Picker(props: PickerProps) {
           $active={activeTab === StickerTap.emoji}
           onClick={() => setActiveTab(StickerTap.emoji)}
         >
-          {getIcon("EmojiBox")}
+          {getIcon("EmojiBox", { fontSize: "small" })}
         </Tab>
         <Tab
           $active={activeTab === StickerTap.gif}
           onClick={() => setActiveTab(StickerTap.gif)}
         >
-          {getIcon("GifBox")}
+          {getIcon("GifBox", { fontSize: "small" })}
         </Tab>
         <Tab
           $active={activeTab === StickerTap.sticker}
           onClick={() => setActiveTab(StickerTap.sticker)}
         >
-          {getIcon("StickerBox")}
+          {getIcon("StickerBox", { fontSize: "small" })}
         </Tab>
       </TabBar>
       <EmojiWrapper>

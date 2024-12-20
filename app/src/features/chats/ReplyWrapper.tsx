@@ -7,6 +7,8 @@ import { getIcon } from "@data/icons";
 import { clearActiveMessage } from "@state/messages/activeMessage";
 import { useAppSelector } from "@hooks/useGlobalState";
 import MessageBox from "./MessageBox";
+import { useContext } from "react";
+import { ChatInputContext } from "./ChatBox";
 
 const Container = styled.div`
   display: flex;
@@ -21,13 +23,10 @@ const Container = styled.div`
   }
 `;
 
-type Props = {
-  setInput: (state: string) => void;
-};
-
-export default function ReplyWrapper({ setInput }: Props) {
+export default function ReplyWrapper() {
   const dispatch = useDispatch();
 
+  const { setInput } = useContext(ChatInputContext);
   const activeMessage = useAppSelector((state) => state.activeMessage);
 
   function handleHideWrapper() {
@@ -35,13 +34,15 @@ export default function ReplyWrapper({ setInput }: Props) {
     if (activeMessage.state === "edit") setInput("");
   }
 
-  console.log(activeMessage);
+  const isEdit = activeMessage.state === "edit";
 
   return (
     <Container data-testid="reply-wrapper">
-      <Icon>{getIcon(activeMessage.state === "edit" ? "Edit" : "Reply")}</Icon>
+      <Icon data-testid={isEdit ? "edit-icon" : "reply-icon"}>
+        {getIcon(isEdit ? "Edit" : "Reply")}
+      </Icon>
       <MessageBox />
-      <Icon onClick={handleHideWrapper} test-id="close-icon">
+      <Icon onClick={handleHideWrapper} data-testid="close-icon">
         {getIcon("Close")}
       </Icon>
     </Container>

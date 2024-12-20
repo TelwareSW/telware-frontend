@@ -6,7 +6,7 @@ interface requestType {
 
 async function apiBlockUser(data: requestType) {
   const res = await fetch(`${API_URL}/users/block/${data.id}`, {
-    method: "PATCH",
+    method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +14,7 @@ async function apiBlockUser(data: requestType) {
     },
   });
 
-  if (res.status !== 200) {
+  if (!res.ok) {
     throw new Error(res.statusText);
   }
 }

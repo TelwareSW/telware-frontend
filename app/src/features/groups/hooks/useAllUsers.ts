@@ -7,10 +7,11 @@ type UserType = {
   username: string;
   screenFirstName: string;
   screenLastName: string;
-  email: string;
+  email?: string;
   photo: string;
   status: string;
-  bio: string;
+  bio?: string;
+  role?: "admin" | "member" | undefined;
 };
 
 function useAllUsers() {

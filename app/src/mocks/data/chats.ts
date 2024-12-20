@@ -10,6 +10,7 @@ export type Member = {
   stories: string[];
   blockedUsers: string[];
   Role: "member" | "admin" | "creator";
+  isBlocked?: boolean;
 };
 
 export type ChatMember = {

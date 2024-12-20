@@ -10,7 +10,7 @@ const StyledMain = styled.main`
   position: relative;
   overflow: hidden;
   background: var(--color-chat-wallpaper-1);
-
+  padding-top: 1rem;
   &::before {
     content: "";
     position: absolute;

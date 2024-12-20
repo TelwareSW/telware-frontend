@@ -8,6 +8,10 @@ import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "@data/sideBar";
 import { useMouseLeave } from "@hooks/useMouseLeave";
 import { getIcon } from "@data/icons";
+import { useSidebarType } from "../SideBarContext";
+import { RootState } from "@state/store";
+import { clearSearch } from "@state/messages/global-search";
+import { useSelector } from "react-redux";
 
 const ToolsIcon = styled.div`
   > svg {
@@ -41,16 +45,34 @@ const StyledList = styled.ul<{ $isOpened?: boolean }>`
 `;
 
 function SettingsToolbar() {
+  const { searchTerm } = useSelector((state: RootState) => state.globalSearch);
+  const isSearching = searchTerm.length > 0;
   const [isOpened, setIsOpened] = useState(false);
   const dispatch = useAppDispatch();
   const ref = useMouseLeave(() => setIsOpened(false), false);
+
   const handleOpenSettings = () => {
     setIsOpened((prevState) => !prevState);
   };
+
+  const handleResetSearch = () => {
+    dispatch(clearSearch());
+  };
+
+
+  const type = useSidebarType();
+
   return (
     <>
-      <ToolsIcon onClick={handleOpenSettings} data-testid="menu-items-icon">
-        {getIcon("Menu")}
+      <ToolsIcon
+        onClick={() =>
+          isSearching ? handleResetSearch() : handleOpenSettings()
+        }
+        data-testid="menu-items-icon"
+      >
+        {isSearching
+          ? getIcon("Close", { fontSize: "large", sx: { fontSize: "2rem" } })
+          : getIcon("Menu")}
       </ToolsIcon>
       {isOpened && (
         <StyledList
@@ -65,7 +87,7 @@ function SettingsToolbar() {
               dispatch(
                 updateSideBarView({
                   redirect: sideBarPages.CONTACTS,
-                  data: undefined,
+                  data: { type },
                 })
               )
             }
@@ -78,7 +100,7 @@ function SettingsToolbar() {
               dispatch(
                 updateSideBarView({
                   redirect: sideBarPages.SETTINGS,
-                  data: undefined,
+                  data: { type },
                 })
               )
             }

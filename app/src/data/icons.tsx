@@ -57,9 +57,14 @@ enum icons {
   Info,
   Phone,
   ArrowForward,
-  Home,
-  Group,
-  Sun,
+  Mute,
+  EndCall,
+  AddMembers,
+  Lock,
+  Admin,
+  Members,
+  RemoveMember,
+  Eye,
 }
 
 type iconStrings = keyof typeof icons;
@@ -401,16 +406,38 @@ const iconImports: Record<iconStrings, IconConfig> = {
     importFn: () => import("@mui/icons-material/ArrowForward"),
     defaultProps: { fontSize: "large" },
   },
-  Sun: {
-    importFn: () => import("@mui/icons-material/LightModeOutlined"),
-    defaultProps: {
-      sx: {
-        color: `white`,
-        fontSize: "1.5rem",
-      },
-    },
+  Mute: {
+    importFn: () => import("@mui/icons-material/Mic"),
+    defaultProps: { fontSize: "large" },
+  },
+  EndCall: {
+    importFn: () => import("@mui/icons-material/CallEnd"),
+    defaultProps: { fontSize: "large" },
+  },
+  AddMembers: {
+    importFn: () => import("@mui/icons-material/PersonAddAlt1"),
+    defaultProps: { fontSize: "large" },
+  },
+  Lock: {
+    importFn: () => import("@mui/icons-material/LockOutlined"),
+  },
+  Admin: {
+    importFn: () => import("@mui/icons-material/AdminPanelSettingsOutlined"),
+  },
+  Members: {
+    importFn: () => import("@mui/icons-material/PeopleOutlineOutlined"),
+  },
+  RemoveMember: {
+    importFn: () => import("@mui/icons-material/RemoveCircleOutline"),
+    defaultProps: { fontSize: "small" },
+  },
+  Eye: {
+    importFn: () => import("@mui/icons-material/Visibility"),
+    defaultProps: { fontSize: "small" },
   },
 };
+
+const iconCache = new Map<string, React.ReactElement>();
 
 function getIcon(
   iconName?: iconStrings,
@@ -425,6 +452,11 @@ function getIcon(
   const iconConfig = iconImports[iconName];
   if (!iconConfig) return undefined;
 
+  const cacheKey = `${iconName}-${JSON.stringify(customProps)}`;
+  if (iconCache.has(cacheKey)) {
+    return iconCache.get(cacheKey);
+  }
+
   const LazyIcon = lazy(iconConfig.importFn);
 
   const mergedProps = {
@@ -436,12 +468,16 @@ function getIcon(
     },
   };
 
-  return (
+  const iconElement = (
     <Suspense fallback={<div style={{ width: "24px", height: "24px" }}></div>}>
       <LazyIcon {...mergedProps} />
     </Suspense>
   );
+
+  iconCache.set(cacheKey, iconElement);
+
+  return iconElement;
 }
 
-export { getIcon };
+export { getIcon, icons };
 export type { iconStrings };

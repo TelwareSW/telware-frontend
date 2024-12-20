@@ -2,19 +2,19 @@ import styled from "styled-components";
 
 import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
 import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
+import MessageProvider from "./contexts/MessageProvider";
 
 const ScrollContainer = styled.div`
   width: 100%;
-  /* margin-top: 100px; */
-  height: 87dvh;
+  height: 82dvh;
   overflow-y: auto;
   position: relative;
-
+  margin-top: 3rem;
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -28,10 +28,7 @@ const ScrollContainer = styled.div`
     border-radius: 5px;
   }
 
-  scroll-behavior: smooth;
-
   z-index: 1;
-
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -39,38 +36,72 @@ const ScrollContainer = styled.div`
 
 function ChatBody() {
   const { chatId } = useParams<{ chatId: string }>();
-  const chats = useAppSelector((state) => state.chats.chats);
+  const { chats, members } = useAppSelector((state) => state.chats);
+  const { activeThread } = useAppSelector((state) => state.channelsThreads);
+  const chat = getChatByID({ chats: chats, chatID: chatId! });
 
-  const messages =
-    chatId &&
-    getChatByID({
-      chats: chats,
-      chatID: chatId,
-    })?.messages;
+  const { fetchNextPage, hasNextPage } = useFetchNextPage();
 
-  const { fetchNextPage } = useFetchNextPage();
-
-  const { inView, ref } = useInView({ threshold: 0.5 });
+  const { inView, ref } = useInView({ threshold: 0.01 });
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (inView) {
-      fetchNextPage();
+    if (inView && hasNextPage && chatId) {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+
+      const previousScrollHeight = container.scrollHeight;
+      const previousScrollTop = container.scrollTop;
+
+      fetchNextPage().then(() => {
+        requestAnimationFrame(() => {
+          const newScrollHeight = container.scrollHeight;
+          container.scrollTop =
+            previousScrollTop + (newScrollHeight - previousScrollHeight);
+        });
+      });
     }
-  }, [fetchNextPage, inView]);
+  }, [fetchNextPage, inView, chatId]);
 
-  //TODO: fix the ordering of pages and message within each page
-  //TODO: fix new page scroll to the top most message
+  const messages = chat?.messages?.filter((msg) => !msg.parentMessageId);
+  const threadMessages = activeThread
+    ? chat?.messages.filter((msg) => msg.parentMessageId === activeThread)
+    : [];
+
   return (
-    <>
-      <ScrollContainer>
-        <div ref={ref}></div>
+    <ScrollContainer ref={scrollContainerRef}>
+      <div ref={ref}></div>
 
-        {messages &&
-          messages.map((data) => {
-            return <Message key={data._id} data={data} />;
-          })}
-      </ScrollContainer>
-    </>
+      {!activeThread &&
+        messages?.map((data) => {
+          return (
+            <MessageProvider
+              key={data._id}
+              data={data}
+              chatType={chat?.type as "private" | "group" | "channel"}
+              sender={members.find((member) => member._id === data.senderId)}
+              numberOfMembers={chat?.numberOfMembers}
+            >
+              <Message key={data._id} />
+            </MessageProvider>
+          );
+        })}
+
+      {activeThread &&
+        threadMessages?.map((data) => {
+          return (
+            <MessageProvider
+              key={data._id}
+              data={data}
+              chatType="channel"
+              sender={members.find((member) => member._id === data.senderId)}
+              numberOfMembers={chat?.numberOfMembers}
+            >
+              <Message key={data._id} />
+            </MessageProvider>
+          );
+        })}
+    </ScrollContainer>
   );
 }
 

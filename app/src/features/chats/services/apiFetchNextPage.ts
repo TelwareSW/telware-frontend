@@ -2,7 +2,7 @@ import { API_URL } from "@constants";
 
 async function apiFetchNextPage({
   chatId,
-  pageParam = 1,
+  pageParam,
 }: {
   pageParam?: number;
   chatId: string;
@@ -16,7 +16,7 @@ async function apiFetchNextPage({
         "Content-Type": "application/json",
         "X-Session-Token": localStorage.getItem("sessionId") || "",
       },
-    },
+    }
   );
 
   const data = await res.json();

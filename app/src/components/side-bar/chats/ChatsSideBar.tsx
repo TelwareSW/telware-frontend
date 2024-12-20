@@ -3,6 +3,9 @@ import ChatsSidebarHeader from "./ChatsSideBarHeader";
 import StartNewChat from "@features/chats/StartNewChat";
 import AddStory from "@features/stories/components/AddStory";
 import StoryListContainer from "@features/stories/components/StoryListContainer";
+import TabedSearch from "@features/search/components/TabedSearch";
+import { useSelector } from "react-redux";
+import { RootState } from "@state/store";
 
 interface ChatsSideBarProps {
   children?: React.ReactNode;
@@ -15,8 +18,7 @@ const StyledChatsSideBar = styled.div`
   flex-direction: column;
   color: var(--color-icon-secondary);
   background-color: var(--color-background);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 `;
 
 const ButtonsContainer = styled.div`
@@ -37,12 +39,15 @@ function ChatsSideBar({ children }: ChatsSideBarProps) {
   return (
     <StyledChatsSideBar>
       <ChatsSidebarHeader />
-      <StoryListContainer />
-      <div style={{ flex: 1 }}>{children}</div>{" "}
-      <ButtonsContainer data-testid="button-container">
-        <AddStory data-testid="add-story-button" />
-        <StartNewChat data-testid="start-new-chat-button" />
-      </ButtonsContainer>
+      <div style={{ position: "relative", height: "100%" }}>
+        <StoryListContainer />
+        <div style={{ flex: 1, height: "calc(100% - 48px)" }}>{children}</div>
+        <ButtonsContainer data-testid="button-container">
+          <AddStory data-testid="add-story-button" />
+          <StartNewChat data-testid="start-new-chat-button" />
+        </ButtonsContainer>
+        <TabedSearch />
+      </div>
     </StyledChatsSideBar>
   );
 }

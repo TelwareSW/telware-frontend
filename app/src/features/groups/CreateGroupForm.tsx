@@ -14,6 +14,7 @@ import { sideBarPages } from "types/sideBar";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { clearSelectedUsers } from "@state/groups/selectedUsers";
 import { useSocket } from "@hooks/useSocket";
+import { useSidebarType } from "@components/side-bar/SideBarContext";
 
 const Form = styled.form`
   padding: 1rem;
@@ -24,7 +25,7 @@ const Form = styled.form`
   }
 `;
 
-function GroupInfoForm() {
+function GroupInfoForm({ type }: { type: "channel" | "group" }) {
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const { register, handleSubmit, watch } = useForm<NewGroupForm>({
     mode: "onChange",
@@ -34,24 +35,31 @@ function GroupInfoForm() {
     },
   });
 
+  const sideBarType = useSidebarType();
+
   const groupName = watch("groupName");
   const dispatch = useDispatch();
   const members = useAppSelector((state) => state.selectedUsers);
   const { createGroupOrChannel } = useSocket();
 
   const onSubmit = (data: NewGroupForm) => {
-    dispatch(updateSideBarView({ redirect: sideBarPages.CHATS }));
+    dispatch(
+      updateSideBarView({
+        redirect: sideBarPages.CHATS,
+        data: { type: sideBarType },
+      })
+    );
     dispatch(clearSelectedUsers());
 
     createGroupOrChannel({
       name: data.groupName,
-      type: "group",
+      type,
       members: members.map((member) => member._id),
     });
   };
 
   return (
-    <Form data-testid="new-group-form" onSubmit={handleSubmit(onSubmit)}>
+    <Form data-testid={`new-${type}-form`} onSubmit={handleSubmit(onSubmit)}>
       <UploadImage
         setSelectedImageFile={setSelectedImageFile}
         selectedImageFile={selectedImageFile}
@@ -59,7 +67,7 @@ function GroupInfoForm() {
 
       <FloatingLabelInput<NewGroupForm>
         id="groupName"
-        label="Group Name (required)"
+        label={`${type} Name (required)`}
         register={register}
         watch={watch}
         data-testid="group-name"
