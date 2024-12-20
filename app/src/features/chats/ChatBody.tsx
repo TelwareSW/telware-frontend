@@ -37,9 +37,7 @@ const ScrollContainer = styled.div`
 function ChatBody() {
   const { chatId } = useParams<{ chatId: string }>();
   const { chats, members } = useAppSelector((state) => state.chats);
-  const { activeThread, activeThreadMessages } = useAppSelector(
-    (state) => state.channelsThreads,
-  );
+  const { activeThread } = useAppSelector((state) => state.channelsThreads);
   const chat = getChatByID({ chats: chats, chatID: chatId! });
 
   const { fetchNextPage, hasNextPage } = useFetchNextPage();
@@ -65,17 +63,22 @@ function ChatBody() {
     }
   }, [fetchNextPage, inView, chatId]);
 
+  const messages = chat?.messages?.filter((msg) => !msg.parentMessageId);
+  const threadMessages = activeThread
+    ? chat?.messages.filter((msg) => msg.parentMessageId === activeThread)
+    : [];
+
   return (
     <ScrollContainer ref={scrollContainerRef}>
       <div ref={ref}></div>
 
       {!activeThread &&
-        chat?.messages.map((data) => {
+        messages?.map((data) => {
           return (
             <MessageProvider
               key={data._id}
               data={data}
-              chatType={chat?.type}
+              chatType={chat?.type as "private" | "group" | "channel"}
               sender={members.find((member) => member._id === data.senderId)}
               numberOfMembers={chat?.numberOfMembers}
             >
@@ -85,7 +88,7 @@ function ChatBody() {
         })}
 
       {activeThread &&
-        activeThreadMessages?.map((data) => {
+        threadMessages?.map((data) => {
           return (
             <MessageProvider
               key={data._id}
