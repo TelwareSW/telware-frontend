@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 import { useMessageContext } from "./contexts/MessageProvider";
 import { getIcon } from "@data/icons";
+import { useDispatch } from "react-redux";
+import { setActiveThread } from "@state/messages/channels";
 
 const Container = styled.div`
   cursor: pointer;
@@ -14,6 +16,13 @@ const Container = styled.div`
   color: var(--accent-color);
   justify-content: space-between;
   align-items: center;
+  border-radius: 0 0 0.5rem 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--color-chat-hover);
+    backdrop-filter: hue-rotate(10deg);
+  }
 `;
 
 const CommentsText = styled.div`
@@ -23,10 +32,15 @@ const CommentsText = styled.div`
 const CommentsIcon = styled.div``;
 
 function CommentBox() {
-  const { threadMessages } = useMessageContext();
+  const { threadMessages, _id: messageId } = useMessageContext();
+  const dispatch = useDispatch();
+
+  const handleOpenComments = () => {
+    dispatch(setActiveThread({ threadId: messageId, threadMessages }));
+  };
 
   return (
-    <Container>
+    <Container onClick={handleOpenComments}>
       <CommentsText>{threadMessages?.length} Comments</CommentsText>
       <CommentsIcon>
         {getIcon("RightArrow", {

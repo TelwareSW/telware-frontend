@@ -8,6 +8,7 @@ export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const activeMessage = useAppSelector((state) => state.activeMessage);
+  const { activeThread } = useAppSelector((state) => state.channelsThreads);
 
   const { encrypt } = useEncryptDecrypt();
   const chats = useAppSelector((state) => state.chats.chats);
@@ -16,7 +17,7 @@ export const useMessageSender = () => {
     data: string,
     chatId?: string,
     file?: string,
-    type: ContentType = "text"
+    type: ContentType = "text",
   ) => {
     const chat = getChatByID({ chats, chatID: chatId as string });
 
@@ -53,7 +54,17 @@ export const useMessageSender = () => {
         media: file,
         threadMessages: [],
       };
-      sendMessage({ ...message, chatType: chat?.type! });
+
+      const threadMessage = {
+        ...message,
+        parentMessageId: activeThread,
+        isReply: true,
+        chatType: "channel",
+      };
+
+      const messageToSend = activeThread ? threadMessage : message;
+
+      sendMessage({ ...messageToSend, chatType: chat?.type! });
     }
   };
 
