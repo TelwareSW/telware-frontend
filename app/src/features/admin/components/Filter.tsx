@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { MOBILE_VIEW, DESKTOP_VIEW } from "@constants";
 
 interface Props {
   filters: string[];
@@ -28,8 +29,6 @@ const FilterContainer = styled.div<{ $filters: number }>`
 `;
 
 const FilterCategory = styled.div<{ $active?: boolean }>`
-  padding: 0.8rem;
-  width: 10rem;
   text-align: center;
   cursor: pointer;
   color: var(--color-text);
@@ -40,6 +39,16 @@ const FilterCategory = styled.div<{ $active?: boolean }>`
   }
   background-color: ${({ $active }) =>
     $active ? "var(--color-chat-active)" : "inherit"};
+  @media ${MOBILE_VIEW} {
+    font-size: 0.8rem;
+    width: 5rem;
+    padding: 0.4rem 0.2rem;
+  }
+  @media ${DESKTOP_VIEW} {
+    font-size: 1.2rem;
+    width: 10rem;
+    padding: 0.8rem;
+  }
 `;
 function Filter(props: Props) {
   const { filters, onFilterChange } = props;
@@ -50,12 +59,13 @@ function Filter(props: Props) {
   };
 
   return (
-    <FilterContainer $filters={filters?.length}>
+    <FilterContainer $filters={filters?.length} data-testid="filter-container">
       {filters.map((filter, index) => (
         <FilterCategory
           key={filter}
           onClick={() => handleFilterChange(filter, index)}
           $active={activeFilter === index}
+          data-testid={`filter-${filter}`}
         >
           {filter}
         </FilterCategory>

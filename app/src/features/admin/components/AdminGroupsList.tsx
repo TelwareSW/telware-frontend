@@ -4,6 +4,7 @@ import { useGroups } from "../hooks/useGroups";
 import { Group } from "types/admin";
 import Filter from "./Filter";
 import GroupCard from "./GroupCard";
+import { DESKTOP_VIEW, MOBILE_VIEW } from "@constants";
 
 const groupFilters = ["all", "filtered", "unfiltered"];
 const Container = styled.div`
@@ -15,12 +16,17 @@ const Container = styled.div`
 const StyledGroupsList = styled.ul`
   display: grid;
   gap: 1.6rem 0.6rem;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  padding: 1.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  @media ${MOBILE_VIEW} {
+    padding: 0 calc(50% - 7.5rem);
+  }
+  @media ${DESKTOP_VIEW} {
+    padding: 1.6rem;
+  }
 `;
 function GroupsList() {
-  const { groups: groupsData } = useGroups();
-  const groups = groupsData?.data.groupsAndChannels;
+  const { data } = useGroups();
+  const groups = data?.data.groupsAndChannels;
   const [renderedGroups, setRenderedGroups] = useState<Group[]>(groups);
   const [currentFilter, setCurrentFilter] = useState("all");
 

@@ -45,14 +45,6 @@ const NavLink = styled.li<{ $active?: boolean }>`
     `};
 `;
 
-const Span = styled.span`
-  @media ${MOBILE_VIEW} {
-    display: inline;
-  }
-  @media ${DESKTOP_VIEW} {
-    display: inline;
-  }
-`;
 function AdminMainNav() {
   const activeView = useAppSelector((state) => state.adminView.value);
   const dispatch = useAppDispatch();
@@ -66,25 +58,27 @@ function AdminMainNav() {
     }
   };
   return (
-    <nav>
-      <NavList>
+    <nav data-testid="admin-main-nav">
+      <NavList data-testid="nav-list">
         <NavLink
           onClick={() => {
             handleViewChange(View.USERS);
           }}
           $active={activeView === View.USERS}
+          data-testid="users-nav"
         >
           {getIcon("Contacts")}
-          <Span>Users</Span>
+          <span>Users</span>
         </NavLink>
         <NavLink
           onClick={() => {
             handleViewChange(View.GROUPS);
           }}
           $active={activeView === View.GROUPS}
+          data-testid="groups-nav"
         >
           {getIcon("Group")}
-          <Span>Groups</Span>
+          <span>Groups</span>
         </NavLink>
       </NavList>
     </nav>

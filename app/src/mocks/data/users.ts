@@ -60,10 +60,12 @@ export const DEACTIVATED = {
 };
 export const ADMIN = {
   id: "5",
-  firstName: "Amir",
-  lastName: "Kedis",
+  screenFirstName: "Eng.",
+  screenLastName: "Hashish",
   email: "admin@gmail.com",
   password: "12345678",
+  username: "admin",
+  isAdmin: true,
 };
 
 export const TOKEN =

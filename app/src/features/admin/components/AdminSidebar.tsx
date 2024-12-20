@@ -19,7 +19,7 @@ const H1 = styled(Heading)`
 
 function AdminSidebar() {
   return (
-    <Sidebar>
+    <Sidebar data-testid="admin-sidebar">
       <Logo />
       <H1 as="h1">TelWare</H1>
       <AdminMainNav />

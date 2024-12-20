@@ -21,7 +21,7 @@ const ListItem = styled.li`
 
 function AdminHeaderMenu() {
   return (
-    <StyledHeaderMenu>
+    <StyledHeaderMenu data-testid="admin-header-menu">
       <ThemeToggle isAdmin={true} />
       <ListItem>
         <Logout size={2.2} />

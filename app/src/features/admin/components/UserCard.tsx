@@ -63,7 +63,7 @@ function UserCard(props: UserCardProps) {
     userName?.length > 9 ? `${userName?.slice(0, 9)}...` : userName;
 
   return (
-    <Card>
+    <Card data-testid={`user-card-${id}`}>
       <UserInfo>
         <Avatar image={photo} name={userName} />
         <>
@@ -71,7 +71,11 @@ function UserCard(props: UserCardProps) {
           <P $status={status}>{status}</P>
         </>
       </UserInfo>
-      <UserCardButton status={status} onChangeStatus={handleUserStatusChange} />
+      <UserCardButton
+        status={status}
+        onChangeStatus={handleUserStatusChange}
+        data-testid={`user-card-button-${id}`}
+      />
     </Card>
   );
 }

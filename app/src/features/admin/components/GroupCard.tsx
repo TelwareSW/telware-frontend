@@ -52,7 +52,7 @@ function GroupCard(props: GroupCardProps) {
   const displayedName = name.length > 9 ? `${name.slice(0, 9)}...` : name;
 
   return (
-    <Card>
+    <Card data-testid={`group-card-${id}`}>
       <GroupInfo>
         <Avatar image={photo} name={name} />
         <>
@@ -66,6 +66,9 @@ function GroupCard(props: GroupCardProps) {
           $type={filtered ? "danger" : "normal"}
           onClick={handleFilterGroup}
           $width="8rem"
+          data-testid={
+            filtered ? `unfilter-button-${id}` : `filter-button-${id}`
+          }
         >
           {filtered ? "Unfilter" : "Filter"}
         </Button>

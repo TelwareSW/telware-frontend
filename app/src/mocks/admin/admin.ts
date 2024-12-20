@@ -107,7 +107,7 @@ export const adminMock = [
   http.get("/users", async () => {
     return HttpResponse.json(
       {
-        data: MOCK_USERS,
+        data: { users: MOCK_USERS },
       },
       { status: 200 }
     );
@@ -115,7 +115,7 @@ export const adminMock = [
   http.get("/users/all-groups", async () => {
     return HttpResponse.json(
       {
-        data: MOCK_GROUPS,
+        data: { groupsAndChannels: MOCK_GROUPS },
       },
       { status: 200 }
     );

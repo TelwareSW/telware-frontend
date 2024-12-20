@@ -36,7 +36,7 @@ function AdminHeader() {
   return (
     <Header>
       <AdminNavMenu />
-      <H4 as="h4">Hi, {user.firstName + " " + user.lastName} 👋️</H4>
+      <H4 as="h4">Hi, {user?.firstName + " " + user?.lastName} 👋️</H4>
       <AdminHeaderMenu />
     </Header>
   );

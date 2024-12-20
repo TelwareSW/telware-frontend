@@ -68,6 +68,7 @@ const MOCK_USERS: User[] = [
     accountStatus: userStatus.active,
   },
 ];
+
 const MOCK_GROUPS: Group[] = [
   {
     id: "1",
@@ -117,4 +118,5 @@ const MOCK_GROUPS: Group[] = [
     numberOfMembers: 4,
   },
 ];
+
 export { MOCK_USERS, MOCK_GROUPS };

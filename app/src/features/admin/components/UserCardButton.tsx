@@ -25,6 +25,7 @@ function UserCardButton(props: Props) {
             onClick={() => onChangeStatus(userStatus.deactivated)}
             $type="normal"
             $width="15rem"
+            data-testid="deactivate-button"
           >
             Deactivate
           </Button>
@@ -32,6 +33,7 @@ function UserCardButton(props: Props) {
             onClick={() => onChangeStatus(userStatus.banned)}
             $type="danger"
             $width="15rem"
+            datatype="ban-button"
           >
             Ban
           </Button>
@@ -45,6 +47,7 @@ function UserCardButton(props: Props) {
             $type="modal"
             $width="15rem"
             onClick={() => onChangeStatus(userStatus.active)}
+            data-testid="activate-button"
           >
             Activate
           </Button>
@@ -52,6 +55,7 @@ function UserCardButton(props: Props) {
             onClick={() => onChangeStatus(userStatus.banned)}
             $type="danger"
             $width="15rem"
+            data-testid="ban-button"
           >
             Ban
           </Button>

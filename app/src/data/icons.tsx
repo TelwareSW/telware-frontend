@@ -65,6 +65,8 @@ enum icons {
   Members,
   RemoveMember,
   Eye,
+  Sun,
+  Group,
 }
 
 type iconStrings = keyof typeof icons;
@@ -85,9 +87,9 @@ const iconImports: Record<iconStrings, IconConfig> = {
     importFn: () => import("@mui/icons-material/GroupsOutlined"),
     defaultProps: { sx: { color: `var(--color-icon-secondary)` } },
   },
-  Home: {
-    importFn: () => import("@mui/icons-material/HomeOutlined"),
-    defaultProps: { sx: { color: `var(--color-icon-secondary)` } },
+  Sun: {
+    importFn: () => import("@mui/icons-material/WbSunny"),
+    defaultProps: { sx: { color: `white` } },
   },
   BlockIcon: {
     importFn: () => import("@mui/icons-material/Block"),
