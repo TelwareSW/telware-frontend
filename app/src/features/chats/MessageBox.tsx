@@ -55,7 +55,7 @@ const StyledMessageBox = styled.div<{ $colorIndex: number }>`
 
 function getMessageById(
   messageId: string,
-  messages?: MessageInterface[]
+  messages?: MessageInterface[],
 ): MessageInterface | undefined {
   return messages
     ? messages.find((message) => message._id === messageId)
@@ -86,12 +86,12 @@ function MessageBox({ messageId }: MessageBoxProps) {
   }
 
   const memberIndex = members.findIndex(
-    (member) => member._id === msg?.senderId
+    (member) => member._id === msg?.senderId,
   );
   const colorIndex = memberIndex >= 0 ? (memberIndex % 5) + 2 : 2;
 
   const activeMessage = useAppSelector(
-    (state: RootState) => state.activeMessage
+    (state: RootState) => state.activeMessage,
   );
 
   return (

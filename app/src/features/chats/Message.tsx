@@ -11,6 +11,7 @@ import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 import useHover from "./hooks/useHover";
 import { useMessageContext } from "./contexts/MessageProvider";
 import React from "react";
+import CommentBox from "./CommentBox";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -71,7 +72,7 @@ const CheckBoxWrapper = styled.div`
 `;
 
 const Message = React.memo(() => {
-  const { _id: id, chatId, isMine } = useMessageContext();
+  const { _id: id, chatId, isMine, chatType } = useMessageContext();
 
   const { lastMessageRef } = useScrollToLastMsg();
   useScrollToSearchResultsMsg();
@@ -93,16 +94,17 @@ const Message = React.memo(() => {
       <StyledMessage
         ref={lastMessageRef}
         key={id}
-        $isMine={isMine}
+        $isMine={chatType === "channel" ? false : isMine}
         data-message-id={id}
         data-testid={`message-${id}`}
         onMouseLeave={handleMouseLeave}
         onContextMenu={handleOpenList}
       >
-        <Bubble $isMine={isMine}>
+        <Bubble $isMine={chatType === "channel" ? false : isMine}>
           <MessageContent />
           {isHovered && <MessageOptionList />}
           <MessageDetails />
+          {chatType === "channel" && <CommentBox />}
         </Bubble>
       </StyledMessage>
     </MessageRow>
