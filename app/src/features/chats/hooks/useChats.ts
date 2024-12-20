@@ -70,8 +70,7 @@ export function useChats() {
 
     const initialChatState: ChatsState = {
       chats: parseChatsToState(chatData),
-      members:
-        chatData?.members?.filter((member) => member._id !== userId) || [],
+      members: chatData?.members || [],
     };
 
     processMessages(initialChatState).then(() => {

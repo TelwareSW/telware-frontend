@@ -20,6 +20,8 @@ import {
   addAdmins,
   members,
   permissions,
+  channelInfo,
+  editChannelInfo,
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -80,6 +82,10 @@ function getSideBarPage(type: number): SideBarView {
       return members;
     case sideBarPages.PERMISSIONS:
       return permissions;
+    case sideBarPages.CHANNEL_INFO:
+      return channelInfo;
+    case sideBarPages.EDIT_CHANNEL_INFO:
+      return editChannelInfo;
     default:
       throw new Error("Unknown Type");
   }
@@ -106,7 +112,7 @@ const sideBarSlice = createSlice({
       const updatedSideBar = {
         page: newData.page,
         title: newData.title,
-        backView: newData.backView,
+        backView: data?.backView ? data?.backView : newData?.backView,
         props: { ...newData.props },
       };
 

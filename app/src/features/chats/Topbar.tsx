@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -19,7 +19,8 @@ import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarPr
 
 import { getElapsedTime } from "@utils/helpers";
 import { getChatByID } from "./utils/helpers";
-import Button from "@components/Button";
+import { updateSideBarView } from "@state/side-bar/sideBar";
+import { sideBarPages } from "types/sideBar";
 import { resetActiveThread } from "@state/messages/channels";
 
 const Container = styled.div<{ $hasMargin?: boolean }>`
@@ -137,9 +138,23 @@ function Topbar() {
   const { setIsRightSideBarOpen } = useRightSideBarContext();
 
   function handleOpenRightSideBar() {
-    if (chat?.type === "channel" || chat?.type === "group")
-      setIsRightSideBarOpen((prev) => !prev);
+    if (chat?.type === "channel" || chat?.type === "group") {
+      dispatch(
+        updateSideBarView({
+          redirect:
+            chat?.type === "group"
+              ? sideBarPages.GROUP_INFO
+              : sideBarPages.CHANNEL_INFO,
+          data: { type: "right" },
+        })
+      );
+    }
   }
+
+  useEffect(() => {
+    if (!chatId) return;
+    handleOpenRightSideBar();
+  }, [chatId]);
 
   let image;
   let lastSeen;
@@ -190,7 +205,7 @@ function Topbar() {
             data-testid="chat-avatar"
             image={image}
             name={chat.name?.charAt(0)}
-            onClick={handleOpenRightSideBar}
+            onClick={() => setIsRightSideBarOpen((prev) => !prev)}
           />
         )}
         {activeThread && (
@@ -204,7 +219,10 @@ function Topbar() {
           <SearchBar onClose={toggleSearch} />
         ) : (
           <>
-            <Info data-testid="chat-info" onClick={handleOpenRightSideBar}>
+            <Info
+              data-testid="chat-info"
+              onClick={() => setIsRightSideBarOpen((prev) => !prev)}
+            >
               <Content>
                 <Name data-testid="chat-name">
                   {activeThread ? "Comments" : chat.name}

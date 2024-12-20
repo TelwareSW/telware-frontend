@@ -93,6 +93,8 @@ const pagesMap: { [K in pagesStrings]: string } = {
   ADD_ADMINS: "AddAdmins",
   MEMBERS: "Members",
   PERMISSIONS: "Permissions",
+  CHANNEL_INFO: "ChannelInfo",
+  EDIT_CHANNEL_INFO: "EditChannelInfo",
 };
 
 const settingsRows = [
@@ -244,7 +246,6 @@ const editGroupInfo: SideBarView = {
 
 const groupType: SideBarView = {
   title: "Group Type",
-  backView: sideBarPages.EDIT_GROUP_INFO,
   page: "GROUP_TYPE",
 };
 
@@ -256,7 +257,6 @@ const addMoreMembers: SideBarView = {
 
 const admins: SideBarView = {
   title: "Adminstrators",
-  backView: sideBarPages.EDIT_GROUP_INFO,
   page: "ADMINS",
 };
 
@@ -268,14 +268,23 @@ const addAdmins: SideBarView = {
 
 const members: SideBarView = {
   title: "Members",
-  backView: sideBarPages.EDIT_GROUP_INFO,
   page: "MEMBERS",
 };
 
 const permissions: SideBarView = {
   title: "Permissions",
-  backView: sideBarPages.EDIT_GROUP_INFO,
   page: "PERMISSIONS",
+};
+
+const channelInfo: SideBarView = {
+  title: "Channel Info",
+  page: "CHANNEL_INFO",
+};
+
+const editChannelInfo: SideBarView = {
+  title: "Edit",
+  backView: sideBarPages.CHANNEL_INFO,
+  page: "EDIT_CHANNEL_INFO",
 };
 
 export {
@@ -306,4 +315,6 @@ export {
   addAdmins,
   members,
   permissions,
+  channelInfo,
+  editChannelInfo,
 };

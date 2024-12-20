@@ -11,6 +11,7 @@ import { sideBarPages } from "types/sideBar";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import BackArrow from "@components/BackArrow";
 import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
+import { useChat } from "@features/chats/hooks/useChat";
 
 const StyledSideBarHeader = styled.div`
   display: flex;
@@ -29,6 +30,8 @@ const Container = styled.div`
 `;
 
 function GroupInfoHeader() {
+  const { chat, isPending } = useChat();
+
   const type = useSidebarType();
   const { setIsRightSideBarOpen } = useRightSideBarContext();
 
@@ -39,11 +42,15 @@ function GroupInfoHeader() {
   );
 
   const dispatch = useAppDispatch();
+  if (!chat || isPending) return null;
 
   function handleEdit() {
     dispatch(
       updateSideBarView({
-        redirect: sideBarPages.EDIT_GROUP_INFO,
+        redirect:
+          chat?.type === "group"
+            ? sideBarPages.EDIT_GROUP_INFO
+            : sideBarPages.EDIT_CHANNEL_INFO,
         data: { type },
       })
     );
@@ -52,7 +59,7 @@ function GroupInfoHeader() {
   return (
     <StyledSideBarHeader data-testid="group-info-header">
       <Container>
-        {title === "Group Info" ? (
+        {title === "Group Info" || title === "Channel Info" ? (
           <Icon
             data-testid="close-button"
             onClick={() => setIsRightSideBarOpen(false)}
@@ -66,7 +73,7 @@ function GroupInfoHeader() {
           {title}
         </Heading>
       </Container>
-      {title === "Group Info" && (
+      {(title === "Group Info" || title === "Channel Info") && (
         <Icon data-testid="edit-button" onClick={handleEdit}>
           {getIcon("Edit")}
         </Icon>

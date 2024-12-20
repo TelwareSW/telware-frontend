@@ -6,6 +6,7 @@ import { useGroupInfo } from "./hooks/useGroupInfo";
 import { useSocket } from "@hooks/useSocket";
 import { useRightSideBarContext } from "./contexts/RightSideBarProvider";
 import { getSettings } from "./data/settings";
+import { sideBarPages } from "types/sideBar";
 
 const Container = styled.div`
   background-color: var(--color-background);
@@ -15,11 +16,16 @@ const Container = styled.div`
 
 function EditGroupInfo() {
   const dispatch = useDispatch();
-  const { admins, groupMembers, chatId, isPending } = useGroupInfo();
+  const { admins, groupMembers, chatId, isPending, chatType } = useGroupInfo();
   const { leaveGroup } = useSocket();
   const { setIsRightSideBarOpen } = useRightSideBarContext();
 
   if (isPending) return null;
+
+  const backView =
+    chatType === "group"
+      ? sideBarPages.EDIT_GROUP_INFO
+      : sideBarPages.EDIT_CHANNEL_INFO;
 
   const settings = getSettings({
     dispatch,
@@ -29,6 +35,8 @@ function EditGroupInfo() {
     leaveGroup,
     setIsRightSideBarOpen,
     resetRightSideBar,
+    chatType: chatType!,
+    backView,
   });
 
   return (
