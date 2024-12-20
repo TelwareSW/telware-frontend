@@ -51,6 +51,7 @@ function useGroupInfo() {
     admins,
     isCurrUserAdmin,
     chatId,
+    chatType: group?.type,
   };
 }
 

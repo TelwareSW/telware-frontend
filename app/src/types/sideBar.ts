@@ -18,6 +18,8 @@ enum sideBarPages {
   ADD_ADMINS,
   MEMBERS,
   PERMISSIONS,
+  CHANNEL_INFO,
+  EDIT_CHANNEL_INFO,
 }
 
 type pagesStrings = keyof typeof sideBarPages;

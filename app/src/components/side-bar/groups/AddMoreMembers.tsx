@@ -22,7 +22,11 @@ const Container = styled.div`
 function AddMoreMembers() {
   const { chatId } = useParams<{ chatId: string }>();
 
-  const { groupMembers, isPending: isPendingGroupMembers } = useGroupInfo();
+  const {
+    groupMembers,
+    isPending: isPendingGroupMembers,
+    chatType,
+  } = useGroupInfo();
   const { users, isPending: isPendenigAllUsers } = useAllUsers();
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
   const { addGroupMembers } = useSocket();
@@ -30,13 +34,17 @@ function AddMoreMembers() {
   const dispatch = useDispatch();
 
   if (isPendingGroupMembers || isPendenigAllUsers) return;
+  console.log(chatType);
 
   function handleClick() {
     addGroupMembers({
       chatId: chatId!,
       users: selectedUsers.map((user) => user._id),
     });
-    const redirect = sideBarPages.GROUP_INFO;
+    const redirect =
+      chatType === "group"
+        ? sideBarPages.GROUP_INFO
+        : sideBarPages.CHANNEL_INFO;
     dispatch(updateSideBarView({ redirect, data: { type: "right" } }));
     dispatch(clearSelectedUsers());
   }

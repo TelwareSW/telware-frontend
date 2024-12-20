@@ -8,12 +8,15 @@ type SettingsProps = {
   admins: any[];
   groupMembers: any[];
   chatId: string;
+  chatType: string;
+  backView: sideBarPages;
   leaveGroup: (params: { chatId: string }) => void;
   setIsRightSideBarOpen: (value: boolean) => void;
   resetRightSideBar: () => { type: string };
 };
 
 const getSettings = ({
+  chatType,
   dispatch,
   admins,
   groupMembers,
@@ -21,17 +24,18 @@ const getSettings = ({
   leaveGroup,
   setIsRightSideBarOpen,
   resetRightSideBar,
+  backView,
 }: SettingsProps) => [
   {
     testid: "group-type",
     icon: "Lock" as iconStrings,
-    title: "Group Type",
+    title: `${chatType?.charAt(0)?.toUpperCase()}${chatType?.slice(1)} Type`,
     subtitle: "private",
     onClick: () =>
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.GROUP_TYPE,
-          data: { type: "right" },
+          data: { type: "right", backView },
         })
       ),
   },
@@ -44,20 +48,20 @@ const getSettings = ({
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.ADMINS,
-          data: { type: "right" },
+          data: { type: "right", backView },
         })
       ),
   },
   {
     testid: "members",
     icon: "Members" as iconStrings,
-    title: "Members",
+    title: chatType === "group" ? "Members" : "Subscribers",
     subtitle: groupMembers.length,
     onClick: () =>
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.MEMBERS,
-          data: { type: "right" },
+          data: { type: "right", backView },
         })
       ),
   },
@@ -70,14 +74,14 @@ const getSettings = ({
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.PERMISSIONS,
-          data: { type: "right" },
+          data: { type: "right", backView },
         })
       ),
   },
   {
     testid: "leave-group-button",
     icon: "Delete" as iconStrings,
-    title: "Delete and Leave Group",
+    title: `Delete and Leave ${chatType}`,
     subtitle: "",
     onClick: () => {
       leaveGroup({ chatId });
