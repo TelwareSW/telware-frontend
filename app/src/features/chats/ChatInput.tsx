@@ -77,7 +77,7 @@ function ChatInput() {
     isEmojiSelectorOpen,
     handleSubmit,
     showForwardUsers,
-    handleClose,
+    handleClose
   } = useContext(ChatInputContext);
 
   const chats = useAppSelector((state) => state.chats.chats);
@@ -96,7 +96,7 @@ function ChatInput() {
   return (
     <>
       {isFilePreviewOpen && file && (
-        <FilePreviewItem data-testid="file-preview" />
+        <FilePreviewItem data-testid="file-preview" chatId={chatId} />
       )}
 
       {isBlocked ? null : (
