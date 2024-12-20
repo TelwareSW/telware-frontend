@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 import Message from "./Message";
 import { useInView } from "@features/stories/hooks/useInView";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFetchNextPage } from "./hooks/useFetchNextPage";
 import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
 import MessageProvider from "./contexts/MessageProvider";
+import { MessageInterface } from "types/messages";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -37,13 +38,7 @@ const ScrollContainer = styled.div`
 function ChatBody() {
   const { chatId } = useParams<{ chatId: string }>();
   const chats = useAppSelector((state) => state.chats.chats);
-
-  const messages =
-    chatId &&
-    getChatByID({
-      chats: chats,
-      chatID: chatId,
-    })?.messages;
+  const chat = getChatByID({ chats: chats, chatID: chatId! });
 
   const { fetchNextPage, hasNextPage } = useFetchNextPage();
 
@@ -51,7 +46,7 @@ function ChatBody() {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (inView && hasNextPage) {
+    if (inView && hasNextPage && chatId) {
       const container = scrollContainerRef.current;
       if (!container) return;
 
@@ -66,20 +61,19 @@ function ChatBody() {
         });
       });
     }
-  }, [fetchNextPage, inView]);
+  }, [fetchNextPage, inView, chatId]);
 
   return (
     <ScrollContainer ref={scrollContainerRef}>
       <div ref={ref}></div>
 
-      {messages &&
-        messages.map((data) => {
-          return (
-            <MessageProvider key={data._id} data={data}>
-              <Message key={data._id} />
-            </MessageProvider>
-          );
-        })}
+      {chat?.messages.map((data) => {
+        return (
+          <MessageProvider key={data._id} data={data}>
+            <Message key={data._id} />
+          </MessageProvider>
+        );
+      })}
     </ScrollContainer>
   );
 }

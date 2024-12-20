@@ -20,7 +20,8 @@ export async function getAllChatsApi() {
 }
 
 export async function getChatApi(id: string) {
-  if (!id) return;
+  if (!id) return null;
+
   const res = await fetch(`${API_URL}/chats/${id}`, {
     method: "GET",
     headers: {

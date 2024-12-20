@@ -22,10 +22,11 @@ function useFetchNextPage() {
     isFetchingNextPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: [`chat-${chatId}-pages`],
+    queryKey: chatId ? [`chat-${chatId}-pages`] : [],
     queryFn: ({ pageParam }) =>
       apiFetchNextPage({ chatId: chatId!, pageParam }),
-    getNextPageParam: (lastPage) => lastPage.nextPage,
+    getNextPageParam: (lastPage) => lastPage?.nextPage,
+    enabled: !!chatId,
     initialPageParam: 0,
   });
 
@@ -67,7 +68,7 @@ function useFetchNextPage() {
         });
       }
     }
-  }, [data, chatId, dispatch]);
+  }, [data, chatId, dispatch, chats.length]);
 
   return {
     data,

@@ -201,14 +201,20 @@ const chatsSlice = createSlice({
       }>
     ) => {
       const { chatId, newMessages } = action.payload;
-      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+      const chatIndex = state.chats.findIndex((chat) => chat._id === chatId);
 
-      const filteredMessages = newMessages.filter(
-        (msg) => !chat?.messages.find((m) => m._id === msg._id)
-      );
 
-      if (chat) {
-        chat.messages = [...filteredMessages, ...chat.messages];
+      if (chatIndex !== -1) {
+        const chat = state.chats[chatIndex];
+
+        const filteredMessages = newMessages.filter(
+          (msg) => !chat.messages.find((m) => m._id === msg._id)
+        );
+
+        state.chats[chatIndex] = {
+          ...chat,
+          messages: [...filteredMessages, ...chat.messages],
+        };
       }
     },
 
