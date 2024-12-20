@@ -26,26 +26,42 @@ export function useChats() {
   let DecryptedChats: DetailedChatInterface[] = [];
 
   useEffect(() => {
-    const processMessages = async (chats: DetailedChatInterface[]) => {
+    const processMessages = async ({ chats, members }: ChatsState) => {
       await Promise.all(
         chats.map(async (chat) => {
-          const decryptedMsg = await decrypt({
-            message: chat.lastMessage?.content!,
-            key: chat?.encryptionKey!,
-            iv: chat?.initializationVector!,
-          });
+          if (chat.type === "private") {
+            const decryptedMsg = await decrypt({
+              message: chat.lastMessage?.content!,
+              key: chat?.encryptionKey!,
+              iv: chat?.initializationVector!,
+            });
 
+            const otherUserId = chat.members.filter(
+              (member) => member._id !== userId
+            )[0]._id;
 
-          return {
-            ...chat,
-            lastMessage: {
-              ...chat.lastMessage,
-              content:
-                typeof decryptedMsg === "string"
-                  ? decryptedMsg
-                  : chat.lastMessage?.content!,
-            },
-          };
+            const otherUserFullData = members.find(
+              (member) => member._id === otherUserId
+            );
+
+            return {
+              ...chat,
+              lastMessage: {
+                ...chat.lastMessage,
+                content:
+                  typeof decryptedMsg === "string"
+                    ? decryptedMsg
+                    : chat.lastMessage?.content!,
+              },
+              name:
+                otherUserFullData?.screenFirstName +
+                " " +
+                otherUserFullData?.screenLastName,
+              photo: otherUserFullData?.photo!,
+            };
+          } else {
+            return chat;
+          }
         })
       ).then((decryptedMessagesArray) => {
         DecryptedChats = decryptedMessagesArray as DetailedChatInterface[];
@@ -58,7 +74,7 @@ export function useChats() {
         chatData?.members?.filter((member) => member._id !== userId) || [],
     };
 
-    processMessages(initialChatState.chats).then(() => {
+    processMessages(initialChatState).then(() => {
       dispatch(
         setAllChats({
           chatsData: {
