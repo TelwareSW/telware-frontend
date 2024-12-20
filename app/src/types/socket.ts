@@ -38,6 +38,7 @@ export interface SocketContextType {
     messageId: string;
     chatId: string;
   }) => void;
+  leaveGroup: ({ chatId }: { chatId: string }) => void;
 }
 
 export interface SocketProviderProps {

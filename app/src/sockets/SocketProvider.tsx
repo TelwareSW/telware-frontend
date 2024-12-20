@@ -69,7 +69,6 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   const { decrypt } = useEncryptDecrypt();
   const { chat } = useChat();
-  // const chats = useAppSelector((state) => state.chats.chats);
 
   useEffect(() => {
     if (!socket) return;
@@ -88,8 +87,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     };
 
     const onReceiveMessage = (message: MessageInterface) => {
-      // const chat = getChatByID({ chats, chatID: message.chatId });
-
       console.log("Received message:", message);
       if (!chat) {
         console.warn("No chat context available for decryption");
@@ -167,6 +164,14 @@ function SocketProvider({ children }: SocketProviderProps) {
       }
     );
 
+    socket.on(
+      "LEAVE_GROUP_CHANNEL_SERVER",
+      ({ chatId, memberId }: { chatId: string; memberId: string }) => {
+        console.log("LEAVE_GROUP_CHANNEL_SERVER", chatId, memberId);
+        queryClient.invalidateQueries({ queryKey: ["chats"] });
+      }
+    );
+
     socket.emit("typing");
 
     return () => {
@@ -185,11 +190,8 @@ function SocketProvider({ children }: SocketProviderProps) {
     };
   }, [socket, chat, decrypt, dispatch, queryClient]);
 
-  //TODO: remove isFirstTime
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
-      // const chat = getChatByID({ chats, chatID: sentMessage.chatId });
-
       console.log("messageToSend", sentMessage);
       socket.emit(
         "SEND_MESSAGE",
@@ -392,7 +394,7 @@ function SocketProvider({ children }: SocketProviderProps) {
             toast.success(message);
             queryClient.invalidateQueries({ queryKey: ["chats"] });
           } else {
-            toast.error(`Group size limit exceeded. ${message}`);
+            toast.error(message);
             console.error(error);
           }
         }
@@ -426,6 +428,27 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }
 
+  function leaveGroup({ chatId }: { chatId: string }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "LEAVE_GROUP_CHANNEL_CLIENT",
+        { chatId },
+        ({ success, message, error }: AckCreateGroup) => {
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+            navigate("/");
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot add admins: not connected to socket server");
+    }
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -439,6 +462,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         deleteMessage,
         addGroupMembers,
         addAdmins,
+        leaveGroup,
       }}
     >
       {children}

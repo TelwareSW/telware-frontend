@@ -44,7 +44,14 @@ function useGroupInfo() {
     }
   }, [group, users, isPending, isPendingCurrUser, user]);
 
-  return { groupMembers, group, isPending: isLoading, admins, isCurrUserAdmin };
+  return {
+    groupMembers,
+    group,
+    isPending: isLoading,
+    admins,
+    isCurrUserAdmin,
+    chatId,
+  };
 }
 
 export { useGroupInfo };

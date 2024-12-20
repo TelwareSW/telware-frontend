@@ -91,6 +91,9 @@ const sideBarSlice = createSlice({
   name: "sideBarData",
   initialState,
   reducers: {
+    resetRightSideBar: (state) => {
+      state.rightSideBar = groupInfo;
+    },
     updateSideBarView: (state, action: PayloadAction<actionType>) => {
       const { redirect, data } = action.payload;
 
@@ -120,6 +123,6 @@ const sideBarSlice = createSlice({
   },
 });
 
-export const { updateSideBarView } = sideBarSlice.actions;
+export const { updateSideBarView, resetRightSideBar } = sideBarSlice.actions;
 export default sideBarSlice.reducer;
 export type { SideBarView, actionType };
