@@ -1,5 +1,6 @@
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import AddMembers from "./AddMembers";
 
@@ -8,10 +9,9 @@ import { useGroupInfo } from "@features/groups/hooks/useGroupInfo";
 import { sideBarPages } from "types/sideBar";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import AddMembersButton from "./AddMembersButton";
-import { useAllUsers } from "@features/groups/hooks/useAllUsers";
+
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useSocket } from "@hooks/useSocket";
-import { useParams } from "react-router-dom";
 import { clearSelectedUsers } from "@state/groups/selectedUsers";
 
 const Container = styled.div`
@@ -22,18 +22,14 @@ const Container = styled.div`
 function AddMoreMembers() {
   const { chatId } = useParams<{ chatId: string }>();
 
-  const {
-    groupMembers,
-    isPending: isPendingGroupMembers,
-    chatType,
-  } = useGroupInfo();
-  const { users, isPending: isPendenigAllUsers } = useAllUsers();
+  const { groupMembers, isPending, chatType } = useGroupInfo();
+  const users = useAppSelector((state) => state.chats.members);
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
   const { addGroupMembers } = useSocket();
 
   const dispatch = useDispatch();
 
-  if (isPendingGroupMembers || isPendenigAllUsers) return;
+  if (isPending) return;
   console.log(chatType);
 
   function handleClick() {

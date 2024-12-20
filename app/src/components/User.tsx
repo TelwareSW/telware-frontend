@@ -84,6 +84,8 @@ function User({ user, view }: UserProps) {
   const { chatId } = useParams<{ chatId: string }>();
   const { isPending, isCurrUserAdmin } = useGroupInfo();
 
+  console.log(isCurrUserAdmin);
+
   const dispatch = useAppDispatch();
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
   const { removeMembers } = useSocket();
