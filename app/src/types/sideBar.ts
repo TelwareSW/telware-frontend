@@ -9,6 +9,15 @@ enum sideBarPages {
   DEVICES,
   ADD_MEMBERS,
   NEW_GROUP,
+  NEW_CHANNEL,
+  GROUP_INFO,
+  EDIT_GROUP_INFO,
+  GROUP_TYPE,
+  ADD_MORE_MEMBERS,
+  ADMINS,
+  ADD_ADMINS,
+  MEMBERS,
+  PERMISSIONS,
 }
 
 type pagesStrings = keyof typeof sideBarPages;

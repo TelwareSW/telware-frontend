@@ -8,6 +8,7 @@ import { useMouseLeave } from "@hooks/useMouseLeave";
 import { useDispatch } from "react-redux";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+import { useSidebarType } from "@components/side-bar/SideBarContext";
 
 interface StyledListProps {
   $bottom?: number;
@@ -52,10 +53,31 @@ function StartNewChat() {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const ref = useMouseLeave(() => setIsMenuOpened(false), false);
   const dispatch = useDispatch();
+  const sideBarType = useSidebarType();
 
   const handleOpenMenu = () => {
     setIsMenuOpened((prevState) => !prevState);
   };
+
+  function handleMenuItemClick(title: string) {
+    if (title === "New Channel") {
+      dispatch(
+        updateSideBarView({
+          redirect: sideBarPages.ADD_MEMBERS,
+          data: { type: sideBarType, view: "channel" },
+        })
+      );
+    } else if (title === "New Group") {
+      dispatch(
+        updateSideBarView({
+          redirect: sideBarPages.ADD_MEMBERS,
+          data: { type: sideBarType, view: "group" },
+        })
+      );
+    } else {
+      //TODO: implemn
+    }
+  }
 
   return (
     <>
@@ -83,14 +105,7 @@ function StartNewChat() {
             <SideBarMenuItem
               {...item}
               key={id}
-              onClick={() => {
-                dispatch(
-                  updateSideBarView({
-                    redirect: sideBarPages.ADD_MEMBERS,
-                    data: undefined,
-                  })
-                );
-              }}
+              onClick={() => handleMenuItemClick(item?.title)}
             />
           ))}
         </StyledList>

@@ -1,4 +1,15 @@
 import styled from "styled-components";
+import { useMessageContext } from "./contexts/MessageProvider";
+import useOptionListAction from "./hooks/useOptionListAction";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
+import {
+  pinMessage,
+  setShowCheckBox,
+  unpinMessage,
+} from "@state/messages/chats";
+import { useSocket } from "@hooks/useSocket";
+import useCheckBox from "@features/forward/hooks/useCheckBox";
+import { useDeleteMessage } from "./hooks/useDeleteMessage";
 
 const StyledList = styled.ul<{ $isMine: boolean }>`
   position: absolute;
@@ -8,7 +19,7 @@ const StyledList = styled.ul<{ $isMine: boolean }>`
   right: ${(props) => !props.$isMine && -6.5}rem;
   left: ${(props) => props.$isMine && -6.5}rem;
 
-  z-index: 20 !important;
+  z-index: 10;
   overflow: auto;
 
   display: flex;
@@ -48,41 +59,71 @@ const StyledP = styled.p`
   color: var(--color-text-secondary);
 `;
 
-interface Props {
-  $isMine: boolean;
-  forwardOnClick: () => void;
-  replyOnClick: () => void;
-  editOnClick: () => void;
-  pinOnClick: () => void;
-  isPinned: boolean;
-}
-
-function MessageOptionList(props: Props) {
+function MessageOptionList() {
   const {
-    $isMine,
-    forwardOnClick,
-    replyOnClick,
-    editOnClick,
-    pinOnClick,
+    isMine,
     isPinned,
-  } = props;
+    _id: id,
+    content,
+    parentMessageId,
+    chatId,
+  } = useMessageContext();
+
+  const { handleDeleteMessage } = useDeleteMessage();
+
+  const { handleEditMessage, handleReply } = useOptionListAction({
+    id,
+    content,
+    parentMessageId,
+  });
+
+  const { showCheckBox } = useCheckBox({ chatId, messageId: id });
+
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+
+  const dispatch = useAppDispatch();
+  const { pinMessage: pinMessageSocket, unpinMessage: unpinMessageSocket } =
+    useSocket();
+
+  function handlePin() {
+    if (isPinned) {
+      dispatch(unpinMessage({ messageId: id, chatId: chatId }));
+      unpinMessageSocket(chatId, id, userId);
+      return;
+    }
+    dispatch(pinMessage({ messageId: id, chatId: chatId }));
+    pinMessageSocket(chatId, id, userId);
+  }
+
+  function handleForward() {
+    dispatch(setShowCheckBox({ chatId: chatId, showCheckBox: !showCheckBox }));
+  }
+
+  function handleDelete() {
+    handleDeleteMessage(id, chatId);
+  }
 
   return (
-    <StyledList $isMine={$isMine} data-testid="message-option-list">
-      <HoverMask onClick={forwardOnClick} data-testid="forward-option">
+    <StyledList $isMine={isMine} data-testid="message-option-list">
+      <HoverMask onClick={handleForward} data-testid="forward-option">
         <StyledP>Forward</StyledP>
       </HoverMask>
-      <HoverMask onClick={replyOnClick} data-testid="reply-option">
+      <HoverMask onClick={handleReply} data-testid="reply-option">
         <StyledP>Reply</StyledP>
       </HoverMask>
-      {$isMine && (
-        <HoverMask onClick={editOnClick} data-testid="edit-option">
+      {isMine && (
+        <HoverMask onClick={handleEditMessage} data-testid="edit-option">
           <StyledP>Edit</StyledP>
         </HoverMask>
       )}
-      <HoverMask onClick={pinOnClick} data-testid="pin-option">
+      <HoverMask onClick={handlePin} data-testid="pin-option">
         <StyledP>{isPinned ? "Unpin" : "Pin"}</StyledP>
       </HoverMask>
+      {isMine && (
+        <HoverMask onClick={handleDelete} data-testid="delete-option">
+          <StyledP>Delete</StyledP>
+        </HoverMask>
+      )}
     </StyledList>
   );
 }

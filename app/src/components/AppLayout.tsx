@@ -3,8 +3,12 @@ import styled from "styled-components";
 import Main from "./Main";
 import SideBar from "./side-bar/SideBar";
 import { DESKTOP_VIEW, MOBILE_VIEW } from "@constants";
+import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
 
-const StyledApp = styled.div<{ $isChatOpen: boolean }>`
+const StyledApp = styled.div<{
+  $isChatOpen: boolean;
+  $isRightSideBarOpen: boolean;
+}>`
   @media ${MOBILE_VIEW} {
     & > main {
       display: ${({ $isChatOpen }) => ($isChatOpen ? "contents" : "none")};
@@ -17,7 +21,10 @@ const StyledApp = styled.div<{ $isChatOpen: boolean }>`
 
   @media ${DESKTOP_VIEW} {
     display: grid;
-    grid-template-columns: minmax(20rem, 2.5fr) 5fr;
+    grid-template-columns: ${({ $isRightSideBarOpen }) =>
+      $isRightSideBarOpen ? "1.5fr 3fr 1.5fr" : "1.5fr 4.5fr"};
+
+    overflow-x: hidden;
 
     & > main {
       display: block;
@@ -31,15 +38,20 @@ const StyledApp = styled.div<{ $isChatOpen: boolean }>`
 
 function AppLayout() {
   const { chatId } = useParams();
-
   const isChatOpen = !!chatId;
+  const { isRightSideBarOpen } = useRightSideBarContext();
 
   return (
-    <StyledApp $isChatOpen={isChatOpen} data-testid="app-layout">
-      <SideBar />
+    <StyledApp
+      $isChatOpen={isChatOpen}
+      data-testid="app-layout"
+      $isRightSideBarOpen={isRightSideBarOpen}
+    >
+      <SideBar type="left" />
       <Main>
         <Outlet />
       </Main>
+      {isRightSideBarOpen && <SideBar type="right" />}
     </StyledApp>
   );
 }

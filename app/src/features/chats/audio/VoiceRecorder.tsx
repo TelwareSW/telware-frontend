@@ -1,33 +1,29 @@
 import React, {
   useRef,
-  Dispatch,
-  SetStateAction,
   useEffect,
   useCallback,
+  useContext,
 } from "react";
 import RecordInput from "../SendButton";
 import { useUploadMedia } from "../media/hooks/useUploadMedia";
+import { useMessageSender } from "../hooks/useMessageSender";
+import { ChatInputContext } from "../ChatBox";
 
 export type RecordingStates = "idle" | "recording" | "pause";
 
-type VoiceRecorderProps = {
-  recordingMimeType?: string;
-  isRecording: RecordingStates;
-  setIsRecording: Dispatch<SetStateAction<RecordingStates>>;
-  setError: Dispatch<SetStateAction<string>>;
-  handleSendMessage: (data: string, file: string) => void;
-};
-
-const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
-  handleSendMessage,
+const VoiceRecorder: React.FC = ({
   recordingMimeType = "audio/webm",
-  isRecording,
-  setIsRecording,
-  setError,
+}: {
+  recordingMimeType?: string;
 }) => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const { data: voiceNoteURL, mutate: uploadVoiceNote } = useUploadMedia();
+
+  const { isRecording, setIsRecording, setError } =
+    useContext(ChatInputContext);
+
+  const { handleSendMessage } = useMessageSender();
 
   useEffect(() => {
     if (isRecording === "recording") {

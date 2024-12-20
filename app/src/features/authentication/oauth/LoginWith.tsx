@@ -29,8 +29,8 @@ type LoginWithProps = ComponentProps<"img"> & ComponentProps<"div">;
 
 function LoginWith({ onClick, alt, src }: LoginWithProps) {
   return (
-    <Icon onClick={onClick}>
-      <Img data-test={`${alt}-img`} src={src} alt={alt} />
+    <Icon data-testid={`${alt}-img`} onClick={onClick}>
+      <Img src={src} alt={alt} />
     </Icon>
   );
 }

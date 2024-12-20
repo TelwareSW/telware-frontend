@@ -17,6 +17,7 @@ import {
   privacySettingsInterface,
 } from "types/user";
 import { DataInterface, ExtractData } from "./getDataFactory";
+import { useSidebarType } from "@components/side-bar/SideBarContext";
 
 const StyledSideBarRow = styled.div`
   height: 4rem;
@@ -83,6 +84,7 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
 
   const dataExtractor: DataInterface = ExtractData(type, currStatus, status);
   const data = dataExtractor.getData();
+  const sideBarType = useSidebarType();
 
   useEffect(() => {
     if (status !== undefined && type !== undefined) {
@@ -95,7 +97,7 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
             setCurrStatus(
               userData?.privacySettings?.[
                 key as keyof privacySettingsInterface
-              ] || "everyone",
+              ] || "everyone"
             );
           break;
         case StatusType.ACTIVITY:
@@ -103,7 +105,7 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
           setCurrStatus(
             userData?.activitySettings?.[
               key as keyof activitySettingsInterface
-            ] || "everyone",
+            ] || "everyone"
           );
           break;
         case StatusType.PERMISSION:
@@ -111,7 +113,7 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
           setCurrStatus(
             userData?.permissionSettings?.[
               key as keyof permissionsSettingsInterface
-            ] || "everyone",
+            ] || "everyone"
           );
           break;
         default:
@@ -127,7 +129,10 @@ function SideBarRow({ redirect, icon, title, status, type }: SideBarRowProps) {
   return (
     <StyledSideBarRow
       onClick={() =>
-        redirect && dispatch(updateSideBarView({ redirect, data }))
+        redirect &&
+        dispatch(
+          updateSideBarView({ redirect, data: { ...data, type: sideBarType } })
+        )
       }
       data-testid={key && `menu-item-${key}`}
     >

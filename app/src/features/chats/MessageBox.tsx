@@ -9,8 +9,8 @@ interface MessageBoxProps {
   messageId?: string | null;
 }
 
-const State = styled.div`
-  color: var(--accent-color);
+const State = styled.div<{ $colorIndex: number }>`
+  color: var(--color-peer-${({ $colorIndex }) => $colorIndex});
   text-transform: capitalize;
 `;
 
@@ -20,21 +20,24 @@ const Message = styled.div`
   opacity: 0.9;
 `;
 
-const StyledMessageBox = styled.div`
+const StyledMessageBox = styled.div<{ $colorIndex: number }>`
   line-height: 1rem;
 
-  background-color: var(--color-background-compact-menu);
+  color: var(--color-peer-${({ $colorIndex }) => $colorIndex});
+  background-color: var(--color-peer-bg-${({ $colorIndex }) => $colorIndex});
 
   position: relative;
   flex: 1 1;
 
-  border-left: var(--accent-color) 3px solid;
+  border-left: var(--color-peer-${({ $colorIndex }) => $colorIndex}) 3px solid;
   border-radius: 5px;
 
   padding: 7px 0.5rem;
 
   &:hover {
-    background-color: var(--color-background-compact-menu-hover);
+    background-color: var(
+      --color-peer-bg-active ${({ $colorIndex }) => $colorIndex}
+    );
   }
 
   &::before {
@@ -46,13 +49,13 @@ const StyledMessageBox = styled.div`
     width: 1px;
     height: 100%;
 
-    background-color: var(--accent-color);
+    background-color: var(--color-peer-${({ $colorIndex }) => $colorIndex});
   }
 `;
 
 function getMessageById(
   messageId: string,
-  messages?: MessageInterface[]
+  messages?: MessageInterface[],
 ): MessageInterface | undefined {
   return messages
     ? messages.find((message) => message._id === messageId)
@@ -75,7 +78,6 @@ function MessageBox({ messageId }: MessageBoxProps) {
   // TODO: refactor this
   if (messageId) {
     msg = getMessageById(messageId, messages);
-    console.log(msg);
     if (id === msg?.senderId) name = "you";
     else {
       const sender = members.find((member) => member._id === msg?.senderId);
@@ -83,13 +85,20 @@ function MessageBox({ messageId }: MessageBoxProps) {
     }
   }
 
+  const memberIndex = members.findIndex(
+    (member) => member._id === msg?.senderId,
+  );
+  const colorIndex = memberIndex >= 0 ? (memberIndex % 5) + 2 : 2;
+
   const activeMessage = useAppSelector(
-    (state: RootState) => state.activeMessage
+    (state: RootState) => state.activeMessage,
   );
 
   return (
-    <StyledMessageBox>
-      <State>{name ? name : `${activeMessage.state}ing`}</State>
+    <StyledMessageBox $colorIndex={colorIndex}>
+      <State $colorIndex={colorIndex}>
+        {name ? name : `${activeMessage.state}ing`}
+      </State>
       <Message>{msg ? msg.content : activeMessage.content}</Message>
     </StyledMessageBox>
   );

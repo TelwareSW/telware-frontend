@@ -1,4 +1,5 @@
 import { getChatByID } from "@features/chats/utils/helpers";
+import { BlockListInterface } from "@features/privacy-settings/BlockList";
 import { Chat, Member } from "@mocks/data/chats";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MessageInterface } from "types/messages";
@@ -15,6 +16,11 @@ interface DetailedChatInterface extends Chat {
     timestamp: string;
   };
   name?: string;
+  isBlocked?: boolean;
+  photo?: string;
+
+  encryptionKey?: string;
+  initializationVector?: string;
 }
 
 interface ChatsState {
@@ -31,8 +37,32 @@ const chatsSlice = createSlice({
   name: "chats",
   initialState,
   reducers: {
-    setAllChats: (state, action: PayloadAction<{ chatsData: ChatsState }>) => {
-      state.chats = action.payload.chatsData.chats;
+    setAllChats: (
+      state,
+      action: PayloadAction<{
+        chatsData: ChatsState;
+        blockList: BlockListInterface[];
+        userId: string;
+      }>
+    ) => {
+      const { blockList, userId, chatsData } = action.payload;
+      const incomminingChats = chatsData?.chats;
+      incomminingChats
+        ?.map((chat) => {
+          if (chat.type === "private") {
+            const members = chat.members;
+            const otherUser = members.filter(
+              (member) => member._id !== userId
+            )[0];
+
+            if (blockList?.find((user: any) => user.id === otherUser._id)) {
+              chat.isBlocked = true;
+            }
+          }
+          return chat;
+        })
+        ?.filter((chat) => chat !== undefined) as DetailedChatInterface[];
+      state.chats = incomminingChats;
       state.members = action.payload.chatsData.members;
     },
 
@@ -42,7 +72,14 @@ const chatsSlice = createSlice({
     ) => {
       const { chatId, message } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
-      chat?.messages.push(message);
+
+      if (chat?.type === "private" && chat?.isBlocked) return;
+      const { _id, content, senderId, timestamp } = message;
+
+      if (chat) {
+        chat.lastMessage = { _id, content, senderId, timestamp };
+        chat.messages.push(message);
+      }
     },
 
     deleteMessage: (
@@ -51,7 +88,9 @@ const chatsSlice = createSlice({
     ) => {
       const { messageId, chatId } = action.payload;
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
-      chat?.messages.filter((msg) => msg._id !== messageId);
+      if (chat) {
+        chat.messages = chat?.messages.filter((msg) => msg._id !== messageId);
+      }
     },
 
     editMessage: (
@@ -162,9 +201,20 @@ const chatsSlice = createSlice({
       }>
     ) => {
       const { chatId, newMessages } = action.payload;
-      const chat = getChatByID({ chats: state.chats, chatID: chatId });
-      if (chat) {
-        chat.messages = [...newMessages, ...chat.messages];
+      const chatIndex = state.chats.findIndex((chat) => chat._id === chatId);
+
+
+      if (chatIndex !== -1) {
+        const chat = state.chats[chatIndex];
+
+        const filteredMessages = newMessages.filter(
+          (msg) => !chat.messages.find((m) => m._id === msg._id)
+        );
+
+        state.chats[chatIndex] = {
+          ...chat,
+          messages: [...filteredMessages, ...chat.messages],
+        };
       }
     },
 
@@ -176,6 +226,76 @@ const chatsSlice = createSlice({
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
       if (chat) {
         chat.lastMessage = lastMessage;
+      }
+    },
+
+    setChatIsBlocked: (
+      state,
+      action: PayloadAction<{
+        chatId: string;
+        isBlocked: boolean;
+        userId: string;
+      }>
+    ) => {
+      const { chatId, isBlocked, userId } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+
+      console.log(chat);
+      if (chat) chat.isBlocked = isBlocked;
+
+      const members = chat?.members;
+      const otherUser = members?.filter((member) => member._id !== userId)[0];
+
+      const user = state.members.find(
+        (member) => member._id === otherUser?._id
+      );
+
+      if (user) user.isBlocked = isBlocked;
+    },
+
+    setMemberIsBlocked: (
+      state,
+      action: PayloadAction<{
+        memberId: string;
+        isBlocked: boolean;
+        userId: string;
+      }>
+    ) => {
+      const { memberId, isBlocked, userId } = action.payload;
+      const member = state.members.find((member) => member._id === memberId);
+      if (member) member.isBlocked = isBlocked;
+
+      state.chats.forEach((chat) => {
+        if (chat.type === "private") {
+          const otherUser = chat.members.find(
+            (member) => member._id !== userId
+          );
+
+          if (otherUser?._id === memberId) {
+            chat.isBlocked = isBlocked;
+          }
+        }
+      });
+    },
+    setName: (
+      state,
+      action: PayloadAction<{ chatId: string; name: string }>
+    ) => {
+      const { chatId, name } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+      if (chat) {
+        chat.name = name;
+      }
+    },
+
+    setPhoto: (
+      state,
+      action: PayloadAction<{ chatId: string; photo: string }>
+    ) => {
+      const { chatId, photo } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+      if (chat) {
+        chat.photo = photo;
       }
     },
   },
@@ -195,6 +315,10 @@ export const {
   removeSelectedMessage,
   mergeMessages,
   updateLastMessage,
+  setChatIsBlocked,
+  setMemberIsBlocked,
+  setName,
+  setPhoto,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 export type { DetailedChatInterface, ChatsState };

@@ -37,6 +37,7 @@ interface RadioInputProps {
   state?: string;
   data: RadioInputInterface;
   updateFnType: StatusType;
+  type?: 'channel' | 'group';
 }
 
 const StyledForm = styled.div`

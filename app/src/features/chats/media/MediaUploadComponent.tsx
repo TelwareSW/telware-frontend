@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getIcon } from "@data/icons";
 import Icon from "@components/Icon";
 
-const InvisibleButton = styled.button`
+const InvisibleButton = styled.div`
   all: unset;
   display: inline-block;
   cursor: pointer;
@@ -37,9 +37,13 @@ export default function MediaUploadComponent({
         ref={fileInput}
         onChange={onAddFile}
         style={{ display: "none" }}
+        data-testid="file-input"
       />
       <InvisibleButton>
-        <Icon onClick={() => fileInput.current.click()}>
+        <Icon
+          data-testid="upload-media-button"
+          onClick={() => fileInput.current?.click()}
+        >
           {getIcon("Attatch")}
         </Icon>
       </InvisibleButton>

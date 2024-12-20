@@ -2,6 +2,8 @@ import styled from "styled-components";
 import OptionsList from "./OptionsList";
 import SettingsSideBarHeader from "./SettingsSideBarHeader";
 import { SideBarRowProps } from "./side-bar-row/SideBarRow";
+import { useSidebarType } from "../SideBarContext";
+import GroupInfoHeader from "./GroupInfoHeader";
 
 interface SettingsSideBarProps {
   children?: React.ReactNode;
@@ -15,9 +17,10 @@ const StyledSettingsSideBar = styled.div`
 `;
 
 function SettingsSideBar({ rows, children }: SettingsSideBarProps) {
+  const type = useSidebarType();
   return (
     <StyledSettingsSideBar>
-      <SettingsSideBarHeader />
+      {type === "left" ? <SettingsSideBarHeader /> : <GroupInfoHeader />}
       {children}
       <OptionsList rows={rows} />
     </StyledSettingsSideBar>
