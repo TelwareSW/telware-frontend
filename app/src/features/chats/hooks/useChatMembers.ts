@@ -12,4 +12,5 @@ export function useChatMembers(memberIDs?: ChatMember[]): Member[] {
       members.find((member) => member._id === filteredID._id)
     )
     .filter((member): member is Member => member !== undefined); // Ensure no undefined values
+    
 }

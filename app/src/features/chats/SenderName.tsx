@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { useAppSelector } from "@hooks/useGlobalState";
-import { useChatMembers } from "./hooks/useChatMember";
+import { useChatMembers } from "./hooks/useChatMembers";
 
 import { useMessageContext } from "./contexts/MessageProvider";
 
