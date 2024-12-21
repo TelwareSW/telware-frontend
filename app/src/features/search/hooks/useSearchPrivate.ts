@@ -49,12 +49,12 @@ function useSearchPrivate(searchRequest: SearchRequest) {
           searchRequest.filter.includes(message?.contentType) &&
           message?.content
             .toLowerCase()
-            .includes(searchRequest.query.toLowerCase()),
+            .includes(searchRequest.query.toLowerCase())
       );
 
       const mergedSearchResults = filteredMessages.map((message) => {
         const sender = members.find(
-          (member) => member._id === message.senderId,
+          (member) => member._id === message.senderId
         );
 
         const chat = privateChats.find((chat) => chat._id === message.chatId);
@@ -68,16 +68,16 @@ function useSearchPrivate(searchRequest: SearchRequest) {
             username: sender?.username,
             screenFirstName: sender?.screenFirstName,
             screenLastName: sender?.screenLastName,
-            photo: sender?.photo,
+            photo: sender?.photo
           },
           chatId: {
             id: chat?._id,
             name: chat?.name,
             numberOfMembers: chat?.members.length,
             type: chat?.type,
-            photo: chat?.photo,
+            photo: chat?.photo
           },
-          timestamp: message.timestamp,
+          timestamp: message.timestamp
         };
       });
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -23,6 +23,7 @@ import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
 
 import { resetActiveThread } from "@state/messages/channels";
+import { callStatusEmitter } from "@features/calls/context/callStatusEmitter";
 
 const Container = styled.div<{ $hasMargin?: boolean }>`
   position: absolute;
@@ -122,14 +123,30 @@ function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const chats = useAppSelector((state) => state.chats.chats);
+  const dispatch = useAppDispatch();
   const { activeThread } = useAppSelector((state) => state.channelsThreads);
   const [isSearching, setIsSearching] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { startConnection } = useSocket();
+  const { createVoiceCall } = useSocket();
+  const [callStatus, setCallStatus] = useState<
+    "inactive" | "active" | "calling" | "incoming" | "ended"
+  >("inactive");
+
+  useEffect(() => {
+    const handler = (status: typeof callStatus) => setCallStatus(status);
+    callStatusEmitter.on("update", handler);
+
+    return () => callStatusEmitter.off("update", handler);
+  }, []);
+  const startCall = () => {
+    if (chatId && callStatus === "inactive") {
+      createVoiceCall({ chatId });
+    }
+  };
   const chat = chatId
     ? getChatByID({
         chatID: chatId,
-        chats: chats,
+        chats: chats
       })
     : undefined;
 
@@ -138,26 +155,29 @@ function Topbar() {
 
   const { setIsRightSideBarOpen } = useRightSideBarContext();
 
-  function handleOpenRightSideBar() {
-    if (!chat) return;
-    if (chat?.type === "private") setIsRightSideBarOpen(false);
-    else {
-      dispatch(
-        updateSideBarView({
-          redirect:
-            chat?.type === "group"
-              ? sideBarPages.GROUP_INFO
-              : sideBarPages.CHANNEL_INFO,
-          data: { type: "right" },
-        })
-      );
-    }
-  }
+  const cachedOpenRightSideBar = useCallback(
+    function handleOpenRightSideBar() {
+      if (!chat) return;
+      if (chat?.type === "private") setIsRightSideBarOpen(false);
+      else {
+        dispatch(
+          updateSideBarView({
+            redirect:
+              chat?.type === "group"
+                ? sideBarPages.GROUP_INFO
+                : sideBarPages.CHANNEL_INFO,
+            data: { type: "right" }
+          })
+        );
+      }
+    },
+    [chat, dispatch, setIsRightSideBarOpen]
+  );
 
   useEffect(() => {
     if (!chatId) return;
-    handleOpenRightSideBar();
-  }, [chatId, chat]);
+    cachedOpenRightSideBar();
+  }, [chatId, chat, cachedOpenRightSideBar]);
 
   let image;
   let lastSeen;
@@ -171,15 +191,13 @@ function Topbar() {
     setIsSearching(!isSearching);
   };
 
-  const dispatch = useAppDispatch();
-
   async function handleRemoveFromBlock() {
     await removeFromBlockList({ id: membersData[0]._id });
     dispatch(
       setChatIsBlocked({
         chatId: chatId!,
         isBlocked: false,
-        userId: userId,
+        userId: userId
       })
     );
   }
@@ -193,18 +211,16 @@ function Topbar() {
     dispatch(resetActiveThread());
   };
 
-  const isCall = false;
-
   if (!chat) return null;
 
   return (
     <>
-      {isCall && (
+      {callStatus != "inactive" && (
         <CallLayout
           isCollapsed={isCollapsed}
           setIsCollapsed={setIsCollapsed}
-          name={chat.name}
-          image={image}
+          chatId={chatId}
+          callStatus={callStatus}
         />
       )}
       <Container data-testid="chat-topbar" $hasMargin={isCollapsed}>
@@ -219,7 +235,7 @@ function Topbar() {
         {activeThread && (
           <div onClick={closeThread} data-testid="back-button">
             {getIcon("LeftArrow", {
-              sx: { fontSize: "3rem", color: "var(--accent-color)" },
+              sx: { fontSize: "3rem", color: "var(--accent-color)" }
             })}
           </div>
         )}
@@ -250,7 +266,7 @@ function Topbar() {
             )}
             <Icons>
               <InvisibleButton>
-                <Icon onClick={() => startConnection()} data-testid="call-icon">
+                <Icon onClick={startCall} data-testid="call-icon">
                   {getIcon("Call")}
                 </Icon>
               </InvisibleButton>

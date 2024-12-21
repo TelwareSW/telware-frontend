@@ -60,7 +60,7 @@ type ChatItemProps = {
 
 const ChatItem = ({
   chat: { _id, lastMessage, name, photo },
-  onClick,
+  onClick
 }: ChatItemProps) => {
   const navigate = useNavigate();
 
@@ -88,7 +88,7 @@ const ChatItem = ({
           <Timestamp data-testid="chat-timestamp">
             {new Date(timestamp).toLocaleTimeString("en-US", {
               hour: "2-digit",
-              minute: "2-digit",
+              minute: "2-digit"
             }) || "No messages"}
           </Timestamp>
         </ChatHeader>

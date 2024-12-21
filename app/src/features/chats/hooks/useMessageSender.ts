@@ -3,6 +3,7 @@ import { ContentType, MessageInterface, MessageStatus } from "types/messages";
 import { useSocket } from "@hooks/useSocket";
 import { useEncryptDecrypt } from "./useEncryptDecrypt";
 import { getChatByID } from "../utils/helpers";
+import { getFileType } from "@utils/helpers";
 
 export const useMessageSender = () => {
   const { sendMessage, editMessage } = useSocket();
@@ -23,8 +24,8 @@ export const useMessageSender = () => {
 
     const encrypedMessage = await encrypt({
       message: data,
-      key: chat?.encryptionKey!,
-      iv: chat?.initializationVector!,
+      key: chat?.encryptionKey as string,
+      iv: chat?.initializationVector as string
     });
 
     if (activeMessage?.id && activeMessage.state === "edit") {
@@ -34,7 +35,9 @@ export const useMessageSender = () => {
 
     const isReply = activeMessage.state === "reply";
     const isEncryptedContent =
-      chat?.type! === "private" && typeof encrypedMessage === "string";
+      chat?.type === "private" && typeof encrypedMessage === "string";
+
+    type = getFileType(file, isEncryptedContent ? encrypedMessage : data);
 
     if (encrypedMessage || file) {
       const message: MessageInterface = {
@@ -45,9 +48,9 @@ export const useMessageSender = () => {
         isPinned: false,
         isForward: false,
         isAnnouncement: false,
+        isAppropriate: true,
         senderId: userId,
         chatId: chatId!,
-
         parentMessageId: isReply ? activeMessage.id : null,
         isReply,
         status: MessageStatus.sent,
@@ -61,12 +64,12 @@ export const useMessageSender = () => {
         ...message,
         parentMessageId: activeThread,
         isReply: true,
-        chatType: "channel",
+        chatType: "channel"
       };
 
       const messageToSend = activeThread ? threadMessage : message;
 
-      sendMessage({ ...messageToSend, chatType: chat?.type! });
+      sendMessage({ ...messageToSend, chatType: chat?.type || "private" });
     }
   };
 

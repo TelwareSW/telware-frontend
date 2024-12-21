@@ -27,11 +27,13 @@ function useChatInput() {
     handleSendMessage("", chatId, sticker, "sticker");
     setIsEmojiSelectorOpen(false);
   };
+
   const handleSubmit = (e: Event, voiceNoteName = "") => {
+    console.log(voiceNoteName);
     e.preventDefault();
     setIsEmojiSelectorOpen(false);
     if (isRecording !== "idle") return;
-    handleSendMessage(input, chatId, voiceNoteName);
+    handleSendMessage(input, chatId);
     dispatch(clearActiveMessage());
     setInput("");
   };
@@ -57,7 +59,7 @@ function useChatInput() {
     sendGIF,
     sendSticker,
     handleSubmit,
-    handleCloseFilePreview,
+    handleCloseFilePreview
   };
 }
 

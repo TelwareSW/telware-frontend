@@ -86,6 +86,7 @@ function ChatBody() {
               chatType={chat?.type as "private" | "group" | "channel"}
               sender={members.find((member) => member._id === data.senderId)}
               numberOfMembers={chat?.numberOfMembers}
+              isAppropriate={data.isAppropriate}
             >
               <Message key={data._id} />
             </MessageProvider>
@@ -101,6 +102,7 @@ function ChatBody() {
               chatType="channel"
               sender={members.find((member) => member._id === data.senderId)}
               numberOfMembers={chat?.numberOfMembers}
+              isAppropriate={data.isAppropriate}
             >
               <Message key={data._id} />
             </MessageProvider>

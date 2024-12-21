@@ -14,12 +14,15 @@ import {
   pinMessage,
   unpinMessage,
   editMessage,
-  deleteMessage as deleteMessageAction,
+  deleteMessage as deleteMessageAction
 } from "@state/messages/chats";
-import { connectToPeer, createAnswer, startCall } from "@features/calls/call";
+// import { connectToPeer, createAnswer, startCall } from "@features/calls/call";
 import { useEncryptDecrypt } from "@features/chats/hooks/useEncryptDecrypt";
 import toast from "react-hot-toast";
 import { useChat } from "@features/chats/hooks/useChat";
+import { useCallContext } from "@features/calls/hooks/useCallContext";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { resetRightSideBar } from "@state/side-bar/sideBar";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -46,6 +49,7 @@ interface AcknowledgmentResponse {
   message: string;
   error?: string;
   data: MessageInterface;
+  data: MessageInterface;
 }
 
 interface AckCreateGroup {
@@ -59,18 +63,94 @@ interface AckCreateGroup {
 
 function SocketProvider({ children }: SocketProviderProps) {
   const [isConnected, setIsConnected] = useState(false);
+  const {
+    callId,
+    joinCall,
+    endCall,
+    recieveICE,
+    recieveAnswer,
+    peerConnection,
+    startPeerConnection,
+    offer,
+    acceptCall: setAcceptedCall,
+    callAccepted
+  } = useCallContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = useSocket();
   const queryClient = useQueryClient();
 
+  const userId = useAppSelector((state) => state.user.userInfo.id);
+
+  const user = useAppSelector((state) => state.user.userInfo);
+
   const { decrypt } = useEncryptDecrypt();
   const { chat } = useChat();
-
+  const handleIceCandidates = useCallback(async () => {
+    return new Promise((resolve) => {
+      const timeout = setTimeout(() => {
+        resolve(null);
+      }, 10000);
+      if (peerConnection && isConnected && socket && callId) {
+        peerConnection.onicecandidate = (event) => {
+          if (!event.candidate) {
+            clearTimeout(timeout);
+            resolve(null);
+          }
+          socket.emit("SIGNAL-SERVER", {
+            type: "ICE",
+            voiceCallId: callId,
+            data: event.candidate
+          });
+        };
+      }
+    });
+  }, [peerConnection, isConnected, socket, callId]);
+  const sendOffer = useCallback(() => {
+    if (offer && isConnected && socket && callId) {
+      socket.emit("SIGNAL-SERVER", {
+        type: "OFFER",
+        voiceCallId: callId,
+        data: offer
+      });
+    }
+  }, [offer, isConnected, socket, callId]);
+  const acceptCall = useCallback(() => {
+    console.log(callId, callAccepted, isConnected, socket);
+    if (isConnected && socket && callId.current && !callAccepted.current) {
+      console.log("acceptCall", callId.current);
+      setAcceptedCall();
+      socket.emit("JOIN-CALL", { voiceCallId: callId.current });
+    }
+  }, [callAccepted, isConnected, socket, callId, setAcceptedCall]);
+  const sendAnswer = useCallback(
+    (
+      answer: string,
+      callback?: (response: { success: boolean; error?: string }) => void
+    ) => {
+      if (isConnected && socket) {
+        socket.emit(
+          "SEND_ANSWER",
+          { answer },
+          (response: { success: boolean; error?: string }) => {
+            if (callback) {
+              callback(response);
+            } else if (!response.success) {
+              console.error("Failed to send answer:", response.error);
+            } else {
+              console.log("Answer sent successfully");
+            }
+          }
+        );
+      } else {
+        console.warn("Cannot send answer: not connected to socket server");
+      }
+    },
+    [isConnected, socket]
+  );
   useEffect(() => {
     if (!socket) return;
-
-    socket.connect();
+    if (!socket.connected) socket.connect();
 
     const onConnect = () => {
       setIsConnected(true);
@@ -80,7 +160,6 @@ function SocketProvider({ children }: SocketProviderProps) {
         console.log("Socket connection closed:", reason);
       });
     };
-
     const onReceiveMessage = (message: MessageInterface) => {
       console.log("Received message:", message);
       if (!chat) {
@@ -92,7 +171,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         decrypt({
           message: message.content,
           key: chat.encryptionKey!,
-          iv: chat.initializationVector!,
+          iv: chat.initializationVector!
         })
           .then((content) => {
             console.log("Decrypted content:", content);
@@ -137,20 +216,28 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.log("NEW MEMBERS ARE ADDED");
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
+    socket.on("SET_PERMISSION_SERVER", ({ chatId, type, who }) => {
+      console.log("SET_PERMISSION_SERVER", chatId, type, who);
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
+    socket.on("SET_PRIVACY_SERVER", ({ chatId, privacy }) => {
+      console.log("SET_PERMISSION_SERVER", chatId, privacy);
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
 
     socket.on("typing", (isTyping, message) =>
       handleIsTyping(dispatch, isTyping, message.chatId)
     );
 
-    socket.on("RECIEVE_OFFER", async (offer) => {
-      console.log(offer);
-      const answer = await createAnswer(offer);
-      sendAnswer(answer);
-    });
-    socket.on("RECEIVE_ANSWER", async (answer: string) => {
-      console.log(answer);
-      await startCall(answer);
-    });
+    // socket.on("RECIEVE_OFFER", async (offer) => {
+    //   console.log(offer);
+    //   const answer = await createAnswer(offer);
+    //   sendAnswer(answer);
+    // });
+    // socket.on("RECEIVE_ANSWER", async (answer: string) => {
+    //   console.log(answer);
+    //   startCall(answer);
+    // });
 
     socket.on(
       "DELETE_MESSAGE_SERVER",
@@ -167,18 +254,58 @@ function SocketProvider({ children }: SocketProviderProps) {
       }
     );
 
-    socket.on("REMOVE_MEMBERS_SERVER", () => {
+    socket.on(
+      "DELETE_GROUP_CHANNEL_SERVER",
+      ({ chatId }: { chatId: string }) => {
+        console.log("DELETE_GROUP_CHANNEL_SERVER", chatId);
+        queryClient.invalidateQueries({ queryKey: ["chats"] });
+      }
+    );
+
+    socket.on("REMOVE_MEMBERS_SERVER", ({ memberId }: { memberId: string }) => {
       console.log("REMOVE_MEMBERS_SERVER");
+
+      if (memberId === user.id) {
+        navigate("/");
+        dispatch(resetRightSideBar());
+        //TODO: close the right sidebar
+      }
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
 
+    socket.on(
+      "CALL-STARTED",
+      ({
+        snederId,
+        voiceCallId,
+        chatId
+      }: {
+        snederId: string;
+        voiceCallId: string;
+        chatId: string;
+      }) => {
+        console.log("call id", voiceCallId);
+        joinCall(snederId, chatId, voiceCallId);
+        console.log(snederId, userId);
+        if (snederId === userId) acceptCall();
+      }
+    );
+    socket.on("CLIENT-JOINED", () => {
+      console.log("CLIENT-JOINED");
+      startPeerConnection();
+      sendOffer();
+      handleIceCandidates();
+    });
+    socket.on("SIGNAL-SERVER", async ({ type, voiceCallId, data }) => {
+      console.log(typeof data);
+      if (type === "ANSWER") recieveAnswer(data);
+      if (type === "ICE") recieveICE(data);
+    });
     socket.emit("typing");
 
     return () => {
       console.log("Cleaning up socket listeners");
-
-      socket.disconnect();
-
+      // if (socket.connected) socket.disconnect();
       socket.off("connect", onConnect);
       socket.off("RECEIVE_MESSAGE", onReceiveMessage);
       socket.off("PIN_MESSAGE_SERVER");
@@ -186,9 +313,9 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.off("EDIT_MESSAGE_SERVER");
       socket.off("JOIN_GROUP_CHANNEL");
       socket.off("typing");
-      socket.io.engine.off("close");
+      // socket.io.engine.off("close");
     };
-  }, [socket, chat, decrypt, dispatch, queryClient]);
+  }, [socket, chat, decrypt, dispatch, queryClient, user]);
 
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
@@ -196,32 +323,38 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.emit(
         "SEND_MESSAGE",
         sentMessage,
-        ({ success, data, error, message }: AcknowledgmentResponse) => {
+        ({
+          success,
+          data: recieved_message,
+          error,
+          message
+        }: AcknowledgmentResponse) => {
           if (!success) {
             console.log(message);
             console.log("Failed to send", error);
           }
           if (success) {
-            const _id = data._id;
+            const _id = recieved_message._id;
+
             if (!chat) return;
 
             if (chat?.type === "private") {
               decrypt({
-                message: sentMessage.content,
-                key: chat?.encryptionKey!,
-                iv: chat?.initializationVector!,
+                message: recieved_message.content,
+                key: chat?.encryptionKey || "",
+                iv: chat?.initializationVector || ""
               }).then((content) => {
                 handleIncomingMessage(
                   dispatch,
-                  { ...sentMessage, content: content as string, _id },
-                  sentMessage.chatId
+                  { ...recieved_message, content: content as string, _id },
+                  recieved_message.chatId
                 );
               });
             } else {
               handleIncomingMessage(
                 dispatch,
-                { ...sentMessage, _id },
-                sentMessage.chatId
+                { ...recieved_message, _id },
+                recieved_message.chatId
               );
             }
           }
@@ -252,7 +385,7 @@ function SocketProvider({ children }: SocketProviderProps) {
               editMessage({
                 chatId: response.res.message.chatId,
                 messageId: response.res.message._id,
-                content: response.res.message.content,
+                content: response.res.message.content
               })
             );
           } else {
@@ -286,45 +419,28 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.warn("Cannot unpin message: not connected to socket server");
     }
   };
-  const startConnection = async () => {
-    const offer = await connectToPeer();
-    if (isConnected && socket) {
-      console.log(offer);
-      socket.emit("SEND_OFFER", { offer });
-    } else {
-      console.warn("Cannot unpin message: not connected to socket server");
+  const createVoiceCall = ({ chatId }: { chatId: string }) => {
+    console.log("create call", isConnected, socket, chatId, callId.current);
+    if (isConnected && socket && !callId.current) {
+      socket.emit("CREATE-CALL", {
+        chatId
+      });
     }
   };
-  const sendAnswer = useCallback(
-    (
-      answer: string,
-      callback?: (response: { success: boolean; error?: string }) => void
-    ) => {
-      if (isConnected && socket) {
-        socket.emit(
-          "SEND_ANSWER",
-          { answer },
-          (response: { success: boolean; error?: string }) => {
-            if (callback) {
-              callback(response);
-            } else if (!response.success) {
-              console.error("Failed to send answer:", response.error);
-            } else {
-              console.log("Answer sent successfully");
-            }
-          }
-        );
-      } else {
-        console.warn("Cannot send answer: not connected to socket server");
-      }
-    },
-    [isConnected, socket]
-  );
+  // const startConnection = async (callId: string) => {
+  //   const offer = await connectToPeer();
+  //   if (isConnected && socket) {
+  //     console.log(offer);
+  //     socket.emit("SEND_OFFER", { offer });
+  //   } else {
+  //     console.warn("Cannot unpin message: not connected to socket server");
+  //   }
+  // };
 
   function createGroupOrChannel({
     type,
     name,
-    members,
+    members
   }: {
     type: "group" | "channel";
     name: string;
@@ -352,7 +468,7 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   function addGroupMembers({
     chatId,
-    users,
+    users
   }: {
     chatId: string;
     users: string[];
@@ -378,7 +494,7 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   function addAdmins({
     chatId,
-    members,
+    members
   }: {
     chatId: string;
     members: string[];
@@ -405,7 +521,7 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   function deleteMessage({
     messageId,
-    chatId,
+    chatId
   }: {
     messageId: string;
     chatId: string;
@@ -433,6 +549,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         "LEAVE_GROUP_CHANNEL_CLIENT",
         { chatId },
         ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
           if (success) {
             toast.success(message);
             queryClient.invalidateQueries({ queryKey: ["chats"] });
@@ -450,7 +567,7 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   function removeMembers({
     chatId,
-    members,
+    members
   }: {
     chatId: string;
     members: string[];
@@ -475,6 +592,84 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }
 
+  function setPermission({
+    chatId,
+    type,
+    who
+  }: {
+    chatId: string;
+    type: "post" | "download";
+    who: "admins" | "everyone";
+  }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "SET_PERMISSION_CLIENT",
+        { chatId, type, who },
+        ({ success, message, error }: AckCreateGroup) => {
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot remove members: not connected to socket");
+    }
+  }
+
+  function deleteGroup({ chatId }: { chatId: string }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "DELETE_GROUP_CHANNEL_CLIENT",
+        { chatId },
+        ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+            navigate("/");
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot delete group: not connected to socket server");
+    }
+  }
+
+  function setPrivacy({
+    chatId,
+    privacy
+  }: {
+    chatId: string;
+    privacy: boolean;
+  }) {
+    console.log(privacy);
+    if (isConnected && socket) {
+      socket.emit(
+        "SET_PRIVACY_CLIENT",
+        { chatId, privacy },
+        ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot set privacy: not connected to socket server");
+    }
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -483,13 +678,18 @@ function SocketProvider({ children }: SocketProviderProps) {
         pinMessage: pinMessageSocket,
         unpinMessage: unpinMessageSocket,
         editMessage: editMessageSocket,
-        startConnection,
+        //startConnection,
         createGroupOrChannel,
         deleteMessage,
         addGroupMembers,
         addAdmins,
         leaveGroup,
         removeMembers,
+        acceptCall,
+        createVoiceCall,
+        setPermission,
+        deleteGroup,
+        setPrivacy
       }}
     >
       {children}

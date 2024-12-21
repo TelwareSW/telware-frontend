@@ -8,7 +8,7 @@ interface ChannelsState {
 
 const initialState: ChannelsState = {
   activeThread: "",
-  activeThreadMessages: [],
+  activeThreadMessages: []
 };
 
 const channelsThreadsSlice = createSlice({
@@ -17,7 +17,7 @@ const channelsThreadsSlice = createSlice({
   reducers: {
     setActiveThread: (
       state,
-      action: PayloadAction<{ threadId: string; messages: MessageInterface[] }>,
+      action: PayloadAction<{ threadId: string; messages: MessageInterface[] }>
     ) => {
       state.activeThread = action.payload.threadId;
       state.activeThreadMessages = action.payload.messages;
@@ -25,8 +25,8 @@ const channelsThreadsSlice = createSlice({
     resetActiveThread: (state) => {
       state.activeThread = "";
       state.activeThreadMessages = [];
-    },
-  },
+    }
+  }
 });
 
 export const { setActiveThread, resetActiveThread } =

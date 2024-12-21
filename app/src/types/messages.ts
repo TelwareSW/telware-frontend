@@ -30,6 +30,7 @@ export interface MessageInterface {
 
   parentMessageId: string | null;
   status: MessageStatus;
+  isAppropriate: boolean;
 
   media?: string;
 

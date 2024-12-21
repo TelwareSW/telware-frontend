@@ -1,10 +1,11 @@
-import styled from "styled-components";
-import SettingsRow from "./SettingsRow";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { resetRightSideBar } from "@state/side-bar/sideBar";
+import styled from "styled-components";
+
+import SettingsRow from "./SettingsRow";
+import ConfirmDeleteGroupModal from "./ConfirmDeleteGroupModal";
 import { useGroupInfo } from "./hooks/useGroupInfo";
-import { useSocket } from "@hooks/useSocket";
-import { useRightSideBarContext } from "./contexts/RightSideBarProvider";
+
 import { getSettings } from "./data/settings";
 import { sideBarPages } from "types/sideBar";
 
@@ -16,9 +17,16 @@ const Container = styled.div`
 
 function EditGroupInfo() {
   const dispatch = useDispatch();
-  const { admins, groupMembers, chatId, isPending, chatType } = useGroupInfo();
-  const { leaveGroup } = useSocket();
-  const { setIsRightSideBarOpen } = useRightSideBarContext();
+  const {
+    admins,
+    groupMembers,
+    isPending,
+    chatType,
+    numGivenPermissions,
+    group
+  } = useGroupInfo();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (isPending) return null;
 
@@ -31,16 +39,21 @@ function EditGroupInfo() {
     dispatch,
     admins,
     groupMembers,
-    chatId: chatId!,
-    leaveGroup,
-    setIsRightSideBarOpen,
-    resetRightSideBar,
     chatType: chatType!,
     backView,
+    numGivenPermissions,
+    setIsModalOpen,
+    privacy: group?.privacy!,
   });
 
   return (
     <Container data-testid="group-settings-container">
+      {isModalOpen && (
+        <ConfirmDeleteGroupModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
       {settings.map((setting, index) => (
         <SettingsRow
           key={index}

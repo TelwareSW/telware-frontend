@@ -24,7 +24,7 @@ function getElapsedTime(timestamp: string): string {
   } else if (minutes > 0) {
     return `${minutes}m`;
   } else {
-    return `${seconds}s`;
+    return `${Math.max(seconds, 1)}s`;
   }
 }
 
@@ -38,4 +38,43 @@ function isValidDate(date: string): boolean {
   return new Date(date).toString() !== "Invalid Date";
 }
 
-export { getElapsedTime, getAvatarName, isValidDate };
+export type SearchFilter =
+  | "text"
+  | "image"
+  | "GIF"
+  | "sticker"
+  | "audio"
+  | "video"
+  | "file"
+  | "link";
+
+function getFileType(filename?: string, content?: string): SearchFilter {
+  if (content === undefined) return "text";
+
+  const urlPattern = /(https?:\/\/)/i;
+  if (urlPattern.test(content)) return "link";
+
+  if (!filename) return "text";
+
+  const ext = filename.toLowerCase().split(".").pop() || "";
+
+  const imageExts = ["jpg", "jpeg", "png", "webp", "svg", "bmp"];
+  if (imageExts.includes(ext)) return "image";
+
+  if (ext === "gif") return "GIF";
+
+  const stickerExts = ["webp", "apng"];
+  if (stickerExts.includes(ext)) return "sticker";
+
+  const audioExts = ["mp3", "wav", "ogg", "m4a", "aac", "webm"];
+  if (audioExts.includes(ext)) return "audio";
+
+  const videoExts = ["mp4", "mov", "avi", "mkv"];
+  if (videoExts.includes(ext)) return "video";
+
+  if (ext) return "file";
+
+  return "text";
+}
+
+export { getElapsedTime, getAvatarName, isValidDate, getFileType };

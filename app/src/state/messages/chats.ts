@@ -8,12 +8,13 @@ interface DetailedChatInterface extends Chat {
   messages: MessageInterface[];
   isTyping: boolean;
   showCheckBox: boolean;
-  selectedMessages: string[]; //indicates ids only of selected messages
+  selectedMessages: string[];
   lastMessage?: {
     _id: string;
     content: string;
     senderId: string;
     timestamp: string;
+    contentType: string;
   };
   name?: string;
   isBlocked?: boolean;
@@ -21,6 +22,9 @@ interface DetailedChatInterface extends Chat {
 
   encryptionKey?: string;
   initializationVector?: string;
+  messagingPermission?: boolean;
+  downloadingPermission?: boolean;
+  privacy: boolean;
 }
 
 interface ChatsState {
@@ -30,7 +34,7 @@ interface ChatsState {
 
 const initialState: ChatsState = {
   chats: [],
-  members: [],
+  members: []
 };
 
 const chatsSlice = createSlice({
@@ -74,10 +78,10 @@ const chatsSlice = createSlice({
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
 
       if (chat?.type === "private" && chat?.isBlocked) return;
-      const { _id, content, senderId, timestamp } = message;
+      const { _id, content, senderId, timestamp, contentType } = message;
 
       if (chat) {
-        chat.lastMessage = { _id, content, senderId, timestamp };
+        chat.lastMessage = { _id, content, senderId, timestamp, contentType };
         chat.messages.push(message);
       }
     },
@@ -203,7 +207,6 @@ const chatsSlice = createSlice({
       const { chatId, newMessages } = action.payload;
       const chatIndex = state.chats.findIndex((chat) => chat._id === chatId);
 
-
       if (chatIndex !== -1) {
         const chat = state.chats[chatIndex];
 
@@ -213,7 +216,7 @@ const chatsSlice = createSlice({
 
         state.chats[chatIndex] = {
           ...chat,
-          messages: [...filteredMessages, ...chat.messages],
+          messages: [...filteredMessages, ...chat.messages]
         };
       }
     },

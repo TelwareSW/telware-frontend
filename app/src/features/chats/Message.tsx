@@ -12,6 +12,7 @@ import useHover from "./hooks/useHover";
 import { useMessageContext } from "./contexts/MessageProvider";
 import React from "react";
 import CommentBox from "./CommentBox";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const StyledMessage = styled.div<{ $isMine: boolean }>`
   display: flex;
@@ -78,9 +79,10 @@ const Message = React.memo(() => {
 
   const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({
     chatId,
-    messageId: id,
+    messageId: id
   });
   const { isHovered, handleMouseLeave, handleOpenList } = useHover();
+  const { activeThread } = useAppSelector((state) => state.channelsThreads);
 
   return (
     <MessageRow $isChecked={isChecked}>
@@ -102,7 +104,7 @@ const Message = React.memo(() => {
           <MessageContent />
           {isHovered && <MessageOptionList />}
           <MessageDetails />
-          {chatType === "channel" && <CommentBox />}
+          {chatType === "channel" && !activeThread && <CommentBox />}
         </Bubble>
       </StyledMessage>
     </MessageRow>
