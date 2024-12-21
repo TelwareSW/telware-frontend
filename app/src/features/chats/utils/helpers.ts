@@ -52,7 +52,9 @@ export function parseChatsToState(chatData?: any) {
 
       lastMessage: {
         _id: incomingLastMessage?.id,
-        content: incomingLastMessage?.content,
+        content: incomingLastMessage?.isAppropriate
+          ? incomingLastMessage?.content
+          : "🚫️ This message has inappropriate content.",
         senderId: incomingLastMessage?.senderId,
         timestamp: incomingLastMessage?.timestamp,
         contentType: incomingLastMessage?.contentType
