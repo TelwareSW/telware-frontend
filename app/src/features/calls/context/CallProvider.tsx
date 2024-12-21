@@ -101,29 +101,38 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
     [setCallStatus, userId]
   );
 
-  const endCall = useCallback(() => {
-    setCallStatus("inactive");
-    callIdRef.current = null;
-    senderIdRef.current = null;
-    chatIdRef.current = null;
-    if (localStream.current) {
-      localStream.current.getTracks().forEach((track) => {
-        track.stop();
-      });
-    }
-    clientIdRef.current.forEach((clientData, clientId) => {
-      if (clientData.connection) {
-        clientData.connection.close();
+  const endCall = useCallback(
+    (clientId = null) => {
+      if (clientId) {
+        const clientData = clientIdRef.current.get(clientId);
+        if (clientData?.connection) clientData.connection.close();
+        removeClientId(clientId);
+      } else {
+        setCallStatus("inactive");
+        callIdRef.current = null;
+        senderIdRef.current = null;
+        chatIdRef.current = null;
+        if (localStream.current) {
+          localStream.current.getTracks().forEach((track) => {
+            track.stop();
+          });
+        }
+        clientIdRef.current.forEach((clientData, clientId) => {
+          if (clientData.connection) {
+            clientData.connection.close();
+          }
+
+          removeClientId(clientId);
+        });
+        const remoteAudioElements = document.querySelectorAll("audio");
+        remoteAudioElements.forEach((audio) => audio.remove());
+
+        localStream.current = null;
+        clearClientIds();
       }
-
-      removeClientId(clientId);
-    });
-    const remoteAudioElements = document.querySelectorAll("audio");
-    remoteAudioElements.forEach((audio) => audio.remove());
-
-    localStream.current = null;
-    clearClientIds();
-  }, [clearClientIds, removeClientId, setCallStatus]);
+    },
+    [clearClientIds, removeClientId, setCallStatus]
+  );
 
   const acceptCall = useCallback(() => {
     if (callIdRef.current && chatIdRef.current) {
