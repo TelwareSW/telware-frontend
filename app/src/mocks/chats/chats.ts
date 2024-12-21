@@ -14,7 +14,7 @@ export const chats = [
 
   http.get("/chats/:id", async ({ params }) => {
     const chat = allChats.find((chat) => chat._id.toString() === params.id);
-
+    
     return HttpResponse.json(
       {
         status: "success",

@@ -300,8 +300,40 @@ const chatsSlice = createSlice({
       if (chat) {
         chat.photo = photo;
       }
-    }
-  }
+    },
+
+    setIsMention: (
+      state,
+      action: PayloadAction<{
+        chatId: string;
+        messageId: string;
+        isMention: boolean;
+      }>
+    ) => {
+      const { chatId, isMention, messageId } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+      const reqMessage = chat?.messages.find((msg) => msg._id === messageId);
+      if (reqMessage) {
+        reqMessage.isMention = isMention;
+      }
+    },
+
+    setIsSeen: (
+      state,
+      action: PayloadAction<{
+        chatId: string;
+        messageId: string;
+        isSeen: boolean;
+      }>
+    ) => {
+      const { chatId, isSeen, messageId } = action.payload;
+      const chat = getChatByID({ chats: state.chats, chatID: chatId });
+      const reqMessage = chat?.messages.find((msg) => msg._id === messageId);
+      if (reqMessage) {
+        reqMessage.isSeen = isSeen;
+      }
+    },
+  },
 });
 
 export const {
@@ -321,7 +353,9 @@ export const {
   setChatIsBlocked,
   setMemberIsBlocked,
   setName,
-  setPhoto
+  setPhoto,
+  setIsMention,
+  setIsSeen,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 export type { DetailedChatInterface, ChatsState };

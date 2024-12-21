@@ -3,7 +3,7 @@ import { getIcon } from "@data/icons";
 import styled from "styled-components";
 import MediaUploadComponent from "./media/MediaUploadComponent";
 import Icon from "@components/Icon";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { ChatInputContext } from "./ChatBox";
 
 const InvisibleButton = styled.div`
@@ -27,7 +27,11 @@ function ChatInputIcons() {
     setIsEmojiSelectorOpen((show: boolean) => !show);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (
+    e:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     setIsEmojiSelectorOpen(false);
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();

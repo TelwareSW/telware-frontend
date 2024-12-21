@@ -41,71 +41,71 @@ export type ChatDataType = {
   }[];
 };
 
-export const allChats: Chat[] = [
-  {
-    _id: "1",
-    isSeen: false,
-    members: ["1", "2"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "2",
-    isSeen: false,
-    members: ["2", "1"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "3",
-    isSeen: false,
-    members: ["3"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "4",
-    isSeen: false,
-    members: ["4"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "5",
-    isSeen: false,
-    members: ["5"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "6",
-    isSeen: false,
-    members: ["6"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "7",
-    isSeen: false,
-    members: ["7"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "8",
-    isSeen: false,
-    members: ["8"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-  {
-    _id: "9",
-    isSeen: false,
-    members: ["9"],
-    type: "private",
-    numberOfMembers: 1,
-  },
-];
+export const allChats: Chat[] = [];
+//   {
+//     _id: "1",
+//     isSeen: false,
+//     members: ["1", "2"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "2",
+//     isSeen: false,
+//     members: ["2", "1"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "3",
+//     isSeen: false,
+//     members: ["3"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "4",
+//     isSeen: false,
+//     members: ["4"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "5",
+//     isSeen: false,
+//     members: ["5"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "6",
+//     isSeen: false,
+//     members: ["6"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "7",
+//     isSeen: false,
+//     members: ["7"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "8",
+//     isSeen: false,
+//     members: ["8"],
+//     type: "private",
+//     numberOfMembers: 1
+//   },
+//   {
+//     _id: "9",
+//     isSeen: false,
+//     members: ["9"],
+//     type: "private",
+//     numberOfMembers: 1
+//   }
+// ];
 
 export const members: Member[] = [
   {
@@ -119,7 +119,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "2",
@@ -132,7 +132,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "3",
@@ -145,7 +145,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "4",
@@ -158,7 +158,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "5",
@@ -171,7 +171,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "6",
@@ -184,7 +184,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "7",
@@ -197,7 +197,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "8",
@@ -210,7 +210,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "9",
@@ -223,7 +223,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "10",
@@ -236,7 +236,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "11",
@@ -249,7 +249,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "12",
@@ -262,7 +262,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "13",
@@ -275,7 +275,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "14",
@@ -288,7 +288,7 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
+    blockedUsers: []
   },
   {
     _id: "15",
@@ -301,8 +301,8 @@ export const members: Member[] = [
     isAdmin: false,
     Role: "member",
     stories: [],
-    blockedUsers: [],
-  },
+    blockedUsers: []
+  }
 ];
 
 export const lastMessages = [
@@ -310,63 +310,63 @@ export const lastMessages = [
     chatId: "1",
     lastMessage: {
       content: "Hello, Alice!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "2",
     lastMessage: {
       content: "Hi, Bob!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "3",
     lastMessage: {
       content: "Hello, Charlie!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "4",
     lastMessage: {
       content: "Hi, David!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "5",
     lastMessage: {
       content: "Hello, Eve!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "6",
     lastMessage: {
       content: "Hi, Frank!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "7",
     lastMessage: {
       content: "Hello, Grace!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "8",
     lastMessage: {
       content: "Hi, Hannah!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
   },
   {
     chatId: "9",
     lastMessage: {
       content: "Hello, Ivy!",
-      timestaamp: "2021-09-01T12:00:00.000Z",
-    },
-  },
+      timestaamp: "2021-09-01T12:00:00.000Z"
+    }
+  }
 ];

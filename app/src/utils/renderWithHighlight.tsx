@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import RenderWithMention from "./renderWithMentions";
 
 const HighlightedText = styled.span<{ $highlight?: boolean }>`
   background-color: ${(props) => (props.$highlight ? "yellow" : "transparent")};
@@ -12,21 +13,22 @@ function RenderWithHighlight(
   id?: string
 ) {
   if (!searchTerm) {
-    return content;
+    return RenderWithMention(content, id!);
   }
 
   const result = searchResults?.find((result) => result.messageId === id);
 
   if (!result) {
-    return content;
+    return RenderWithMention(content, id!);
   }
 
-  const before = content.slice(0, result.highlightIndex);
-  const highlighted = content.slice(
-    result.highlightIndex,
-    result.highlightIndex + searchTerm.length
-  );
-  const after = content.slice(result.highlightIndex + searchTerm.length);
+  const before = content.toString().slice(0, result.highlightIndex);
+  const highlighted = content
+    .toString()
+    .slice(result.highlightIndex, result.highlightIndex + searchTerm.length);
+  const after = content
+    .toString()
+    .slice(result.highlightIndex + searchTerm.length);
 
   return (
     <span>

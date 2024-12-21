@@ -9,7 +9,7 @@ import { getIcon } from "@data/icons";
 import { setChatIsBlocked } from "@state/messages/chats";
 import { useSocket } from "@hooks/useSocket";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
-import { useChatMembers } from "./hooks/useChatMember";
+import { useChatMembers } from "./hooks/useChatMembers";
 import { useBlock } from "@features/privacy-settings/hooks/useBlock";
 import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
 import { getElapsedTime } from "@utils/helpers";

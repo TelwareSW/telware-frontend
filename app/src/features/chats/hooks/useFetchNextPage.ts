@@ -57,6 +57,11 @@ function useFetchNextPage() {
 
     if (data) {
       const lastFetchedPage = data.pages[data.pages.length - 1];
+      lastFetchedPage.messages.forEach((element: any) => {
+        element.isMention = false;
+        element.isSeen = false;
+      });
+
       if (lastFetchedPage && chatId) {
         processMessages(lastFetchedPage.messages).then(() => {
           dispatch(

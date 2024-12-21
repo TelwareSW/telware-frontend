@@ -8,12 +8,14 @@ import { getChatByID } from "./utils/helpers";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@hooks/useGlobalState";
 import MessageProvider from "./contexts/MessageProvider";
+import { getIcon } from "@data/icons";
+import useTraversalMentions from "./hooks/useTraverseMentions";
+import Icon from "@components/Icon";
 
 const ScrollContainer = styled.div`
   width: 100%;
   height: 82dvh;
   overflow-y: auto;
-  position: relative;
   margin-top: 3rem;
   &::-webkit-scrollbar {
     width: 5px;
@@ -44,6 +46,9 @@ function ChatBody() {
 
   const { inView, ref } = useInView({ threshold: 0.01 });
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const { handleNextMentionMessage, mentionMessages } = useTraversalMentions();
+
 
   useEffect(() => {
     if (inView && hasNextPage && chatId) {
@@ -103,6 +108,26 @@ function ChatBody() {
             </MessageProvider>
           );
         })}
+      <Icon onClick={handleNextMentionMessage} data-testid="mention-icon">
+        {mentionMessages.length > 0 &&
+          getIcon("Mention", {
+            sx: {
+              fontSize: "2.5rem",
+              color: "var(--accent-color)",
+              backgroundColor: `var(--color-background)`,
+              borderRadius: "50%",
+              position: "absolute",
+              bottom: "8rem",
+              right: "3%",
+              cursor: "pointer",
+              ":hover": {
+                backgroundColor: "var(--color-background-own-1)",
+                color: "white",
+                transition: "0.2s",
+              },
+            },
+          })}
+      </Icon>
     </ScrollContainer>
   );
 }
