@@ -7,13 +7,12 @@ type SettingsProps = {
   dispatch: Dispatch;
   admins: any[];
   groupMembers: any[];
-  chatId: string;
+
   chatType: string;
   backView: sideBarPages;
   numGivenPermissions: number;
-  leaveGroup: (params: { chatId: string }) => void;
-  setIsRightSideBarOpen: (value: boolean) => void;
-  resetRightSideBar: () => { type: string };
+
+  setIsModalOpen: (value: boolean) => void;
 };
 
 const getSettings = ({
@@ -21,12 +20,10 @@ const getSettings = ({
   dispatch,
   admins,
   groupMembers,
-  chatId,
-  leaveGroup,
-  setIsRightSideBarOpen,
-  resetRightSideBar,
+
   backView,
-  numGivenPermissions
+  numGivenPermissions,
+  setIsModalOpen
 }: SettingsProps) => [
   {
     testid: "group-type",
@@ -58,7 +55,7 @@ const getSettings = ({
     testid: "members",
     icon: "Members" as iconStrings,
     title: chatType === "group" ? "Members" : "Subscribers",
-    subtitle: groupMembers.length,
+    subtitle: groupMembers?.length,
     onClick: () =>
       dispatch(
         updateSideBarView({
@@ -86,9 +83,10 @@ const getSettings = ({
     title: `Delete and Leave ${chatType}`,
     subtitle: "",
     onClick: () => {
-      leaveGroup({ chatId });
-      setIsRightSideBarOpen(false);
-      dispatch(resetRightSideBar());
+      setIsModalOpen(true);
+      // leaveGroup({ chatId });
+      // setIsRightSideBarOpen(false);
+      // dispatch(resetRightSideBar());
     }
   }
 ];
