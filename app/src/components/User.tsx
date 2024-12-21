@@ -84,14 +84,10 @@ function User({ user, view }: UserProps) {
   const { chatId } = useParams<{ chatId: string }>();
   const { isPending, isCurrUserAdmin } = useGroupInfo();
 
-  console.log(isCurrUserAdmin);
-
   const dispatch = useAppDispatch();
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
   const { removeMembers } = useSocket();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  if (isPending) return;
 
   function handleContextMenu(e: React.MouseEvent) {
     e.preventDefault();
@@ -109,6 +105,8 @@ function User({ user, view }: UserProps) {
   function handleCloseModal() {
     setIsModalVisible(false);
   }
+
+  if (isPending) return;
 
   return (
     <UserRow
