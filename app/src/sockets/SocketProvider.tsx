@@ -254,6 +254,14 @@ function SocketProvider({ children }: SocketProviderProps) {
       }
     );
 
+    socket.on(
+      "DELETE_GROUP_CHANNEL_SERVER",
+      ({ chatId }: { chatId: string }) => {
+        console.log("DELETE_GROUP_CHANNEL_SERVER", chatId);
+        queryClient.invalidateQueries({ queryKey: ["chats"] });
+      }
+    );
+
     socket.on("REMOVE_MEMBERS_SERVER", ({ memberId }: { memberId: string }) => {
       console.log("REMOVE_MEMBERS_SERVER");
 
@@ -607,6 +615,28 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }
 
+  function deleteGroup({ chatId }: { chatId: string }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "DELETE_GROUP_CHANNEL_CLIENT",
+        { chatId },
+        ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+            navigate("/");
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot delete group: not connected to socket server");
+    }
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -624,7 +654,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         removeMembers,
         acceptCall,
         createVoiceCall,
-        setPermission
+        setPermission,
+        deleteGroup
       }}
     >
       {children}

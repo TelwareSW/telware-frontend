@@ -123,6 +123,7 @@ function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const chats = useAppSelector((state) => state.chats.chats);
+  const dispatch = useAppDispatch();
   const { activeThread } = useAppSelector((state) => state.channelsThreads);
   const [isSearching, setIsSearching] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -153,28 +154,31 @@ function Topbar() {
   const { removeFromBlockList } = useBlock();
 
   const { setIsRightSideBarOpen } = useRightSideBarContext();
-  const dispatch = useAppDispatch();
 
-  const handleOpenRightSideBar = useCallback(() => {
-    if (!chat) return;
-    if (chat?.type === "private") setIsRightSideBarOpen(false);
-    else {
-      dispatch(
-        updateSideBarView({
-          redirect:
-            chat?.type === "group"
-              ? sideBarPages.GROUP_INFO
-              : sideBarPages.CHANNEL_INFO,
-          data: { type: "right" }
-        })
-      );
-    }
-  }, [chat, dispatch, setIsRightSideBarOpen]);
+  const cachedOpenRightSideBar = useCallback(
+    function handleOpenRightSideBar() {
+      if (!chat) return;
+      if (chat?.type === "private") setIsRightSideBarOpen(false);
+      else {
+        dispatch(
+          updateSideBarView({
+            redirect:
+              chat?.type === "group"
+                ? sideBarPages.GROUP_INFO
+                : sideBarPages.CHANNEL_INFO,
+            data: { type: "right" }
+          })
+        );
+      }
+    },
+    [chat, dispatch, setIsRightSideBarOpen]
+  );
 
   useEffect(() => {
     if (!chatId) return;
-    handleOpenRightSideBar();
-  }, [chatId, handleOpenRightSideBar]);
+    cachedOpenRightSideBar();
+  }, [chatId, chat, cachedOpenRightSideBar]);
+
   let image;
   let lastSeen;
 
