@@ -644,6 +644,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     chatId: string;
     privacy: boolean;
   }) {
+    console.log(privacy);
     if (isConnected && socket) {
       socket.emit(
         "SET_PRIVACY_CLIENT",
