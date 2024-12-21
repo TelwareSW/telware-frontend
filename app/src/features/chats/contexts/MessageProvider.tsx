@@ -18,6 +18,7 @@ type ProviderProps = {
   chatType: string;
   sender?: Member;
   numberOfMembers?: number;
+  isAppropriate: boolean;
 };
 
 function MessageProvider({
@@ -26,13 +27,21 @@ function MessageProvider({
   chatType,
   sender,
   numberOfMembers,
+  isAppropriate,
 }: ProviderProps) {
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const isMine = userId === data.senderId;
 
   return (
     <MessageContext.Provider
-      value={{ ...data, isMine, chatType, sender, numberOfMembers }}
+      value={{
+        ...data,
+        isMine,
+        chatType,
+        sender,
+        numberOfMembers,
+        isAppropriate,
+      }}
     >
       {children}
     </MessageContext.Provider>

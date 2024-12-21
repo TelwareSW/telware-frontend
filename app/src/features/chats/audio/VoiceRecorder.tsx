@@ -1,21 +1,21 @@
-import React, {
-  useRef,
-  useEffect,
-  useCallback,
-  useContext,
-} from "react";
+import { useRef, useEffect, useCallback, useContext } from "react";
 import RecordInput from "../SendButton";
 import { useUploadMedia } from "../media/hooks/useUploadMedia";
 import { useMessageSender } from "../hooks/useMessageSender";
 import { ChatInputContext } from "../ChatBox";
+import toast from "react-hot-toast";
 
 export type RecordingStates = "idle" | "recording" | "pause";
 
-const VoiceRecorder: React.FC = ({
-  recordingMimeType = "audio/webm",
-}: {
+interface VoiceRecorderProps {
   recordingMimeType?: string;
-}) => {
+  chatId: string | undefined;
+}
+
+const VoiceRecorder = ({
+  recordingMimeType = "audio/webm",
+  chatId,
+}: VoiceRecorderProps) => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const { data: voiceNoteURL, mutate: uploadVoiceNote } = useUploadMedia();
@@ -86,8 +86,33 @@ const VoiceRecorder: React.FC = ({
       });
       audioChunks.current = [];
       uploadVoiceNote(file);
+
+      try {
+        uploadVoiceNote(file, {
+          onSuccess: (url) => {
+            console.log("File uploaded successfully:", url);
+            toast.success("Voice note sent successfully.");
+            handleSendMessage("", chatId, url);
+          },
+          onError: (error) => {
+            console.error("Error uploading file:", error);
+            toast.error("Failed to upload the file. Please try again.");
+          },
+        });
+      } catch (error) {
+        console.error("Unexpected error while sending file:", error);
+        toast.error("Unexpected error occurred. Please try again.");
+      }
+      setIsRecording("idle");
     }
-  }, [isRecording, recordingMimeType, uploadVoiceNote]);
+  }, [
+    isRecording,
+    recordingMimeType,
+    setIsRecording,
+    uploadVoiceNote,
+    handleSendMessage,
+    chatId,
+  ]);
 
   useEffect(() => {
     if (voiceNoteURL && isRecording === "pause") {

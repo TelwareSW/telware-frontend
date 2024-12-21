@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -122,6 +122,7 @@ function Topbar() {
   const { chatId } = useParams<{ chatId: string }>();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const chats = useAppSelector((state) => state.chats.chats);
+  const dispatch = useAppDispatch();
   const { activeThread } = useAppSelector((state) => state.channelsThreads);
   const [isSearching, setIsSearching] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -138,26 +139,29 @@ function Topbar() {
 
   const { setIsRightSideBarOpen } = useRightSideBarContext();
 
-  function handleOpenRightSideBar() {
-    if (!chat) return;
-    if (chat?.type === "private") setIsRightSideBarOpen(false);
-    else {
-      dispatch(
-        updateSideBarView({
-          redirect:
-            chat?.type === "group"
-              ? sideBarPages.GROUP_INFO
-              : sideBarPages.CHANNEL_INFO,
-          data: { type: "right" },
-        })
-      );
-    }
-  }
+  const cachedOpenRightSideBar = useCallback(
+    function handleOpenRightSideBar() {
+      if (!chat) return;
+      if (chat?.type === "private") setIsRightSideBarOpen(false);
+      else {
+        dispatch(
+          updateSideBarView({
+            redirect:
+              chat?.type === "group"
+                ? sideBarPages.GROUP_INFO
+                : sideBarPages.CHANNEL_INFO,
+            data: { type: "right" },
+          })
+        );
+      }
+    },
+    [chat, dispatch, setIsRightSideBarOpen]
+  );
 
   useEffect(() => {
     if (!chatId) return;
-    handleOpenRightSideBar();
-  }, [chatId, chat]);
+    cachedOpenRightSideBar();
+  }, [chatId, chat, cachedOpenRightSideBar]);
 
   let image;
   let lastSeen;
@@ -170,8 +174,6 @@ function Topbar() {
   const toggleSearch = () => {
     setIsSearching(!isSearching);
   };
-
-  const dispatch = useAppDispatch();
 
   async function handleRemoveFromBlock() {
     await removeFromBlockList({ id: membersData[0]._id });

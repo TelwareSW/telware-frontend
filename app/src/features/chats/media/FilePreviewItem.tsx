@@ -71,7 +71,7 @@ function FilePreviewItem({ chatId }: { chatId: string | undefined }) {
         onError: (error) => {
           console.error("Error uploading file:", error);
           alert("Failed to upload the file. Please try again.");
-        }
+        },
       });
     } catch (error) {
       console.error("Unexpected error while sending file:", error);

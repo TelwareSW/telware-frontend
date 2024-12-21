@@ -31,7 +31,7 @@ function useChatInput() {
     e.preventDefault();
     setIsEmojiSelectorOpen(false);
     if (isRecording !== "idle") return;
-    handleSendMessage(input, chatId, voiceNoteName);
+    handleSendMessage(input, chatId, voiceNoteName, "audio");
     dispatch(clearActiveMessage());
     setInput("");
   };

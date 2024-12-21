@@ -177,7 +177,7 @@ export default function LoginForm() {
             "Login"
           )}
         </Button>
-        {error && <Error data-testid="login-error-message">{error}</Error>}
+        {error && <Error data-testid="login-zerror-message">{error}</Error>}
       </Form>
     </>
   );
