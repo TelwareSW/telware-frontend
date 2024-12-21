@@ -4,7 +4,9 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { callStatusEmitter } from "./callStatusEmitter";
 import { CallStatus } from "types/calls";
 import { TURN_USERNAME, TURN_PASSWORD } from "@constants";
-const stunServers = {
+console.log("TURN_USERNAME", TURN_USERNAME);
+console.log("TURN_PASSWORD", TURN_PASSWORD);
+const Servers = {
   iceServers: [
     { urls: ["stun:stun.l.google.com:19302", "stun:stun.l.google.com:5349"] },
     {
@@ -149,7 +151,7 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
         endCall();
         return null;
       }
-      const peerConnection = new RTCPeerConnection(stunServers);
+      const peerConnection = new RTCPeerConnection(Servers);
       localStream.current.getTracks().forEach((track) => {
         peerConnection?.addTrack(track, localStream.current);
       });
@@ -207,7 +209,7 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
       }
 
       try {
-        const peerConnection = new RTCPeerConnection(stunServers);
+        const peerConnection = new RTCPeerConnection(Servers);
         if (!localStream.current) {
           localStream.current = await navigator.mediaDevices.getUserMedia({
             audio: true,
