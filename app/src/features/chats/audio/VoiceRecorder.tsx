@@ -1,23 +1,20 @@
-import React, {
-  useRef,
-  useEffect,
-  useCallback,
-  useContext,
-} from "react";
+import React, { useRef, useEffect, useCallback, useContext } from "react";
 import RecordInput from "../SendButton";
 import { useUploadMedia } from "../media/hooks/useUploadMedia";
 import { useMessageSender } from "../hooks/useMessageSender";
 import { ChatInputContext } from "../ChatBox";
+import { useParams } from "react-router-dom";
 
 export type RecordingStates = "idle" | "recording" | "pause";
 
 const VoiceRecorder: React.FC = ({
-  recordingMimeType = "audio/webm",
+  recordingMimeType = "audio/webm"
 }: {
   recordingMimeType?: string;
 }) => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
+  const { chatId } = useParams<{ chatId: string }>();
   const { data: voiceNoteURL, mutate: uploadVoiceNote } = useUploadMedia();
 
   const { isRecording, setIsRecording, setError } =
@@ -31,7 +28,7 @@ const VoiceRecorder: React.FC = ({
         .getUserMedia({ audio: true })
         .then((stream) => {
           const recorder = new MediaRecorder(stream, {
-            mimeType: recordingMimeType,
+            mimeType: recordingMimeType
           });
           mediaRecorder.current = recorder;
 
@@ -76,13 +73,13 @@ const VoiceRecorder: React.FC = ({
   }, [setIsRecording]);
 
   const handleSendRecord = useCallback(() => {
-    if (isRecording === "pause") {
+    if (isRecording === "pause" && audioChunks.current.length) {
       const audioBlob = new Blob(audioChunks.current, {
-        type: recordingMimeType,
+        type: recordingMimeType
       });
       const file = new File([audioBlob], "recording.webm", {
         type: audioBlob.type,
-        lastModified: Date.now(),
+        lastModified: Date.now()
       });
       audioChunks.current = [];
       uploadVoiceNote(file);
@@ -91,9 +88,8 @@ const VoiceRecorder: React.FC = ({
 
   useEffect(() => {
     if (voiceNoteURL && isRecording === "pause") {
-      handleSendMessage("", voiceNoteURL);
+      handleSendMessage("", chatId, voiceNoteURL, "audio");
       setIsRecording("idle");
-      uploadVoiceNote(null);
     }
   }, [
     voiceNoteURL,
@@ -101,6 +97,7 @@ const VoiceRecorder: React.FC = ({
     handleSendMessage,
     setIsRecording,
     uploadVoiceNote,
+    chatId
   ]);
 
   return (
