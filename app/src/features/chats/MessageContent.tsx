@@ -61,7 +61,7 @@ function MessageContent() {
       {parentMessageId && (
         <MessageBoxWrapper
           onClick={MoveToReplyMessage}
-          test-id={`reply-box-${id}`}
+          data-testid={`reply-box-${id}`}
         >
           <MessageBox messageId={parentMessageId} />
         </MessageBoxWrapper>

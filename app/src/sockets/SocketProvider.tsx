@@ -77,8 +77,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     acceptCall: setAcceptedCall,
     callAccepted
   } = useCallContext();
-  console.log(callId, callAccepted);
-  console.log("reredder");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = useSocket();

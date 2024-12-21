@@ -68,6 +68,7 @@ const Input = styled.div`
 function ChatInput() {
   const { chatId } = useParams<{ chatId: string }>();
   const { isCurrUserAdmin } = useGroupInfo();
+  const { activeThread } = useAppSelector((state) => state?.channelsThreads);
 
   const {
     input,
@@ -100,6 +101,8 @@ function ChatInput() {
     setError("");
   }
 
+  if (!activeThread && !isCurrUserAdmin && currChat?.type === "channel")
+    return <DisabledChatInput />;
   if (hasNoPostPermission) return <DisabledChatInput />;
 
   return (

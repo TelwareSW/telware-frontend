@@ -35,7 +35,6 @@ function App() {
   const currentUserRole = useAppSelector((state) =>
     state.user.userInfo.isAdmin ? "admin" : "user"
   );
-  console.log("currentUserRole :", currentUserRole);
 
   useEffect(() => {
     document.documentElement.className =
