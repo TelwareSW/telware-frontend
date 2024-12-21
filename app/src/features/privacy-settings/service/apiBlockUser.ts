@@ -4,7 +4,7 @@ interface requestType {
   id: string;
 }
 
-async function blockUser(data: requestType) {
+async function apiBlockUser(data: requestType) {
   const res = await fetch(`${API_URL}/users/block/${data.id}`, {
     method: "POST",
     credentials: "include",
@@ -19,4 +19,4 @@ async function blockUser(data: requestType) {
   }
 }
 
-export { blockUser };
+export { apiBlockUser };

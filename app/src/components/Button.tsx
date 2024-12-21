@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-const Button = styled.button<{ $type?: string }>`
+const Button = styled.button<{ $type?: string; $width?: string }>`
   font-weight: bold;
   letter-spacing: 1.5px;
   border: none;
@@ -24,22 +24,37 @@ const Button = styled.button<{ $type?: string }>`
     opacity: 0.6;
   }
 
-  ${(props) =>
-    props.$type === "modal" &&
-    css`
-      font-weight: normal;
-      letter-spacing: normal;
-    `}
-  ${(props) =>
-    props.$type === "danger" &&
-    css`
-      background-color: var(--color-error);
-      color: var(--color-text-button);
-      font-weight: normal;
-      &:hover {
-        background-color: var(--color-error-shade);
-      }
-    `}
+  width: ${(props) => props.$width || "auto"};
+  ${(props) => {
+    switch (props.$type) {
+      case "normal":
+        return css`
+          background-color: var(--color-border);
+          color: var(--color-text);
+          font-weight: normal;
+          letter-spacing: normal;
+          &:hover {
+            background-color: var(--color-border-hover);
+          }
+        `;
+      case "modal":
+        return css`
+          font-weight: normal;
+          letter-spacing: normal;
+        `;
+      case "danger":
+        return css`
+          background-color: var(--color-error);
+          color: var(--color-text-button);
+          font-weight: normal;
+          &:hover {
+            background-color: var(--color-error-shade);
+          }
+        `;
+      default:
+        return;
+    }
+  }}
 `;
 
 export default Button;

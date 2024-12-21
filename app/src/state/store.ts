@@ -8,6 +8,7 @@ import activeMessageReducer from "./messages/activeMessage";
 import chatsReducer from "./messages/chats";
 import selectedUsersReducer from "./groups/selectedUsers";
 import channelThreadsReducer from "./messages/channels";
+import adminViewReducer from "./admin/adminView";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     globalSearch: globalSearchReducer,
     selectedUsers: selectedUsersReducer,
     channelsThreads: channelThreadsReducer,
+    adminView: adminViewReducer,
   },
 });
 

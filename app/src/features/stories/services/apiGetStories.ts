@@ -6,6 +6,7 @@ async function getStories() {
       method: "GET",
       credentials: "include",
       headers: {
+        "Content-Type": "application/json",
         "X-Session-Token": localStorage.getItem("sessionId") || "",
       },
     });

@@ -1,4 +1,11 @@
-import { MOCK_USER1, MOCK_USER2, TOKEN } from "@mocks/data/users";
+import {
+  MOCK_USER1,
+  MOCK_USER2,
+  BANNNED,
+  DEACTIVATED,
+  ADMIN,
+  TOKEN,
+} from "@mocks/data/users";
 import { http, HttpResponse } from "msw";
 
 type LoginRequestBody = {
@@ -35,7 +42,10 @@ export const loginMock = [
 
       const isValidUser =
         (email === MOCK_USER1.email && password === MOCK_USER1.password) ||
-        (email === MOCK_USER2.email && password === MOCK_USER2.password);
+        (email === MOCK_USER2.email && password === MOCK_USER2.password) ||
+        (email === BANNNED.email && password === BANNNED.password) ||
+        (email === DEACTIVATED.email && password === DEACTIVATED.password) ||
+        (email === ADMIN.email && password === ADMIN.password);
 
       if (!isValidUser) {
         return HttpResponse.json(
@@ -44,7 +54,51 @@ export const loginMock = [
             status: "error",
             data: {},
           },
-          { status: 401 },
+          { status: 401 }
+        );
+      }
+
+      const isAdmin = email === ADMIN.email;
+      if (isAdmin) {
+        localStorage.setItem("user", JSON.stringify(ADMIN));
+        return HttpResponse.json(
+          {
+            message: "Successful login",
+            status: "success",
+            data: {
+              user: ADMIN,
+              sessionID: TOKEN,
+            },
+          },
+          {
+            status: 201,
+            headers: {
+              "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
+            },
+          }
+        );
+      }
+
+      const isBannedUser = email === BANNNED.email;
+      if (isBannedUser) {
+        return HttpResponse.json(
+          {
+            message: "User is banned",
+            status: "error",
+            data: {},
+          },
+          { status: 403 }
+        );
+      }
+      const isDeactivatedUser = email === DEACTIVATED.email;
+      if (isDeactivatedUser) {
+        return HttpResponse.json(
+          {
+            message: "User is deactivated",
+            status: "error",
+            data: {},
+          },
+          { status: 403 }
         );
       }
 
@@ -64,8 +118,8 @@ export const loginMock = [
           headers: {
             "Set-Cookie": `sessionID=${TOKEN}; HttpOnly; SameSite=Strict; Path=/`,
           },
-        },
+        }
       );
-    },
+    }
   ),
 ];

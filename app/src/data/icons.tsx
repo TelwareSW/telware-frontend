@@ -65,6 +65,8 @@ enum icons {
   Members,
   RemoveMember,
   Eye,
+  Sun,
+  Group,
 }
 
 type iconStrings = keyof typeof icons;
@@ -81,6 +83,14 @@ type IconConfig = {
 };
 
 const iconImports: Record<iconStrings, IconConfig> = {
+  Group: {
+    importFn: () => import("@mui/icons-material/GroupsOutlined"),
+    defaultProps: { sx: { color: `var(--color-icon-secondary)` } },
+  },
+  Sun: {
+    importFn: () => import("@mui/icons-material/WbSunny"),
+    defaultProps: { sx: { color: `white` } },
+  },
   BlockIcon: {
     importFn: () => import("@mui/icons-material/Block"),
     defaultProps: { sx: { color: `var(--color-icon-secondary)` } },
@@ -437,7 +447,7 @@ function getIcon(
     sx?: SxProps;
     fontSize?: "small" | "medium" | "large";
     style?: React.CSSProperties;
-  },
+  }
 ) {
   if (!iconName) return undefined;
 

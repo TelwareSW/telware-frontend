@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { changeSettings } from "@features/privacy-settings/service/apiChangeSettings";
+import { apiChangeSettings } from "@features/privacy-settings/service/apiChangeSettings";
 
 export function useUpdatePrivacy() {
   const { mutateAsync: updatePrivacy } = useMutation({
     mutationKey: ["privacy"],
-    mutationFn: changeSettings,
+    mutationFn: apiChangeSettings,
     onSuccess: () => {},
   });
 

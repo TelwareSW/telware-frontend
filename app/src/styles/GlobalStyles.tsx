@@ -58,6 +58,7 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu-hover: #4c90b23b;
     
     --color-border: #dfe1e5;
+    --color-border-hover: #c1c1c1;
     --color-borders-input: rgb(218, 220, 224);
     
     --color-search-border: #3390ec;
@@ -68,6 +69,19 @@ const GlobalStyles = createGlobalStyle`
     --scrollbar-color: rgba(0, 0, 0, .2);
     --color-avatar: linear-gradient(135deg, #d6d46c, #5e924e);
     --color-avatar-shadow:linear-gradient(135deg,#d6d46c, #5e924e);
+    --admin-sidebar-bg: #56a2c9;
+    --admin-sidebar-bg-hover: #447f9c;
+
+    --admin-main-bg: #fff;
+    --admin-main-bg-hover: #f5f5f5;
+
+    --admin-header-bg:  #f5f5f5;
+    --admin-header-bg-hover: #e5e5e5;
+
+
+    --admin-nav-menu-item-hover-text: #56a2c9;
+  --admin-nav-menu-item-hover: rgba(213, 213, 216, 0.666);
+  --admin-card-active: #f0f0f0;
 
   }
   
@@ -124,6 +138,9 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu-hover: #ffffff36;
  
     --color-border: #09182299;
+    --color-border-hover: #091822;
+
+    --admin-card-active: #56a2c9;
     --color-borders-input: var(--color-text-secondary);
 
     --color-search-border: #7644CB;
@@ -137,7 +154,20 @@ const GlobalStyles = createGlobalStyle`
     --scrollbar-color: rgba(255, 255, 255, .2);
     --color-avatar: linear-gradient(135deg, #72C6EF, #004E92);
     --color-avatar-shadow:linear-gradient(135deg, #72C6EF, #004E92);
-    
+
+    --admin-sidebar-bg: #192b35;
+    --admin-sidebar-bg-hover: #25353f;
+
+    --admin-main-bg: #24343e;
+    --admin-main-bg-hover: #25353f;
+
+    --admin-header-bg:  #25353f;
+    --admin-header-bg-hover: #203030;
+
+    --admin-nav-menu-item-hover-text: #24343e79;
+  --admin-nav-menu-item-hover: rgba(213, 213, 216, 0.466);
+  --admin-card-active: #4c90b2;
+
   }
 
   --story-views-background: #181a1b;
@@ -183,6 +213,10 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-messages-small: 0.375rem;
   --border-radius-forum-avatar: 25%;
   --border-radius-circle: 50%;
+  --border-radius-one-sided: 50px 0 0 50px;
+  --border-radius-left-sided-small: 0.625rem 0 0 0.625rem;
+  --border-radius-right-sided-small: 0 0.625rem 0.625rem 0;
+
   
   --color-borders-input: rgb(218, 220, 224);
 
@@ -218,8 +252,6 @@ select:-webkit-autofill:focus {
   transition: background-color 0.3s, border 0.3s;
 
   user-select: none;
-  user-drag: none;
-  app-region: no-drag;
 }
 
 body {

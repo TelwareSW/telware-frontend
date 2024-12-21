@@ -1,6 +1,6 @@
 import { API_URL } from "@constants";
 
-async function getBlockList() {
+async function apiGetBlockList() {
   const response = await fetch(`${API_URL}/users/block`, {
     method: "GET",
     credentials: "include",
@@ -15,4 +15,4 @@ async function getBlockList() {
   return data.data.users;
 }
 
-export default getBlockList;
+export default apiGetBlockList;

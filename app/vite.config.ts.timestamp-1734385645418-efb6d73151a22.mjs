@@ -1,0 +1,18 @@
+// vite.config.ts
+import { defineConfig, loadEnv } from "file:///home/ahmed/Desktop/projects/telware-frontend/app/node_modules/vite/dist/node/index.js";
+import react from "file:///home/ahmed/Desktop/projects/telware-frontend/app/node_modules/@vitejs/plugin-react/dist/index.mjs";
+import tsconfigPaths from "file:///home/ahmed/Desktop/projects/telware-frontend/app/node_modules/vite-tsconfig-paths/dist/index.js";
+var vite_config_default = ({ mode }) => {
+  process.env = {
+    ...process.env,
+    ...loadEnv(mode, process.cwd())
+  };
+  return defineConfig({
+    server: { port: parseInt(process.env.VITE_PORT) },
+    plugins: [react(), tsconfigPaths()]
+  });
+};
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCIvaG9tZS9haG1lZC9EZXNrdG9wL3Byb2plY3RzL3RlbHdhcmUtZnJvbnRlbmQvYXBwXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ZpbGVuYW1lID0gXCIvaG9tZS9haG1lZC9EZXNrdG9wL3Byb2plY3RzL3RlbHdhcmUtZnJvbnRlbmQvYXBwL3ZpdGUuY29uZmlnLnRzXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ltcG9ydF9tZXRhX3VybCA9IFwiZmlsZTovLy9ob21lL2FobWVkL0Rlc2t0b3AvcHJvamVjdHMvdGVsd2FyZS1mcm9udGVuZC9hcHAvdml0ZS5jb25maWcudHNcIjtpbXBvcnQgeyBkZWZpbmVDb25maWcsIGxvYWRFbnYgfSBmcm9tIFwidml0ZVwiO1xuaW1wb3J0IHJlYWN0IGZyb20gXCJAdml0ZWpzL3BsdWdpbi1yZWFjdFwiO1xuaW1wb3J0IHRzY29uZmlnUGF0aHMgZnJvbSBcInZpdGUtdHNjb25maWctcGF0aHNcIjtcblxuLy8gaHR0cHM6Ly92aXRlanMuZGV2L2NvbmZpZy9cblxuZXhwb3J0IGRlZmF1bHQgKHsgbW9kZSB9KSA9PiB7XG4gIHByb2Nlc3MuZW52ID0ge1xuICAgIC4uLnByb2Nlc3MuZW52LFxuICAgIC4uLmxvYWRFbnYobW9kZSwgcHJvY2Vzcy5jd2QoKSksXG4gIH07XG4gIHJldHVybiBkZWZpbmVDb25maWcoe1xuICAgIHNlcnZlcjogeyBwb3J0OiBwYXJzZUludChwcm9jZXNzLmVudi5WSVRFX1BPUlQpIH0sXG4gICAgcGx1Z2luczogW3JlYWN0KCksIHRzY29uZmlnUGF0aHMoKV0sXG4gIH0pO1xufTtcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBcVUsU0FBUyxjQUFjLGVBQWU7QUFDM1csT0FBTyxXQUFXO0FBQ2xCLE9BQU8sbUJBQW1CO0FBSTFCLElBQU8sc0JBQVEsQ0FBQyxFQUFFLEtBQUssTUFBTTtBQUMzQixVQUFRLE1BQU07QUFBQSxJQUNaLEdBQUcsUUFBUTtBQUFBLElBQ1gsR0FBRyxRQUFRLE1BQU0sUUFBUSxJQUFJLENBQUM7QUFBQSxFQUNoQztBQUNBLFNBQU8sYUFBYTtBQUFBLElBQ2xCLFFBQVEsRUFBRSxNQUFNLFNBQVMsUUFBUSxJQUFJLFNBQVMsRUFBRTtBQUFBLElBQ2hELFNBQVMsQ0FBQyxNQUFNLEdBQUcsY0FBYyxDQUFDO0FBQUEsRUFDcEMsQ0FBQztBQUNIOyIsCiAgIm5hbWVzIjogW10KfQo=

@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import Heading from "@components/Heading";
 import BackArrow from "@components/BackArrow";
 import CircleIcon from "@components/CircleIcon";
-import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
 import { useSidebarType } from "../SideBarContext";
