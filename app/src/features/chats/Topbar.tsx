@@ -21,6 +21,7 @@ import { getElapsedTime } from "@utils/helpers";
 import { getChatByID } from "./utils/helpers";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+
 import { resetActiveThread } from "@state/messages/channels";
 
 const Container = styled.div<{ $hasMargin?: boolean }>`
