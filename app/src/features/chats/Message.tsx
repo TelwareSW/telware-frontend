@@ -7,7 +7,6 @@ import MessageContent from "./MessageContent";
 import useCheckBox from "@features/forward/hooks/useCheckBox";
 import MessageDetails from "./MessageDetails";
 
-import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 import useHover from "./hooks/useHover";
 import { useMessageContext } from "./contexts/MessageProvider";
 import React from "react";

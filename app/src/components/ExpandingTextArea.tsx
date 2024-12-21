@@ -45,7 +45,7 @@ function ExpandingTextArea({ input, setInput, onKeyDown }: PropsType) {
     <StyledMentionsInput>
       <MentionsInput
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e: any) => setInput(e.target.value)}
         onKeyDown={onKeyDown!}
         onInput={handleInput}
         placeholder="Message"
@@ -56,7 +56,7 @@ function ExpandingTextArea({ input, setInput, onKeyDown }: PropsType) {
             border: "none",
             forcedColorAdjust: "none",
             color: "var(--color-text)",
-            outline: "none",
+            outline: "none"
           },
           suggestions: {
             list: {
@@ -67,16 +67,16 @@ function ExpandingTextArea({ input, setInput, onKeyDown }: PropsType) {
               zIndex: 1,
               bottom: "2rem",
               width: "20rem",
-              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)"
             },
             item: {
               padding: "0.5rem 1rem",
               "&focused": {
                 backgroundColor: "var(--accent-color)",
-                color: "white",
-              },
-            },
-          },
+                color: "white"
+              }
+            }
+          }
         }}
       >
         <Mention
@@ -86,7 +86,7 @@ function ExpandingTextArea({ input, setInput, onKeyDown }: PropsType) {
           style={{
             backgroundColor: "transparent",
             color: "ButtonFace",
-            border: "none",
+            border: "none"
           }}
         />
       </MentionsInput>

@@ -49,7 +49,6 @@ interface AcknowledgmentResponse {
   message: string;
   error?: string;
   data: MessageInterface;
-  data: MessageInterface;
 }
 
 interface AckCreateGroup {
@@ -66,7 +65,6 @@ function SocketProvider({ children }: SocketProviderProps) {
   const {
     callId,
     joinCall,
-    endCall,
     recieveICE,
     recieveAnswer,
     peerConnection,
@@ -296,7 +294,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       sendOffer();
       handleIceCandidates();
     });
-    socket.on("SIGNAL-SERVER", async ({ type, voiceCallId, data }) => {
+    socket.on("SIGNAL-SERVER", async ({ type, data }) => {
       console.log(typeof data);
       if (type === "ANSWER") recieveAnswer(data);
       if (type === "ICE") recieveICE(data);
