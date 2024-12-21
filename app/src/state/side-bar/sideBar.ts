@@ -100,6 +100,9 @@ const sideBarSlice = createSlice({
   name: "sideBarData",
   initialState,
   reducers: {
+    resetLeftSideBar: (state) => {
+      state.leftSideBar = chats;
+    },
     resetRightSideBar: (state) => {
       state.rightSideBar = groupInfo;
     },
@@ -139,6 +142,7 @@ const sideBarSlice = createSlice({
   },
 });
 
-export const { updateSideBarView, resetRightSideBar } = sideBarSlice.actions;
+export const { updateSideBarView, resetRightSideBar, resetLeftSideBar } =
+  sideBarSlice.actions;
 export default sideBarSlice.reducer;
 export type { SideBarView, actionType };

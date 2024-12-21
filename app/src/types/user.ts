@@ -31,6 +31,7 @@ interface userInfoInterface {
   status: string;
   bio: string;
   id: string;
+  isAdmin?: boolean;
 }
 
 interface updatePrivacyInterface {

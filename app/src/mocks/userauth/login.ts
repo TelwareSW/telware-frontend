@@ -79,22 +79,12 @@ export const loginMock = [
         );
       }
 
-      const isBannedUser = email === BANNNED.email;
-      if (isBannedUser) {
+      const isnotActiveUser =
+        email === BANNNED.email || email === DEACTIVATED.email;
+      if (isnotActiveUser) {
         return HttpResponse.json(
           {
-            message: "User is banned",
-            status: "error",
-            data: {},
-          },
-          { status: 403 }
-        );
-      }
-      const isDeactivatedUser = email === DEACTIVATED.email;
-      if (isDeactivatedUser) {
-        return HttpResponse.json(
-          {
-            message: "User is deactivated",
+            message: "User is banned or deactivated",
             status: "error",
             data: {},
           },
