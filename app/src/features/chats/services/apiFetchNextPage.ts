@@ -25,10 +25,6 @@ async function apiFetchNextPage({
     throw new Error(data.message);
   }
 
-  if (data.status !== "success") {
-    throw new Error(data.message);
-  }
-
   return { messages: data.data.messages, nextPage: data.data.nextPage };
 }
 
