@@ -333,9 +333,16 @@ function SocketProvider({ children }: SocketProviderProps) {
             console.log("Failed to send", error);
           }
           if (success) {
-            console.log(recieved_message);
-            console.log("message sent successfully 2");
             const _id = recieved_message._id;
+
+            if (
+              recieved_message.isAppropriate === false &&
+              chat?.type !== "private"
+            ) {
+              toast.error("Your message was inappropriate.");
+              recieved_message.content =
+                "🚫️ This mesaage has inappropriate content.";
+            }
 
             if (!chat) return;
 
