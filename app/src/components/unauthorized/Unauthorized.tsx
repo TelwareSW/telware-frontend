@@ -16,7 +16,7 @@ const Sign = styled.p`
   font-size: 15rem;
   text-align: center;
 `;
-const Error = styled.p`
+const ErrorMessage = styled.p`
   color: var(--color-error);
   font-size: 1.5rem;
 `;
@@ -41,7 +41,7 @@ function Unauthorized() {
     <Container>
       <Sign>🚫️</Sign>
       <Heading as="h1">403 - Unauthorized</Heading>
-      <Error>You do not have access to this page.</Error>
+      <ErrorMessage>You do not have access to this page.</ErrorMessage>
       <Arrow
         onClick={() => navigate(isAdmin ? "/admin" : "/", { replace: true })}
       >
