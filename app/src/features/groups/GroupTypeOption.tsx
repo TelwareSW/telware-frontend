@@ -1,24 +1,29 @@
 import styled from "styled-components";
 
-const Option = styled.div`
+const Option = styled.div<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   gap: 1rem;
-  cursor: pointer;
+
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 `;
 
-const RadioButton = styled.div<{ selected: boolean }>`
+const RadioButton = styled.button<{ selected: boolean; disabled: boolean }>`
+  background: transparent;
   flex-shrink: 0;
+
   width: 1.2rem;
   height: 1.2rem;
+
+  border-radius: 50%;
   border: 2px solid
     ${({ selected }) =>
       selected ? "var(--accent-color)" : "var(--color-text-secondary)"};
-  border-radius: 50%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 
   &::after {
     content: "";
@@ -49,6 +54,7 @@ const Description = styled.p`
 interface GroupTypeOptionProps {
   type: "private" | "public";
   selected: boolean;
+  isAdmin: boolean;
   onClick: () => void;
   groupType: string | undefined;
 }
@@ -57,10 +63,11 @@ const GroupTypeOption = ({
   type,
   selected,
   onClick,
-  groupType
+  groupType,
+  isAdmin
 }: GroupTypeOptionProps) => (
-  <Option onClick={onClick}>
-    <RadioButton selected={selected} />
+  <Option disabled={!isAdmin} onClick={onClick}>
+    <RadioButton selected={selected} disabled={!isAdmin} />
     <Details>
       <Title>{`${type.charAt(0).toUpperCase() + type.slice(1)} ${groupType}`}</Title>
       <Description>

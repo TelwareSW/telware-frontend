@@ -14,7 +14,7 @@ const Container = styled.div`
 `;
 
 function GroupType() {
-  const { group, chatId } = useGroupInfo();
+  const { group, chatId, isCurrUserAdmin } = useGroupInfo();
   const { setPrivacy } = useSocket();
   const [selectedGroupType, setSelectedGroupType] = useState<
     "private" | "public"
@@ -35,12 +35,14 @@ function GroupType() {
         selected={selectedGroupType === "private"}
         onClick={() => handleSelection("private")}
         groupType={group?.type}
+        isAdmin={isCurrUserAdmin}
       />
       <GroupTypeOption
         type="public"
         selected={selectedGroupType === "public"}
         onClick={() => handleSelection("public")}
         groupType={group?.type}
+        isAdmin={isCurrUserAdmin}
       />
     </Container>
   );

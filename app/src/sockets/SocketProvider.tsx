@@ -224,6 +224,10 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.log("SET_PERMISSION_SERVER", chatId, type, who);
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
+    socket.on("SET_PRIVACY_SERVER", ({ chatId, privacy }) => {
+      console.log("SET_PERMISSION_SERVER", chatId, privacy);
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
 
     socket.on("typing", (isTyping, message) =>
       handleIsTyping(dispatch, isTyping, message.chatId)
