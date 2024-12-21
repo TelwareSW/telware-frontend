@@ -1,5 +1,6 @@
 import { API_URL } from "@constants";
 import { User } from "../LoginForm/LoginForm";
+import toast from "react-hot-toast";
 
 export async function login(user: User) {
   const res = await fetch(`${API_URL}/auth/login`, {
@@ -15,6 +16,7 @@ export async function login(user: User) {
 
   const data = await res.json();
   if (data.status !== "success") {
+    toast.error(data.message);
     throw new Error(data.message);
   }
 

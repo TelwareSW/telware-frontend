@@ -10,7 +10,7 @@ const InvisibleButton = styled.div`
 `;
 interface ChildProps {
   file: File | null;
-  setFile: React.Dispatch<React.SetStateAction<File | null>>;
+  setFile: (file: File) => void;
   setIsFilePreviewOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

@@ -24,7 +24,7 @@ function getElapsedTime(timestamp: string): string {
   } else if (minutes > 0) {
     return `${minutes}m`;
   } else {
-    return `${seconds}s`;
+    return `${Math.max(seconds, 1)}s`;
   }
 }
 

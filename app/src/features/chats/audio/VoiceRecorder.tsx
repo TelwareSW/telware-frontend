@@ -82,9 +82,29 @@ const VoiceRecorder: React.FC = ({
         lastModified: Date.now()
       });
       audioChunks.current = [];
-      uploadVoiceNote(file);
+      try {
+        uploadVoiceNote(file, {
+          onSuccess: (url) => {
+            console.log("File uploaded successfully:", url);
+            handleSendMessage("", chatId, url);
+          },
+          onError: (error) => {
+            console.error("Error uploading file:", error);
+          }
+        });
+      } catch (error) {
+        console.error("Unexpected error while sending file:", error);
+      }
+      setIsRecording("idle");
     }
-  }, [isRecording, recordingMimeType, uploadVoiceNote]);
+  }, [
+    isRecording,
+    recordingMimeType,
+    setIsRecording,
+    uploadVoiceNote,
+    handleSendMessage,
+    chatId
+  ]);
 
   useEffect(() => {
     if (voiceNoteURL && isRecording === "pause") {
