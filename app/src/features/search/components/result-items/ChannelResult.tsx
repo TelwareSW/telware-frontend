@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const ItemWrapper = styled.div`
   display: flex;
@@ -57,8 +58,20 @@ const ChannelResult: React.FC<ChannelResultProps> = ({
   chatId
 }) => {
   const navigate = useNavigate();
+  const { chats, members } = useAppSelector((state) => state.chats);
+
   const handleItemClick = () => {
     if (chatId) navigate(`/${chatId}`);
+
+    const user = members.find((member) => member.username === username);
+    const userChat = chats.find(
+      (chat) =>
+        chat?.type === "private" &&
+        chat.members
+          .flatMap((member) => member._id)
+          .includes(user?._id as string)
+    );
+    if (userChat) navigate(`/${userChat._id}`);
   };
 
   return (
