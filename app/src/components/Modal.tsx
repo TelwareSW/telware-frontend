@@ -20,17 +20,20 @@ const ModalContainer = styled.div`
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
   width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 1rem;
 `;
 
 const ModalTitle = styled.h2`
-  margin-bottom: 1rem;
   color: var(--color-text);
 `;
 
 const ModalMessage = styled.p`
-  margin-bottom: 2rem;
   color: var(--color-text-secondary);
 `;
 
@@ -53,7 +56,7 @@ type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  message: string;
+  message?: string;
   children: React.ReactNode;
 };
 
@@ -75,7 +78,7 @@ function Modal({ onClose, isOpen, title, message, children }: ModalProps) {
           &times;
         </CloseButton>
         <ModalTitle>{title}</ModalTitle>
-        <ModalMessage>{message}</ModalMessage>
+        {message && <ModalMessage>{message}</ModalMessage>}
         {children}
       </ModalContainer>
     </ModalOverlay>
