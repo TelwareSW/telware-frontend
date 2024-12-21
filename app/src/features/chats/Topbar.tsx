@@ -21,6 +21,7 @@ import { getElapsedTime } from "@utils/helpers";
 import { getChatByID } from "./utils/helpers";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+
 import { resetActiveThread } from "@state/messages/channels";
 
 const Container = styled.div<{ $hasMargin?: boolean }>`
@@ -138,7 +139,9 @@ function Topbar() {
   const { setIsRightSideBarOpen } = useRightSideBarContext();
 
   function handleOpenRightSideBar() {
-    if (chat?.type === "channel" || chat?.type === "group") {
+    if (!chat) return;
+    if (chat?.type === "private") setIsRightSideBarOpen(false);
+    else {
       dispatch(
         updateSideBarView({
           redirect:
@@ -154,7 +157,7 @@ function Topbar() {
   useEffect(() => {
     if (!chatId) return;
     handleOpenRightSideBar();
-  }, [chatId]);
+  }, [chatId, chat]);
 
   let image;
   let lastSeen;
@@ -177,8 +180,13 @@ function Topbar() {
         chatId: chatId!,
         isBlocked: false,
         userId: userId,
-      }),
+      })
     );
+  }
+
+  function toggleRightSideBar() {
+    if (chat?.type === "private") return;
+    setIsRightSideBarOpen((prev) => !prev);
   }
 
   const closeThread = () => {
@@ -205,7 +213,7 @@ function Topbar() {
             data-testid="chat-avatar"
             image={image}
             name={chat.name?.charAt(0)}
-            onClick={() => setIsRightSideBarOpen((prev) => !prev)}
+            onClick={toggleRightSideBar}
           />
         )}
         {activeThread && (
@@ -219,10 +227,7 @@ function Topbar() {
           <SearchBar onClose={toggleSearch} />
         ) : (
           <>
-            <Info
-              data-testid="chat-info"
-              onClick={() => setIsRightSideBarOpen((prev) => !prev)}
-            >
+            <Info data-testid="chat-info" onClick={toggleRightSideBar}>
               <Content>
                 <Name data-testid="chat-name">
                   {activeThread ? "Comments" : chat.name}
