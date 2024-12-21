@@ -12,7 +12,7 @@ type prortectedRouteType = {
 function ProtectedRoute({
   children,
   allowedRoles,
-  userRole,
+  userRole
 }: prortectedRouteType) {
   const navigate = useNavigate();
   const { isAuth, isPending } = useAuthStatus();
