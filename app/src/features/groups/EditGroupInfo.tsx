@@ -22,7 +22,8 @@ function EditGroupInfo() {
     groupMembers,
     isPending,
     chatType,
-    numGivenPermissions
+    numGivenPermissions,
+    group
   } = useGroupInfo();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +42,8 @@ function EditGroupInfo() {
     chatType: chatType!,
     backView,
     numGivenPermissions,
-    setIsModalOpen
+    setIsModalOpen,
+    privacy: group?.privacy!,
   });
 
   return (
@@ -50,7 +52,6 @@ function EditGroupInfo() {
         <ConfirmDeleteGroupModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-
         />
       )}
       {settings.map((setting, index) => (
