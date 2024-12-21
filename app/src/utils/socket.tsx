@@ -1,39 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { useUser } from "@features/authentication/login/hooks/useUser";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 
-let socketInstance: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
+let socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
+
+function initializeSocket(
+  userId: string,
+  sessionId: string | null
+): Socket<DefaultEventsMap, DefaultEventsMap> {
+  if (!socket) {
+    socket = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`, {
+      query: {
+        userId
+      },
+      auth: {
+        sessionId
+      }
+    });
+
+    console.log("Socket initialized");
+  }
+
+  return socket;
+}
 
 function useSocket() {
   const { user, isPending } = useUser();
-  const [socket, setSocket] = useState<Socket<
-    DefaultEventsMap,
-    DefaultEventsMap
-  > | null>(null);
+  const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
+    null
+  );
 
   useEffect(() => {
-    if (!isPending && user && !socketInstance) {
-      socketInstance = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`, {
-        query: {
-          userId: user._id,
-        },
-        auth: {
-          sessionId: localStorage.getItem("sessionId"),
-        },
-      });
-
-      setSocket(socketInstance);
+    if (!isPending && user && !socketRef.current) {
+      const sessionId = localStorage.getItem("sessionId");
+      socketRef.current = initializeSocket(user._id, sessionId);
 
       return () => {
         console.log("Disconnecting socket");
-        socketInstance?.disconnect();
-        socketInstance = null;
+        socketRef.current?.disconnect();
+        socket = null;
       };
     }
   }, [user, isPending]);
 
-  return socket;
+  return socketRef.current;
 }
 
 export { useSocket };

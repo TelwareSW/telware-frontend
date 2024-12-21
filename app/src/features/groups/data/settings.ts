@@ -10,6 +10,7 @@ type SettingsProps = {
   chatId: string;
   chatType: string;
   backView: sideBarPages;
+  numGivenPermissions: number;
   leaveGroup: (params: { chatId: string }) => void;
   setIsRightSideBarOpen: (value: boolean) => void;
   resetRightSideBar: () => { type: string };
@@ -25,6 +26,7 @@ const getSettings = ({
   setIsRightSideBarOpen,
   resetRightSideBar,
   backView,
+  numGivenPermissions
 }: SettingsProps) => [
   {
     testid: "group-type",
@@ -35,22 +37,22 @@ const getSettings = ({
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.GROUP_TYPE,
-          data: { type: "right", backView },
+          data: { type: "right", backView }
         })
-      ),
+      )
   },
   {
     testid: "admins",
     icon: "Admin" as iconStrings,
     title: "Administrators",
-    subtitle: admins.length,
+    subtitle: admins?.length,
     onClick: () =>
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.ADMINS,
-          data: { type: "right", backView },
+          data: { type: "right", backView }
         })
-      ),
+      )
   },
   {
     testid: "members",
@@ -61,22 +63,22 @@ const getSettings = ({
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.MEMBERS,
-          data: { type: "right", backView },
+          data: { type: "right", backView }
         })
-      ),
+      )
   },
   {
     testid: "permissions",
     icon: "Members" as iconStrings,
     title: "Permissions",
-    subtitle: "13/13",
+    subtitle: `${numGivenPermissions}/3`,
     onClick: () =>
       dispatch(
         updateSideBarView({
           redirect: sideBarPages.PERMISSIONS,
-          data: { type: "right", backView },
+          data: { type: "right", backView }
         })
-      ),
+      )
   },
   {
     testid: "leave-group-button",
@@ -87,8 +89,8 @@ const getSettings = ({
       leaveGroup({ chatId });
       setIsRightSideBarOpen(false);
       dispatch(resetRightSideBar());
-    },
-  },
+    }
+  }
 ];
 
 export { getSettings };

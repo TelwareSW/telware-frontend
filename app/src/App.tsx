@@ -14,22 +14,28 @@ import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
 import ProtectedRoute from "@components/protected-route/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
-
 import ChatBox from "@features/chats/ChatBox";
 import SocketProvider from "sockets/SocketProvider";
 import RightSideBarProvider from "@features/groups/contexts/RightSideBarProvider";
+import { CallProvider } from "@features/calls/context/CallProvider";
+import AdminAppLayout from "@features/admin/components/AdminAppLayout";
+import Unauthorized from "@components/unauthorized/Unauthorized";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 0,
-      retry: 3,
-    },
-  },
+      retry: 3
+    }
+  }
 });
 
 function App() {
   const currentTheme = useAppSelector((state) => state.theme.value);
+  const currentUserRole = useAppSelector((state) =>
+    state.user.userInfo.isAdmin ? "admin" : "user"
+  );
+  console.log("currentUserRole :", currentUserRole);
 
   useEffect(() => {
     document.documentElement.className =
@@ -43,24 +49,38 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute
+                allowedRoles={["admin"]}
+                userRole={currentUserRole}
+              >
+                <AdminAppLayout />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/"
             element={
-              <ProtectedRoute>
-                <SocketProvider>
-                  <RightSideBarProvider>
-                    <AppLayout />
-                  </RightSideBarProvider>
-                </SocketProvider>
+              <ProtectedRoute
+                allowedRoles={["user"]}
+                userRole={currentUserRole}
+              >
+                <CallProvider>
+                  <SocketProvider>
+                    <RightSideBarProvider>
+                      <AppLayout />
+                    </RightSideBarProvider>
+                  </SocketProvider>
+                </CallProvider>
               </ProtectedRoute>
             }
           >
             <Route path=":chatId" element={<ChatBox />} />
           </Route>
-          <Route path="dashboard" element={<AdminAppLayout />} />
-          <Route path="users" element={<AdminAppLayout />} />
-          <Route path="settings" element={<AdminAppLayout />} />
-          <Route path="groups" element={<AdminAppLayout />} />
+
           <Route path="login" element={<Login />} />
           <Route
             path="password-reset/:token"

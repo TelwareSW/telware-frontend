@@ -4,8 +4,6 @@ import StartNewChat from "@features/chats/StartNewChat";
 import AddStory from "@features/stories/components/AddStory";
 import StoryListContainer from "@features/stories/components/StoryListContainer";
 import TabedSearch from "@features/search/components/TabedSearch";
-import { useSelector } from "react-redux";
-import { RootState } from "@state/store";
 
 interface ChatsSideBarProps {
   children?: React.ReactNode;

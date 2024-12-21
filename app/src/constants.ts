@@ -10,6 +10,7 @@ const {
 const MOBILE_VIEW = "(max-width: 800px)";
 const DESKTOP_VIEW = "(min-width: 800px)";
 const MAX_STORY_SIZE = 5 * 1024 * 1024;
+
 export {
   ENVIRONMENT,
   RECAPTCHA_SITE_KEY,
