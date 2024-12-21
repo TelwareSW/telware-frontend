@@ -22,9 +22,7 @@ import toast from "react-hot-toast";
 import { useChat } from "@features/chats/hooks/useChat";
 import { useCallContext } from "@features/calls/hooks/useCallContext";
 import { useAppSelector } from "@hooks/useGlobalState";
-import { useAppSelector } from "@hooks/useGlobalState";
 import { resetRightSideBar } from "@state/side-bar/sideBar";
-
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
