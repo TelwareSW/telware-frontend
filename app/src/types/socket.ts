@@ -45,6 +45,15 @@ export interface SocketContextType {
     messageId: string;
     chatId: string;
   }) => void;
+  setPermission: ({
+    chatId,
+    type,
+    who
+  }: {
+    chatId: string;
+    type: "post" | "download";
+    who: "everyone" | "admins";
+  }) => void;
   leaveGroup: ({ chatId }: { chatId: string }) => void;
   createVoiceCall: ({ chatId }: { chatId: string }) => void;
   acceptCall: (callId: string | null) => void;
