@@ -8,7 +8,7 @@ import {
   SearchResultChannel,
   SearchResultGroup,
   SearchResultMessage,
-  SearchResultUser,
+  SearchResultUser
 } from "../types/search";
 
 const SearchSectionHeader = styled.div`
@@ -25,7 +25,7 @@ export const getTitle = (
     | SearchResultMessage
     | SearchResultGroup
     | SearchResultChannel
-    | SearchResultUser,
+    | SearchResultUser
 ) => {
   return (
     (item as SearchResultMessage).chatId?.name ||
@@ -39,7 +39,7 @@ export const getImage = (
     | SearchResultMessage
     | SearchResultGroup
     | SearchResultChannel
-    | SearchResultUser,
+    | SearchResultUser
 ) => {
   return (
     (item as SearchResultMessage).chatId?.photo ||
@@ -62,7 +62,7 @@ export const hasResults = (data: SearchResponseData | undefined) => {
 export const renderMessageResults = (
   messages: SearchResultMessage[],
   contentTypes: SearchFilter[],
-  searchTerm: string,
+  searchTerm: string
 ) => {
   return messages
     .filter((message) => contentTypes.includes(message?.contentType))
@@ -73,7 +73,7 @@ export const renderMessageResults = (
         title: getTitle(message),
         image: getImage(message),
         date: message?.timestamp,
-        chatId: message?.chatId?.id,
+        chatId: message?.chatId?.id
       };
 
       switch (message?.contentType) {
@@ -83,6 +83,7 @@ export const renderMessageResults = (
               key={`search-message-${message?.id}`}
               data-testid={`search-message-${message?.id}`}
               {...commonProps}
+              media={message?.media}
             />
           );
         case "image":
@@ -111,7 +112,9 @@ export const renderMessageResults = (
             <FileResult
               key={`search-message-${message?.id}`}
               data-testid={`search-message-${message?.id}`}
+              size="30KB"
               {...commonProps}
+              image="https://www.svgrepo.com/show/144578/pdf.svg"
             />
           );
         case "audio":
@@ -132,7 +135,7 @@ export const renderMessageResults = (
 export const renderGlobalResults = <T,>(
   results: T[],
   sectionTitle: string,
-  renderItem: (item: T) => JSX.Element,
+  renderItem: (item: T) => JSX.Element
 ) => {
   if (!results || results.length === 0) return null;
   return (
