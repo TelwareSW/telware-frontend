@@ -26,7 +26,8 @@ export function parseChatsToState(chatData?: any) {
       encryptionKey,
       initializationVector,
       messagingPermission,
-      downloadingPermission
+      downloadingPermission,
+      privacy
     } = currChat;
 
     const filteredMembers = members?.map((member: any) => {
@@ -65,7 +66,8 @@ export function parseChatsToState(chatData?: any) {
       encryptionKey,
       initializationVector,
       messagingPermission,
-      downloadingPermission
+      downloadingPermission,
+      privacy
     } as DetailedChatInterface;
   });
 }

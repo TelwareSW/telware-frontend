@@ -99,7 +99,6 @@ function ChatInput() {
     alert(error);
     setError("");
   }
-  console.log(isCurrUserAdmin);
 
   if (hasNoPostPermission) return <DisabledChatInput />;
 
