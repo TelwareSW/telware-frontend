@@ -22,8 +22,6 @@ function ProtectedRoute({
       navigate("/login");
     }
   }, [navigate, isAuth, isPending]);
-  console.log(allowedRoles);
-  console.log(userRole);
 
   if (isAuth)
     return allowedRoles.includes(userRole) ? (
