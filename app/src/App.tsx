@@ -14,10 +14,10 @@ import Signup from "./pages/Signup";
 import ResetPasswordModal from "@features/authentication/reset-password/ResetPasswordModal";
 import ProtectedRoute from "@components/protected-route/ProtectedRoute";
 import AppLayout from "@components/AppLayout";
-
 import ChatBox from "@features/chats/ChatBox";
 import SocketProvider from "sockets/SocketProvider";
 import RightSideBarProvider from "@features/groups/contexts/RightSideBarProvider";
+import { CallProvider } from "@features/calls/context/CallProvider";
 import AdminAppLayout from "@features/admin/components/AdminAppLayout";
 import Unauthorized from "@components/unauthorized/Unauthorized";
 
@@ -25,9 +25,9 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 0,
-      retry: 3,
-    },
-  },
+      retry: 3
+    }
+  }
 });
 
 function App() {
@@ -68,11 +68,13 @@ function App() {
                 allowedRoles={["user"]}
                 userRole={currentUserRole}
               >
-                <SocketProvider>
-                  <RightSideBarProvider>
-                    <AppLayout />
-                  </RightSideBarProvider>
-                </SocketProvider>
+                <CallProvider>
+                  <SocketProvider>
+                    <RightSideBarProvider>
+                      <AppLayout />
+                    </RightSideBarProvider>
+                  </SocketProvider>
+                </CallProvider>
               </ProtectedRoute>
             }
           >

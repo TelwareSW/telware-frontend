@@ -10,7 +10,7 @@ export interface SocketContextType {
   createGroupOrChannel: ({
     type,
     name,
-    members,
+    members
   }: {
     type: "group" | "channel";
     name: string;
@@ -18,34 +18,36 @@ export interface SocketContextType {
   }) => void;
   addGroupMembers: ({
     chatId,
-    users,
+    users
   }: {
     chatId: string;
     users: string[];
   }) => void;
   addAdmins: ({
     chatId,
-    members,
+    members
   }: {
     chatId: string;
     members: string[];
   }) => void;
   removeMembers: ({
     chatId,
-    members,
+    members
   }: {
     chatId: string;
     members: string[];
   }) => void;
-  startConnection: (offer?: RTCSessionDescription) => void;
+  //startConnection: (offer?: RTCSessionDescription) => void;
   deleteMessage: ({
     messageId,
-    chatId,
+    chatId
   }: {
     messageId: string;
     chatId: string;
   }) => void;
   leaveGroup: ({ chatId }: { chatId: string }) => void;
+  createVoiceCall: ({ chatId }: { chatId: string }) => void;
+  acceptCall: (callId: string | null) => void;
 }
 
 export interface SocketProviderProps {

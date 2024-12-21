@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { peerConnection } from "./call";
 import { STATIC_MEDIA_URL } from "@constants";
-
 import { getAvatarName } from "utils/helpers";
 import { createPortal } from "react-dom";
-import Icon from "@components/Icon";
 import { getIcon } from "@data/icons";
-import { useState } from "react";
+import { useCallContext } from "./hooks/useCallContext";
+import { getChatByID } from "@features/chats/utils/helpers";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { useSocket } from "@hooks/useSocket";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -19,7 +19,7 @@ const ModalContainer = styled.div`
   align-items: center;
   opacity: 1;
   transition: opacity 0.15s ease;
-  z-index: 6;
+  z-index: 102;
 `;
 
 const ModalBackdrop = styled.div`
@@ -131,7 +131,8 @@ const RoundButton = styled.button<{
 `;
 
 const ButtonContainer = styled.div`
-  width: 5rem;
+  width: 6rem;
+  height: 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,7 +177,7 @@ const ActiveHeaderOpen = styled.div`
   top: 0;
   left: 0;
   height: 1rem;
-  width: 100%;
+  width: 100vw;
   z-index: 6;
   display: flex;
   justify-content: center;
@@ -187,20 +188,29 @@ const ActiveHeaderOpen = styled.div`
   padding: 0 1rem;
   background: linear-gradient(135deg, rgb(49, 82, 232), rgb(143, 74, 172));
   transform: translateY(0);
+  z-index: 102;
 `;
 type PropsType = {
-  image?: string | undefined;
-  name: string | undefined;
   isCollapsed: boolean;
   setIsCollapsed: (arg0: boolean) => void;
+  chatId: string | undefined;
+  callStatus: string | undefined;
 };
 
 export default function CallLayout({
-  name,
-  image,
   isCollapsed,
   setIsCollapsed,
+  chatId,
+  callStatus
 }: PropsType) {
+  const { endCall } = useCallContext();
+  const { acceptCall } = useSocket();
+  const chats = useAppSelector((state) => state.chats.chats);
+  const chat = getChatByID({
+    chatID: chatId ?? "",
+    chats: chats
+  });
+
   return (
     <>
       {!isCollapsed
@@ -210,8 +220,8 @@ export default function CallLayout({
               <ModalDialog>
                 <ModalContent>
                   <AvatarContainer>
-                    <StyledAvatar $image={image}>
-                      {!image && getAvatarName(name)}
+                    <StyledAvatar $image={chat?.photo}>
+                      {!chat?.photo && getAvatarName(chat?.name)}
                     </StyledAvatar>
                     <TopBar>
                       <RoundButton onClick={() => setIsCollapsed(true)}>
@@ -219,16 +229,29 @@ export default function CallLayout({
                       </RoundButton>
                     </TopBar>
                     <NameContainer>
-                      <h1>{name}</h1>
-                      <span>state</span>
+                      <h1>{chat?.name}</h1>
+                      <span>{callStatus}...</span>
                     </NameContainer>
                     <ButtonsContainer>
                       <ButtonContainer>
                         <RoundButton>{getIcon("Mute")}</RoundButton>
                         <ButtonText>unmute</ButtonText>
                       </ButtonContainer>
+                      {callStatus === "incoming" && (
+                        <ButtonContainer>
+                          <RoundButton
+                            $bgColor="var(--color-success)"
+                            $bgColorHover="var(--color-success-shade)"
+                            onClick={() => acceptCall()}
+                          >
+                            {getIcon("CallAccept")}
+                          </RoundButton>
+                          <ButtonText>accept</ButtonText>
+                        </ButtonContainer>
+                      )}
                       <ButtonContainer>
                         <RoundButton
+                          onClick={() => endCall()}
                           $bgColor="var(--color-error)"
                           $bgColorHover="var(--color-error-shade)"
                         >
@@ -241,13 +264,13 @@ export default function CallLayout({
                 </ModalContent>
               </ModalDialog>
             </ModalContainer>,
-            document.body,
+            document.body
           )
         : createPortal(
             <ActiveHeaderOpen onClick={() => setIsCollapsed(false)}>
-              <span>{name}</span>
+              <span>{chat?.name}</span>
             </ActiveHeaderOpen>,
-            document.body,
+            document.body
           )}
     </>
   );
