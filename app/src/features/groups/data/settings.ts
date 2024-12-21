@@ -43,7 +43,7 @@ const getSettings = ({
     testid: "admins",
     icon: "Admin" as iconStrings,
     title: "Administrators",
-    subtitle: admins.length,
+    subtitle: admins?.length,
     onClick: () =>
       dispatch(
         updateSideBarView({

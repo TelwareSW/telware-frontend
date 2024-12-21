@@ -22,6 +22,9 @@ import toast from "react-hot-toast";
 import { useChat } from "@features/chats/hooks/useChat";
 import { useCallContext } from "@features/calls/hooks/useCallContext";
 import { useAppSelector } from "@hooks/useGlobalState";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { resetRightSideBar } from "@state/side-bar/sideBar";
+
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -82,7 +85,11 @@ function SocketProvider({ children }: SocketProviderProps) {
   const dispatch = useDispatch();
   const socket = useSocket();
   const queryClient = useQueryClient();
+
   const userId = useAppSelector((state) => state.user.userInfo.id);
+
+  const user = useAppSelector((state) => state.user.userInfo);
+
   const { decrypt } = useEncryptDecrypt();
   const { chat } = useChat();
   const handleIceCandidates = useCallback(async () => {
@@ -245,8 +252,14 @@ function SocketProvider({ children }: SocketProviderProps) {
       }
     );
 
-    socket.on("REMOVE_MEMBERS_SERVER", () => {
+    socket.on("REMOVE_MEMBERS_SERVER", ({ memberId }: { memberId: string }) => {
       console.log("REMOVE_MEMBERS_SERVER");
+
+      if (memberId === user.id) {
+        navigate("/");
+        dispatch(resetRightSideBar());
+        //TODO: close the right sidebar
+      }
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
 
@@ -292,7 +305,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.off("typing");
       // socket.io.engine.off("close");
     };
-  }, [socket, chat, decrypt, dispatch, queryClient]);
+  }, [socket, chat, decrypt, dispatch, queryClient, user]);
 
   const sendMessage = (sentMessage: MessageInterface) => {
     if (isConnected && socket) {
@@ -521,6 +534,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         "LEAVE_GROUP_CHANNEL_CLIENT",
         { chatId },
         ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
           if (success) {
             toast.success(message);
             queryClient.invalidateQueries({ queryKey: ["chats"] });
