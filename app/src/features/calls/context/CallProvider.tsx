@@ -4,8 +4,6 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { callStatusEmitter } from "./callStatusEmitter";
 import { CallStatus } from "types/calls";
 import { TURN_USERNAME, TURN_PASSWORD } from "@constants";
-console.log("TURN_USERNAME", TURN_USERNAME);
-console.log("TURN_PASSWORD", TURN_PASSWORD);
 const Servers = {
   iceServers: [
     { urls: ["stun:stun.l.google.com:19302", "stun:stun.l.google.com:5349"] },
@@ -108,7 +106,11 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
     callIdRef.current = null;
     senderIdRef.current = null;
     chatIdRef.current = null;
-
+    if (localStream.current) {
+      localStream.current.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
     clientIdRef.current.forEach((clientData, clientId) => {
       if (clientData.connection) {
         clientData.connection.close();
