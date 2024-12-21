@@ -20,7 +20,7 @@ function ChatInputIcons() {
     setInput,
     file,
     setFile,
-    setIsFilePreviewOpen,
+    setIsFilePreviewOpen
   } = useContext(ChatInputContext);
 
   const toggleShowEmojies = () => {
@@ -28,10 +28,16 @@ function ChatInputIcons() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    setIsEmojiSelectorOpen(false);
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e as unknown as Event);
     }
+  };
+  const handleSetFile = (file: File) => {
+    setIsEmojiSelectorOpen(false);
+    setFile(file);
+    setIsFilePreviewOpen(true);
   };
 
   return (
@@ -50,7 +56,7 @@ function ChatInputIcons() {
 
       <MediaUploadComponent
         file={file}
-        setFile={setFile}
+        setFile={handleSetFile}
         setIsFilePreviewOpen={setIsFilePreviewOpen}
       />
     </>

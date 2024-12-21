@@ -80,7 +80,7 @@ function ChatInput() {
     isEmojiSelectorOpen,
     handleSubmit,
     showForwardUsers,
-    handleClose,
+    handleClose
   } = useContext(ChatInputContext);
 
   const chats = useAppSelector((state) => state.chats.chats);
@@ -133,7 +133,7 @@ function ChatInput() {
                   data-testid="send-button"
                 />
               ) : (
-                <VoiceRecorder chatId={chatId} />
+                <VoiceRecorder />
               )}
             </Input>
           ) : (
