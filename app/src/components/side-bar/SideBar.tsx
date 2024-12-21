@@ -161,6 +161,16 @@ const sideBarMap: {
       <Permissions />
     </SettingsSideBar>
   ),
+  ChannelInfo: () => (
+    <SettingsSideBar rows={[]}>
+      <GroupInfo />
+    </SettingsSideBar>
+  ),
+  EditChannelInfo: () => (
+    <SettingsSideBar rows={[]}>
+      <EditGroupInfo />
+    </SettingsSideBar>
+  ),
 };
 
 function Sidebar({ type }: { type: "left" | "right" }) {

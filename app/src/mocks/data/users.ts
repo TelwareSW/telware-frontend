@@ -11,7 +11,7 @@ export const MOCK_USER1 = {
   phoneNumber: "0123456789",
   status: "Online",
   screenName: "John Doe",
-  state: userStatus.active,
+  accountStatus: userStatus.active,
 };
 
 export const MOCK_USER2 = {
@@ -26,12 +26,12 @@ export const MOCK_USER2 = {
   phoneNumber: "0123456798",
   status: "Online",
   screenName: "Ay 7aga",
-  state: userStatus.active,
+  accountStatus: userStatus.active,
 };
 
 export const BANNNED = {
   id: "3",
-  email: "banned@gmail.com",
+  email: "banned@example.com",
   password: "1234",
   firstName: "المصفوع",
   lastName: "من",
@@ -41,12 +41,12 @@ export const BANNNED = {
   phoneNumber: "0125456798",
   status: "Online",
   screenName: "theBannedUser",
-  state: userStatus.banned,
+  accountStatus: userStatus.banned,
 };
 
 export const DEACTIVATED = {
   id: "4",
-  email: "deactivated@gmail.com",
+  email: "deactivated@example.com",
   password: "1234",
   firstName: "Mr. ",
   lastName: "deactivtaed",
@@ -56,7 +56,7 @@ export const DEACTIVATED = {
   phoneNumber: "0125451598",
   status: "Online",
   screenName: "theDeactivatedUser",
-  state: userStatus.deactivated,
+  accountStatus: userStatus.deactivated,
 };
 export const ADMIN = {
   id: "5",

@@ -89,8 +89,6 @@ function User({ user, view }: UserProps) {
   const { removeMembers } = useSocket();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  if (isPending) return;
-
   function handleContextMenu(e: React.MouseEvent) {
     e.preventDefault();
     setIsModalVisible(true);
@@ -107,6 +105,8 @@ function User({ user, view }: UserProps) {
   function handleCloseModal() {
     setIsModalVisible(false);
   }
+
+  if (isPending) return;
 
   return (
     <UserRow
