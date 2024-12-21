@@ -13,6 +13,8 @@ const FileViewerContainer = styled.div`
   z-index: 7;
   min-width: fit-content;
   height: fit-content;
+  max-width: 200px;
+  max-height: 200px;
   padding: 4px;
   background: var(--color-secondary);
   border: 1px solid #e6e6e6;
@@ -66,11 +68,13 @@ function FilePreviewItem({ chatId }: { chatId: string | undefined }) {
           console.log("File uploaded successfully:", url);
           handleSendMessage(caption, chatId, url);
           setCaption("");
-          setFile(null);
         },
         onError: (error) => {
           console.error("Error uploading file:", error);
           alert("Failed to upload the file. Please try again.");
+        },
+        onSettled: () => {
+          setFile(null);
         }
       });
     } catch (error) {

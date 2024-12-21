@@ -17,13 +17,16 @@ interface ChildProps {
 export default function MediaUploadComponent({
   file,
   setFile,
-  setIsFilePreviewOpen,
+  setIsFilePreviewOpen
 }: ChildProps) {
   const fileInput = useRef(null);
 
   const onAddFile = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && !file) {
+    console.log("file");
+    if (e.target.files) {
+      console.log("file", e.target.files[0]);
       setFile(e.target.files[0]);
+      event.target.value = "";
     }
 
     setIsFilePreviewOpen(true);
@@ -31,15 +34,15 @@ export default function MediaUploadComponent({
 
   return (
     <>
-      <input
-        type="file"
-        multiple={false}
-        ref={fileInput}
-        onChange={onAddFile}
-        style={{ display: "none" }}
-        data-testid="file-input"
-      />
       <InvisibleButton>
+        <input
+          type="file"
+          multiple={false}
+          ref={fileInput}
+          onChange={onAddFile}
+          style={{ display: "none" }}
+          data-testid="file-input"
+        />
         <Icon
           data-testid="upload-media-button"
           onClick={() => fileInput.current?.click()}
