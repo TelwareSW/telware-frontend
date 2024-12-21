@@ -62,7 +62,7 @@ function SettingsSideBarHeader() {
               dispatch(
                 updateSideBarView({
                   redirect: sideBarPages.PROFILE_UPDATE,
-                  data: { type },
+                  data: { type }
                 })
               )
             }

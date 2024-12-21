@@ -67,6 +67,7 @@ enum icons {
   Eye,
   Sun,
   Group,
+  CallAccept
 }
 
 type iconStrings = keyof typeof icons;
@@ -248,6 +249,10 @@ const iconImports: Record<iconStrings, IconConfig> = {
         fontSize: "1.5rem",
       },
     },
+  },
+  CallAccept: {
+    importFn: () => import("@mui/icons-material/LocalPhone"),
+    defaultProps: { fontSize: "large" },
   },
   AddPhoto: {
     importFn: () => import("@mui/icons-material/AddAPhotoOutlined"),
