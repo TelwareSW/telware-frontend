@@ -45,10 +45,7 @@ interface AcknowledgmentResponse {
   success: boolean;
   message: string;
   error?: string;
-  res: {
-    messageId: string;
-    message: MessageInterface;
-  };
+  data: MessageInterface;
 }
 
 interface AckCreateGroup {
@@ -199,14 +196,13 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.emit(
         "SEND_MESSAGE",
         sentMessage,
-        ({ success, res, error, message }: AcknowledgmentResponse) => {
+        ({ success, data, error, message }: AcknowledgmentResponse) => {
           if (!success) {
             console.log(message);
             console.log("Failed to send", error);
           }
           if (success) {
-            const _id = res.messageId;
-
+            const _id = data._id;
             if (!chat) return;
 
             if (chat?.type === "private") {

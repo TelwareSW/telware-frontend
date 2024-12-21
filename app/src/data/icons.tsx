@@ -67,6 +67,7 @@ enum icons {
   Eye,
   Sun,
   Group,
+  Mention,
 }
 
 type iconStrings = keyof typeof icons;
@@ -436,6 +437,9 @@ const iconImports: Record<iconStrings, IconConfig> = {
   Eye: {
     importFn: () => import("@mui/icons-material/Visibility"),
     defaultProps: { fontSize: "small" },
+  },
+  Mention:{
+    importFn: () => import ("@mui/icons-material/AlternateEmail"),
   },
 };
 

@@ -13,13 +13,13 @@ function RenderWithHighlight(
   id?: string
 ) {
   if (!searchTerm) {
-    return RenderWithMention(content);
+    return RenderWithMention(content, id!);
   }
 
   const result = searchResults?.find((result) => result.messageId === id);
 
   if (!result) {
-    return RenderWithMention(content);
+    return RenderWithMention(content, id!);
   }
 
   const before = content.toString().slice(0, result.highlightIndex);

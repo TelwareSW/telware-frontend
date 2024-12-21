@@ -58,7 +58,7 @@ export function parseChatsToState(chatData?: any) {
       isTyping: false,
       showCheckBox: false,
       selectedMessages: [],
-
+      isMention: false,
       encryptionKey,
       initializationVector,
     } as DetailedChatInterface;

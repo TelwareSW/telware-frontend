@@ -74,7 +74,6 @@ const CheckBoxWrapper = styled.div`
 const Message = React.memo(() => {
   const { _id: id, chatId, isMine, chatType } = useMessageContext();
 
-  const { lastMessageRef } = useScrollToLastMsg();
   useScrollToSearchResultsMsg();
 
   const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({
@@ -92,7 +91,6 @@ const Message = React.memo(() => {
       )}
 
       <StyledMessage
-        ref={lastMessageRef}
         key={id}
         $isMine={chatType === "channel" ? false : isMine}
         data-message-id={id}

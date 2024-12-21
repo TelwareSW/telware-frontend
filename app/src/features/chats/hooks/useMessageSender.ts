@@ -17,7 +17,7 @@ export const useMessageSender = () => {
     data: string,
     chatId?: string,
     file?: string,
-    type: ContentType = "text",
+    type: ContentType = "text"
   ) => {
     const chat = getChatByID({ chats, chatID: chatId as string });
 
@@ -53,6 +53,8 @@ export const useMessageSender = () => {
         status: MessageStatus.sent,
         media: file,
         threadMessages: [],
+        isMention: false,
+        isSeen: false,
       };
 
       const threadMessage = {

@@ -36,6 +36,8 @@ export interface MessageInterface {
   //TODO: should use parentMessageId
   isReply: boolean;
   threadMessages: string[];
+  isMention: boolean;
+  isSeen: boolean;
 }
 
 export enum StickerTap {

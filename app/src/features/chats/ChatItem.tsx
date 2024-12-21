@@ -66,7 +66,7 @@ const ChatItem = ({
 
   const timestamp = lastMessage?.timestamp || "No messages";
   const lastMessageContent =
-    RenderWithMention(lastMessage?.content!) || "No messages";
+    RenderWithMention(lastMessage?.content!, lastMessage?._id!) || "No messages";
 
   const { chatId } = useParams<{ chatId: string }>();
 
