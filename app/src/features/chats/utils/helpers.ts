@@ -53,7 +53,8 @@ export function parseChatsToState(chatData?: any) {
         _id: incomingLastMessage?.id,
         content: incomingLastMessage?.content,
         senderId: incomingLastMessage?.senderId,
-        timestamp: incomingLastMessage?.timestamp
+        timestamp: incomingLastMessage?.timestamp,
+        contentType: incomingLastMessage?.contentType
       },
 
       messages: [],
