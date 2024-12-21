@@ -7,7 +7,7 @@ type SettingsProps = {
   dispatch: Dispatch;
   admins: any[];
   groupMembers: any[];
-
+  privacy: boolean;
   chatType: string;
   backView: sideBarPages;
   numGivenPermissions: number;
@@ -20,7 +20,7 @@ const getSettings = ({
   dispatch,
   admins,
   groupMembers,
-
+  privacy,
   backView,
   numGivenPermissions,
   setIsModalOpen
@@ -29,7 +29,7 @@ const getSettings = ({
     testid: "group-type",
     icon: "Lock" as iconStrings,
     title: `${chatType?.charAt(0)?.toUpperCase()}${chatType?.slice(1)} Type`,
-    subtitle: "private",
+    subtitle: privacy ? "private" : "public",
     onClick: () =>
       dispatch(
         updateSideBarView({
@@ -84,9 +84,6 @@ const getSettings = ({
     subtitle: "",
     onClick: () => {
       setIsModalOpen(true);
-      // leaveGroup({ chatId });
-      // setIsRightSideBarOpen(false);
-      // dispatch(resetRightSideBar());
     }
   }
 ];

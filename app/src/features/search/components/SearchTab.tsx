@@ -7,20 +7,20 @@ import NoResultsFound from "./NoResultsFound";
 import {
   hasResults,
   renderGlobalResults,
-  renderMessageResults,
+  renderMessageResults
 } from "../utils/searchTabsHelpers";
 import ChannelResult from "./result-items/ChannelResult";
 import {
   SearchResultChannel,
   SearchResultGroup,
   SearchResultMessage,
-  SearchResultUser,
+  SearchResultUser
 } from "../types/search";
 import { useSearchPrivate } from "../hooks/useSearchPrivate";
 
 const SearchTab: React.FC = () => {
   const { searchTerm, selectedTab } = useSelector(
-    (state: RootState) => state.globalSearch,
+    (state: RootState) => state.globalSearch
   );
 
   const currentTab = SEARCH_TABS.find((tab) => tab.title === selectedTab);
@@ -30,16 +30,16 @@ const SearchTab: React.FC = () => {
       query: searchTerm,
       filter: currentTab?.filter || [],
       searchSpace: currentTab?.searchSpace || [],
-      isGlobalSearch: currentTab?.isGlobalSearch || false,
+      isGlobalSearch: currentTab?.isGlobalSearch || false
     }),
-    [searchTerm, currentTab],
+    [searchTerm, currentTab]
   );
 
   const { data, isLoading, error } = useSearch(searchRequest);
   const {
     searchResults: privateSearchResults,
     isLoading: isPrivateLoading,
-    error: privateError,
+    error: privateError
   } = useSearchPrivate(searchRequest);
 
   if (isLoading || isPrivateLoading)
@@ -62,16 +62,17 @@ const SearchTab: React.FC = () => {
 
   return (
     <div style={{ height: "100%" }}>
-      {renderMessageResults(
-        privateSearchResults as SearchResultMessage[],
-        ["text", "image", "video", "GIF", "sticker", "link", "file", "audio"],
-        searchTerm,
-      )}
+      {selectedTab !== "Channels" &&
+        renderMessageResults(
+          privateSearchResults as SearchResultMessage[],
+          ["text", "image", "video", "GIF", "sticker", "link", "file", "audio"],
+          searchTerm
+        )}
       {renderMessageResults(data!.searchResult, ["text"], searchTerm)}
       {renderMessageResults(
         data!.searchResult,
         ["image", "video", "GIF", "sticker"],
-        searchTerm,
+        searchTerm
       )}
       {renderMessageResults(data!.searchResult, ["link"], searchTerm)}
       {renderMessageResults(data!.searchResult, ["file"], searchTerm)}
@@ -88,8 +89,9 @@ const SearchTab: React.FC = () => {
             image={group?.photo}
             username={group?.name}
             subscribers={group?.numberOfMembers}
+            chatId={group?.id}
           />
-        ),
+        )
       )}
 
       {renderGlobalResults<SearchResultChannel>(
@@ -103,8 +105,9 @@ const SearchTab: React.FC = () => {
             image={channel?.photo}
             username={channel?.name}
             subscribers={channel?.numberOfMembers}
+            chatId={channel?.id}
           />
-        ),
+        )
       )}
 
       {renderGlobalResults<SearchResultUser>(
@@ -118,7 +121,7 @@ const SearchTab: React.FC = () => {
             image={user?.photo}
             username={user?.username}
           />
-        ),
+        )
       )}
     </div>
   );

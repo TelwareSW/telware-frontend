@@ -51,7 +51,7 @@ const FileResult: React.FC<FileResultProps> = ({
   image,
   size,
   date,
-  chatId,
+  chatId
 }) => {
   const navigate = useNavigate();
   const handleItemClick = () => {
@@ -76,7 +76,7 @@ const FileResult: React.FC<FileResultProps> = ({
               day: "numeric",
               year: "numeric",
               hour: "numeric",
-              minute: "numeric",
+              minute: "numeric"
             })) ||
             ""}
         </Preview>

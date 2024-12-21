@@ -81,7 +81,7 @@ const MessageResult: React.FC<MessageResultProps> = ({
   image,
   media,
   link,
-  chatId,
+  chatId
 }) => {
   const navigate = useNavigate();
 
@@ -93,7 +93,7 @@ const MessageResult: React.FC<MessageResultProps> = ({
         <Highlight key={index}>{part}</Highlight>
       ) : (
         part
-      ),
+      )
     );
   };
 
@@ -114,7 +114,7 @@ const MessageResult: React.FC<MessageResultProps> = ({
               ? new Date(date).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
-                  year: "numeric",
+                  year: "numeric"
                 })
               : ""}
           </DateSpan>

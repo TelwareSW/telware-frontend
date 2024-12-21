@@ -12,50 +12,50 @@ export const SEARCH_TABS: SearchTabType[] = [
     component: () => <SearchTab />,
     filter: ["text"],
     searchSpace: ["groups", "channels"],
-    isGlobalSearch: true,
+    isGlobalSearch: true
   },
   {
-    title: "Channnels",
+    title: "Channels",
     component: () => <SearchTab />,
     filter: ["text"],
     searchSpace: ["channels", "groups"],
-    isGlobalSearch: true,
+    isGlobalSearch: true
   },
   {
     title: "Media",
     component: () => <SearchTab />,
-    filter: ["text", "image", "video", "GIF", "sticker"],
+    filter: ["image", "video", "GIF", "sticker"],
     searchSpace: ["groups", "channels"],
-    isGlobalSearch: false,
+    isGlobalSearch: false
   },
   {
     title: "Links",
     component: () => <SearchTab />,
     filter: ["link"],
     searchSpace: ["groups", "channels"],
-    isGlobalSearch: false,
+    isGlobalSearch: false
   },
   {
     title: "Files",
     component: () => <SearchTab />,
     filter: ["file"],
     searchSpace: ["groups", "channels"],
-    isGlobalSearch: false,
+    isGlobalSearch: false
   },
   {
     title: "Music",
     component: () => <SearchTab />,
     filter: ["audio"],
     searchSpace: ["groups", "channels"],
-    isGlobalSearch: false,
+    isGlobalSearch: false
   },
   {
     title: "Voice",
     component: () => <SearchTab />,
     filter: ["audio"],
     searchSpace: ["groups", "channels"],
-    isGlobalSearch: false,
-  },
+    isGlobalSearch: false
+  }
 ];
 
 export const SEARCH_TABS_MOCK = [
@@ -115,7 +115,7 @@ export const SEARCH_TABS_MOCK = [
           />
         ))}
       </div>
-    ),
+    )
   },
   {
     title: "Channnels",
@@ -128,7 +128,7 @@ export const SEARCH_TABS_MOCK = [
           subscribers={100}
         />
       </div>
-    ),
+    )
   },
   {
     title: "Media",
@@ -143,7 +143,7 @@ export const SEARCH_TABS_MOCK = [
           media="https://placecats.com/20/20"
         />
       </div>
-    ),
+    )
   },
   {
     title: "Links",
@@ -158,11 +158,11 @@ export const SEARCH_TABS_MOCK = [
           link="https://placecats.com/20/20"
         />
       </div>
-    ),
+    )
   },
   {
     title: "Files",
-    component: () => <NoResultsFound />,
+    component: () => <NoResultsFound />
   },
   {
     title: "Music",
@@ -175,7 +175,7 @@ export const SEARCH_TABS_MOCK = [
           file="https://ia802306.us.archive.org/20/items/NeverGonnaGiveYouUp/jocofullinterview41.mp3"
         />
       </div>
-    ),
+    )
   },
   {
     title: "Voice",
@@ -188,6 +188,6 @@ export const SEARCH_TABS_MOCK = [
           file="https://ia802306.us.archive.org/20/items/NeverGonnaGiveYouUp/jocofullinterview41.mp3"
         />
       </div>
-    ),
-  },
+    )
+  }
 ];
