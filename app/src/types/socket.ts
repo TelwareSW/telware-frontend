@@ -54,7 +54,15 @@ export interface SocketContextType {
     type: "post" | "download";
     who: "everyone" | "admins";
   }) => void;
+  setPrivacy: ({
+    chatId,
+    privacy
+  }: {
+    chatId: string;
+    privacy: boolean;
+  }) => void;
   leaveGroup: ({ chatId }: { chatId: string }) => void;
+  deleteGroup: ({ chatId }: { chatId: string }) => void;
   createVoiceCall: ({ chatId }: { chatId: string }) => void;
   acceptCall: (callId: string | null) => void;
 }

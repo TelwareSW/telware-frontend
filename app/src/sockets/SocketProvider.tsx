@@ -48,10 +48,7 @@ interface AcknowledgmentResponse {
   success: boolean;
   message: string;
   error?: string;
-  res: {
-    messageId: string;
-    message: MessageInterface;
-  };
+  data: MessageInterface;
 }
 
 interface AckCreateGroup {
@@ -77,8 +74,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     acceptCall: setAcceptedCall,
     callAccepted
   } = useCallContext();
-  console.log(callId, callAccepted);
-  console.log("reredder");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = useSocket();
@@ -224,6 +219,10 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.log("SET_PERMISSION_SERVER", chatId, type, who);
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
+    socket.on("SET_PRIVACY_SERVER", ({ chatId, privacy }) => {
+      console.log("SET_PERMISSION_SERVER", chatId, privacy);
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
 
     socket.on("typing", (isTyping, message) =>
       handleIsTyping(dispatch, isTyping, message.chatId)
@@ -250,6 +249,14 @@ function SocketProvider({ children }: SocketProviderProps) {
       "LEAVE_GROUP_CHANNEL_SERVER",
       ({ chatId, memberId }: { chatId: string; memberId: string }) => {
         console.log("LEAVE_GROUP_CHANNEL_SERVER", chatId, memberId);
+        queryClient.invalidateQueries({ queryKey: ["chats"] });
+      }
+    );
+
+    socket.on(
+      "DELETE_GROUP_CHANNEL_SERVER",
+      ({ chatId }: { chatId: string }) => {
+        console.log("DELETE_GROUP_CHANNEL_SERVER", chatId);
         queryClient.invalidateQueries({ queryKey: ["chats"] });
       }
     );
@@ -315,33 +322,40 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.emit(
         "SEND_MESSAGE",
         sentMessage,
-        ({ success, res, error, message }: AcknowledgmentResponse) => {
+        ({
+          success,
+          data: recieved_message,
+          error,
+          message
+        }: AcknowledgmentResponse) => {
           if (!success) {
             console.log(message);
             console.log("Failed to send", error);
           }
           if (success) {
-            const _id = res.messageId;
+            console.log(recieved_message);
+            console.log("message sent successfully 2");
+            const _id = recieved_message._id;
 
             if (!chat) return;
 
             if (chat?.type === "private") {
               decrypt({
-                message: sentMessage.content,
+                message: recieved_message.content,
                 key: chat?.encryptionKey || "",
                 iv: chat?.initializationVector || ""
               }).then((content) => {
                 handleIncomingMessage(
                   dispatch,
-                  { ...sentMessage, content: content as string, _id },
-                  sentMessage.chatId
+                  { ...recieved_message, content: content as string, _id },
+                  recieved_message.chatId
                 );
               });
             } else {
               handleIncomingMessage(
                 dispatch,
-                { ...sentMessage, _id },
-                sentMessage.chatId
+                { ...recieved_message, _id },
+                recieved_message.chatId
               );
             }
           }
@@ -607,6 +621,56 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }
 
+  function deleteGroup({ chatId }: { chatId: string }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "DELETE_GROUP_CHANNEL_CLIENT",
+        { chatId },
+        ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+            navigate("/");
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot delete group: not connected to socket server");
+    }
+  }
+
+  function setPrivacy({
+    chatId,
+    privacy
+  }: {
+    chatId: string;
+    privacy: boolean;
+  }) {
+    console.log(privacy);
+    if (isConnected && socket) {
+      socket.emit(
+        "SET_PRIVACY_CLIENT",
+        { chatId, privacy },
+        ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot set privacy: not connected to socket server");
+    }
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -624,7 +688,9 @@ function SocketProvider({ children }: SocketProviderProps) {
         removeMembers,
         acceptCall,
         createVoiceCall,
-        setPermission
+        setPermission,
+        deleteGroup,
+        setPrivacy
       }}
     >
       {children}

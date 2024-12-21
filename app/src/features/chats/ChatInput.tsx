@@ -68,6 +68,7 @@ const Input = styled.div`
 function ChatInput() {
   const { chatId } = useParams<{ chatId: string }>();
   const { isCurrUserAdmin } = useGroupInfo();
+  const { activeThread } = useAppSelector((state) => state?.channelsThreads);
 
   const {
     input,
@@ -80,16 +81,11 @@ function ChatInput() {
     isEmojiSelectorOpen,
     handleSubmit,
     showForwardUsers,
-    handleClose,
+    handleClose
   } = useContext(ChatInputContext);
 
   const chats = useAppSelector((state) => state.chats.chats);
   const currChat = getChatByID({ chats: chats, chatID: chatId! });
-  const hasNoPostPermission =
-    currChat?.type === "group" &&
-    !currChat?.messagingPermission &&
-    !isCurrUserAdmin;
-
   const showCheckBox = currChat?.showCheckBox;
   const isBlocked = currChat?.isBlocked;
 
@@ -99,9 +95,22 @@ function ChatInput() {
     alert(error);
     setError("");
   }
-  console.log(isCurrUserAdmin);
 
-  if (hasNoPostPermission) return <DisabledChatInput />;
+  console.log(currChat?.messagingPermission);
+
+  const isGroupWithoutPostPermission =
+    currChat?.type === "group" &&
+    !currChat?.messagingPermission &&
+    !isCurrUserAdmin;
+
+  const isChannelWithoutPostPermission =
+    currChat?.type === "channel" &&
+    !isCurrUserAdmin &&
+    (!activeThread || !currChat?.messagingPermission);
+
+  if (isChannelWithoutPostPermission || isGroupWithoutPostPermission) {
+    return <DisabledChatInput />;
+  }
 
   return (
     <>
@@ -133,7 +142,7 @@ function ChatInput() {
                   data-testid="send-button"
                 />
               ) : (
-                <VoiceRecorder chatId={chatId} />
+                <VoiceRecorder />
               )}
             </Input>
           ) : (

@@ -7,13 +7,12 @@ type SettingsProps = {
   dispatch: Dispatch;
   admins: any[];
   groupMembers: any[];
-  chatId: string;
+  privacy: boolean;
   chatType: string;
   backView: sideBarPages;
   numGivenPermissions: number;
-  leaveGroup: (params: { chatId: string }) => void;
-  setIsRightSideBarOpen: (value: boolean) => void;
-  resetRightSideBar: () => { type: string };
+
+  setIsModalOpen: (value: boolean) => void;
 };
 
 const getSettings = ({
@@ -21,18 +20,16 @@ const getSettings = ({
   dispatch,
   admins,
   groupMembers,
-  chatId,
-  leaveGroup,
-  setIsRightSideBarOpen,
-  resetRightSideBar,
+  privacy,
   backView,
-  numGivenPermissions
+  numGivenPermissions,
+  setIsModalOpen
 }: SettingsProps) => [
   {
     testid: "group-type",
     icon: "Lock" as iconStrings,
     title: `${chatType?.charAt(0)?.toUpperCase()}${chatType?.slice(1)} Type`,
-    subtitle: "private",
+    subtitle: privacy ? "private" : "public",
     onClick: () =>
       dispatch(
         updateSideBarView({
@@ -58,7 +55,7 @@ const getSettings = ({
     testid: "members",
     icon: "Members" as iconStrings,
     title: chatType === "group" ? "Members" : "Subscribers",
-    subtitle: groupMembers.length,
+    subtitle: groupMembers?.length,
     onClick: () =>
       dispatch(
         updateSideBarView({
@@ -86,9 +83,7 @@ const getSettings = ({
     title: `Delete and Leave ${chatType}`,
     subtitle: "",
     onClick: () => {
-      leaveGroup({ chatId });
-      setIsRightSideBarOpen(false);
-      dispatch(resetRightSideBar());
+      setIsModalOpen(true);
     }
   }
 ];

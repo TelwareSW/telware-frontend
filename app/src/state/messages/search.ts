@@ -12,7 +12,7 @@ interface SearchState {
 const initialState: SearchState = {
   searchTerm: "",
   searchResults: [],
-  currentResultIndex: -1,
+  currentResultIndex: -1
 };
 
 const searchSlice = createSlice({
@@ -24,7 +24,7 @@ const searchSlice = createSlice({
     },
     setSearchResults: (
       state,
-      action: PayloadAction<{ messageId: string; highlightIndex: number }[]>,
+      action: PayloadAction<{ messageId: string; highlightIndex: number }[]>
     ) => {
       state.searchResults = action.payload;
       state.currentResultIndex = state.searchResults.length > 0 ? 0 : -1;
@@ -46,8 +46,8 @@ const searchSlice = createSlice({
       state.searchTerm = "";
       state.searchResults = [];
       state.currentResultIndex = -1;
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -55,6 +55,6 @@ export const {
   setSearchResults,
   moveToNextResult,
   moveToPreviousResult,
-  clearSearch,
+  clearSearch
 } = searchSlice.actions;
 export default searchSlice.reducer;

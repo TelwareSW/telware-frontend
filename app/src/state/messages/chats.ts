@@ -8,12 +8,13 @@ interface DetailedChatInterface extends Chat {
   messages: MessageInterface[];
   isTyping: boolean;
   showCheckBox: boolean;
-  selectedMessages: string[]; //indicates ids only of selected messages
+  selectedMessages: string[];
   lastMessage?: {
     _id: string;
     content: string;
     senderId: string;
     timestamp: string;
+    contentType: string;
   };
   name?: string;
   isBlocked?: boolean;
@@ -23,6 +24,7 @@ interface DetailedChatInterface extends Chat {
   initializationVector?: string;
   messagingPermission?: boolean;
   downloadingPermission?: boolean;
+  privacy: boolean;
 }
 
 interface ChatsState {
@@ -76,10 +78,10 @@ const chatsSlice = createSlice({
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
 
       if (chat?.type === "private" && chat?.isBlocked) return;
-      const { _id, content, senderId, timestamp } = message;
+      const { _id, content, senderId, timestamp, contentType } = message;
 
       if (chat) {
-        chat.lastMessage = { _id, content, senderId, timestamp };
+        chat.lastMessage = { _id, content, senderId, timestamp, contentType };
         chat.messages.push(message);
       }
     },
