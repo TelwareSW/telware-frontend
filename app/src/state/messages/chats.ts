@@ -203,7 +203,6 @@ const chatsSlice = createSlice({
       const { chatId, newMessages } = action.payload;
       const chatIndex = state.chats.findIndex((chat) => chat._id === chatId);
 
-
       if (chatIndex !== -1) {
         const chat = state.chats[chatIndex];
 
