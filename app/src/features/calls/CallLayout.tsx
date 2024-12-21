@@ -252,7 +252,7 @@ export default function CallLayout({
                       {callStatus === "incoming" ? (
                         <ButtonContainer>
                           <RoundButton
-                            onClick={() => endCall()}
+                            onClick={() => endCall(null)}
                             $bgColor="var(--color-error)"
                             $bgColorHover="var(--color-error-shade)"
                           >

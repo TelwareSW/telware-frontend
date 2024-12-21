@@ -13,7 +13,7 @@ export interface CallContextType {
   >;
   // callAccepted: React.RefObject<string | null>;
   joinCall: (newCallId: string, newSenderId: string, newChatId: string) => void;
-  endCall: () => void;
+  endCall: (clientId: string | null) => void;
 
   acceptCall: () => void;
   startPeerConnection: (
@@ -31,7 +31,7 @@ export interface CallContextType {
     senderId: string
   ) => Promise<RTCSessionDescriptionInit | null>;
   setChatId: (chatId: string) => void;
-  recieveAnswer: (answer: RTCSessionDescriptionInit, senderId: string) => void; 
+  recieveAnswer: (answer: RTCSessionDescriptionInit, senderId: string) => void;
 }
 export type CallStatus =
   | "inactive"

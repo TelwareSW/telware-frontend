@@ -71,6 +71,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     createAnswer,
     startPeerConnection,
     offer,
+    endCall,
     acceptCall: setAcceptedCall
   } = useCallContext();
   const navigate = useNavigate();
@@ -139,7 +140,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const finishCall = useCallback(() => {
     if (socket?.connected && socket && callId.current) {
       socket.emit("LEAVE", { voiceCallId: callId.current });
-      endCall();
+      endCall(null);
     }
   }, [socket, callId, endCall]);
   const sendAnswer = useCallback(
