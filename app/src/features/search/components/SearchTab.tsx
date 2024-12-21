@@ -89,6 +89,7 @@ const SearchTab: React.FC = () => {
             image={group?.photo}
             username={group?.name}
             subscribers={group?.numberOfMembers}
+            chatId={group?.id}
           />
         )
       )}
@@ -104,6 +105,7 @@ const SearchTab: React.FC = () => {
             image={channel?.photo}
             username={channel?.name}
             subscribers={channel?.numberOfMembers}
+            chatId={channel?.id}
           />
         )
       )}
