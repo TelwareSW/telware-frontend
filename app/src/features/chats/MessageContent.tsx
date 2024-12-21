@@ -36,6 +36,7 @@ function MessageContent() {
     media,
     contentType,
     chatType,
+    isAppropriate,
   } = useMessageContext();
 
   const { searchTerm, searchResults } = useAppSelector((state) => state.search);
@@ -49,6 +50,10 @@ function MessageContent() {
     media && (contentType === "GIF" || contentType === "sticker");
 
   const isFile = media && !(contentType === "GIF" || contentType === "sticker");
+  const filteredContent =
+    (chatType === "group" || chatType === "channel") && !isAppropriate
+      ? content
+      : "🚫️ This mesaage has unappropriate content";
 
   return (
     <Container>
