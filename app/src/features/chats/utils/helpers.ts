@@ -151,6 +151,6 @@ export const decryptMessage = async ({
 
     return new TextDecoder().decode(decryptedBuffer);
   } catch (err: any) {
-    return Error(`Decryption error: ${err.message}`);
+    console.error(`Decryption error: ${err.message}`);
   }
 };

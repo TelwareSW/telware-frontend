@@ -96,7 +96,6 @@ function ChatInput() {
     setError("");
   }
 
-  console.log(currChat?.messagingPermission);
 
   const isGroupWithoutPostPermission =
     currChat?.type === "group" &&
@@ -115,7 +114,7 @@ function ChatInput() {
   return (
     <>
       {isFilePreviewOpen && file && (
-        <FilePreviewItem data-testid="file-preview" chatId={chatId} />
+        <FilePreviewItem data-testid="file-preview" chatId={chatId}  />
       )}
 
       {isBlocked ? null : (

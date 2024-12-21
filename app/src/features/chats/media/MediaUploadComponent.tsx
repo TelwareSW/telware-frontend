@@ -22,11 +22,10 @@ export default function MediaUploadComponent({
   const fileInput = useRef(null);
 
   const onAddFile = async (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("file");
     if (e.target.files) {
       console.log("file", e.target.files[0]);
       setFile(e.target.files[0]);
-      event.target.value = "";
+      e.target.value = "";
     }
 
     setIsFilePreviewOpen(true);
