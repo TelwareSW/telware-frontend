@@ -28,6 +28,7 @@ function useChatInput() {
     setIsEmojiSelectorOpen(false);
   };
   const handleSubmit = (e: Event, voiceNoteName = "") => {
+    console.log(voiceNoteName);
     e.preventDefault();
     setIsEmojiSelectorOpen(false);
     if (isRecording !== "idle") return;
@@ -57,7 +58,7 @@ function useChatInput() {
     sendGIF,
     sendSticker,
     handleSubmit,
-    handleCloseFilePreview,
+    handleCloseFilePreview
   };
 }
 

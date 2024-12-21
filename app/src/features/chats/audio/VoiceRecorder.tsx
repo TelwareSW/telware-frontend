@@ -1,22 +1,20 @@
-import { useRef, useEffect, useCallback, useContext } from "react";
+import React, { useRef, useEffect, useCallback, useContext } from "react";
 import RecordInput from "../SendButton";
 import { useUploadMedia } from "../media/hooks/useUploadMedia";
 import { useMessageSender } from "../hooks/useMessageSender";
 import { ChatInputContext } from "../ChatBox";
+import { useParams } from "react-router-dom";
 
 export type RecordingStates = "idle" | "recording" | "pause";
 
-interface VoiceRecorderProps {
+const VoiceRecorder: React.FC = ({
+  recordingMimeType = "audio/webm"
+}: {
   recordingMimeType?: string;
-  chatId: string | undefined;
-}
-
-const VoiceRecorder = ({
-  recordingMimeType = "audio/webm",
-  chatId
-}: VoiceRecorderProps) => {
+}) => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
+  const { chatId } = useParams<{ chatId: string }>();
   const { data: voiceNoteURL, mutate: uploadVoiceNote } = useUploadMedia();
 
   const { isRecording, setIsRecording, setError } =
@@ -75,7 +73,7 @@ const VoiceRecorder = ({
   }, [setIsRecording]);
 
   const handleSendRecord = useCallback(() => {
-    if (isRecording === "pause") {
+    if (isRecording === "pause" && audioChunks.current.length) {
       const audioBlob = new Blob(audioChunks.current, {
         type: recordingMimeType
       });
@@ -110,9 +108,8 @@ const VoiceRecorder = ({
 
   useEffect(() => {
     if (voiceNoteURL && isRecording === "pause") {
-      handleSendMessage("", voiceNoteURL);
+      handleSendMessage("", chatId, voiceNoteURL, "audio");
       setIsRecording("idle");
-      uploadVoiceNote(null);
     }
   }, [
     voiceNoteURL,
@@ -120,6 +117,8 @@ const VoiceRecorder = ({
     handleSendMessage,
     setIsRecording,
     uploadVoiceNote
+    uploadVoiceNote,
+    chatId
   ]);
 
   return (
