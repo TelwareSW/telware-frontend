@@ -3,7 +3,6 @@ import RecordInput from "../SendButton";
 import { useUploadMedia } from "../media/hooks/useUploadMedia";
 import { useMessageSender } from "../hooks/useMessageSender";
 import { ChatInputContext } from "../ChatBox";
-import toast from "react-hot-toast";
 
 export type RecordingStates = "idle" | "recording" | "pause";
 
@@ -14,7 +13,7 @@ interface VoiceRecorderProps {
 
 const VoiceRecorder = ({
   recordingMimeType = "audio/webm",
-  chatId,
+  chatId
 }: VoiceRecorderProps) => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
@@ -31,7 +30,7 @@ const VoiceRecorder = ({
         .getUserMedia({ audio: true })
         .then((stream) => {
           const recorder = new MediaRecorder(stream, {
-            mimeType: recordingMimeType,
+            mimeType: recordingMimeType
           });
           mediaRecorder.current = recorder;
 
@@ -78,11 +77,11 @@ const VoiceRecorder = ({
   const handleSendRecord = useCallback(() => {
     if (isRecording === "pause") {
       const audioBlob = new Blob(audioChunks.current, {
-        type: recordingMimeType,
+        type: recordingMimeType
       });
       const file = new File([audioBlob], "recording.webm", {
         type: audioBlob.type,
-        lastModified: Date.now(),
+        lastModified: Date.now()
       });
       audioChunks.current = [];
       try {
@@ -93,7 +92,7 @@ const VoiceRecorder = ({
           },
           onError: (error) => {
             console.error("Error uploading file:", error);
-          },
+          }
         });
       } catch (error) {
         console.error("Unexpected error while sending file:", error);
@@ -106,7 +105,7 @@ const VoiceRecorder = ({
     setIsRecording,
     uploadVoiceNote,
     handleSendMessage,
-    chatId,
+    chatId
   ]);
 
   useEffect(() => {
@@ -120,7 +119,7 @@ const VoiceRecorder = ({
     isRecording,
     handleSendMessage,
     setIsRecording,
-    uploadVoiceNote,
+    uploadVoiceNote
   ]);
 
   return (
