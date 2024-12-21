@@ -36,24 +36,24 @@ function MessageContent() {
     media,
     contentType,
     chatType,
-    isAppropriate,
+    isAppropriate
   } = useMessageContext();
 
   const { searchTerm, searchResults } = useAppSelector((state) => state.search);
   const { MoveToReplyMessage } = useOptionListAction({
     id,
     content,
-    parentMessageId,
+    parentMessageId
   });
 
   const isGifOrSticker =
     media && (contentType === "GIF" || contentType === "sticker");
 
   const isFile = media && !(contentType === "GIF" || contentType === "sticker");
-  const filteredContent =
-    (chatType === "group" || chatType === "channel") && !isAppropriate
-      ? content
-      : "🚫️ This mesaage has unappropriate content";
+  console.log("isAppropriate", isAppropriate);
+  const filteredContent = isAppropriate
+    ? content
+    : "🚫️ This mesaage has unappropriate content";
 
   return (
     <Container>
@@ -68,7 +68,7 @@ function MessageContent() {
       )}
       {isGifOrSticker && <Gif src={media} loading="lazy" />}
       {isFile && <FileViewer file={media} />}
-      {RenderWithHighlight(content, searchTerm, searchResults, id)}
+      {RenderWithHighlight(filteredContent, searchTerm, searchResults, id)}
     </Container>
   );
 }

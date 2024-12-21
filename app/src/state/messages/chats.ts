@@ -14,6 +14,7 @@ interface DetailedChatInterface extends Chat {
     content: string;
     senderId: string;
     timestamp: string;
+    contentType: string;
   };
   name?: string;
   isBlocked?: boolean;
@@ -77,10 +78,10 @@ const chatsSlice = createSlice({
       const chat = getChatByID({ chats: state.chats, chatID: chatId });
 
       if (chat?.type === "private" && chat?.isBlocked) return;
-      const { _id, content, senderId, timestamp } = message;
+      const { _id, content, senderId, timestamp, contentType } = message;
 
       if (chat) {
-        chat.lastMessage = { _id, content, senderId, timestamp };
+        chat.lastMessage = { _id, content, senderId, timestamp, contentType };
         chat.messages.push(message);
       }
     },

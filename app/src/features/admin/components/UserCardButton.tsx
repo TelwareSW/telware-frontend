@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { userStatus } from "types/admin";
 import Button from "@components/Button";
+import Modal from "@components/Modal";
+import { useState } from "react";
+import { set } from "react-hook-form";
 
 interface Props {
   status: userStatus;
@@ -16,13 +19,23 @@ const ButtonContainer = styled.div`
 
 function UserCardButton(props: Props) {
   const { status, onChangeStatus } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [action, setAction] = useState("");
   let renderedButtons;
+  const handleDeactivate = () => {
+    setAction("deactivate");
+    setIsModalOpen(true);
+  };
+  const handleBan = () => {
+    setAction("ban");
+    setIsModalOpen(true);
+  };
   switch (status) {
     case userStatus.active:
       renderedButtons = (
         <>
           <Button
-            onClick={() => onChangeStatus(userStatus.deactivated)}
+            onClick={handleDeactivate}
             $type="normal"
             $width="15rem"
             data-testid="deactivate-button"
@@ -30,10 +43,10 @@ function UserCardButton(props: Props) {
             Deactivate
           </Button>
           <Button
-            onClick={() => onChangeStatus(userStatus.banned)}
             $type="danger"
             $width="15rem"
             datatype="ban-button"
+            onClick={handleBan}
           >
             Ban
           </Button>
@@ -52,7 +65,7 @@ function UserCardButton(props: Props) {
             Activate
           </Button>
           <Button
-            onClick={() => onChangeStatus(userStatus.banned)}
+            onClick={handleBan}
             $type="danger"
             $width="15rem"
             data-testid="ban-button"
@@ -66,7 +79,31 @@ function UserCardButton(props: Props) {
       renderedButtons = null;
       break;
   }
-  return <ButtonContainer>{renderedButtons}</ButtonContainer>;
+  return (
+    <>
+      <Modal
+        isOpen={isModalOpen}
+        message={`You are going to ${action} this user${action === "ban" ? "for ever" : ""}.`}
+        title={`${action} User`}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <Button
+          onClick={() =>
+            onChangeStatus(
+              action === "ban" ? userStatus.banned : userStatus.deactivated
+            )
+          }
+          $type="danger"
+          $width="10rem"
+          data-testid="ban-button"
+          style={{ margin: "auto" }}
+        >
+          {action}
+        </Button>
+      </Modal>
+      <ButtonContainer>{renderedButtons}</ButtonContainer>
+    </>
+  );
 }
 
 export default UserCardButton;
