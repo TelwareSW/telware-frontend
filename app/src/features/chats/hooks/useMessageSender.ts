@@ -55,7 +55,9 @@ export const useMessageSender = () => {
         isReply,
         status: MessageStatus.sent,
         media: file,
-        threadMessages: []
+        threadMessages: [],
+        isMention: false,
+        isSeen: false,
       };
 
       const threadMessage = {

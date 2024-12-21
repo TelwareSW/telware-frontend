@@ -1,59 +1,96 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { MentionsInput, Mention } from "react-mentions";
+import useMentionList from "@features/chats/hooks/useMentionList";
 
-const Textarea = styled.textarea`
-  outline: none;
-  border: none;
-
-  flex: 1;
-  align-self: center;
-
-  caret-color: var(--accent-color);
+const StyledMentionsInput = styled.div`
+  width: 100%;
+  max-width: 27rem;
   color: var(--color-text);
-
-  resize: none;
-  overflow: hidden;
-
-  font-size: 1rem;
-  line-height: 1.5;
-  padding: 0.25rem;
-
-  max-height: 300px;
 `;
 
 type PropsType = {
   input: string;
   setInput: (value: string) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onKeyDown?: (
+    e:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => void;
 };
 
 function ExpandingTextArea({ input, setInput, onKeyDown }: PropsType) {
-  const ref = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const { filteredMembers } = useMentionList();
 
   function handleInput() {
-    if (ref.current) {
-      ref.current.style.height = "auto";
-      ref.current.style.height = `${ref.current.scrollHeight}px`;
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }
+
   useEffect(() => {
-    if (ref.current) {
-      if (ref.current.value === "" || input === "") {
-        ref.current.style.height = "32px";
+    if (textareaRef.current) {
+      if (textareaRef.current.value === "" || input === "") {
+        textareaRef.current.style.height = "32px";
       }
     }
   }, [input]);
 
+  console.log(filteredMembers);
+
   return (
-    <Textarea
-      ref={ref}
-      value={input}
-      onChange={(e) => setInput(e.target.value)}
-      placeholder="Message"
-      rows={1}
-      onInput={handleInput}
-      onKeyDown={onKeyDown}
-    />
+    <StyledMentionsInput>
+      <MentionsInput
+        value={input}
+        onChange={(e: any) => setInput(e.target.value)}
+        onKeyDown={onKeyDown!}
+        onInput={handleInput}
+        placeholder="Message"
+        a11ySuggestionsListLabel="Suggested mentions"
+        style={{
+          input: {
+            overflow: "hidden",
+            border: "none",
+            forcedColorAdjust: "none",
+            color: "var(--color-text)",
+            outline: "none"
+          },
+          suggestions: {
+            list: {
+              backgroundColor: "var(--color-background)",
+              border: "none",
+              borderRadius: "0.5rem",
+              position: "absolute",
+              zIndex: 1,
+              bottom: "2rem",
+              width: "20rem",
+              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)"
+            },
+            item: {
+              padding: "0.5rem 1rem",
+              "&focused": {
+                backgroundColor: "var(--accent-color)",
+                color: "white"
+              }
+            }
+          }
+        }}
+      >
+        <Mention
+          trigger="@"
+          data={filteredMembers}
+          displayTransform={(display) => `@${display}`}
+          style={{
+            backgroundColor: "transparent",
+            color: "ButtonFace",
+            border: "none"
+          }}
+        />
+      </MentionsInput>
+    </StyledMentionsInput>
   );
 }
 

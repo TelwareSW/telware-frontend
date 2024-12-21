@@ -14,7 +14,7 @@ export function getChatByID({
 export function parseChatsToState(chatData?: any) {
   if (!chatData) return [];
   return chatData?.chats?.map((chat: any): DetailedChatInterface => {
-    const { isMuted, draft, chat: currChat } = chat;
+    const { chat: currChat } = chat;
     const {
       _id: chatId,
       isSeen,
@@ -64,7 +64,7 @@ export function parseChatsToState(chatData?: any) {
       isTyping: false,
       showCheckBox: false,
       selectedMessages: [],
-
+      isMention: false,
       encryptionKey,
       initializationVector,
       messagingPermission,

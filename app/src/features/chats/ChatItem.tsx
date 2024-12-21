@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Avatar from "@components/Avatar";
 import { DetailedChatInterface } from "@state/messages/chats";
+import RenderWithMention from "@utils/renderWithMentions";
 
 const Container = styled.li<{ $active?: boolean }>`
   display: flex;
@@ -64,7 +65,8 @@ const ChatItem = ({
   const navigate = useNavigate();
 
   const timestamp = lastMessage?.timestamp || "No messages";
-  const lastMessageContent = lastMessage?.content || "No messages";
+  const lastMessageContent =
+    RenderWithMention(lastMessage?.content!, lastMessage?._id!) || "No messages";
 
   const { chatId } = useParams<{ chatId: string }>();
 

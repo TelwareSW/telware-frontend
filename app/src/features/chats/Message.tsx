@@ -7,7 +7,6 @@ import MessageContent from "./MessageContent";
 import useCheckBox from "@features/forward/hooks/useCheckBox";
 import MessageDetails from "./MessageDetails";
 
-import useScrollToLastMsg from "./hooks/useScrollToLastMsg";
 import useHover from "./hooks/useHover";
 import { useMessageContext } from "./contexts/MessageProvider";
 import React from "react";
@@ -75,7 +74,6 @@ const CheckBoxWrapper = styled.div`
 const Message = React.memo(() => {
   const { _id: id, chatId, isMine, chatType } = useMessageContext();
 
-  const { lastMessageRef } = useScrollToLastMsg();
   useScrollToSearchResultsMsg();
 
   const { isChecked, toggleCheckBox, showCheckBox } = useCheckBox({
@@ -94,7 +92,6 @@ const Message = React.memo(() => {
       )}
 
       <StyledMessage
-        ref={lastMessageRef}
         key={id}
         $isMine={chatType === "channel" ? false : isMine}
         data-message-id={id}

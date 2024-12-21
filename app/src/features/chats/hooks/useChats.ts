@@ -27,6 +27,7 @@ export function useChats() {
 
   useEffect(() => {
     const processMessages = async ({ chats, members }: ChatsState) => {
+      if (!chats) return;
       await Promise.all(
         chats.map(async (chat) => {
           if (chat.type === "private") {
