@@ -58,6 +58,7 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu-hover: #4c90b23b;
     
     --color-border: #dfe1e5;
+    --color-border-hover: #c1c1c1;
     --color-borders-input: rgb(218, 220, 224);
     
     --color-search-border: #3390ec;
@@ -80,6 +81,7 @@ const GlobalStyles = createGlobalStyle`
 
     --admin-nav-menu-item-hover-text: #56a2c9;
   --admin-nav-menu-item-hover: rgba(213, 213, 216, 0.666);
+  --admin-card-active: #f0f0f0;
 
   }
   
@@ -136,6 +138,9 @@ const GlobalStyles = createGlobalStyle`
     --color-background-compact-menu-hover: #ffffff36;
  
     --color-border: #09182299;
+    --color-border-hover: #091822;
+
+    --admin-card-active: #56a2c9;
     --color-borders-input: var(--color-text-secondary);
 
     --color-search-border: #7644CB;
@@ -161,6 +166,7 @@ const GlobalStyles = createGlobalStyle`
 
     --admin-nav-menu-item-hover-text: #24343e79;
   --admin-nav-menu-item-hover: rgba(213, 213, 216, 0.466);
+  --admin-card-active: #4c90b2;
 
   }
 
@@ -208,6 +214,8 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-forum-avatar: 25%;
   --border-radius-circle: 50%;
   --border-radius-one-sided: 50px 0 0 50px;
+  --border-radius-left-sided-small: 0.625rem 0 0 0.625rem;
+  --border-radius-right-sided-small: 0 0.625rem 0.625rem 0;
 
   
   --color-borders-input: rgb(218, 220, 224);
@@ -244,8 +252,6 @@ select:-webkit-autofill:focus {
   transition: background-color 0.3s, border 0.3s;
 
   user-select: none;
-  user-drag: none;
-  app-region: no-drag;
 }
 
 body {

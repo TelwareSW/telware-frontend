@@ -1,127 +1,122 @@
+import { Group, User, userStatus } from "types/admin";
+
 const MOCK_USERS: User[] = [
   {
     id: "1",
-    userName: "Eddie Brock",
+    username: "Eddie Brock",
     photo: "https://i.pravatar.cc/70?=0.05",
-    status: "activated",
+    accountStatus: userStatus.active,
   },
   {
     id: "2",
-    userName: "Gwen Stacy",
+    username: "Gwen Stacy",
     photo: "https://i.pravatar.cc/70?=0.06",
-    status: "activated",
+    accountStatus: userStatus.active,
   },
   {
     id: "3",
-    userName: "Mary Jane",
+    username: "Mary Jane",
     photo: "https://i.pravatar.cc/70?=0.07",
-    status: "activated",
+    accountStatus: userStatus.active,
   },
   {
     id: "4",
-    userName: "Peter Parker",
+    username: "Peter Parker",
     photo: "https://i.pravatar.cc/70?=0.08",
-    status: "banned",
+    accountStatus: userStatus.banned,
   },
   {
     id: "5",
-    userName: "Clark Kent",
+    username: "Clark Kent",
     photo: "https://i.pravatar.cc/70?=0.09",
-    status: "deactivated",
+    accountStatus: userStatus.deactivated,
   },
   {
     id: "6",
-    userName: "Bruce Wayne",
+    username: "Bruce Wayne",
     photo: "https://i.pravatar.cc/70?=0.11",
-    status: "activated",
+    accountStatus: userStatus.active,
   },
   {
     id: "7",
-    userName: "Diana Prince",
+    username: "Diana Prince",
     photo: "https://i.pravatar.cc/70?=0.12",
-    status: "deactivated",
+    accountStatus: userStatus.deactivated,
   },
   {
     id: "8",
-    userName: "Tony Stark",
+    username: "Tony Stark",
     photo: "https://i.pravatar.cc/70?=0.13",
-    status: "deactivated",
+    accountStatus: userStatus.deactivated,
   },
   {
     id: "9",
-    userName: "Steve Rogers",
+    username: "Steve Rogers",
     photo: "https://i.pravatar.cc/70?=0.14",
-    status: "banned",
+    accountStatus: userStatus.banned,
   },
   {
     id: "10",
-    userName: "Natasha Romanoff",
+    username: "Natasha Romanoff",
     photo: "https://i.pravatar.cc/70?=0.15",
-    status: "activated",
+    accountStatus: userStatus.active,
   },
   {
     id: "11",
-    userName: "Wade Wilson",
+    username: "Wade Wilson",
     photo: "https://i.pravatar.cc/70?=0.36",
-    status: "activated",
+    accountStatus: userStatus.active,
   },
 ];
-const MOCK_GROUPS = [
+
+const MOCK_GROUPS: Group[] = [
   {
     id: "1",
     name: "Avengers",
-    photo: "https://i.pravatar.cc/70?=0.16",
-    membersCount: 10,
-    filtered: false,
+    picture: "https://i.redd.it/gf9yyhdo08m11.jpg",
+    isFilterd: false,
+    numberOfMembers: 12,
   },
   {
     id: "2",
     name: "Justice League",
-    photo: "https://i.pravatar.cc/70?=0.17",
-    membersCount: 12,
-    filtered: false,
+    picture:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSk0jgB0khxHpWlQ2WIrTWbbCcRVvzXusD-w&s",
+    isFilterd: false,
+    numberOfMembers: 8,
   },
   {
     id: "3",
     name: "Guardians of the Galaxy",
-    photo: "https://i.pravatar.cc/70?=0.18",
-    membersCount: 5,
-    filtered: false,
+    picture:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk0TL205opaVnA2dYCebuk552-PP-ROsLgRw&s",
+    isFilterd: false,
+    numberOfMembers: 4,
   },
   {
     id: "4",
     name: "Power Rangers",
-    photo: "https://i.pravatar.cc/70?=0.19",
-    membersCount: 7,
-    filtered: false,
+    picture:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrtYzIiKsxu86ysm1wLFydr5yiTVA05dfHwA&s",
+    isFilterd: false,
+    numberOfMembers: 6,
   },
   {
     id: "5",
     name: "Teen Titans",
-    photo: "https://i.pravatar.cc/70?=0.20",
-    membersCount: 6,
-    filtered: true,
+    picture:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0vBXO-BKKBlWT5gV1PzDbUZ4BcS3TGT8NGw&s",
+    isFilterd: true,
+    numberOfMembers: 5,
   },
   {
     id: "6",
     name: "Ninga Turtles",
-    photo: "https://i.pravatar.cc/70?=0.21",
-    membersCount: 4,
-    filtered: false,
-  },
-  {
-    id: "7",
-    name: "Transformers",
-    photo: "https://i.pravatar.cc/70?=0.22",
-    membersCount: 10,
-    filtered: false,
-  },
-  {
-    id: "8",
-    name: "SWE team",
-    photo: "https://i.pravatar.cc/70?=0.23",
-    membersCount: 16,
-    filtered: true,
+    picture:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlLycnffNMBrxjCKrG80nlmKWW3eAPfbhlow&s",
+    isFilterd: false,
+    numberOfMembers: 4,
   },
 ];
+
 export { MOCK_USERS, MOCK_GROUPS };

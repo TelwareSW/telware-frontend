@@ -1,8 +1,7 @@
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useParams } from "react-router-dom";
-import { useAllUsers, UserType } from "./useAllUsers";
+import { UserType } from "./useAllUsers";
 import { useState, useEffect } from "react";
-import { useUser } from "@features/authentication/login/hooks/useUser";
 
 function useGroupInfo() {
   const { chatId } = useParams<{ chatId: string }>();
@@ -10,17 +9,15 @@ function useGroupInfo() {
   const [admins, setAdmins] = useState<UserType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCurrUserAdmin, setIsCurrUserAdmin] = useState(false);
-  const { user, isPending: isPendingCurrUser } = useUser();
 
-  const group = useAppSelector((state) =>
-    state.chats.chats.find((chat) => chat._id === chatId)
-  );
+  const { chats, members: users } = useAppSelector((state) => state.chats);
+  const user = useAppSelector((state) => state.user.userInfo);
 
-  const { users, isPending } = useAllUsers();
+  const group = chats.find((chat) => chat._id === chatId);
 
   useEffect(() => {
-    if (!isPending && group && users?.length) {
-      const members = group.members
+    if (users?.length) {
+      const members = group?.members
         .map((groupMember) => {
           const user = users?.find((member) => member._id === groupMember._id);
           return user
@@ -32,17 +29,18 @@ function useGroupInfo() {
         })
         .filter((member) => member !== null);
 
-      const groupAdmins = members.filter((member) => member.role === "admin");
+
+      const groupAdmins = members?.filter((member) => member.role === "admin");
       setIsCurrUserAdmin(
-        members.some(
-          (member) => member._id === user._id && member.role === "admin"
-        )
+        members?.some(
+          (member) => member._id === user.id && member.role === "admin"
+        ) || false
       );
-      setGroupMembers(members);
-      setAdmins(groupAdmins);
+      setGroupMembers(members!);
+      setAdmins(groupAdmins!);
       setIsLoading(false);
     }
-  }, [group, users, isPending, isPendingCurrUser, user]);
+  }, [group, users, user, isLoading]);
 
   return {
     groupMembers,
@@ -51,6 +49,7 @@ function useGroupInfo() {
     admins,
     isCurrUserAdmin,
     chatId,
+    chatType: group?.type,
   };
 }
 

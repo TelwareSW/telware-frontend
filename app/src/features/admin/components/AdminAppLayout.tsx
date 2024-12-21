@@ -1,8 +1,11 @@
-import { Outlet } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
 import styled from "styled-components";
 import { DESKTOP_VIEW, MOBILE_VIEW } from "@constants";
+import { useAppSelector } from "@hooks/useGlobalState";
+import { View } from "@state/admin/adminView";
+import UsersList from "./AdminUsersList";
+import GroupsList from "./AdminGroupsList";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -36,27 +39,24 @@ const StyledAppLayout = styled.div`
 const Main = styled.main`
   overflow-y: auto;
   padding: 4rem 2.4rem;
-  background-color: var(--admin-main-bg);
-`;
-
-const Container = styled.div`
-  gap: 3.2rem;
-  display: flex;
-  margin: 0 auto;
-  max-width: 120rem;
-  flex-direction: column;
+  background-color: var(--admin-header-bg);
+  &::-webkit-scrollbar {
+    display: block;
+    width: 0.6rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+    border-radius: 0.4rem;
+  }
 `;
 
 function AdminAppLayout() {
+  const adminView = useAppSelector((state) => state.adminView.value);
   return (
     <StyledAppLayout>
       <AdminHeader />
       <AdminSidebar />
-      <Main>
-        <Container>
-          <Outlet />
-        </Container>
-      </Main>
+      <Main>{adminView === View.USERS ? <UsersList /> : <GroupsList />}</Main>
     </StyledAppLayout>
   );
 }

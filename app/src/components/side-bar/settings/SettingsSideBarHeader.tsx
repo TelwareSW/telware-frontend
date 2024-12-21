@@ -6,6 +6,7 @@ import CircleIcon from "@components/CircleIcon";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
 import { useSidebarType } from "../SideBarContext";
+import { useLogout } from "@features/authentication/logout/hooks/useLogout";
 
 const StyledSideBarHeader = styled.div`
   height: 4rem !important;

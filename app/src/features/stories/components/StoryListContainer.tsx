@@ -61,7 +61,7 @@ function StoryListContainer() {
         <CollapsedList
           data-testid="stories-collapsed-list"
           onOpen={handleOpen}
-          render={(userStory) => (
+          render={(userStory: unknown) => (
             <StoryIcon
               isCollapsed={true}
               name={userStory.name}

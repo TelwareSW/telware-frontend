@@ -1,3 +1,4 @@
+import { userStatus } from "types/admin";
 export const MOCK_USER1 = {
   id: "1",
   email: "johndoe@example.com",
@@ -10,6 +11,7 @@ export const MOCK_USER1 = {
   phoneNumber: "0123456789",
   status: "Online",
   screenName: "John Doe",
+  state: userStatus.active,
 };
 
 export const MOCK_USER2 = {
@@ -24,6 +26,46 @@ export const MOCK_USER2 = {
   phoneNumber: "0123456798",
   status: "Online",
   screenName: "Ay 7aga",
+  state: userStatus.active,
+};
+
+export const BANNNED = {
+  id: "3",
+  email: "banned@example.com",
+  password: "1234",
+  firstName: "المصفوع",
+  lastName: "من",
+  bio: "أهلا أنا المصفوع من شخصيا",
+  photo: "",
+  username: "theBannedUser",
+  phoneNumber: "0125456798",
+  status: "Online",
+  screenName: "theBannedUser",
+  state: userStatus.banned,
+};
+
+export const DEACTIVATED = {
+  id: "4",
+  email: "deactivated@example.com",
+  password: "1234",
+  firstName: "Mr. ",
+  lastName: "deactivtaed",
+  bio: "أهلا أنا المصفوع من شخصيا",
+  photo: "",
+  username: "theDeactivatedUser",
+  phoneNumber: "0125451598",
+  status: "Online",
+  screenName: "theDeactivatedUser",
+  state: userStatus.deactivated,
+};
+export const ADMIN = {
+  id: "5",
+  screenFirstName: "Eng.",
+  screenLastName: "Hashish",
+  email: "admin@gmail.com",
+  password: "12345678",
+  username: "admin",
+  isAdmin: true,
 };
 
 export const TOKEN =

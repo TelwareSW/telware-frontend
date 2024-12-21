@@ -14,7 +14,7 @@ function useBanUser() {
   } = useMutation({
     mutationFn: (userId: string) => apiBanUser(userId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["all-users"] });
       toast.success("User banned successfully");
     },
     onError: () => {

@@ -6,11 +6,15 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 function Admins() {
   const { isPending, admins } = useGroupInfo();
   const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
+  const { backView } = useAppSelector(
+    (state) => state.sideBarData.rightSideBar
+  );
 
   if (isPending) return;
 
@@ -24,7 +28,7 @@ function Admins() {
     dispatch(
       updateSideBarView({
         redirect: sideBarPages.ADD_ADMINS,
-        data: { type: "right" },
+        data: { type: "right", prevBackView: backView },
       })
     );
   }

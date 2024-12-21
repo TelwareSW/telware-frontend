@@ -1,8 +1,11 @@
-import Avatar from "@components/Avatar";
-import Button from "@components/Button";
-import Heading from "@components/Heading";
 import styled from "styled-components";
 import { userStatus } from "types/admin";
+import { useBanUser } from "../hooks/useBanUser";
+import { useActivateUser } from "../hooks/useActivateUser";
+import { useDeactivateUser } from "../hooks/useDeactivateUser";
+import Avatar from "@components/Avatar";
+import Heading from "@components/Heading";
+import UserCardButton from "./UserCardButton";
 
 interface UserCardProps {
   id: string;
@@ -14,14 +17,18 @@ interface UserCardProps {
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 0.6rem;
   padding: 2.4rem;
   border-radius: 0.8rem;
-  background-color: var(--admin-card-bg--active);
+  background-color: var(--admin-sidebar-bg);
+  height: 15rem;
+  width: 21rem;
 `;
-const P = styled.p<{ $status: string }>`
+const P = styled.p<{ $status: userStatus }>`
   color: ${({ $status }) =>
-    $status === userStatus.active ? "var(--accent-color)" : "red"};
+    $status === userStatus.active
+      ? "var(--admin-card-active)"
+      : "var(--color-error)"};
 `;
 const UserInfo = styled.div`
   display: flex;
@@ -34,22 +41,41 @@ const UserInfo = styled.div`
 
 function UserCard(props: UserCardProps) {
   const { id, userName, photo, status } = props;
-  const handleUserStatusChange = (id: string, status: string) => {
-    console.log(id, status);
+  const { activateUser } = useActivateUser();
+  const { deactivateUser } = useDeactivateUser();
+  const { banUser } = useBanUser();
+  const handleUserStatusChange = (status: string) => {
+    switch (status) {
+      case userStatus.active:
+        activateUser(id);
+        break;
+      case userStatus.deactivated:
+        deactivateUser(id);
+        break;
+      case userStatus.banned:
+        banUser(id);
+        break;
+      default:
+        break;
+    }
   };
+  const displayedName =
+    userName?.length > 9 ? `${userName?.slice(0, 9)}...` : userName;
 
   return (
-    <Card>
-      <Avatar image={photo} name={userName} />
+    <Card data-testid={`user-card-${id}`}>
       <UserInfo>
-        <Heading as="h4">{userName}</Heading>
-        <P $status={status}>{status}</P>
+        <Avatar image={photo} name={userName} />
+        <>
+          <Heading as="h4">{displayedName}</Heading>
+          <P $status={status}>{status}</P>
+        </>
       </UserInfo>
-      {
-        <Button onClick={() => handleUserStatusChange(id, status)}>
-          {status === userStatus.active ? "Deactivate" : "Activate"}
-        </Button>
-      }
+      <UserCardButton
+        status={status}
+        onChangeStatus={handleUserStatusChange}
+        data-testid={`user-card-button-${id}`}
+      />
     </Card>
   );
 }

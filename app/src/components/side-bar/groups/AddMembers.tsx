@@ -4,6 +4,7 @@ import styled from "styled-components";
 import UsersList from "@components/UsersList";
 import { UserType } from "@features/groups/hooks/useAllUsers";
 import SearchInput from "./SearchInput";
+import { useAppSelector } from "@hooks/useGlobalState";
 
 const StyledUsersList = styled.div`
   width: 100%;
@@ -16,11 +17,14 @@ const StyledUsersList = styled.div`
 
 function AddMembers({ users }: { users: UserType[] }) {
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const currUser = useAppSelector((state) => state.user.userInfo);
 
-  const filteredUsers = users?.filter((user) =>
-    `${user.screenFirstName} ${user.screenLastName}`
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
+  const filteredUsers = users?.filter(
+    (user) =>
+      currUser.id !== user._id &&
+      `${user.screenFirstName} ${user.screenLastName}`
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
   );
 
   return (

@@ -1,6 +1,8 @@
 import SideBarMenuItem from "@components/side-bar/chats/SideBarMenuItem";
 import { getIcon } from "@data/icons";
+import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import { useMouseLeave } from "@hooks/useMouseLeave";
+import { setView, View } from "@state/admin/adminView";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -38,6 +40,18 @@ function AdminNavMenu() {
   const handleOpenSettings = () => {
     setIsOpened((prevState) => !prevState);
   };
+  const activeView = useAppSelector((state) => state.adminView.value);
+  const dispatch = useAppDispatch();
+  const handleViewChange = (view: View) => {
+    if (activeView !== view) {
+      dispatch(
+        setView({
+          value: view,
+        })
+      );
+    }
+    setIsOpened(false);
+  };
   return (
     <>
       <ToolsIcon onClick={handleOpenSettings} data-testid="menu-items-icon">
@@ -52,13 +66,17 @@ function AdminNavMenu() {
             data-testid="menu-item-users"
             title="Users"
             iconMapValue="Contacts"
-            // onClick={() => onChoose("users")}
+            onClick={() => {
+              handleViewChange(View.USERS);
+            }}
           />
           <SideBarMenuItem
             data-testid="menu-item-groups"
             title="Groups"
-            iconMapValue="Group"
-            // onClick={() => onChoose("groups")}
+            iconMapValue="NewGroup"
+            onClick={() => {
+              handleViewChange(View.GROUPS);
+            }}
           />
         </StyledList>
       )}

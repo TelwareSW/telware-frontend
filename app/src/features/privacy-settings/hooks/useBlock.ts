@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import getBlockList from "@features/privacy-settings/service/apiGetBlockList";
-import { blockUser } from "../service/apiBlockUser";
-import { removeFromBlock } from "../service/apiRemoveFromBlocks";
+import apiGetBlockList from "@features/privacy-settings/service/apiGetBlockList";
+import { apiBlockUser } from "../service/apiBlockUser";
+import { apiRemoveFromBlock } from "../service/apiRemoveFromBlocks";
 
 export function useBlock() {
   const { data: blockList } = useQuery({
