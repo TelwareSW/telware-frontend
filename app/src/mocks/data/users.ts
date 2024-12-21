@@ -31,7 +31,7 @@ export const MOCK_USER2 = {
 
 export const BANNNED = {
   id: "3",
-  email: "banned@example.com",
+  email: "banned@gmail.com",
   password: "1234",
   firstName: "المصفوع",
   lastName: "من",
@@ -46,7 +46,7 @@ export const BANNNED = {
 
 export const DEACTIVATED = {
   id: "4",
-  email: "deactivated@example.com",
+  email: "deactivated@gmail.com",
   password: "1234",
   firstName: "Mr. ",
   lastName: "deactivtaed",
