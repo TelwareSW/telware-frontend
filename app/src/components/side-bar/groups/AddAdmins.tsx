@@ -25,6 +25,7 @@ function AddAdmins() {
   const { groupMembers, isPending } = useGroupInfo();
 
   const selectedUsers = useAppSelector((state) => state.selectedUsers);
+  const { props } = useAppSelector((state) => state.sideBarData.rightSideBar);
 
   const dispatch = useDispatch();
   const { addAdmins } = useSocket();
@@ -35,7 +36,12 @@ function AddAdmins() {
       members: selectedUsers.map((user) => user._id),
     });
     const redirect = sideBarPages.ADMINS;
-    dispatch(updateSideBarView({ redirect, data: { type: "right" } }));
+    dispatch(
+      updateSideBarView({
+        redirect,
+        data: { type: "right", backView: props?.prevBackView! },
+      })
+    );
     dispatch(clearSelectedUsers());
   }
 

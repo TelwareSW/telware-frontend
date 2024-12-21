@@ -116,6 +116,13 @@ const sideBarSlice = createSlice({
         props: { ...newData.props },
       };
 
+      if (redirect === sideBarPages.ADD_ADMINS) {
+        updatedSideBar.props = {
+          ...updatedSideBar.props,
+          prevBackView: data.prevBackView,
+        };
+      }
+
       if (redirect === sideBarPages.ADD_MEMBERS) {
         updatedSideBar.props = {
           ...updatedSideBar.props,
