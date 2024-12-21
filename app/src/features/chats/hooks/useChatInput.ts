@@ -28,7 +28,7 @@ function useChatInput() {
     setIsEmojiSelectorOpen(false);
   };
 
-  const handleSubmit = (e: Event, voiceNoteName = "voice") => {
+  const handleSubmit = (e: Event, voiceNoteName = "") => {
     console.log(voiceNoteName);
     e.preventDefault();
     setIsEmojiSelectorOpen(false);
