@@ -86,11 +86,6 @@ function ChatInput() {
 
   const chats = useAppSelector((state) => state.chats.chats);
   const currChat = getChatByID({ chats: chats, chatID: chatId! });
-  const hasNoPostPermission =
-    currChat?.type === "group" &&
-    !currChat?.messagingPermission &&
-    !isCurrUserAdmin;
-
   const showCheckBox = currChat?.showCheckBox;
   const isBlocked = currChat?.isBlocked;
 
@@ -101,9 +96,21 @@ function ChatInput() {
     setError("");
   }
 
-  if (!activeThread && !isCurrUserAdmin && currChat?.type === "channel")
+  console.log(currChat?.messagingPermission);
+
+  const isGroupWithoutPostPermission =
+    currChat?.type === "group" &&
+    !currChat?.messagingPermission &&
+    !isCurrUserAdmin;
+
+  const isChannelWithoutPostPermission =
+    currChat?.type === "channel" &&
+    !isCurrUserAdmin &&
+    (!activeThread || !currChat?.messagingPermission);
+
+  if (isChannelWithoutPostPermission || isGroupWithoutPostPermission) {
     return <DisabledChatInput />;
-  if (hasNoPostPermission) return <DisabledChatInput />;
+  }
 
   return (
     <>
