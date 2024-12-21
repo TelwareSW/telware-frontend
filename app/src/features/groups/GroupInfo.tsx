@@ -69,7 +69,7 @@ function GroupInfo() {
         <Info>
           <GroupName data-testid="group-name">{group?.name}</GroupName>
           <MembersCount data-testid="group-members-count">
-            {groupMembers.length} members
+            {groupMembers?.length} members
           </MembersCount>
         </Info>
       </GroupDetails>

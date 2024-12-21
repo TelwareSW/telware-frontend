@@ -21,6 +21,8 @@ interface DetailedChatInterface extends Chat {
 
   encryptionKey?: string;
   initializationVector?: string;
+  messagingPermission?: boolean;
+  downloadingPermission?: boolean;
 }
 
 interface ChatsState {
@@ -30,7 +32,7 @@ interface ChatsState {
 
 const initialState: ChatsState = {
   chats: [],
-  members: [],
+  members: []
 };
 
 const chatsSlice = createSlice({
@@ -203,7 +205,6 @@ const chatsSlice = createSlice({
       const { chatId, newMessages } = action.payload;
       const chatIndex = state.chats.findIndex((chat) => chat._id === chatId);
 
-
       if (chatIndex !== -1) {
         const chat = state.chats[chatIndex];
 
@@ -213,7 +214,7 @@ const chatsSlice = createSlice({
 
         state.chats[chatIndex] = {
           ...chat,
-          messages: [...filteredMessages, ...chat.messages],
+          messages: [...filteredMessages, ...chat.messages]
         };
       }
     },
@@ -297,8 +298,8 @@ const chatsSlice = createSlice({
       if (chat) {
         chat.photo = photo;
       }
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -318,7 +319,7 @@ export const {
   setChatIsBlocked,
   setMemberIsBlocked,
   setName,
-  setPhoto,
+  setPhoto
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 export type { DetailedChatInterface, ChatsState };

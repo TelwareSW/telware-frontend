@@ -3,7 +3,7 @@ import { ChatMember } from "@mocks/data/chats";
 
 export function getChatByID({
   chats,
-  chatID,
+  chatID
 }: {
   chats: DetailedChatInterface[];
   chatID: string;
@@ -25,12 +25,14 @@ export function parseChatsToState(chatData?: any) {
       name,
       encryptionKey,
       initializationVector,
+      messagingPermission,
+      downloadingPermission
     } = currChat;
 
     const filteredMembers = members?.map((member: any) => {
       return {
         _id: member.user,
-        Role: member.Role,
+        Role: member.Role
       } as ChatMember;
     });
 
@@ -51,7 +53,7 @@ export function parseChatsToState(chatData?: any) {
         _id: incomingLastMessage?.id,
         content: incomingLastMessage?.content,
         senderId: incomingLastMessage?.senderId,
-        timestamp: incomingLastMessage?.timestamp,
+        timestamp: incomingLastMessage?.timestamp
       },
 
       messages: [],
@@ -61,6 +63,8 @@ export function parseChatsToState(chatData?: any) {
 
       encryptionKey,
       initializationVector,
+      messagingPermission,
+      downloadingPermission
     } as DetailedChatInterface;
   });
 }
@@ -80,7 +84,7 @@ const arrayBufferToHex = (buffer: ArrayBuffer) => {
 export const encryptMessage = async ({
   message,
   keyHex,
-  ivHex,
+  ivHex
 }: {
   message: string;
   keyHex: string;
@@ -115,7 +119,7 @@ export const encryptMessage = async ({
 export const decryptMessage = async ({
   encryptedMessageHex,
   keyHex,
-  ivHex,
+  ivHex
 }: {
   encryptedMessageHex: string;
   keyHex: string;

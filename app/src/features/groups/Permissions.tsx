@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import styled from "styled-components";
 import Checkbox from "@components/Checkbox";
+import { useSocket } from "@hooks/useSocket";
+import { useParams } from "react-router-dom";
+import { useGroupInfo } from "./hooks/useGroupInfo";
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +19,6 @@ const P = styled.p`
 
 const PermissionRow = styled.div`
   display: flex;
-
   align-items: center;
   padding: 0.75rem;
 `;
@@ -26,55 +28,62 @@ const PermissionText = styled.span`
   font-size: 0.875rem;
 `;
 
-interface Permission {
-  id: string;
-  label: string;
-  enabled: boolean;
+interface PermissionsState {
+  [key: string]: boolean;
 }
 
-//TODO: Integrate with backend
-function Permissions() {
-  const [permissions, setPermissions] = useState<Permission[]>([
-    {
-      id: "post",
-      label: "Send messages",
-      enabled: false,
-    },
-    {
-      id: "vidoe",
-      label: "Download video messages",
-      enabled: false,
-    },
-    {
-      id: "audio",
-      label: "Download audio messages",
-      enabled: false,
-    },
-  ]);
+const Permissions = () => {
+  const { group, isCurrUserAdmin } = useGroupInfo();
+  const { chatId } = useParams<{ chatId: string }>();
 
-  const togglePermission = (id: string) => {
-    setPermissions(
-      permissions.map((perm) =>
-        perm.id === id ? { ...perm, enabled: !perm.enabled } : perm
-      )
-    );
+  const [permissions, setPermissions] = useState<PermissionsState>({
+    post: group?.messagingPermission!,
+    video: group?.downloadingPermission!,
+    audio: false
+  });
+
+  const { setPermission: socketSetPermission } = useSocket();
+
+  const togglePermission = useCallback((id: string) => {
+    setPermissions((prev) => {
+      const isEnabled = !prev[id];
+
+      console.log(id, isEnabled);
+
+      if (id === "post") {
+        socketSetPermission({
+          chatId: chatId!,
+          type: "post",
+          who: isEnabled ? "everyone" : "admins"
+        });
+      }
+
+      return { ...prev, [id]: isEnabled };
+    });
+  }, []);
+
+  const permissionLabels: { [key: string]: string } = {
+    post: "Send messages",
+    video: "Download video messages",
+    audio: "Download audio messages"
   };
 
   return (
     <Container>
       <P>What can members of this chat do?</P>
-      {permissions.map((permission) => (
-        <PermissionRow key={permission.id}>
+      {Object.entries(permissionLabels).map(([id, label]) => (
+        <PermissionRow key={id}>
           <Checkbox
-            checked={permission.enabled}
-            onChange={() => togglePermission(permission.id)}
-            data-testid={`permission-${permission.id}`}
+            checked={permissions[id]}
+            onChange={() => togglePermission(id)}
+            data-testid={`permission-${id}`}
+            disabled={!isCurrUserAdmin}
           />
-          <PermissionText>{permission.label}</PermissionText>
+          <PermissionText>{label}</PermissionText>
         </PermissionRow>
       ))}
     </Container>
   );
-}
+};
 
 export default Permissions;

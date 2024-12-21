@@ -16,7 +16,14 @@ const Container = styled.div`
 
 function EditGroupInfo() {
   const dispatch = useDispatch();
-  const { admins, groupMembers, chatId, isPending, chatType } = useGroupInfo();
+  const {
+    admins,
+    groupMembers,
+    chatId,
+    isPending,
+    chatType,
+    numGivenPermissions
+  } = useGroupInfo();
   const { leaveGroup } = useSocket();
   const { setIsRightSideBarOpen } = useRightSideBarContext();
 
@@ -37,6 +44,7 @@ function EditGroupInfo() {
     resetRightSideBar,
     chatType: chatType!,
     backView,
+    numGivenPermissions
   });
 
   return (
