@@ -15,12 +15,9 @@ function useGroupInfo() {
 
   const group = chats.find((chat) => chat._id === chatId);
 
-  console.log("group members ids", group?.members);
-  console.log("ALl users", users);
-
   useEffect(() => {
-    if (group && users?.length) {
-      const members = group.members
+    if (users?.length) {
+      const members = group?.members
         .map((groupMember) => {
           const user = users?.find((member) => member._id === groupMember._id);
           return user
@@ -32,19 +29,18 @@ function useGroupInfo() {
         })
         .filter((member) => member !== null);
 
-      console.log("current members", members);
 
-      const groupAdmins = members.filter((member) => member.role === "admin");
+      const groupAdmins = members?.filter((member) => member.role === "admin");
       setIsCurrUserAdmin(
-        members.some(
+        members?.some(
           (member) => member._id === user.id && member.role === "admin"
-        )
+        ) || false
       );
-      setGroupMembers(members);
-      setAdmins(groupAdmins);
+      setGroupMembers(members!);
+      setAdmins(groupAdmins!);
       setIsLoading(false);
     }
-  }, [group, users, user]);
+  }, [group, users, user, isLoading]);
 
   return {
     groupMembers,
