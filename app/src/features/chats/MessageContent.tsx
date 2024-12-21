@@ -50,10 +50,9 @@ function MessageContent() {
     media && (contentType === "GIF" || contentType === "sticker");
 
   const isFile = media && !(contentType === "GIF" || contentType === "sticker");
-  console.log("isAppropriate", isAppropriate);
   const filteredContent = isAppropriate
     ? content
-    : "🚫️ This mesaage has unappropriate content";
+    : "🚫️ This mesaage has unappropriate content.";
 
   return (
     <Container>

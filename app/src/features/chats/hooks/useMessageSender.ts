@@ -48,7 +48,7 @@ export const useMessageSender = () => {
         isPinned: false,
         isForward: false,
         isAnnouncement: false,
-        isAppropriate: false,
+        isAppropriate: true,
         senderId: userId,
         chatId: chatId!,
         parentMessageId: isReply ? activeMessage.id : null,
