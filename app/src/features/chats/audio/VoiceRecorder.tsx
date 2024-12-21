@@ -85,23 +85,18 @@ const VoiceRecorder = ({
         lastModified: Date.now(),
       });
       audioChunks.current = [];
-      uploadVoiceNote(file);
-
       try {
         uploadVoiceNote(file, {
           onSuccess: (url) => {
             console.log("File uploaded successfully:", url);
-            toast.success("Voice note sent successfully.");
             handleSendMessage("", chatId, url);
           },
           onError: (error) => {
             console.error("Error uploading file:", error);
-            toast.error("Failed to upload the file. Please try again.");
           },
         });
       } catch (error) {
         console.error("Unexpected error while sending file:", error);
-        toast.error("Unexpected error occurred. Please try again.");
       }
       setIsRecording("idle");
     }
