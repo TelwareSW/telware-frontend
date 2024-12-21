@@ -54,7 +54,7 @@ const ChannelResult: React.FC<ChannelResultProps> = ({
   image,
   username,
   subscribers,
-  chatId,
+  chatId
 }) => {
   const navigate = useNavigate();
   const handleItemClick = () => {
