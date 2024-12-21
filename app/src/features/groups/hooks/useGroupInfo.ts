@@ -23,12 +23,11 @@ function useGroupInfo() {
           return user
             ? {
                 ...user,
-                role: groupMember.Role,
+                role: groupMember.Role
               }
             : null;
         })
         .filter((member) => member !== null);
-
 
       const groupAdmins = members?.filter((member) => member.role === "admin");
       setIsCurrUserAdmin(
@@ -50,6 +49,8 @@ function useGroupInfo() {
     isCurrUserAdmin,
     chatId,
     chatType: group?.type,
+    numGivenPermissions:
+      Number(group?.messagingPermission) + Number(group?.downloadingPermission)
   };
 }
 

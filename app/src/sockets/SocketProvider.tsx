@@ -220,6 +220,10 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.log("NEW MEMBERS ARE ADDED");
       queryClient.invalidateQueries({ queryKey: ["chats"] });
     });
+    socket.on("SET_PERMISSION_SERVER", ({ chatId, type, who }) => {
+      console.log("SET_PERMISSION_SERVER", chatId, type, who);
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+    });
 
     socket.on("typing", (isTyping, message) =>
       handleIsTyping(dispatch, isTyping, message.chatId)
@@ -575,6 +579,34 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }
 
+  function setPermission({
+    chatId,
+    type,
+    who
+  }: {
+    chatId: string;
+    type: "post" | "download";
+    who: "admins" | "everyone";
+  }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "SET_PERMISSION_CLIENT",
+        { chatId, type, who },
+        ({ success, message, error }: AckCreateGroup) => {
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot remove members: not connected to socket");
+    }
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -591,7 +623,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         leaveGroup,
         removeMembers,
         acceptCall,
-        createVoiceCall
+        createVoiceCall,
+        setPermission
       }}
     >
       {children}

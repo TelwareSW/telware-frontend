@@ -15,6 +15,8 @@ import FilePreviewItem from "./media/FilePreviewItem";
 import useActiveMessage from "./hooks/useActiveMessage";
 import { useContext } from "react";
 import { ChatInputContext } from "./ChatBox";
+import { useGroupInfo } from "@features/groups/hooks/useGroupInfo";
+import DisabledChatInput from "./DisabledChatInput";
 
 const Container = styled.div`
   z-index: 1;
@@ -65,6 +67,7 @@ const Input = styled.div`
 
 function ChatInput() {
   const { chatId } = useParams<{ chatId: string }>();
+  const { isCurrUserAdmin } = useGroupInfo();
 
   const {
     input,
@@ -82,6 +85,10 @@ function ChatInput() {
 
   const chats = useAppSelector((state) => state.chats.chats);
   const currChat = getChatByID({ chats: chats, chatID: chatId! });
+  const hasNoPostPermission =
+    currChat?.type === "group" &&
+    !currChat?.messagingPermission &&
+    !isCurrUserAdmin;
 
   const showCheckBox = currChat?.showCheckBox;
   const isBlocked = currChat?.isBlocked;
@@ -92,6 +99,9 @@ function ChatInput() {
     alert(error);
     setError("");
   }
+  console.log(isCurrUserAdmin);
+
+  if (hasNoPostPermission) return <DisabledChatInput />;
 
   return (
     <>
