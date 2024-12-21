@@ -637,6 +637,33 @@ function SocketProvider({ children }: SocketProviderProps) {
     }
   }
 
+  function setPrivacy({
+    chatId,
+    privacy
+  }: {
+    chatId: string;
+    privacy: boolean;
+  }) {
+    if (isConnected && socket) {
+      socket.emit(
+        "SET_PRIVACY_CLIENT",
+        { chatId, privacy },
+        ({ success, message, error }: AckCreateGroup) => {
+          console.log(message, error, success);
+          if (success) {
+            toast.success(message);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
+          } else {
+            toast.error(message);
+            console.error(error);
+          }
+        }
+      );
+    } else {
+      console.warn("Cannot set privacy: not connected to socket server");
+    }
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -655,7 +682,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         acceptCall,
         createVoiceCall,
         setPermission,
-        deleteGroup
+        deleteGroup,
+        setPrivacy
       }}
     >
       {children}

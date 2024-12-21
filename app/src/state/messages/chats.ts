@@ -8,7 +8,7 @@ interface DetailedChatInterface extends Chat {
   messages: MessageInterface[];
   isTyping: boolean;
   showCheckBox: boolean;
-  selectedMessages: string[]; //indicates ids only of selected messages
+  selectedMessages: string[];
   lastMessage?: {
     _id: string;
     content: string;
@@ -23,6 +23,7 @@ interface DetailedChatInterface extends Chat {
   initializationVector?: string;
   messagingPermission?: boolean;
   downloadingPermission?: boolean;
+  privacy: boolean;
 }
 
 interface ChatsState {
