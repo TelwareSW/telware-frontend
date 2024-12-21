@@ -65,6 +65,7 @@ export interface SocketContextType {
   deleteGroup: ({ chatId }: { chatId: string }) => void;
   createVoiceCall: ({ chatId }: { chatId: string }) => void;
   acceptCall: (callId: string | null) => void;
+  finishCall: () => void;
 }
 
 export interface SocketProviderProps {

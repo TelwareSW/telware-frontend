@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode, useCallback } from "react";
+import { useEffect, ReactNode, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
@@ -61,18 +61,18 @@ interface AckCreateGroup {
 }
 
 function SocketProvider({ children }: SocketProviderProps) {
-  const [isConnected, setIsConnected] = useState(false);
   const {
     callId,
     joinCall,
     endCall,
     recieveICE,
     recieveAnswer,
-    peerConnection,
+    setChatId,
+    getPeerConnection,
+    createAnswer,
     startPeerConnection,
     offer,
-    acceptCall: setAcceptedCall,
-    callAccepted
+    acceptCall: setAcceptedCall
   } = useCallContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -85,82 +85,93 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   const { decrypt } = useEncryptDecrypt();
   const { chat } = useChat();
-  const handleIceCandidates = useCallback(async () => {
-    return new Promise((resolve) => {
-      const timeout = setTimeout(() => {
-        resolve(null);
-      }, 10000);
-      if (peerConnection && isConnected && socket && callId) {
-        peerConnection.onicecandidate = (event) => {
-          if (!event.candidate) {
-            clearTimeout(timeout);
-            resolve(null);
-          }
-          socket.emit("SIGNAL-SERVER", {
-            type: "ICE",
-            voiceCallId: callId,
-            data: event.candidate
-          });
-        };
-      }
-    });
-  }, [peerConnection, isConnected, socket, callId]);
-  const sendOffer = useCallback(() => {
-    if (offer && isConnected && socket && callId) {
-      socket.emit("SIGNAL-SERVER", {
-        type: "OFFER",
-        voiceCallId: callId,
-        data: offer
+  const handleIceCandidates = useCallback(
+    async (clientId: string) => {
+      return new Promise((resolve) => {
+        const timeout = setTimeout(() => {
+          resolve(null);
+        }, 10000);
+        if (socket?.connected && socket && callId.current) {
+          const peerConnection = getPeerConnection(clientId);
+          if (!peerConnection) return;
+          peerConnection.onicecandidate = (event) => {
+            if (!event.candidate) {
+              clearTimeout(timeout);
+              resolve(null);
+            }
+            socket.emit("SIGNAL-SERVER", {
+              type: "ICE",
+              voiceCallId: callId.current,
+              data: event.candidate,
+              targetId: clientId
+            });
+          };
+        }
       });
-    }
-  }, [offer, isConnected, socket, callId]);
+    },
+    [socket, callId, getPeerConnection]
+  );
+  const sendOffer = useCallback(
+    (clientId: string, offer: RTCSessionDescriptionInit) => {
+      if (
+        socket &&
+        offer &&
+        socket?.connected &&
+        socket &&
+        callId.current &&
+        clientId
+      ) {
+        socket.emit("SIGNAL-SERVER", {
+          type: "OFFER",
+          voiceCallId: callId.current,
+          data: offer,
+          targetId: clientId
+        });
+      }
+    },
+    [socket, callId]
+  );
   const acceptCall = useCallback(() => {
-    console.log(callId, callAccepted, isConnected, socket);
-    if (isConnected && socket && callId.current && !callAccepted.current) {
-      console.log("acceptCall", callId.current);
+    if (socket?.connected && socket && callId.current) {
       setAcceptedCall();
       socket.emit("JOIN-CALL", { voiceCallId: callId.current });
     }
-  }, [callAccepted, isConnected, socket, callId, setAcceptedCall]);
+  }, [socket, callId, setAcceptedCall]);
+  const finishCall = useCallback(() => {
+    if (socket?.connected && socket && callId.current) {
+      socket.emit("LEAVE", { voiceCallId: callId.current });
+      endCall();
+    }
+  }, [socket, callId, endCall]);
   const sendAnswer = useCallback(
-    (
-      answer: string,
-      callback?: (response: { success: boolean; error?: string }) => void
-    ) => {
-      if (isConnected && socket) {
-        socket.emit(
-          "SEND_ANSWER",
-          { answer },
-          (response: { success: boolean; error?: string }) => {
-            if (callback) {
-              callback(response);
-            } else if (!response.success) {
-              console.error("Failed to send answer:", response.error);
-            } else {
-              console.log("Answer sent successfully");
-            }
-          }
-        );
-      } else {
-        console.warn("Cannot send answer: not connected to socket server");
+    (clientId: string, answer: RTCSessionDescriptionInit) => {
+      if (
+        socket &&
+        offer &&
+        socket?.connected &&
+        socket &&
+        callId.current &&
+        clientId
+      ) {
+        socket.emit("SIGNAL-SERVER", {
+          type: "ANSWER",
+          voiceCallId: callId.current,
+          data: answer,
+          targetId: clientId
+        });
       }
     },
-    [isConnected, socket]
+    [socket, callId, offer]
   );
   useEffect(() => {
     if (!socket) return;
-    if (!socket.connected) socket.connect();
 
     const onConnect = () => {
-      setIsConnected(true);
-      console.log("Socket connected");
-
       socket.io.engine.on("close", (reason) => {
         console.log("Socket connection closed:", reason);
       });
     };
     const onReceiveMessage = (message: MessageInterface) => {
-      console.log("Received message:", message);
       if (!chat) {
         console.warn("No chat context available for decryption");
         return;
@@ -227,17 +238,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     socket.on("typing", (isTyping, message) =>
       handleIsTyping(dispatch, isTyping, message.chatId)
     );
-
-    // socket.on("RECIEVE_OFFER", async (offer) => {
-    //   console.log(offer);
-    //   const answer = await createAnswer(offer);
-    //   sendAnswer(answer);
-    // });
-    // socket.on("RECEIVE_ANSWER", async (answer: string) => {
-    //   console.log(answer);
-    //   startCall(answer);
-    // });
-
     socket.on(
       "DELETE_MESSAGE_SERVER",
       ({ chatId, id }: { chatId: string; id: string }) => {
@@ -283,22 +283,43 @@ function SocketProvider({ children }: SocketProviderProps) {
         voiceCallId: string;
         chatId: string;
       }) => {
-        console.log("call id", voiceCallId);
         joinCall(snederId, chatId, voiceCallId);
-        console.log(snederId, userId);
         if (snederId === userId) acceptCall();
       }
     );
-    socket.on("CLIENT-JOINED", () => {
-      console.log("CLIENT-JOINED");
-      startPeerConnection();
-      sendOffer();
-      handleIceCandidates();
+    socket.on("CLIENT-JOINED", async ({ clientId }) => {
+      const offer = await startPeerConnection(clientId);
+      try {
+        if (offer && clientId) {
+          sendOffer(clientId, offer);
+          handleIceCandidates(clientId);
+        } else throw new Error("Failed to send offer");
+      } catch {
+        console.error("Failed to send offer");
+      }
     });
-    socket.on("SIGNAL-SERVER", async ({ type, voiceCallId, data }) => {
-      console.log(typeof data);
-      if (type === "ANSWER") recieveAnswer(data);
-      if (type === "ICE") recieveICE(data);
+    socket.on(
+      "SIGNAL-CLIENT",
+      async ({ type, voiceCallId, data, senderId }) => {
+        if (voiceCallId == callId.current) {
+          if (type === "OFFER") {
+            const answer = await createAnswer(data, senderId);
+            if (answer) {
+              sendAnswer(senderId, answer);
+              handleIceCandidates(senderId);
+            } else {
+              console.error("Failed to create answer");
+            }
+          }
+          if (type === "ANSWER") recieveAnswer(data, senderId);
+          if (type === "ICE") recieveICE(data, senderId);
+        }
+      }
+    );
+    socket.on("CLIENT-LEFT", ({ voiceCallId, clientId }) => {
+      if (voiceCallId === callId.current) {
+        endCall(clientId);
+      }
     });
     socket.emit("typing");
 
@@ -314,10 +335,10 @@ function SocketProvider({ children }: SocketProviderProps) {
       socket.off("typing");
       // socket.io.engine.off("close");
     };
-  }, [socket, chat, decrypt, dispatch, queryClient, user]);
+  }, [socket, chat]);
 
   const sendMessage = (sentMessage: MessageInterface) => {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       console.log("messageToSend", sentMessage);
       socket.emit(
         "SEND_MESSAGE",
@@ -371,7 +392,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     content: string,
     chatId: string
   ) => {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "EDIT_MESSAGE_CLIENT",
         { messageId, content, chatId },
@@ -396,13 +417,12 @@ function SocketProvider({ children }: SocketProviderProps) {
       );
     }
   };
-
   const pinMessageSocket = (
     chatId: string,
     messageId: string,
     userId: string
   ) => {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit("PIN_MESSAGE_CLIENT", { messageId, chatId, userId });
     } else {
       console.warn("Cannot pin message: not connected to socket server");
@@ -414,29 +434,20 @@ function SocketProvider({ children }: SocketProviderProps) {
     messageId: string,
     userId: string
   ) => {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit("UNPIN_MESSAGE_CLIENT", { messageId, chatId, userId });
     } else {
       console.warn("Cannot unpin message: not connected to socket server");
     }
   };
   const createVoiceCall = ({ chatId }: { chatId: string }) => {
-    console.log("create call", isConnected, socket, chatId, callId.current);
-    if (isConnected && socket && !callId.current) {
+    if (socket?.connected && socket && !callId.current) {
+      setChatId(chatId);
       socket.emit("CREATE-CALL", {
         chatId
       });
     }
   };
-  // const startConnection = async (callId: string) => {
-  //   const offer = await connectToPeer();
-  //   if (isConnected && socket) {
-  //     console.log(offer);
-  //     socket.emit("SEND_OFFER", { offer });
-  //   } else {
-  //     console.warn("Cannot unpin message: not connected to socket server");
-  //   }
-  // };
 
   function createGroupOrChannel({
     type,
@@ -447,13 +458,12 @@ function SocketProvider({ children }: SocketProviderProps) {
     name: string;
     members: string[];
   }) {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "CREATE_GROUP_CHANNEL",
         { type, name, members },
         ({ success, data, error }: AckCreateGroup) => {
           if (success) {
-            console.log("Group/Channel ID:", data?._id);
             navigate(`/${data?._id}`);
           } else {
             toast.error(error || `Failed to create ${type}`);
@@ -474,7 +484,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     chatId: string;
     users: string[];
   }) {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "ADD_MEMBERS_CLIENT",
         { chatId, users },
@@ -500,8 +510,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     chatId: string;
     members: string[];
   }) {
-    console.log(chatId, members);
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "ADD_ADMINS_CLIENT",
         { chatId, members },
@@ -527,7 +536,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     messageId: string;
     chatId: string;
   }) {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "DELETE_MESSAGE_CLIENT",
         { messageId, chatId },
@@ -545,12 +554,11 @@ function SocketProvider({ children }: SocketProviderProps) {
   }
 
   function leaveGroup({ chatId }: { chatId: string }) {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "LEAVE_GROUP_CHANNEL_CLIENT",
         { chatId },
         ({ success, message, error }: AckCreateGroup) => {
-          console.log(message, error, success);
           if (success) {
             toast.success(message);
             queryClient.invalidateQueries({ queryKey: ["chats"] });
@@ -574,7 +582,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     members: string[];
   }) {
     console.log(chatId, members);
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "REMOVE_MEMBERS_CLIENT",
         { chatId, members },
@@ -602,7 +610,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     type: "post" | "download";
     who: "admins" | "everyone";
   }) {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "SET_PERMISSION_CLIENT",
         { chatId, type, who },
@@ -656,7 +664,6 @@ function SocketProvider({ children }: SocketProviderProps) {
         "SET_PRIVACY_CLIENT",
         { chatId, privacy },
         ({ success, message, error }: AckCreateGroup) => {
-          console.log(message, error, success);
           if (success) {
             toast.success(message);
             queryClient.invalidateQueries({ queryKey: ["chats"] });
@@ -674,7 +681,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   return (
     <SocketContext.Provider
       value={{
-        isConnected,
+        isConnected: socket?.connected || false,
         sendMessage,
         pinMessage: pinMessageSocket,
         unpinMessage: unpinMessageSocket,
@@ -690,7 +697,8 @@ function SocketProvider({ children }: SocketProviderProps) {
         createVoiceCall,
         setPermission,
         deleteGroup,
-        setPrivacy
+        setPrivacy,
+        finishCall
       }}
     >
       {children}

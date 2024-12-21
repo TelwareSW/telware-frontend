@@ -1,29 +1,22 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
 import Avatar from "@components/Avatar";
 import Icon from "@components/Icon";
 import SearchBar from "@features/search/components/SearchBar";
 import PinnedMessages from "@features/pin-messages/components/PinnedMessages";
-import CallLayout from "@features/calls/CallLayout";
-
 import { getIcon } from "@data/icons";
 import { setChatIsBlocked } from "@state/messages/chats";
-
 import { useSocket } from "@hooks/useSocket";
 import { useAppDispatch, useAppSelector } from "@hooks/useGlobalState";
 import { useChatMembers } from "./hooks/useChatMember";
 import { useBlock } from "@features/privacy-settings/hooks/useBlock";
 import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
-
 import { getElapsedTime } from "@utils/helpers";
 import { getChatByID } from "./utils/helpers";
 import { updateSideBarView } from "@state/side-bar/sideBar";
 import { sideBarPages } from "types/sideBar";
-
 import { resetActiveThread } from "@state/messages/channels";
-import { callStatusEmitter } from "@features/calls/context/callStatusEmitter";
 
 const Container = styled.div<{ $hasMargin?: boolean }>`
   position: absolute;
@@ -126,18 +119,10 @@ function Topbar() {
   const dispatch = useAppDispatch();
   const { activeThread } = useAppSelector((state) => state.channelsThreads);
   const [isSearching, setIsSearching] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const { createVoiceCall } = useSocket();
   const [callStatus, setCallStatus] = useState<
     "inactive" | "active" | "calling" | "incoming" | "ended"
   >("inactive");
-
-  useEffect(() => {
-    const handler = (status: typeof callStatus) => setCallStatus(status);
-    callStatusEmitter.on("update", handler);
-
-    return () => callStatusEmitter.off("update", handler);
-  }, []);
   const startCall = () => {
     if (chatId && callStatus === "inactive") {
       createVoiceCall({ chatId });
@@ -215,15 +200,7 @@ function Topbar() {
 
   return (
     <>
-      {callStatus != "inactive" && (
-        <CallLayout
-          isCollapsed={isCollapsed}
-          setIsCollapsed={setIsCollapsed}
-          chatId={chatId}
-          callStatus={callStatus}
-        />
-      )}
-      <Container data-testid="chat-topbar" $hasMargin={isCollapsed}>
+      <Container data-testid="chat-topbar">
         {!activeThread && (
           <Avatar
             data-testid="chat-avatar"

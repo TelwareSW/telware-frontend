@@ -6,19 +6,15 @@ export function useSignup() {
     mutate: signup,
     isSuccess,
     isPending,
-    isError,
+    isError
   } = useMutation({
-    mutationFn: Signup,
-
-    onSuccess: (email) => {
-      console.log(email);
-    },
+    mutationFn: Signup
   });
 
   return {
     signup,
     isPending,
     isSuccess,
-    isError,
+    isError
   };
 }

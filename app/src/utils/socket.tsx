@@ -3,24 +3,20 @@ import { io, Socket } from "socket.io-client";
 import { useUser } from "@features/authentication/login/hooks/useUser";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 
-let socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
-
 function initializeSocket(
   userId: string,
   sessionId: string | null
 ): Socket<DefaultEventsMap, DefaultEventsMap> {
-  if (!socket) {
-    socket = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`, {
-      query: {
-        userId
-      },
-      auth: {
-        sessionId
-      }
-    });
+  const socket = io(`${import.meta.env.VITE_SOCKET_BACKEND_API}`, {
+    query: {
+      userId
+    },
+    auth: {
+      sessionId
+    }
+  });
 
-    console.log("Socket initialized");
-  }
+  console.log("Socket initialized");
 
   return socket;
 }
@@ -37,9 +33,9 @@ function useSocket() {
       socketRef.current = initializeSocket(user._id, sessionId);
 
       return () => {
-        console.log("Disconnecting socket");
+        ("Disconnecting socket");
         socketRef.current?.disconnect();
-        socket = null;
+        socketRef.current = null;
       };
     }
   }, [user, isPending]);

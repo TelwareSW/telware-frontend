@@ -30,7 +30,6 @@ function AddMoreMembers() {
   const dispatch = useDispatch();
 
   if (isPending) return;
-  console.log(chatType);
 
   function handleClick() {
     addGroupMembers({

@@ -7,6 +7,7 @@ import { useCallContext } from "./hooks/useCallContext";
 import { getChatByID } from "@features/chats/utils/helpers";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useSocket } from "@hooks/useSocket";
+import { EnableSpeaker } from "./SpeakerEnable";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -193,21 +194,19 @@ const ActiveHeaderOpen = styled.div`
 type PropsType = {
   isCollapsed: boolean;
   setIsCollapsed: (arg0: boolean) => void;
-  chatId: string | undefined;
   callStatus: string | undefined;
 };
 
 export default function CallLayout({
   isCollapsed,
   setIsCollapsed,
-  chatId,
   callStatus
 }: PropsType) {
-  const { endCall } = useCallContext();
-  const { acceptCall } = useSocket();
+  const { acceptCall, finishCall } = useSocket();
+  const { endCall, chatId } = useCallContext();
   const chats = useAppSelector((state) => state.chats.chats);
   const chat = getChatByID({
-    chatID: chatId ?? "",
+    chatID: chatId.current ?? "",
     chats: chats
   });
 
@@ -249,16 +248,30 @@ export default function CallLayout({
                           <ButtonText>accept</ButtonText>
                         </ButtonContainer>
                       )}
-                      <ButtonContainer>
-                        <RoundButton
-                          onClick={() => endCall()}
-                          $bgColor="var(--color-error)"
-                          $bgColorHover="var(--color-error-shade)"
-                        >
-                          {getIcon("EndCall")}
-                        </RoundButton>
-                        <ButtonText>end call</ButtonText>
-                      </ButtonContainer>
+
+                      {callStatus === "incoming" ? (
+                        <ButtonContainer>
+                          <RoundButton
+                            onClick={() => endCall()}
+                            $bgColor="var(--color-error)"
+                            $bgColorHover="var(--color-error-shade)"
+                          >
+                            {getIcon("EndCall")}
+                          </RoundButton>
+                          <ButtonText>end call</ButtonText>
+                        </ButtonContainer>
+                      ) : (
+                        <ButtonContainer>
+                          <RoundButton
+                            onClick={() => finishCall()}
+                            $bgColor="var(--color-error)"
+                            $bgColorHover="var(--color-error-shade)"
+                          >
+                            {getIcon("EndCall")}
+                          </RoundButton>
+                          <ButtonText>end call</ButtonText>
+                        </ButtonContainer>
+                      )}
                     </ButtonsContainer>
                   </AvatarContainer>
                 </ModalContent>

@@ -4,6 +4,10 @@ import Main from "./Main";
 import SideBar from "./side-bar/SideBar";
 import { DESKTOP_VIEW, MOBILE_VIEW } from "@constants";
 import { useRightSideBarContext } from "@features/groups/contexts/RightSideBarProvider";
+import { useEffect, useState } from "react";
+import { useSocket } from "@hooks/useSocket";
+import { callStatusEmitter } from "@features/calls/context/callStatusEmitter";
+import CallLayout from "@features/calls/CallLayout";
 
 const StyledApp = styled.div<{
   $isChatOpen: boolean;
@@ -40,7 +44,17 @@ function AppLayout() {
   const { chatId } = useParams();
   const isChatOpen = !!chatId;
   const { isRightSideBarOpen } = useRightSideBarContext();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [callStatus, setCallStatus] = useState<
+    "inactive" | "active" | "calling" | "incoming" | "ended"
+  >("inactive");
 
+  useEffect(() => {
+    const handler = (status: typeof callStatus) => setCallStatus(status);
+    callStatusEmitter.on("update", handler);
+
+    return () => callStatusEmitter.off("update", handler);
+  }, []);
   return (
     <StyledApp
       $isChatOpen={isChatOpen}
@@ -50,6 +64,13 @@ function AppLayout() {
       <SideBar type="left" />
       <Main>
         <Outlet />
+        {callStatus != "inactive" && (
+          <CallLayout
+            isCollapsed={isCollapsed}
+            setIsCollapsed={setIsCollapsed}
+            callStatus={callStatus}
+          />
+        )}
       </Main>
       {isRightSideBarOpen && <SideBar type="right" />}
     </StyledApp>
