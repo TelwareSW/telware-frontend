@@ -94,6 +94,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         callId.current &&
         clientId
       ) {
+        console.log("Sending offer to", clientId);
         socket.emit("SIGNAL-SERVER", {
           type: "OFFER",
           voiceCallId: callId.current,
@@ -264,6 +265,8 @@ function SocketProvider({ children }: SocketProviderProps) {
       console.log("client joined", clientId);
       const offer = await startPeerConnection(clientId);
       try {
+        console.log("offer", offer);
+        console.log("clientId", clientId);
         if (offer && clientId) {
           sendOffer(clientId, offer);
         } else throw new Error("Failed to send offer");

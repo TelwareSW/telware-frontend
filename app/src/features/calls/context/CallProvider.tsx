@@ -215,6 +215,7 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
           remoteAudio.srcObject = event.streams[0];
           remoteAudio.autoplay = true;
           remoteAudio.controls = true;
+          remoteAudio.style.display = "none";
           document.body.appendChild(remoteAudio);
         }
       };
@@ -292,6 +293,7 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
             remoteAudio.srcObject = event.streams[0];
             remoteAudio.autoplay = true;
             remoteAudio.controls = false;
+            remoteAudio.style.display = "none";
             document.body.appendChild(remoteAudio);
           }
         };
