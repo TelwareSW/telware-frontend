@@ -68,7 +68,6 @@ function SocketProvider({ children }: SocketProviderProps) {
     recieveICE,
     recieveAnswer,
     setChatId,
-    getPeerConnection,
     createAnswer,
     startPeerConnection,
     offer,
@@ -86,32 +85,6 @@ function SocketProvider({ children }: SocketProviderProps) {
 
   const { decrypt } = useEncryptDecrypt();
   const { chat } = useChat();
-  const handleIceCandidates = useCallback(
-    async (clientId: string) => {
-      return new Promise((resolve) => {
-        const timeout = setTimeout(() => {
-          resolve(null);
-        }, 10000);
-        if (socket?.connected && socket && callId.current) {
-          const peerConnection = getPeerConnection(clientId);
-          if (!peerConnection) return;
-          peerConnection.onicecandidate = (event) => {
-            if (!event.candidate) {
-              clearTimeout(timeout);
-              resolve(null);
-            }
-            socket.emit("SIGNAL-SERVER", {
-              type: "ICE",
-              voiceCallId: callId.current,
-              data: event.candidate,
-              targetId: clientId
-            });
-          };
-        }
-      });
-    },
-    [socket, callId, getPeerConnection]
-  );
   const sendOffer = useCallback(
     (clientId: string, offer: RTCSessionDescriptionInit) => {
       if (
@@ -122,6 +95,7 @@ function SocketProvider({ children }: SocketProviderProps) {
         callId.current &&
         clientId
       ) {
+        console.log("Sending offer to", clientId);
         socket.emit("SIGNAL-SERVER", {
           type: "OFFER",
           voiceCallId: callId.current,
@@ -291,11 +265,13 @@ function SocketProvider({ children }: SocketProviderProps) {
       }
     );
     socket.on("CLIENT-JOINED", async ({ clientId }) => {
+      console.log("client joined", clientId);
       const offer = await startPeerConnection(clientId);
       try {
+        console.log("offer", offer);
+        console.log("clientId", clientId);
         if (offer && clientId) {
           sendOffer(clientId, offer);
-          handleIceCandidates(clientId);
         } else throw new Error("Failed to send offer");
       } catch {
         console.error("Failed to send offer");
@@ -309,7 +285,6 @@ function SocketProvider({ children }: SocketProviderProps) {
             const answer = await createAnswer(data, senderId);
             if (answer) {
               sendAnswer(senderId, answer);
-              handleIceCandidates(senderId);
             } else {
               console.error("Failed to create answer");
             }
