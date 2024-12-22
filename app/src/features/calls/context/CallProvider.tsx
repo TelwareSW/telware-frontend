@@ -6,7 +6,6 @@ import { CallStatus } from "types/calls";
 import { TURN_USERNAME, TURN_PASSWORD } from "@constants";
 const Servers = {
   iceServers: [
-    { urls: ["stun:stun.l.google.com:19302", "stun:stun.l.google.com:5349"] },
     {
       urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"]
     },
@@ -134,6 +133,14 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
     [clearClientIds, removeClientId, setCallStatus]
   );
 
+  const mute = () => {
+    if (localStream.current)
+      localStream.current.getAudioTracks()[0].enabled = false;
+  };
+  const unmute = () => {
+    if (localStream.current)
+      localStream.current.getAudioTracks()[0].enabled = true;
+  };
   const acceptCall = useCallback(() => {
     if (callIdRef.current && chatIdRef.current) {
       if (
@@ -302,6 +309,8 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
     endCall,
     recieveICE,
     recieveAnswer,
+    mute,
+    unmute,
     getPeerConnection
   };
 

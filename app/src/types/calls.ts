@@ -15,6 +15,9 @@ export interface CallContextType {
   joinCall: (newCallId: string, newSenderId: string, newChatId: string) => void;
   endCall: (clientId: string | null) => void;
 
+  mute: () => void;
+  unmute: () => void;
+
   acceptCall: () => void;
   startPeerConnection: (
     clientId: string

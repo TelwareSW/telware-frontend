@@ -8,6 +8,7 @@ import { getChatByID } from "@features/chats/utils/helpers";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { useSocket } from "@hooks/useSocket";
 import { EnableSpeaker } from "./SpeakerEnable";
+import { useState } from "react";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -203,12 +204,22 @@ export default function CallLayout({
   callStatus
 }: PropsType) {
   const { acceptCall, finishCall } = useSocket();
-  const { endCall, chatId } = useCallContext();
+  const { endCall, chatId, mute, unmute } = useCallContext();
+  const [isMuted, setIsMuted] = useState(false);
   const chats = useAppSelector((state) => state.chats.chats);
   const chat = getChatByID({
     chatID: chatId.current ?? "",
     chats: chats
   });
+  const toggleMute = () => {
+    if (isMuted) {
+      setIsMuted(false);
+      unmute();
+    } else {
+      setIsMuted(true);
+      mute();
+    }
+  };
 
   return (
     <>
@@ -233,7 +244,9 @@ export default function CallLayout({
                     </NameContainer>
                     <ButtonsContainer>
                       <ButtonContainer>
-                        <RoundButton>{getIcon("Mute")}</RoundButton>
+                        <RoundButton onClick={toggleMute}>
+                          {isMuted ? getIcon("UnMute") : getIcon("Mute")}
+                        </RoundButton>
                         <ButtonText>unmute</ButtonText>
                       </ButtonContainer>
                       {callStatus === "incoming" && (

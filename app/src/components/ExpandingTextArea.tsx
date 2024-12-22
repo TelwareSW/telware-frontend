@@ -39,8 +39,6 @@ function ExpandingTextArea({ input, setInput, onKeyDown }: PropsType) {
     }
   }, [input]);
 
-  console.log(filteredMembers);
-
   return (
     <StyledMentionsInput>
       <MentionsInput
