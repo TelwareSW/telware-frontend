@@ -355,7 +355,7 @@ export const {
   setName,
   setPhoto,
   setIsMention,
-  setIsSeen,
+  setIsSeen
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 export type { DetailedChatInterface, ChatsState };

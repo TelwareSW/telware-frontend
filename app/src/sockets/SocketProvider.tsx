@@ -23,6 +23,7 @@ import { useChat } from "@features/chats/hooks/useChat";
 import { useCallContext } from "@features/calls/hooks/useCallContext";
 import { useAppSelector } from "@hooks/useGlobalState";
 import { resetRightSideBar } from "@state/side-bar/sideBar";
+import { getChatByID } from "@features/chats/utils/helpers";
 
 const handleIncomingMessage = (
   dispatch: Dispatch,
@@ -79,9 +80,9 @@ function SocketProvider({ children }: SocketProviderProps) {
   const socket = useSocket();
   const queryClient = useQueryClient();
 
-  const userId = useAppSelector((state) => state.user.userInfo.id);
-
+  const chats = useAppSelector((state) => state.chats.chats);
   const user = useAppSelector((state) => state.user.userInfo);
+  const userId = user.id;
 
   const { decrypt } = useEncryptDecrypt();
   const { chat } = useChat();
@@ -172,16 +173,18 @@ function SocketProvider({ children }: SocketProviderProps) {
       });
     };
     const onReceiveMessage = (message: MessageInterface) => {
-      if (!chat) {
-        console.warn("No chat context available for decryption");
+      const messageChat = getChatByID({ chats, chatID: message.chatId });
+
+      if (!messageChat) {
+        console.warn("No messageChat context available for decryption");
         return;
       }
 
-      if (chat.type === "private") {
+      if (messageChat.type === "private") {
         decrypt({
           message: message.content,
-          key: chat.encryptionKey!,
-          iv: chat.initializationVector!
+          key: messageChat.encryptionKey!,
+          iv: messageChat.initializationVector!
         })
           .then((content) => {
             console.log("Decrypted content:", content);

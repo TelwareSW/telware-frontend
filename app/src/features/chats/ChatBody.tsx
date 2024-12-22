@@ -68,7 +68,12 @@ function ChatBody() {
     }
   }, [fetchNextPage, inView, chatId]);
 
-  const messages = chat?.messages?.filter((msg) => !msg.parentMessageId);
+  let messages = chat?.messages;
+
+  if (chat?.type === "channel") {
+    messages?.filter((msg) => !msg.parentMessageId);
+  }
+
   const threadMessages = activeThread
     ? chat?.messages.filter((msg) => msg.parentMessageId === activeThread)
     : [];
@@ -123,9 +128,9 @@ function ChatBody() {
               ":hover": {
                 backgroundColor: "var(--color-background-own-1)",
                 color: "white",
-                transition: "0.2s",
-              },
-            },
+                transition: "0.2s"
+              }
+            }
           })}
       </Icon>
     </ScrollContainer>
