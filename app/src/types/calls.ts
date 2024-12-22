@@ -14,8 +14,10 @@ export interface CallContextType {
   // callAccepted: React.RefObject<string | null>;
   joinCall: (newCallId: string, newSenderId: string, newChatId: string) => void;
   endCall: (clientId: string | null) => void;
+
   mute: () => void;
   unmute: () => void;
+
   acceptCall: () => void;
   startPeerConnection: (
     clientId: string

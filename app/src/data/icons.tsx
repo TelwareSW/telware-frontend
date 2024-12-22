@@ -448,7 +448,8 @@ const iconImports: Record<iconStrings, IconConfig> = {
     importFn: () => import ("@mui/icons-material/AlternateEmail"),
   },
   UnMute: {
-     importFn: () => import ("@mui/icons-material/MicOff"),
+    importFn: () => import("@mui/icons-material/MicOff"),
+    defaultProps: { fontSize: "large" },
   }
 };
 

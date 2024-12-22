@@ -132,6 +132,7 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
     },
     [clearClientIds, removeClientId, setCallStatus]
   );
+
   const mute = () => {
     if (localStream.current)
       localStream.current.getAudioTracks()[0].enabled = false;
