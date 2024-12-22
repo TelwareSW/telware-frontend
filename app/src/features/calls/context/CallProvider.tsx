@@ -4,6 +4,8 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { callStatusEmitter } from "./callStatusEmitter";
 import { CallStatus } from "types/calls";
 import { TURN_USERNAME, TURN_PASSWORD } from "@constants";
+import { useSocket } from "utils/socket";
+
 console.log(TURN_PASSWORD, TURN_USERNAME);
 const Servers = {
   iceServers: [
@@ -35,6 +37,7 @@ const Servers = {
 export const CallProvider: React.FC<{ children: ReactNode }> = ({
   children
 }) => {
+  const socket = useSocket();
   const userId = useAppSelector((state) => state.user.userInfo.id);
   const callIdRef = useRef<string | null>(null);
   const senderIdRef = useRef<string | null>(null);
@@ -195,7 +198,16 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
             break;
         }
       };
-
+      peerConnection.onicecandidate = (event) => {
+        if (event.candidate && socket?.connected) {
+          socket.emit("SIGNAL-SERVER", {
+            type: "ICE",
+            voiceCallId: callIdRef.current,
+            data: event.candidate,
+            targetId: clientId
+          });
+        }
+      };
       peerConnection.ontrack = (event) => {
         console.log("audio");
         if (event.track.kind === "audio") {
@@ -216,17 +228,21 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
       }
       return null;
     },
-    [addClientId, endCall, hasClientId, setCallStatus]
+    [addClientId, endCall, hasClientId, setCallStatus, socket]
   );
 
   const recieveICE = useCallback(
     async (candidate: RTCIceCandidateInit, senderId: string) => {
-      if (hasClientId(senderId, true)) {
-        const clientData = clientIdRef.current.get(senderId);
-        if (clientData) {
-          if (!clientData.connection) return;
-          clientData.connection.addIceCandidate(candidate);
-        }
+      try {
+        if (hasClientId(senderId, true)) {
+          const clientData = clientIdRef.current.get(senderId);
+          if (clientData) {
+            if (!clientData.connection) throw new Error("No connection found.");
+            clientData.connection.addIceCandidate(candidate);
+          } else throw new Error("No connection found.");
+        } else throw new Error("No connection found.");
+      } catch (error) {
+        console.error("Error recieving ICE candidate:", error);
       }
     },
     [hasClientId]
@@ -300,17 +316,27 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
               break;
           }
         };
+        peerConnection.onicecandidate = (event) => {
+          if (event.candidate && socket?.connected) {
+            socket.emit("SIGNAL-SERVER", {
+              type: "ICE",
+              voiceCallId: callIdRef.current,
+              data: event.candidate,
+              targetId: senderId
+            });
+          }
+        };
         await peerConnection.setRemoteDescription(data);
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
-        addClientId(senderId, peerConnection, false);
+        addClientId(senderId, peerConnection, true);
         return answer;
       } catch (error) {
         console.error("Error creating answer:", error);
         return null;
       }
     },
-    [addClientId, endCall]
+    [addClientId, endCall, socket]
   );
 
   const getPeerConnection = useCallback((clientId: string) => {
