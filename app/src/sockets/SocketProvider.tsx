@@ -288,6 +288,7 @@ function SocketProvider({ children }: SocketProviderProps) {
       }
     );
     socket.on("CLIENT-JOINED", async ({ clientId }) => {
+      console.log("client joined", clientId);
       const offer = await startPeerConnection(clientId);
       try {
         if (offer && clientId) {

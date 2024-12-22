@@ -4,6 +4,7 @@ import { useAppSelector } from "@hooks/useGlobalState";
 import { callStatusEmitter } from "./callStatusEmitter";
 import { CallStatus } from "types/calls";
 import { TURN_USERNAME, TURN_PASSWORD } from "@constants";
+console.log(TURN_PASSWORD, TURN_USERNAME);
 const Servers = {
   iceServers: [
     {
@@ -171,9 +172,32 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
       }
       const peerConnection = new RTCPeerConnection(Servers);
       localStream.current.getTracks().forEach((track) => {
-        peerConnection?.addTrack(track, localStream.current);
+        peerConnection.addTrack(track, localStream.current);
       });
+      peerConnection.oniceconnectionstatechange = () => {
+        const state = peerConnection.iceConnectionState;
+
+        switch (state) {
+          case "connected":
+            console.log("Peer connection established.");
+            break;
+          case "disconnected":
+            console.warn("Peer connection disconnected.");
+            break;
+          case "failed":
+            console.error("Peer connection failed. Restarting ICE?");
+            break;
+          case "closed":
+            console.log("Peer connection closed.");
+            break;
+          default:
+            console.log("ICE connection state:", state);
+            break;
+        }
+      };
+
       peerConnection.ontrack = (event) => {
+        console.log("audio");
         if (event.track.kind === "audio") {
           const remoteAudio = document.createElement("audio");
           remoteAudio.srcObject = event.streams[0];
@@ -183,6 +207,7 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
         }
       };
       const offer = await peerConnection.createOffer();
+      console.log(clientIdRef.current);
       if (!hasClientId(clientId) || hasClientId(clientId, false)) {
         await peerConnection.setLocalDescription(offer);
         addClientId(clientId, peerConnection, true);
@@ -243,15 +268,14 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
         localStream.current.getTracks().forEach((track) => {
           peerConnection.addTrack(track, localStream.current);
         });
-        await peerConnection.setRemoteDescription(data);
-        const answer = await peerConnection.createAnswer();
-        await peerConnection.setLocalDescription(answer);
+
         peerConnection.ontrack = (event) => {
+          console.log("adiooo");
           if (event.track.kind === "audio") {
             const remoteAudio = document.createElement("audio");
             remoteAudio.srcObject = event.streams[0];
             remoteAudio.autoplay = true;
-            remoteAudio.controls = true;
+            remoteAudio.controls = false;
             document.body.appendChild(remoteAudio);
           }
         };
@@ -276,7 +300,9 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({
               break;
           }
         };
-
+        await peerConnection.setRemoteDescription(data);
+        const answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
         addClientId(senderId, peerConnection, false);
         return answer;
       } catch (error) {
