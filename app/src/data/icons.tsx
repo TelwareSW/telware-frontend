@@ -69,6 +69,7 @@ enum icons {
   Group,
   CallAccept,
   Mention,
+  UnMute
 }
 
 type iconStrings = keyof typeof icons;
@@ -446,6 +447,9 @@ const iconImports: Record<iconStrings, IconConfig> = {
   Mention:{
     importFn: () => import ("@mui/icons-material/AlternateEmail"),
   },
+  UnMute: {
+     importFn: () => import ("@mui/icons-material/MicOff"),
+  }
 };
 
 const iconCache = new Map<string, React.ReactElement>();
