@@ -615,7 +615,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   }
 
   function deleteGroup({ chatId }: { chatId: string }) {
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "DELETE_GROUP_CHANNEL_CLIENT",
         { chatId },
@@ -644,7 +644,7 @@ function SocketProvider({ children }: SocketProviderProps) {
     privacy: boolean;
   }) {
     console.log(privacy);
-    if (isConnected && socket) {
+    if (socket?.connected && socket) {
       socket.emit(
         "SET_PRIVACY_CLIENT",
         { chatId, privacy },
