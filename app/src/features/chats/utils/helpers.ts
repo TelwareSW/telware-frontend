@@ -41,6 +41,16 @@ export function parseChatsToState(chatData?: any) {
       (lastMessage: any) => lastMessage.chatId === chatId
     )?.lastMessage;
 
+    let lastMessageContent = null;
+
+    if (incomingLastMessage) {
+      if (incomingLastMessage.isAppropriate) {
+        lastMessageContent = incomingLastMessage.content;
+      } else {
+        lastMessageContent = "🚫️ This message has inappropriate content.";
+      }
+    }
+
     return {
       _id: chatId,
       isSeen: isSeen,
@@ -52,9 +62,7 @@ export function parseChatsToState(chatData?: any) {
 
       lastMessage: {
         _id: incomingLastMessage?.id,
-        content: incomingLastMessage?.isAppropriate
-          ? incomingLastMessage?.content
-          : "🚫️ This message has inappropriate content.",
+        content: lastMessageContent,
         senderId: incomingLastMessage?.senderId,
         timestamp: incomingLastMessage?.timestamp,
         contentType: incomingLastMessage?.contentType

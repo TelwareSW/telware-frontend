@@ -49,7 +49,6 @@ function ChatBody() {
 
   const { handleNextMentionMessage, mentionMessages } = useTraversalMentions();
 
-
   useEffect(() => {
     if (inView && hasNextPage && chatId) {
       const container = scrollContainerRef.current;
@@ -71,7 +70,7 @@ function ChatBody() {
   let messages = chat?.messages;
 
   if (chat?.type === "channel") {
-    messages?.filter((msg) => !msg.parentMessageId);
+    messages = messages?.filter((msg) => !msg.parentMessageId);
   }
 
   const threadMessages = activeThread
