@@ -64,9 +64,10 @@ const ChatItem = ({
 }: ChatItemProps) => {
   const navigate = useNavigate();
 
-  const timestamp = lastMessage?.timestamp || "No messages";
-  const lastMessageContent =
-    RenderWithMention(lastMessage?.content!, lastMessage?._id!) || "No messages";
+  const timestamp = lastMessage?.timestamp || "No Messages Found";
+  const lastMessageContent = lastMessage?.content
+    ? RenderWithMention(lastMessage?.content!, lastMessage?._id!)
+    : "No Messages Found";
 
   const { chatId } = useParams<{ chatId: string }>();
 
