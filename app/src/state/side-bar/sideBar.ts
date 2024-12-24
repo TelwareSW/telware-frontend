@@ -21,7 +21,7 @@ import {
   members,
   permissions,
   channelInfo,
-  editChannelInfo,
+  editChannelInfo
 } from "../../data/sideBar";
 import { pagesStrings } from "types/sideBar";
 
@@ -39,7 +39,7 @@ interface SideBarState {
 
 const initialState: SideBarState = {
   leftSideBar: chats,
-  rightSideBar: groupInfo,
+  rightSideBar: groupInfo
 };
 
 function getSideBarPage(type: number): SideBarView {
@@ -116,20 +116,27 @@ const sideBarSlice = createSlice({
         page: newData.page,
         title: newData.title,
         backView: data?.backView ? data?.backView : newData?.backView,
-        props: { ...newData.props },
+        props: { ...newData.props }
       };
 
+      if (redirect === sideBarPages.SETTINGS_UPDATE) {
+        updatedSideBar.props = { data: data };
+        updatedSideBar.title = data.header;
+      }
       if (redirect === sideBarPages.ADD_ADMINS) {
         updatedSideBar.props = {
           ...updatedSideBar.props,
-          prevBackView: data.prevBackView,
+          prevBackView: data.prevBackView
         };
-      }
-
-      if (redirect === sideBarPages.ADD_MEMBERS) {
+      } else if (redirect === sideBarPages.ADD_MEMBERS) {
         updatedSideBar.props = {
           ...updatedSideBar.props,
-          view: data.view,
+          view: data.view
+        };
+      } else if (redirect === sideBarPages.SETTINGS_UPDATE) {
+        updatedSideBar.props = {
+          ...updatedSideBar.props,
+          props: data
         };
       }
 
@@ -138,8 +145,8 @@ const sideBarSlice = createSlice({
       } else {
         state.rightSideBar = updatedSideBar;
       }
-    },
-  },
+    }
+  }
 });
 
 export const { updateSideBarView, resetRightSideBar, resetLeftSideBar } =
