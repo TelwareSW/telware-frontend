@@ -37,18 +37,39 @@ Check our [deployed website](https://dev.telware.tech/)
 
 - Password: 12345678
 
-## 🧰 Tech Stack
-
-<div style="display:flex; flex-direction: column; gap:10px">
-<div style="display:flex; gap:10px;">
-<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.jsweet.org%2Fwp-content%2Fuploads%2F2016%2F04%2Freact-logo.png&f=1&nofb=1&ipt=addd61f3edcbf2fb996653beac06140e6d6cbe6b1c60edc2c0f73811358a8229&ipo=images" width="120"> <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.RvrEinC-XMTxt_fEqFIB_AAAAA%26pid%3DApi&f=1&ipt=f84f47ebb9df8aac91999849efb694d16ae7bdb8fae77befa86aa06823233402&ipo=images" width="120"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fdecode.agency%2Fwp-content%2Fuploads%2F2023%2F05%2FReact-Query-logo.png&f=1&nofb=1&ipt=ac521ac3371fb3d28d80e0153da08efa5aae5519d8f441f604f59009fe102dcb&ipo=images" width="140"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogowik.com%2Fcontent%2Fuploads%2Fimages%2Fsocketio5224.logowik.com.webp&f=1&nofb=1&ipt=822836374090674630bae0f2920fdd7192ae48687e7f9aaa237a0d6ccb220de5&ipo=images" width="140">
-
-</div>
-
-<br>
-<div style="display:flex; gap:10px;">
-    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.styled-components.com%2Fatom.png&f=1&nofb=1&ipt=ba38d4aaad9b4c425d5302f85bdf90be9c1cb631efd11c1c799fa2cd51e5e257&ipo=images" width="120"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fseeklogo.com%2Fimages%2FM%2Fmsw-mock-service-worker-logo-88A2A26653-seeklogo.com.png&f=1&nofb=1&ipt=560d978968aeb5f957bb0e619f3e66cd7aeffe771905dbd00bb6229cd5ae8c49&ipo=images" width="120"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fih1.redbubble.net%2Fimage.404023256.1965%2Fst%2Csmall%2C507x507-pad%2C600x600%2Cf8f8f8.u2.jpg&f=1&nofb=1&ipt=3d9c6ce894353db68934448e4c500d5bc86e40ee29d33a143c5b67d6cb82bfec&ipo=images" width="120"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.ACh4yFP-3GEpweUbyMCWwQHaEK%26pid%3DApi&f=1&ipt=2111e425baa383224a53eca7c21eefb9336b20d7c3b750ee8fc2b9126088a42b&ipo=images" width="120">
-</div>
+<div style="padding: 20px;">
+  <h2 style="color: #333; margin-bottom: 24px;">🧰 Tech Stack</h2>
+  
+  <div style="display: flex; flex-direction: column; gap: 24px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center;">
+      <img src="https://www.jsweet.org/wp-content/uploads/2016/04/react-logo.png" 
+           style="height: 60px; width: auto; object-fit: contain;" 
+           alt="React Logo">
+      <img src="https://tse4.mm.bing.net/th?id=OIP.RvrEinC-XMTxt_fEqFIB_AAAAA"
+           style="height: 60px; width: auto; object-fit: contain;"
+           alt="Next.js Logo">
+      <img src="https://decode.agency/wp-content/uploads/2023/05/React-Query-logo.png"
+           style="height: 60px; width: auto; object-fit: contain;"
+           alt="React Query Logo">
+      <img src="https://logowik.com/content/uploads/images/socketio5224.logowik.com.webp"
+           style="height: 60px; width: auto; object-fit: contain;"
+           alt="Socket.IO Logo">
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center;">
+      <img src="https://www.styled-components.com/atom.png"
+           style="height: 60px; width: auto; object-fit: contain;"
+           alt="Styled Components Logo">
+      <img src="https://seeklogo.com/images/M/msw-mock-service-worker-logo-88A2A26653-seeklogo.com.png"
+           style="height: 60px; width: auto; object-fit: contain;"
+           alt="MSW Logo">
+      <img src="https://ih1.redbubble.net/image.404023256.1965/st,small,507x507-pad,600x600,f8f8f8.u2.jpg"
+           style="height: 60px; width: auto; object-fit: contain;"
+           alt="Jest Logo">
+      <img src="https://tse4.mm.bing.net/th?id=OIP.ACh4yFP-3GEpweUbyMCWwQHaEK"
+           style="height: 60px; width: auto; object-fit: contain;"
+           alt="TypeScript Logo">
+    </div>
+  </div>
 </div>
 
 ## 🔥 Main Features
